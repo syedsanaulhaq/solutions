@@ -15,8 +15,8 @@ const contactDetails = [
   {
     icon: <Mail className="h-5 w-5 text-[#2563EB]" />,
     label: 'Email',
-    value: 'hello@hostingocean.co.uk',
-    href: 'mailto:hello@hostingocean.co.uk',
+    value: 'info@solutions.hostingocean.co.uk',
+    href: 'mailto:info@solutions.hostingocean.co.uk',
   },
   {
     icon: <MapPin className="h-5 w-5 text-[#2563EB]" />,
