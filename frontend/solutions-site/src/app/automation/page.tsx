@@ -22,6 +22,13 @@ import {
   Clock,
   AlertCircle,
   Database,
+  Search,
+  Hammer,
+  Rocket,
+  LifeBuoy,
+  ChevronDown,
+  PoundSterling,
+  Lightbulb,
 } from 'lucide-react';
 
 export const metadata: Metadata = buildMetadata({
@@ -188,6 +195,130 @@ const principles = [
   },
 ];
 
+const deliveryProcess = [
+  {
+    step: '01',
+    icon: <Search className="h-5 w-5" />,
+    title: 'Process Discovery & Audit',
+    description:
+      'We start by mapping the processes your team currently handles manually — data entry, approval chains, cross-system transfers, scheduled reports, and recurring operational tasks. We interview stakeholders, document the current state, and quantify the time cost. You receive a prioritised list of automation opportunities ranked by ROI before we agree on scope.',
+  },
+  {
+    step: '02',
+    icon: <Lightbulb className="h-5 w-5" />,
+    title: 'Automation Design & Data Mapping',
+    description:
+      'We design the automation architecture — trigger model (webhook, polling, schedule, or event), data transformation rules, conditional logic, error handling strategy, retry policy, and monitoring approach. Every field mapping and transformation is documented before development begins. You see and approve the design before we write code.',
+  },
+  {
+    step: '03',
+    icon: <FileText className="h-5 w-5" />,
+    title: 'Environment & Integration Setup',
+    description:
+      'We configure the development and staging environments, establish API credentials and OAuth flows for each integrated system, set up the queue infrastructure, and wire up the observability stack — structured logging, job monitoring, and alerting. Everything is validated against test accounts before feature development starts.',
+  },
+  {
+    step: '04',
+    icon: <Hammer className="h-5 w-5" />,
+    title: 'Build & Sprint Delivery',
+    description:
+      'Development runs in two-week sprints. Each sprint delivers a working automation flow that you can test end-to-end on staging. We walk you through the monitoring dashboard, show you the audit trail, and confirm the edge cases are handled before moving to the next workflow. No big-bang delivery at the end.',
+  },
+  {
+    step: '05',
+    icon: <ShieldCheck className="h-5 w-5" />,
+    title: 'UAT, Load Testing & Monitoring',
+    description:
+      'Before go-live, we run user acceptance testing with your operations team, stress-test the system at expected peak volumes, verify retry and failure behaviour deliberately, and confirm that alerts fire correctly. The monitoring dashboard is live and your team has been walked through it before we switch production traffic on.',
+  },
+  {
+    step: '06',
+    icon: <Rocket className="h-5 w-5" />,
+    title: 'Go-Live & Handover',
+    description:
+      'We manage the cutover — disabling the old manual process, enabling the automation, and monitoring closely for the first 48 hours. You receive full source code, architecture documentation, runbook for common failure scenarios, and a handover session with whoever is responsible for operations.',
+  },
+];
+
+const pricingTiers = [
+  {
+    title: 'Single Integration or Automation',
+    range: '£3,000 – £10,000',
+    description:
+      'A focused automation project — connecting two systems via API, automating a single business process, or replacing a manual data transfer with a reliable scheduled job.',
+    includes: [
+      'Single workflow or integration',
+      'Error handling and retry logic',
+      'Job monitoring dashboard',
+      'Failure alerting (Slack/email)',
+      'Full audit trail',
+      'Source code and documentation',
+    ],
+  },
+  {
+    title: 'Multi-System Automation Suite',
+    range: '£12,000 – £40,000',
+    description:
+      'A comprehensive automation programme — multiple connected workflows, CRM/ERP integrations, event-driven pipelines, and a centralised monitoring layer across all automations.',
+    includes: [
+      'Multiple workflows and integrations',
+      'CRM, ERP, or accounting connectors',
+      'Queue-based architecture',
+      'Centralised monitoring dashboard',
+      'Bi-directional sync with conflict resolution',
+      'Full test suite + handover training',
+    ],
+    highlighted: true,
+  },
+  {
+    title: 'Automation Retainer',
+    range: 'From £1,200/month',
+    description:
+      'Ongoing automation development — new workflow builds, integration expansions, API version upgrades, monitoring, and on-call support on a rolling monthly contract.',
+    includes: [
+      'Agreed monthly deliverables',
+      'New integration builds on demand',
+      'API version upgrade management',
+      'Priority incident response',
+      'Monthly health report',
+      'Cancel with 30 days notice',
+    ],
+  },
+];
+
+const faqs = [
+  {
+    question: 'Should we use n8n, Zapier, or Make instead of custom code?',
+    answer:
+      'No-code tools are the right answer for simple, low-volume automations that do not need complex error handling or high reliability. Zapier is fine for sending a Slack message when a form is submitted. The problems start when you add conditions, need retries, process hundreds of events per hour, or integrate with systems that have complex auth flows. At that point, you are fighting the tool rather than using it. We use n8n for the right use cases and custom code when the requirements outgrow a no-code approach — we will tell you honestly which is appropriate during the discovery phase.',
+  },
+  {
+    question: 'How do you handle failures and retries?',
+    answer:
+      'Every job enters a queue before processing. If it fails, it is retried with exponential backoff — initially after seconds, then minutes, then hours. After a configurable number of retries, it moves to a dead-letter queue where it is preserved for inspection and manual replay. Every failure is logged with the full payload, error message, stack trace, and attempt number. Alerts fire immediately on first failure for critical workflows. The audit trail means you can diagnose exactly what went wrong and replay the job once the issue is resolved.',
+  },
+  {
+    question: 'How long does an automation project take?',
+    answer:
+      'A single integration or focused automation typically takes 3–6 weeks. A multi-system automation suite with CRM/ERP connectors, custom workflows, and a full monitoring layer runs 8–16 weeks. The discovery and design phase takes 1–2 weeks and produces a scope document and fixed-price quote before development starts. We do not begin building until you have approved both the design and the commercial terms.',
+  },
+  {
+    question: 'Can you migrate automations we already have running in Zapier or Make?',
+    answer:
+      'Yes — this is a common engagement. We audit your existing Zapier/Make workflows, identify which ones are candidates for consolidation or hardening, and rebuild them as maintainable code. We run both in parallel during the transition period so there is no service interruption. Many clients find the migration also resolves reliability issues they had accepted as normal — failed zaps, duplicate records, and silent data loss are all common in complex no-code setups.',
+  },
+  {
+    question: 'What happens when an integrated platform changes its API?',
+    answer:
+      'API changes are a reality — and they are handled differently depending on whether you are on a retainer or a fixed-price project. For retainer clients, API version upgrades are covered as part of the monthly scope. For fixed-price projects, we build the integration layer with API versioning and abstraction in mind so that changes are isolated and the upgrade cost is minimised. We also document all integration points so you know exactly which version of each API is in use at any point.',
+  },
+  {
+    question: 'How do we know the automation is working correctly after go-live?',
+    answer:
+      'Every automation ships with a monitoring dashboard showing real-time job status, processing volume, success/failure rates, and average processing time. Alerts are configured to notify your team via Slack or email when failure rates exceed a threshold or when a queue starts backing up. The full audit trail means you can inspect any individual job run — what triggered it, what data it processed, what it produced, and how long each step took. You are never flying blind.',
+  },
+];
+
 /* ─────────────────────────── page ─────────────────────────── */
 
 export default function AutomationPage() {
@@ -304,6 +435,124 @@ export default function AutomationPage() {
                   ))}
               </div>
             </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* ── Delivery Process ── */}
+      <Section
+        id="process"
+        variant="muted"
+        title="How an Automation Project Works"
+        subtitle="A structured delivery process — from process discovery to a go-live you can monitor and trust."
+      >
+        <div className="relative max-w-4xl mx-auto">
+          <div className="absolute left-7 top-0 bottom-0 w-px bg-[#2563EB]/20 hidden md:block" />
+          <div className="space-y-6">
+            {deliveryProcess.map((step) => (
+              <div key={step.step} className="relative flex gap-6 md:gap-8">
+                <div className="shrink-0 flex flex-col items-center">
+                  <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-xl bg-[#2563EB] text-white shadow-md shadow-blue-500/20">
+                    {step.icon}
+                  </div>
+                </div>
+                <div className="flex-1 pb-6 pt-2">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-xs font-bold text-[#2563EB] tracking-widest uppercase">
+                      Step {step.step}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">{step.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed text-sm">{step.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* ── Pricing Guidance ── */}
+      <Section
+        id="pricing"
+        title="Automation Pricing Guide"
+        subtitle="Fixed-price projects with clear scopes — here is what automation and integration work typically costs."
+      >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-10">
+          {pricingTiers.map((tier) => (
+            <div
+              key={tier.title}
+              className={`relative rounded-2xl border p-7 flex flex-col ${
+                tier.highlighted
+                  ? 'border-[#2563EB] bg-[#2563EB]/5 shadow-lg shadow-blue-500/10'
+                  : 'border-border/60 bg-background'
+              }`}
+            >
+              {tier.highlighted && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                  <span className="bg-[#2563EB] text-white text-xs font-bold px-3 py-1 rounded-full">
+                    Most Popular
+                  </span>
+                </div>
+              )}
+              <div className="mb-4">
+                <PoundSterling className={`h-6 w-6 mb-3 ${tier.highlighted ? 'text-[#2563EB]' : 'text-muted-foreground'}`} />
+                <h3 className="font-bold text-lg mb-1">{tier.title}</h3>
+                <p className={`text-2xl font-extrabold ${tier.highlighted ? 'text-[#2563EB]' : 'text-foreground'}`}>
+                  {tier.range}
+                </p>
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-5">{tier.description}</p>
+              <ul className="space-y-2.5 flex-1">
+                {tier.includes.map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm">
+                    <CheckCircle2 className={`h-4 w-4 shrink-0 mt-0.5 ${tier.highlighted ? 'text-[#2563EB]' : 'text-emerald-600'}`} />
+                    <span className="text-muted-foreground">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-6">
+                <Link href="/contact">
+                  <Button
+                    className={`w-full ${tier.highlighted ? 'bg-[#2563EB] hover:bg-[#1d4ed8]' : 'bg-transparent border border-border hover:bg-muted text-foreground'}`}
+                    variant={tier.highlighted ? 'default' : 'outline'}
+                  >
+                    Get a Quote
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="text-center text-sm text-muted-foreground">
+          All prices are estimates — final costs depend on scope and number of integrations.{' '}
+          <Link href="/pricing" className="text-[#2563EB] hover:underline font-medium">
+            View full pricing guide →
+          </Link>
+        </p>
+      </Section>
+
+      {/* ── FAQ ── */}
+      <Section
+        id="faq"
+        variant="muted"
+        title="Frequently Asked Questions"
+        subtitle="Straight answers to the questions every automation buyer asks."
+        align="left"
+      >
+        <div className="max-w-3xl mx-auto space-y-5">
+          {faqs.map((faq) => (
+            <details
+              key={faq.question}
+              className="group rounded-xl border border-border/60 bg-background overflow-hidden"
+            >
+              <summary className="flex cursor-pointer items-center justify-between gap-4 p-5 font-semibold text-foreground list-none hover:bg-muted/40 transition-colors">
+                {faq.question}
+                <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
+              </summary>
+              <div className="px-5 pb-5 pt-1 text-sm text-muted-foreground leading-relaxed border-t border-border/40">
+                {faq.answer}
+              </div>
+            </details>
           ))}
         </div>
       </Section>
