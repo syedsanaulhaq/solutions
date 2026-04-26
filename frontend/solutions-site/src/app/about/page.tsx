@@ -20,6 +20,13 @@ import {
   TrendingUp,
   Clock,
   Globe,
+  GraduationCap,
+  Building2,
+  ShoppingBag,
+  Briefcase,
+  Cpu,
+  Stethoscope,
+  ChevronDown,
 } from 'lucide-react';
 
 export const metadata: Metadata = buildMetadata({
@@ -195,6 +202,73 @@ const services = [
   { label: 'Automation & Integrations', href: '/automation' },
 ];
 
+const stats = [
+  { value: '50+', label: 'Projects delivered' },
+  { value: '30+', label: 'Satisfied clients' },
+  { value: '5+', label: 'Years experience' },
+  { value: '100%', label: 'Source code ownership' },
+];
+
+const industries = [
+  {
+    icon: <GraduationCap className="h-6 w-6 text-[#2563EB]" />,
+    title: 'Education & EdTech',
+    description: 'Custom LMS platforms, SCORM-compliant course builders, and learner analytics dashboards for training providers, universities, and corporate L&D teams.',
+  },
+  {
+    icon: <Building2 className="h-6 w-6 text-[#2563EB]" />,
+    title: 'Finance & FinTech',
+    description: 'Secure REST APIs, compliance-aware data pipelines, and client-facing portals for financial services companies requiring robust audit trails.',
+  },
+  {
+    icon: <Stethoscope className="h-6 w-6 text-[#2563EB]" />,
+    title: 'Healthcare & MedTech',
+    description: 'Patient-facing React applications, clinical data integrations, and automation workflows built with data privacy and regulatory requirements in mind.',
+  },
+  {
+    icon: <ShoppingBag className="h-6 w-6 text-[#2563EB]" />,
+    title: 'E-commerce & Retail',
+    description: 'Storefront customisations, inventory automation, ERP integrations, and AI-powered product recommendation and support chatbots.',
+  },
+  {
+    icon: <Cpu className="h-6 w-6 text-[#2563EB]" />,
+    title: 'SaaS & Startups',
+    description: 'Full-stack product builds from MVP to scale — multi-tenant architecture, subscription billing integration, and self-serve onboarding flows.',
+  },
+  {
+    icon: <Briefcase className="h-6 w-6 text-[#2563EB]" />,
+    title: 'Professional Services',
+    description: 'Client portal development, document automation, CRM integrations, and internal tooling for law firms, consultancies, and accountancy practices.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'How long does a typical project take?',
+    a: 'It depends on scope. A focused MVP or a single-service integration typically takes 4–8 weeks. A full custom LMS platform or multi-service API backend is usually 10–20 weeks. We always give you a milestone-based timeline in the proposal so you can plan around it.',
+  },
+  {
+    q: 'What exactly is in a fixed-price quote?',
+    a: 'The quote covers the full agreed scope: all development work, code review, automated testing, deployment to your environment, documentation, and a post-launch support window. If the scope changes, we raise a change request with a revised price before doing the additional work — no surprise invoices.',
+  },
+  {
+    q: 'Do you work with non-technical founders?',
+    a: 'Yes, and we enjoy it. We will translate your business problem into a technical approach and explain every decision in plain English. You do not need to know what a REST API is to work effectively with us.',
+  },
+  {
+    q: 'Who owns the code and intellectual property?',
+    a: 'You do. Upon project completion and final payment, all source code, assets, and IP transfer to you in full. We do not retain licences, backdoors, or ongoing dependencies on our infrastructure.',
+  },
+  {
+    q: 'Can you join our existing development team?',
+    a: 'Yes. We offer both standalone project delivery and embedded team augmentation. If you have in-house developers, we can work alongside them — contributing to your repository, following your standards, and handing off cleanly.',
+  },
+  {
+    q: 'What post-launch support do you offer?',
+    a: 'Every project includes a 30-day post-launch support window at no extra charge. After that, we offer a monthly maintenance retainer covering bug fixes, dependency updates, and minor feature additions. Larger changes are quoted as separate projects.',
+  },
+];
+
 /* ─────────────────────────── page ─────────────────────────── */
 
 export default function AboutPage() {
@@ -209,6 +283,20 @@ export default function AboutPage() {
         cta1={{ label: 'Get a Free Quote', href: '/contact' }}
         cta2={{ label: 'View Our Services', href: '/services' }}
       />
+
+      {/* ── Stats ── */}
+      <div className="bg-[#0F172A] py-12">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            {stats.map(({ value, label }) => (
+              <div key={label}>
+                <p className="text-4xl font-extrabold text-white mb-1">{value}</p>
+                <p className="text-sm text-slate-400">{label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
 
       {/* ── Mission ── */}
       <Section id="mission">
@@ -353,6 +441,28 @@ export default function AboutPage() {
         </div>
       </Section>
 
+      {/* ── Industries ── */}
+      <Section
+        id="industries"
+        title="Industries we serve"
+        subtitle="We bring specialist knowledge across a wide range of verticals — not just technical expertise."
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {industries.map((ind) => (
+            <div
+              key={ind.title}
+              className="rounded-2xl border border-border/60 bg-background p-6 shadow-sm hover:shadow-md hover:border-[#2563EB]/30 transition-all"
+            >
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#2563EB]/10 mb-4">
+                {ind.icon}
+              </div>
+              <h3 className="font-semibold mb-2">{ind.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{ind.description}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
       {/* ── Tech stack ── */}
       <Section
         id="tech-stack"
@@ -377,6 +487,27 @@ export default function AboutPage() {
                 ))}
               </div>
             </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* ── FAQ ── */}
+      <Section
+        id="faq"
+        title="Common questions"
+        subtitle="Everything you need to know before starting a project with us."
+      >
+        <div className="max-w-3xl mx-auto space-y-3">
+          {faqs.map(({ q, a }) => (
+            <details key={q} className="group rounded-xl border border-border/60 bg-background shadow-sm overflow-hidden">
+              <summary className="flex cursor-pointer items-center justify-between gap-4 px-6 py-4 font-semibold text-sm select-none list-none [&::-webkit-details-marker]:hidden">
+                {q}
+                <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 group-open:rotate-180" />
+              </summary>
+              <div className="px-6 pb-5 pt-1">
+                <p className="text-sm text-muted-foreground leading-relaxed">{a}</p>
+              </div>
+            </details>
           ))}
         </div>
       </Section>
