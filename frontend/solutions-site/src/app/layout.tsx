@@ -3,7 +3,7 @@ import '../styles/globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { defaultMetadata } from '@/lib/seo';
+import { defaultMetadata, organizationSchema, websiteSchema } from '@/lib/seo';
 
 export { defaultMetadata as metadata };
 
@@ -17,6 +17,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en-GB" suppressHydrationWarning className={inter.variable}>
       <body className="font-sans">
+        {/* ── JSON-LD: Organization + WebSite ── */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema()) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema()) }}
+        />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

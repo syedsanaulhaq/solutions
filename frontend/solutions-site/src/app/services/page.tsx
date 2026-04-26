@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { buildMetadata, pageMetadata } from '@/lib/seo';
 import { Section } from '@/components/Section';
 import { Hero } from '@/components/Hero';
 import { Button } from '@/components/ui/button';
@@ -18,12 +19,10 @@ import {
   MessageCircle,
 } from 'lucide-react';
 
-export const metadata: Metadata = {
-  title: 'Services — HostingOcean Solutions',
-  description:
-    'Full-service software development — LMS platforms, AI chatbots, React apps, Node.js APIs, automation, DevOps, custom dashboards, and SDK development. UK-based, senior engineers only.',
-  alternates: { canonical: 'https://solutions.hostingocean.co.uk/services' },
-};
+export const metadata: Metadata = buildMetadata({
+  ...pageMetadata.services,
+  ogImage: pageMetadata.services.ogImage,
+});
 
 /* ─────────────────────────── data ─────────────────────────── */
 
