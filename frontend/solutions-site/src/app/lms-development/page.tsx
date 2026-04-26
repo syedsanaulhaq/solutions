@@ -24,6 +24,14 @@ import {
   Headphones,
   Zap,
   Code2,
+  Search,
+  FileText,
+  Hammer,
+  FlaskConical,
+  Rocket,
+  LifeBuoy,
+  ChevronDown,
+  PoundSterling,
 } from 'lucide-react';
 
 export const metadata: Metadata = buildMetadata({
@@ -195,6 +203,128 @@ const whyUs = [
   },
 ];
 
+const process = [
+  {
+    step: '01',
+    icon: <Search className="h-5 w-5" />,
+    title: 'Discovery & Scoping',
+    description:
+      'We run a structured discovery workshop — typically 2–4 hours — to understand your learners, your content, your integrations, and your growth plans. We document everything in a detailed scope specification before a single line of code is written.',
+  },
+  {
+    step: '02',
+    icon: <FileText className="h-5 w-5" />,
+    title: 'Architecture & Proposal',
+    description:
+      'Based on discovery, we produce a technical architecture document and a fixed-price proposal. You see the full plan — database schema, API design, infrastructure choices, third-party services — before you commit.',
+  },
+  {
+    step: '03',
+    icon: <Hammer className="h-5 w-5" />,
+    title: 'Agile Build',
+    description:
+      'Development runs in two-week sprints with a working demo at the end of each. You test real features throughout the build — not just at the end. Every sprint ends with a review call and an updated delivery plan.',
+  },
+  {
+    step: '04',
+    icon: <FlaskConical className="h-5 w-5" />,
+    title: 'QA & Acceptance Testing',
+    description:
+      'Before any release, every feature goes through our QA checklist — functional testing, accessibility audit (WCAG 2.1 AA), performance profiling, and security review. You also carry out your own user acceptance testing with real learners.',
+  },
+  {
+    step: '05',
+    icon: <Rocket className="h-5 w-5" />,
+    title: 'Go-Live & Migration',
+    description:
+      'We manage the full production deployment — infrastructure setup, SSL, DNS, data migration from any existing platform, and a staged rollout if your learner volume warrants it. Go-live day is planned, not improvised.',
+  },
+  {
+    step: '06',
+    icon: <LifeBuoy className="h-5 w-5" />,
+    title: 'Support & Iteration',
+    description:
+      'Every project includes a support window post-launch. We monitor for issues, fix anything that arises, and are ready to start the next phase of development — whether that is new features, additional integrations, or performance scaling.',
+  },
+];
+
+const pricingTiers = [
+  {
+    title: 'Moodle Setup & Customisation',
+    range: '£2,500 – £6,000',
+    description:
+      'Ideal for organisations that want the power of Moodle with a polished, on-brand experience. Includes installation, custom theme, essential plugins, and user onboarding.',
+    includes: [
+      'Managed Moodle installation',
+      'Custom brand theme (logo, colours, fonts)',
+      'Up to 5 plugin configurations',
+      'Admin training session',
+      'Post-launch support (30 days)',
+    ],
+  },
+  {
+    title: 'Custom LMS Build',
+    range: '£15,000 – £60,000+',
+    description:
+      'A fully bespoke LMS built on React and Node.js, designed around your exact workflows. Suitable for training providers, commercial platforms, and enterprise deployments.',
+    includes: [
+      'Full-stack React + Node.js build',
+      'Custom course & content management',
+      'Multi-tenant or single-tenant options',
+      'SCORM / xAPI / LTI integration',
+      'Analytics dashboard',
+      'SSO / third-party integrations',
+    ],
+    highlighted: true,
+  },
+  {
+    title: 'LMS Retainer & Managed Growth',
+    range: 'From £1,500 / month',
+    description:
+      'Ongoing development, maintenance, and hosting management for organisations that want to continuously improve their platform without managing an in-house team.',
+    includes: [
+      'Dedicated development hours monthly',
+      'Platform monitoring & updates',
+      'Feature development & iteration',
+      'Performance & security reviews',
+      'Priority support SLA',
+    ],
+  },
+];
+
+const faqs = [
+  {
+    question: 'Should I use Moodle or build a custom LMS?',
+    answer:
+      'Moodle is the right choice for most organisations — it covers the majority of e-learning use cases, has a huge plugin ecosystem, and is far more cost-effective than a custom build. We recommend a custom LMS when your learning model is genuinely novel, when you are building a commercial product where the platform itself is your proposition, or when the total cost of Moodle customisation over five years exceeds what a bespoke build would cost. We will give you an honest recommendation during discovery.',
+  },
+  {
+    question: 'How long does an LMS project take?',
+    answer:
+      'A Moodle setup and customisation project typically takes 4–8 weeks. A custom LMS build ranges from 10 to 24 weeks depending on complexity. We provide a detailed milestone plan with every fixed-price proposal so you know exactly when each deliverable lands.',
+  },
+  {
+    question: 'Can you migrate our existing LMS to a new platform?',
+    answer:
+      'Yes. We have migrated content and learner data from Moodle, TalentLMS, Canvas, LearnDash, and bespoke legacy platforms. Migration involves a data audit, a mapping exercise, a test migration on a staging environment, and a final cut-over window. We handle the full process and ensure zero data loss.',
+  },
+  {
+    question: 'Do you offer hosting and infrastructure management?',
+    answer:
+      'Yes. We can manage hosting on AWS, DigitalOcean, or a private VPS — with SSL, backups, monitoring, and uptime SLAs. Hosting management is included in our retainer option or available as a standalone add-on.',
+  },
+  {
+    question: 'What SCORM and standards support do you provide?',
+    answer:
+      'We support SCORM 1.2 and SCORM 2004 (all editions), xAPI (Tin Can), and LTI 1.3. If you have existing course content, we will test it against your specific packages before go-live. We can also help you convert legacy SCORM content to modern xAPI-compliant formats.',
+  },
+  {
+    question: 'Can the LMS integrate with our existing HR or CRM system?',
+    answer:
+      'Yes — this is something we handle on almost every enterprise LMS project. Common integrations include Salesforce, HubSpot, BambooHR, Workday, Active Directory, and custom internal APIs. If your system has a REST API or supports webhooks, we can integrate with it.',
+  },
+];
+
 /* ─────────────────────────── page ─────────────────────────── */
 
 export default function LmsDevelopmentPage() {
@@ -320,6 +450,125 @@ export default function LmsDevelopmentPage() {
                 <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
               </div>
             </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* ── Delivery Process ── */}
+      <Section
+        id="process"
+        variant="muted"
+        title="How an LMS Project Works"
+        subtitle="A clear, structured delivery process — so you always know what is happening and when."
+      >
+        <div className="relative max-w-4xl mx-auto">
+          {/* vertical line */}
+          <div className="absolute left-7 top-0 bottom-0 w-px bg-[#2563EB]/20 hidden md:block" />
+          <div className="space-y-6">
+            {process.map((step) => (
+              <div key={step.step} className="relative flex gap-6 md:gap-8">
+                <div className="shrink-0 flex flex-col items-center">
+                  <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-xl bg-[#2563EB] text-white shadow-md shadow-blue-500/20">
+                    {step.icon}
+                  </div>
+                </div>
+                <div className="flex-1 pb-6 pt-2">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-xs font-bold text-[#2563EB] tracking-widest uppercase">
+                      Step {step.step}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">{step.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed text-sm">{step.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* ── Pricing Guidance ── */}
+      <Section
+        id="pricing"
+        title="LMS Pricing Guide"
+        subtitle="Every project is quoted individually — but here is a realistic guide to what LMS work costs so you can plan your budget."
+      >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-10">
+          {pricingTiers.map((tier) => (
+            <div
+              key={tier.title}
+              className={`relative rounded-2xl border p-7 flex flex-col ${
+                tier.highlighted
+                  ? 'border-[#2563EB] bg-[#2563EB]/5 shadow-lg shadow-blue-500/10'
+                  : 'border-border/60 bg-background'
+              }`}
+            >
+              {tier.highlighted && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                  <span className="bg-[#2563EB] text-white text-xs font-bold px-3 py-1 rounded-full">
+                    Most Popular
+                  </span>
+                </div>
+              )}
+              <div className="mb-4">
+                <PoundSterling className={`h-6 w-6 mb-3 ${tier.highlighted ? 'text-[#2563EB]' : 'text-muted-foreground'}`} />
+                <h3 className="font-bold text-lg mb-1">{tier.title}</h3>
+                <p className={`text-2xl font-extrabold ${tier.highlighted ? 'text-[#2563EB]' : 'text-foreground'}`}>
+                  {tier.range}
+                </p>
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-5">{tier.description}</p>
+              <ul className="space-y-2.5 flex-1">
+                {tier.includes.map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm">
+                    <CheckCircle2 className={`h-4 w-4 shrink-0 mt-0.5 ${tier.highlighted ? 'text-[#2563EB]' : 'text-emerald-600'}`} />
+                    <span className="text-muted-foreground">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-6">
+                <Link href="/contact">
+                  <Button
+                    className={`w-full ${tier.highlighted ? 'bg-[#2563EB] hover:bg-[#1d4ed8]' : 'bg-transparent border border-border hover:bg-muted text-foreground'}`}
+                    variant={tier.highlighted ? 'default' : 'outline'}
+                  >
+                    Get a Quote
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="text-center text-sm text-muted-foreground">
+          All prices are estimates — final costs depend on scope, integrations, and complexity.{' '}
+          <Link href="/pricing" className="text-[#2563EB] hover:underline font-medium">
+            View full pricing guide →
+          </Link>
+        </p>
+      </Section>
+
+      {/* ── FAQ ── */}
+      <Section
+        id="faq"
+        variant="muted"
+        title="Frequently Asked Questions"
+        subtitle="Honest answers to the questions every LMS buyer asks us."
+        align="left"
+      >
+        <div className="max-w-3xl mx-auto space-y-5">
+          {faqs.map((faq) => (
+            <details
+              key={faq.question}
+              className="group rounded-xl border border-border/60 bg-background overflow-hidden"
+            >
+              <summary className="flex cursor-pointer items-center justify-between gap-4 p-5 font-semibold text-foreground list-none hover:bg-muted/40 transition-colors">
+                {faq.question}
+                <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
+              </summary>
+              <div className="px-5 pb-5 pt-1 text-sm text-muted-foreground leading-relaxed border-t border-border/40">
+                {faq.answer}
+              </div>
+            </details>
           ))}
         </div>
       </Section>
