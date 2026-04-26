@@ -23,6 +23,15 @@ import {
   Brain,
   Globe,
   Lock,
+  Search,
+  Hammer,
+  FlaskConical,
+  Rocket,
+  LifeBuoy,
+  ChevronDown,
+  PoundSterling,
+  Lightbulb,
+  TestTube,
 } from 'lucide-react';
 
 export const metadata: Metadata = buildMetadata({
@@ -202,6 +211,130 @@ const whyPoints = [
   },
 ];
 
+const deliveryProcess = [
+  {
+    step: '01',
+    icon: <Search className="h-5 w-5" />,
+    title: 'Discovery & Use-Case Scoping',
+    description:
+      'We start by understanding the problem you want to solve — the content sources, the user types, the expected query volume, and what success looks like. We document the use case, data sources, integration requirements, and acceptance criteria before writing any code.',
+  },
+  {
+    step: '02',
+    icon: <Lightbulb className="h-5 w-5" />,
+    title: 'Architecture & Model Selection',
+    description:
+      'We design the full RAG pipeline — chunking strategy, embedding model, vector store choice, retrieval method (semantic, hybrid, or keyword), and LLM selection. You get a technical specification document and a fixed-price quote before development begins.',
+  },
+  {
+    step: '03',
+    icon: <Hammer className="h-5 w-5" />,
+    title: 'Knowledge Base Build & Indexing',
+    description:
+      'We ingest your content — PDFs, web pages, Notion, Confluence, Google Docs, or custom APIs — process it through our pipeline, and build the vector index. You can review the indexed content and test retrieval quality before we connect the LLM.',
+  },
+  {
+    step: '04',
+    icon: <TestTube className="h-5 w-5" />,
+    title: 'Bot Development & Evaluation',
+    description:
+      'We build the bot interface, connect all integrations, and run a structured evaluation suite — a set of real questions the bot should answer correctly. We measure precision, recall, and answer quality before you see a single conversation.',
+  },
+  {
+    step: '05',
+    icon: <Rocket className="h-5 w-5" />,
+    title: 'Deployment & Embedding',
+    description:
+      'We deploy to production — whether that is a hosted API, an embeddable widget, a Slack integration, or a WhatsApp bot. We manage infrastructure, SSL, rate limiting, and monitoring. You receive a deploy guide and embed instructions.',
+  },
+  {
+    step: '06',
+    icon: <LifeBuoy className="h-5 w-5" />,
+    title: 'Monitoring, Feedback & Iteration',
+    description:
+      'Post-launch, we monitor response quality, track unanswered questions, and close gaps in the knowledge base. Every engagement includes a support window and optional retainer for continuous improvement as your content evolves.',
+  },
+];
+
+const pricingTiers = [
+  {
+    title: 'Knowledge-Base Bot',
+    range: '£5,000 – £12,000',
+    description:
+      'A RAG chatbot trained on your documentation, FAQs, or knowledge base — embedded on your website or internal tool. Ideal for support deflection and self-service.',
+    includes: [
+      'RAG pipeline with up to 500 documents',
+      'GPT-4o or Claude-powered responses',
+      'Embeddable website chat widget',
+      'Source citations in responses',
+      'Admin dashboard with conversation logs',
+      'Post-launch support (30 days)',
+    ],
+  },
+  {
+    title: 'Customer Support Bot',
+    range: '£10,000 – £28,000',
+    description:
+      'A full support automation system integrated with your ticketing platform. Handles tier-1 queries, escalates intelligently, and tracks resolution rates.',
+    includes: [
+      'RAG pipeline with unlimited documents',
+      'Zendesk / Intercom / Freshdesk integration',
+      'Intelligent human handoff logic',
+      'Conversation analytics dashboard',
+      'Multi-language support',
+      'GDPR-compliant data handling',
+    ],
+    highlighted: true,
+  },
+  {
+    title: 'Internal AI Assistant',
+    range: '£8,000 – £22,000',
+    description:
+      'A private, role-aware assistant for your team — trained on internal SOPs, HR docs, and technical knowledge. SSO-authenticated, audit-logged, and deployable on-premise.',
+    includes: [
+      'Private deployment (your infrastructure)',
+      'SSO / LDAP / Active Directory auth',
+      'Role-based access control',
+      'Full audit trail of all queries',
+      'Feedback loop & retraining workflow',
+      'Priority support SLA',
+    ],
+  },
+];
+
+const faqs = [
+  {
+    question: 'Will the chatbot make up answers (hallucinate)?',
+    answer:
+      'This is the most important question in AI chatbot development. The RAG architecture we use dramatically reduces hallucination because the model is not answering from memory — it is summarising content retrieved from your actual knowledge base. We also implement answer confidence scoring, so low-confidence responses either prompt the user to contact a human or display a clear disclaimer rather than guessing.',
+  },
+  {
+    question: 'How much content does the bot need to get started?',
+    answer:
+      'A useful bot can be built from as few as 20–30 well-written documents. More content generally means better coverage. We run a content audit during discovery to identify gaps and advise on what to prioritise. The bot can also be scoped to a narrow domain (e.g., only your returns policy) and expanded over time.',
+  },
+  {
+    question: 'How long does it take to build and deploy?',
+    answer:
+      'A straightforward knowledge-base bot can be deployed in 4–6 weeks. A more complex support bot with CRM integration typically takes 8–14 weeks. We give you a milestone plan with every proposal so you know exactly when each deliverable lands.',
+  },
+  {
+    question: 'What happens when my documentation changes?',
+    answer:
+      'We build re-indexing pipelines as part of every project. Depending on your needs, this can be triggered manually via an admin dashboard, automatically on a schedule, or in real time via a webhook from your CMS or knowledge base. Updated content is reflected in bot responses within minutes.',
+  },
+  {
+    question: 'Can the bot work in multiple languages?',
+    answer:
+      'Yes. GPT-4o and Claude handle multilingual conversations natively — users can ask in their own language and receive answers in the same language. For the retrieval layer, we can maintain separate language-specific indexes or use cross-lingual embeddings depending on your content structure.',
+  },
+  {
+    question: 'Who owns the bot code and data after the project?',
+    answer:
+      'You own everything — full source code, infrastructure configurations, the vector database, and all conversation data. We deliver comprehensive handover documentation. You are never locked into our hosting or a third-party SaaS platform unless you choose to be.',
+  },
+];
+
 /* ─────────────────────────── page ─────────────────────────── */
 
 export default function AiChatbotsPage() {
@@ -345,6 +478,124 @@ export default function AiChatbotsPage() {
                 <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
               </div>
             </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* ── Delivery Process ── */}
+      <Section
+        id="process"
+        variant="muted"
+        title="How an AI Chatbot Project Works"
+        subtitle="From content audit to a live, monitored production bot — a structured six-step delivery."
+      >
+        <div className="relative max-w-4xl mx-auto">
+          <div className="absolute left-7 top-0 bottom-0 w-px bg-[#2563EB]/20 hidden md:block" />
+          <div className="space-y-6">
+            {deliveryProcess.map((step) => (
+              <div key={step.step} className="relative flex gap-6 md:gap-8">
+                <div className="shrink-0 flex flex-col items-center">
+                  <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-xl bg-[#2563EB] text-white shadow-md shadow-blue-500/20">
+                    {step.icon}
+                  </div>
+                </div>
+                <div className="flex-1 pb-6 pt-2">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-xs font-bold text-[#2563EB] tracking-widest uppercase">
+                      Step {step.step}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">{step.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed text-sm">{step.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* ── Pricing Guidance ── */}
+      <Section
+        id="pricing"
+        title="AI Chatbot Pricing Guide"
+        subtitle="Every project is scoped individually — but here is a realistic guide to what AI chatbot builds cost."
+      >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-10">
+          {pricingTiers.map((tier) => (
+            <div
+              key={tier.title}
+              className={`relative rounded-2xl border p-7 flex flex-col ${
+                tier.highlighted
+                  ? 'border-[#2563EB] bg-[#2563EB]/5 shadow-lg shadow-blue-500/10'
+                  : 'border-border/60 bg-background'
+              }`}
+            >
+              {tier.highlighted && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                  <span className="bg-[#2563EB] text-white text-xs font-bold px-3 py-1 rounded-full">
+                    Most Popular
+                  </span>
+                </div>
+              )}
+              <div className="mb-4">
+                <PoundSterling className={`h-6 w-6 mb-3 ${tier.highlighted ? 'text-[#2563EB]' : 'text-muted-foreground'}`} />
+                <h3 className="font-bold text-lg mb-1">{tier.title}</h3>
+                <p className={`text-2xl font-extrabold ${tier.highlighted ? 'text-[#2563EB]' : 'text-foreground'}`}>
+                  {tier.range}
+                </p>
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-5">{tier.description}</p>
+              <ul className="space-y-2.5 flex-1">
+                {tier.includes.map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm">
+                    <CheckCircle2 className={`h-4 w-4 shrink-0 mt-0.5 ${tier.highlighted ? 'text-[#2563EB]' : 'text-emerald-600'}`} />
+                    <span className="text-muted-foreground">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-6">
+                <Link href="/contact">
+                  <Button
+                    className={`w-full ${tier.highlighted ? 'bg-[#2563EB] hover:bg-[#1d4ed8]' : 'bg-transparent border border-border hover:bg-muted text-foreground'}`}
+                    variant={tier.highlighted ? 'default' : 'outline'}
+                  >
+                    Get a Quote
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="text-center text-sm text-muted-foreground">
+          All prices are estimates — final costs depend on content volume, integrations, and complexity.{' '}
+          <Link href="/pricing" className="text-[#2563EB] hover:underline font-medium">
+            View full pricing guide →
+          </Link>
+        </p>
+      </Section>
+
+      {/* ── FAQ ── */}
+      <Section
+        id="faq"
+        variant="muted"
+        title="Frequently Asked Questions"
+        subtitle="Straight answers to the questions every AI chatbot buyer asks."
+        align="left"
+      >
+        <div className="max-w-3xl mx-auto space-y-5">
+          {faqs.map((faq) => (
+            <details
+              key={faq.question}
+              className="group rounded-xl border border-border/60 bg-background overflow-hidden"
+            >
+              <summary className="flex cursor-pointer items-center justify-between gap-4 p-5 font-semibold text-foreground list-none hover:bg-muted/40 transition-colors">
+                {faq.question}
+                <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
+              </summary>
+              <div className="px-5 pb-5 pt-1 text-sm text-muted-foreground leading-relaxed border-t border-border/40">
+                {faq.answer}
+              </div>
+            </details>
           ))}
         </div>
       </Section>
