@@ -16,6 +16,10 @@ import {
   HelpCircle,
   Zap,
   ShieldCheck,
+  ChevronDown,
+  Code2,
+  Server,
+  Workflow,
 } from 'lucide-react';
 
 export const metadata: Metadata = buildMetadata({
@@ -202,6 +206,171 @@ const chatbotPricing = [
   },
 ];
 
+const reactPricing = [
+  {
+    title: 'MVP / Marketing Site',
+    range: '£5,000 – £15,000',
+    description: 'A production-quality Next.js site or web app built to a defined scope — ideal for product launches, marketing sites, or client-facing portals needing custom functionality.',
+    includes: [
+      'Next.js with App Router and TypeScript',
+      'TailwindCSS UI to your brand guidelines',
+      'CMS or headless content integration',
+      'SEO metadata and Open Graph setup',
+      'Responsive, accessible, WCAG 2.1 AA',
+      'Deployment and DNS configuration',
+    ],
+  },
+  {
+    title: 'React Web Application',
+    range: '£15,000 – £50,000+',
+    description: 'A full-featured, data-driven web application — dashboards, admin panels, multi-user SaaS tools, or complex workflows with authentication, roles, and real-time data.',
+    includes: [
+      'Component library with design system',
+      'Authentication and role-based access',
+      'REST or GraphQL data layer integration',
+      'Real-time features (WebSockets / SSE)',
+      'Automated test suite (Vitest / Playwright)',
+      'CI/CD pipeline and production deployment',
+    ],
+  },
+  {
+    title: 'Component Library / Design System',
+    range: '£8,000 – £25,000',
+    description: 'A shared, documented component library for teams building multiple React products. Built with Storybook, tested, and published to your private npm registry.',
+    includes: [
+      'Core UI components (buttons, forms, tables, modals)',
+      'Storybook documentation and visual testing',
+      'Dark mode and theming support',
+      'Accessibility testing built in',
+      'Private npm package publishing',
+      'Contribution guidelines and changelog',
+    ],
+  },
+  {
+    title: 'React Retainer',
+    range: 'From £1,500/month',
+    description: 'Ongoing React development capacity — new features, performance tuning, dependency upgrades, and bug fixes. Works alongside your team or as your sole frontend engineering resource.',
+    includes: [
+      'Reserved monthly engineering hours',
+      'Feature development and bug fixes',
+      'Dependency and security updates',
+      'Performance audits and optimisations',
+      'Code reviews for your team',
+      'Cancel with 30 days notice',
+    ],
+  },
+];
+
+const nodePricing = [
+  {
+    title: 'REST API Build',
+    range: '£5,000 – £15,000',
+    description: 'A well-structured, documented REST API for a defined set of resources — ideal for mobile apps, third-party integrations, or decoupling a monolith into services.',
+    includes: [
+      'Express or Fastify with TypeScript',
+      'JWT / OAuth 2.0 authentication',
+      'PostgreSQL or MySQL schema and migrations',
+      'OpenAPI / Swagger documentation',
+      'Rate limiting, validation, error handling',
+      'Docker containerisation and deployment',
+    ],
+  },
+  {
+    title: 'Full Backend System',
+    range: '£15,000 – £55,000+',
+    description: 'A production-grade backend — multi-service architecture, complex business logic, event-driven processing, third-party integrations, and a robust data model.',
+    includes: [
+      'Service architecture design and documentation',
+      'Background job queues (Bull, BullMQ)',
+      'Webhook delivery and event processing',
+      'Multi-tenant data isolation',
+      'Automated test suite (unit + integration)',
+      'Monitoring, alerting, and structured logging',
+    ],
+  },
+  {
+    title: 'API Integration Project',
+    range: '£3,000 – £12,000',
+    description: 'Connecting your systems to third-party APIs — payment providers, CRMs, ERPs, communication platforms, or data feeds. Reliable, monitored, with error recovery.',
+    includes: [
+      'Integration design and data mapping',
+      'OAuth / API key credential management',
+      'Retry logic and error handling',
+      'Webhook ingestion and processing',
+      'Integration test suite',
+      'Runbook and monitoring setup',
+    ],
+  },
+  {
+    title: 'API Retainer',
+    range: 'From £1,500/month',
+    description: 'Ongoing backend engineering — new endpoints, schema changes, integration maintenance, performance tuning, and security updates for your production API.',
+    includes: [
+      'Reserved monthly engineering capacity',
+      'New endpoint and schema development',
+      'Dependency and security patch management',
+      'Database query optimisation',
+      'On-call incident support',
+      'Cancel with 30 days notice',
+    ],
+  },
+];
+
+const automationPricing = [
+  {
+    title: 'Single Workflow Automation',
+    range: '£3,000 – £10,000',
+    description: 'Automate one defined business process end-to-end — data sync, document generation, notification workflows, report delivery, or a manual task your team repeats daily.',
+    includes: [
+      'Process mapping and automation design',
+      'Trigger, logic, and action implementation',
+      'Error handling and retry policies',
+      'Logging and audit trail',
+      'Testing with real data',
+      'Handover documentation',
+    ],
+  },
+  {
+    title: 'Multi-System Automation Platform',
+    range: '£12,000 – £40,000',
+    description: 'A centralised automation layer connecting multiple systems — CRM, ERP, LMS, communication tools, and data warehouses — with orchestration, monitoring, and an admin UI.',
+    includes: [
+      'Integration architecture design',
+      'Multi-system data mapping and transformation',
+      'Orchestration engine (n8n, custom, or hybrid)',
+      'Admin dashboard for workflow management',
+      'Alerting and failure notifications',
+      'Full documentation and runbooks',
+    ],
+  },
+  {
+    title: 'Process Audit & Automation Roadmap',
+    range: '£1,500 – £3,500',
+    description: 'A structured audit of your current manual processes, followed by a prioritised automation roadmap — what to automate first, estimated ROI, and recommended tooling.',
+    includes: [
+      'Stakeholder interviews and process mapping',
+      'Identification of automation candidates',
+      'ROI and time-saving estimates per workflow',
+      'Tooling recommendations',
+      'Prioritised implementation roadmap',
+      'Presented report and Q&A session',
+    ],
+  },
+  {
+    title: 'Automation Retainer',
+    range: 'From £1,200/month',
+    description: 'Ongoing automation development and maintenance — new workflows, integration updates, monitoring, and optimisation of existing automations as your systems evolve.',
+    includes: [
+      'Reserved monthly engineering hours',
+      'New workflow development',
+      'Maintenance of existing automations',
+      'Integration version updates',
+      'Performance monitoring and tuning',
+      'Cancel with 30 days notice',
+    ],
+  },
+];
+
 const faqs = [
   {
     q: 'Do you charge for the initial proposal?',
@@ -359,7 +528,99 @@ export default function PricingPage() {
         </p>
       </Section>
 
-      {/* ── What's always included ── */}
+      {/* ── React pricing ── */}
+      <Section
+        id="react-pricing"
+        variant="muted"
+        title="React development pricing"
+        subtitle="Indicative ranges for React and Next.js projects. UI complexity, integrations, and state management requirements are the main drivers."
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          {reactPricing.map((item) => (
+            <div key={item.title} className="rounded-2xl border border-border/60 bg-background p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-start justify-between gap-4 mb-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">
+                  <Code2 className="h-5 w-5" />
+                </div>
+                <span className="text-lg font-extrabold text-[#2563EB] whitespace-nowrap">{item.range}</span>
+              </div>
+              <h3 className="font-semibold mb-1.5">{item.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-4">{item.description}</p>
+              <ul className="space-y-2">
+                {item.includes.map((inc) => (
+                  <li key={inc} className="flex items-start gap-2.5 text-sm">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-[#2563EB] mt-0.5 shrink-0" />
+                    <span className="text-muted-foreground leading-snug">{inc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* ── Node.js pricing ── */}
+      <Section
+        id="node-pricing"
+        title="Node.js API pricing"
+        subtitle="Indicative ranges for backend API and integration projects. Scope, number of integrations, and data complexity are the primary cost factors."
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          {nodePricing.map((item) => (
+            <div key={item.title} className="rounded-2xl border border-border/60 bg-background p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-start justify-between gap-4 mb-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">
+                  <Server className="h-5 w-5" />
+                </div>
+                <span className="text-lg font-extrabold text-[#2563EB] whitespace-nowrap">{item.range}</span>
+              </div>
+              <h3 className="font-semibold mb-1.5">{item.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-4">{item.description}</p>
+              <ul className="space-y-2">
+                {item.includes.map((inc) => (
+                  <li key={inc} className="flex items-start gap-2.5 text-sm">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-[#2563EB] mt-0.5 shrink-0" />
+                    <span className="text-muted-foreground leading-snug">{inc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* ── Automation pricing ── */}
+      <Section
+        id="automation-pricing"
+        variant="muted"
+        title="Automation &amp; integration pricing"
+        subtitle="Indicative ranges for workflow automation and system integration projects. Number of systems, trigger frequency, and error-handling requirements drive cost."
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          {automationPricing.map((item) => (
+            <div key={item.title} className="rounded-2xl border border-border/60 bg-background p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-start justify-between gap-4 mb-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300">
+                  <Workflow className="h-5 w-5" />
+                </div>
+                <span className="text-lg font-extrabold text-[#2563EB] whitespace-nowrap">{item.range}</span>
+              </div>
+              <h3 className="font-semibold mb-1.5">{item.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-4">{item.description}</p>
+              <ul className="space-y-2">
+                {item.includes.map((inc) => (
+                  <li key={inc} className="flex items-start gap-2.5 text-sm">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-[#2563EB] mt-0.5 shrink-0" />
+                    <span className="text-muted-foreground leading-snug">{inc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* ── What's always included ── */
       <Section
         id="always-included"
         variant="muted"
@@ -392,19 +653,17 @@ export default function PricingPage() {
         title="Common questions"
         subtitle="Answers to the questions we get asked most often about pricing and how we work."
       >
-        <div className="max-w-3xl mx-auto space-y-4">
-          {faqs.map((faq) => (
-            <div key={faq.q} className="rounded-xl border border-border/60 bg-background p-5">
-              <div className="flex gap-3.5">
-                <div className="shrink-0 mt-0.5">
-                  <HelpCircle className="h-5 w-5 text-[#2563EB]" />
-                </div>
-                <div>
-                  <p className="font-semibold mb-1.5 text-sm">{faq.q}</p>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{faq.a}</p>
-                </div>
+        <div className="max-w-3xl mx-auto space-y-3">
+          {faqs.map(({ q, a }) => (
+            <details key={q} className="group rounded-xl border border-border/60 bg-background shadow-sm overflow-hidden">
+              <summary className="flex cursor-pointer items-center justify-between gap-4 px-6 py-4 font-semibold text-sm select-none list-none [&::-webkit-details-marker]:hidden">
+                {q}
+                <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 group-open:rotate-180" />
+              </summary>
+              <div className="px-6 pb-5 pt-1">
+                <p className="text-sm text-muted-foreground leading-relaxed">{a}</p>
               </div>
-            </div>
+            </details>
           ))}
         </div>
       </Section>
