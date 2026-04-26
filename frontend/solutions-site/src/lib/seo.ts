@@ -347,7 +347,7 @@ export function buildMetadata({
   title: string;
   description?: string;
   path?: string;
-  keywords?: string[];
+  keywords?: readonly string[];
   ogImage?: string;
 }): Metadata {
   const fullTitle = `${title} | ${siteConfig.name}`;
