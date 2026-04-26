@@ -22,6 +22,14 @@ import {
   AlertCircle,
   GitBranch,
   Clock,
+  Search,
+  FileText,
+  Hammer,
+  Rocket,
+  LifeBuoy,
+  ChevronDown,
+  PoundSterling,
+  Lightbulb,
 } from 'lucide-react';
 
 export const metadata: Metadata = buildMetadata({
@@ -187,6 +195,130 @@ const standards = [
   },
 ];
 
+const deliveryProcess = [
+  {
+    step: '01',
+    icon: <Search className="h-5 w-5" />,
+    title: 'Discovery & API Design',
+    description:
+      'We start by mapping every consumer of the API — web clients, mobile apps, third-party partners, internal services. We document authentication requirements, data contracts, expected throughput, and SLA expectations before writing a line of code. You get an API design document to review and sign off before development starts.',
+  },
+  {
+    step: '02',
+    icon: <Lightbulb className="h-5 w-5" />,
+    title: 'Architecture & OpenAPI Spec',
+    description:
+      'We produce an OpenAPI 3.1 specification and architecture diagram covering every endpoint, request/response schema, error format, auth flow, and database design. Writing the spec first means your frontend team can start building against mock responses while we build the real API in parallel.',
+  },
+  {
+    step: '03',
+    icon: <FileText className="h-5 w-5" />,
+    title: 'Environment & CI Setup',
+    description:
+      'Before any feature code, we establish the project structure, environment configuration, database migration tooling, CI pipeline, and deployment scripts. Every developer gets a reproducible local environment. Staging is configured to mirror production from day one.',
+  },
+  {
+    step: '04',
+    icon: <Hammer className="h-5 w-5" />,
+    title: 'Sprint-Based Development',
+    description:
+      'Development runs in two-week sprints. Each sprint delivers a set of working endpoints — deployed to staging, documented in Swagger, and covered by tests. You test every endpoint as it is built, giving feedback that shapes the next sprint rather than discovering problems at the end.',
+  },
+  {
+    step: '05',
+    icon: <ShieldCheck className="h-5 w-5" />,
+    title: 'Security Audit & Load Testing',
+    description:
+      'Before any production deployment, we run a full OWASP Top 10 security review, penetration-test the authentication and authorisation flows, and run load tests to verify the API meets its SLA under expected peak traffic. Any findings are fixed before you see the final build.',
+  },
+  {
+    step: '06',
+    icon: <Rocket className="h-5 w-5" />,
+    title: 'Production Deployment & Handover',
+    description:
+      'We manage the production deployment — containerised via Docker, health checks, environment variables via secrets manager, monitoring and alerting, and rollback plan. You receive full source code, architecture documentation, API reference, runbook, and a handover session with your engineering team.',
+  },
+];
+
+const pricingTiers = [
+  {
+    title: 'Integration or Feature API',
+    range: '£5,000 – £15,000',
+    description:
+      'A focused API project — a new integration with a third-party platform, an authentication system, a background job service, or a set of new endpoints on an existing backend.',
+    includes: [
+      'TypeScript + Express or Fastify',
+      'Up to 20 endpoints',
+      'OpenAPI 3.1 documentation',
+      'JWT or OAuth 2.0 authentication',
+      'Integration test suite',
+      'Docker deployment configuration',
+    ],
+  },
+  {
+    title: 'Full Backend API',
+    range: '£15,000 – £50,000',
+    description:
+      'A complete backend system — multi-resource REST API, full auth system, third-party integrations, background job workers, and production infrastructure.',
+    includes: [
+      'NestJS or Express + TypeScript',
+      'PostgreSQL + Prisma with migrations',
+      'OAuth 2.0 / SAML SSO auth',
+      'Background job queue (BullMQ)',
+      'Unit + integration + E2E test suite',
+      'CI/CD pipeline + staging environment',
+    ],
+    highlighted: true,
+  },
+  {
+    title: 'API Retainer',
+    range: 'From £1,500/month',
+    description:
+      'Ongoing Node.js backend development — new features, third-party integrations, security patches, performance tuning, and on-call support on a rolling monthly contract.',
+    includes: [
+      'Dedicated senior Node.js engineer',
+      'Agreed monthly sprint deliverables',
+      'Priority security patch response',
+      'Monthly performance review',
+      'On-call support SLA',
+      'Cancel with 30 days notice',
+    ],
+  },
+];
+
+const faqs = [
+  {
+    question: 'Which Node.js framework do you recommend — Express, Fastify, or NestJS?',
+    answer:
+      'It depends on your use case and team. Express is the right choice for lean microservices and teams that want full control with minimal abstraction. Fastify is better when raw throughput matters — it is measurably faster than Express with a cleaner schema validation model. NestJS makes sense for large, long-lived APIs where you want enforced structure, a DI container, and a convention-heavy approach that scales across a team. We will give you a clear recommendation during the discovery phase based on your specific situation.',
+  },
+  {
+    question: 'Do you build GraphQL APIs or just REST?',
+    answer:
+      'Both. REST is the right default for most APIs — simpler to cache, easier to document with OpenAPI, and more straightforward to secure. GraphQL becomes genuinely valuable when you have multiple clients (web, mobile, partners) with significantly different data requirements, or when over-fetching is a real performance problem. We will tell you honestly which is appropriate rather than defaulting to whichever is newer.',
+  },
+  {
+    question: 'How do you handle API versioning?',
+    answer:
+      'We build versioning in from the start, not as an afterthought. For REST APIs we use URL path versioning (/v1/, /v2/) — it is explicit, easy to route, and simple for API consumers to reason about. We maintain backward compatibility guarantees within a major version, document deprecation timelines clearly in the OpenAPI spec, and provide migration guides when breaking changes are necessary.',
+  },
+  {
+    question: 'What database should we use with our Node.js API?',
+    answer:
+      'PostgreSQL is the right default for most applications — relational, ACID-compliant, JSON support, and an exceptional ecosystem. MongoDB makes sense when your data is genuinely document-shaped and schema flexibility is a real requirement. Redis is almost always used alongside a primary database for caching, session storage, and rate limiting. We will recommend a database architecture based on your data model, consistency requirements, and expected query patterns.',
+  },
+  {
+    question: 'How long does a Node.js API project take?',
+    answer:
+      'A focused integration API or authentication system typically takes 4–8 weeks. A full backend API with multiple resource types, auth, integrations, and workers runs 10–18 weeks. Every project gets a milestone plan in the proposal so you know exactly when each endpoint set ships to staging. We do not pad timelines — we give you realistic estimates based on scope and flag scope changes early.',
+  },
+  {
+    question: 'Can you take over an existing Node.js codebase?',
+    answer:
+      'Yes — this is a common engagement. We start with a codebase audit covering security, architecture, test coverage, performance, and dependency health. We produce a written findings report with prioritised recommendations, then agree a remediation plan. We have taken over APIs that were running in production with zero tests, no auth, and no documentation — and brought them to a maintainable, secure standard without a full rewrite.',
+  },
+];
+
 /* ─────────────────────────── page ─────────────────────────── */
 
 export default function NodeApiDevelopmentPage() {
@@ -303,6 +435,124 @@ export default function NodeApiDevelopmentPage() {
                   ))}
               </div>
             </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* ── Delivery Process ── */}
+      <Section
+        id="process"
+        variant="muted"
+        title="How an API Project Works"
+        subtitle="A structured delivery process — from API design to a production-hardened system your team can operate."
+      >
+        <div className="relative max-w-4xl mx-auto">
+          <div className="absolute left-7 top-0 bottom-0 w-px bg-[#2563EB]/20 hidden md:block" />
+          <div className="space-y-6">
+            {deliveryProcess.map((step) => (
+              <div key={step.step} className="relative flex gap-6 md:gap-8">
+                <div className="shrink-0 flex flex-col items-center">
+                  <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-xl bg-[#2563EB] text-white shadow-md shadow-blue-500/20">
+                    {step.icon}
+                  </div>
+                </div>
+                <div className="flex-1 pb-6 pt-2">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-xs font-bold text-[#2563EB] tracking-widest uppercase">
+                      Step {step.step}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">{step.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed text-sm">{step.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* ── Pricing Guidance ── */}
+      <Section
+        id="pricing"
+        title="Node.js API Pricing Guide"
+        subtitle="Fixed-price projects with clear scopes — here is what Node.js backend development typically costs."
+      >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-10">
+          {pricingTiers.map((tier) => (
+            <div
+              key={tier.title}
+              className={`relative rounded-2xl border p-7 flex flex-col ${
+                tier.highlighted
+                  ? 'border-[#2563EB] bg-[#2563EB]/5 shadow-lg shadow-blue-500/10'
+                  : 'border-border/60 bg-background'
+              }`}
+            >
+              {tier.highlighted && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                  <span className="bg-[#2563EB] text-white text-xs font-bold px-3 py-1 rounded-full">
+                    Most Popular
+                  </span>
+                </div>
+              )}
+              <div className="mb-4">
+                <PoundSterling className={`h-6 w-6 mb-3 ${tier.highlighted ? 'text-[#2563EB]' : 'text-muted-foreground'}`} />
+                <h3 className="font-bold text-lg mb-1">{tier.title}</h3>
+                <p className={`text-2xl font-extrabold ${tier.highlighted ? 'text-[#2563EB]' : 'text-foreground'}`}>
+                  {tier.range}
+                </p>
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-5">{tier.description}</p>
+              <ul className="space-y-2.5 flex-1">
+                {tier.includes.map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm">
+                    <CheckCircle2 className={`h-4 w-4 shrink-0 mt-0.5 ${tier.highlighted ? 'text-[#2563EB]' : 'text-emerald-600'}`} />
+                    <span className="text-muted-foreground">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-6">
+                <Link href="/contact">
+                  <Button
+                    className={`w-full ${tier.highlighted ? 'bg-[#2563EB] hover:bg-[#1d4ed8]' : 'bg-transparent border border-border hover:bg-muted text-foreground'}`}
+                    variant={tier.highlighted ? 'default' : 'outline'}
+                  >
+                    Get a Quote
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="text-center text-sm text-muted-foreground">
+          All prices are estimates — final costs depend on scope and integrations.{' '}
+          <Link href="/pricing" className="text-[#2563EB] hover:underline font-medium">
+            View full pricing guide →
+          </Link>
+        </p>
+      </Section>
+
+      {/* ── FAQ ── */}
+      <Section
+        id="faq"
+        variant="muted"
+        title="Frequently Asked Questions"
+        subtitle="Straight answers to the questions every Node.js API buyer asks."
+        align="left"
+      >
+        <div className="max-w-3xl mx-auto space-y-5">
+          {faqs.map((faq) => (
+            <details
+              key={faq.question}
+              className="group rounded-xl border border-border/60 bg-background overflow-hidden"
+            >
+              <summary className="flex cursor-pointer items-center justify-between gap-4 p-5 font-semibold text-foreground list-none hover:bg-muted/40 transition-colors">
+                {faq.question}
+                <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
+              </summary>
+              <div className="px-5 pb-5 pt-1 text-sm text-muted-foreground leading-relaxed border-t border-border/40">
+                {faq.answer}
+              </div>
+            </details>
           ))}
         </div>
       </Section>
