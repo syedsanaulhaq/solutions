@@ -620,7 +620,7 @@ export default function PricingPage() {
         </div>
       </Section>
 
-      {/* ── What's always included ── */
+      {/* ── What's always included ── */}
       <Section
         id="always-included"
         variant="muted"
