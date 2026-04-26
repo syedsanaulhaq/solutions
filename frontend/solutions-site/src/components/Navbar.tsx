@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, X, ChevronDown, Layers } from 'lucide-react';
 import { ModeToggle } from '@/components/ModeToggle';
@@ -19,6 +19,20 @@ const serviceLinks = [
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setServicesOpen(false);
+      }
+    }
+    if (servicesOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [servicesOpen]);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -43,13 +57,10 @@ export function Navbar() {
               Home
             </Link>
 
-            {/* Services dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setServicesOpen(true)}
-              onMouseLeave={() => setServicesOpen(false)}
-            >
+            {/* Services dropdown — click to open, click outside to close */}
+            <div className="relative" ref={dropdownRef}>
               <button
+                onClick={() => setServicesOpen((o) => !o)}
                 className={cn(
                   'flex items-center gap-1 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-accent',
                   servicesOpen && 'text-foreground bg-accent'
@@ -61,7 +72,7 @@ export function Navbar() {
                 />
               </button>
               {servicesOpen && (
-                <div className="absolute top-full left-0 mt-1 w-56 rounded-lg border bg-popover p-1 shadow-lg">
+                <div className="absolute top-full left-0 w-56 rounded-lg border bg-popover p-1 shadow-lg">
                   {serviceLinks.map((link, i) => (
                     <div key={link.href}>
                       {i === 1 && <div className="my-1 h-px bg-border" />}
@@ -148,5 +159,7 @@ export function Navbar() {
         </div>
       )}
     </header>
+  );
+}
   );
 }
