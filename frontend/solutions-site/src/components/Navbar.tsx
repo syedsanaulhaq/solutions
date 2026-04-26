@@ -14,6 +14,7 @@ const serviceLinks = [
   { label: 'Node.js APIs', href: '/node-api-development' },
   { label: 'AI Chatbots', href: '/ai-chatbots' },
   { label: 'Automation', href: '/automation' },
+  { label: 'Web Hosting ↗', href: 'https://www.hostingocean.co.uk' },
 ];
 
 export function Navbar() {
@@ -76,16 +77,31 @@ export function Navbar() {
                   {serviceLinks.map((link, i) => (
                     <div key={link.href}>
                       {i === 1 && <div className="my-1 h-px bg-border" />}
-                      <Link
-                        href={link.href}
-                        className={cn(
-                          'block px-3 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground transition-colors',
-                          i === 0 ? 'font-medium' : 'text-muted-foreground'
-                        )}
-                        onClick={() => setServicesOpen(false)}
-                      >
-                        {link.label}
-                      </Link>
+                      {link.href.startsWith('http') ? (
+                        <a
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={cn(
+                            'block px-3 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground transition-colors',
+                            i === 0 ? 'font-medium' : 'text-muted-foreground'
+                          )}
+                          onClick={() => setServicesOpen(false)}
+                        >
+                          {link.label}
+                        </a>
+                      ) : (
+                        <Link
+                          href={link.href}
+                          className={cn(
+                            'block px-3 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground transition-colors',
+                            i === 0 ? 'font-medium' : 'text-muted-foreground'
+                          )}
+                          onClick={() => setServicesOpen(false)}
+                        >
+                          {link.label}
+                        </Link>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -133,16 +149,29 @@ export function Navbar() {
             <div className="px-3 py-1 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               Services
             </div>
-            {serviceLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="block px-3 py-2 text-sm rounded-md hover:bg-accent text-muted-foreground"
-                onClick={() => setMobileOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {serviceLinks.map((link) =>
+              link.href.startsWith('http') ? (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block px-3 py-2 text-sm rounded-md hover:bg-accent text-muted-foreground"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="block px-3 py-2 text-sm rounded-md hover:bg-accent text-muted-foreground"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              )
+            )}
             <Link
               href="/contact"
               className="block px-3 py-2 text-sm font-medium rounded-md hover:bg-accent"

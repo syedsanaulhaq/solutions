@@ -16,6 +16,7 @@ import {
   Users,
   Clock,
   Globe,
+  Cloud,
   ArrowRight,
   Zap,
   Shield,
@@ -87,6 +88,21 @@ const services = [
     ],
     href: '/ai-chatbots',
     badge: 'New',
+  },
+  {
+    icon: <Cloud className="h-6 w-6" />,
+    title: 'Web Hosting',
+    description:
+      'Enterprise-grade hosting, VPS, cloud servers, and domain management — powered by HostingOcean. The infrastructure behind every solution we build.',
+    features: [
+      'Shared & VPS hosting',
+      'Cloud & dedicated servers',
+      'Domain registration & DNS',
+      'Free SSL certificates',
+      'cPanel / WHM management',
+    ],
+    href: 'https://www.hostingocean.co.uk',
+    badge: 'Partner',
   },
   {
     icon: <Workflow className="h-6 w-6" />,

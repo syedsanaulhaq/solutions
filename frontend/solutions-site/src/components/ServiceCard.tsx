@@ -38,12 +38,23 @@ export function ServiceCard({ icon, title, description, features, href, badge }:
             </li>
           ))}
         </ul>
-        <Link
-          href={href}
-          className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#2563EB] hover:gap-3 transition-all duration-200 mt-2"
-        >
-          Learn more <ArrowRight className="h-4 w-4" />
-        </Link>
+        {href.startsWith('http') ? (
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#2563EB] hover:gap-3 transition-all duration-200 mt-2"
+          >
+            Visit site <ArrowRight className="h-4 w-4" />
+          </a>
+        ) : (
+          <Link
+            href={href}
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#2563EB] hover:gap-3 transition-all duration-200 mt-2"
+          >
+            Learn more <ArrowRight className="h-4 w-4" />
+          </Link>
+        )}
       </CardContent>
     </Card>
   );

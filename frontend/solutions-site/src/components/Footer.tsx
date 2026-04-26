@@ -7,6 +7,7 @@ const serviceLinks = [
   { label: 'Node.js APIs', href: '/node-api-development' },
   { label: 'AI Chatbots', href: '/ai-chatbots' },
   { label: 'Automation', href: '/automation' },
+  { label: 'Web Hosting ↗', href: 'https://www.hostingocean.co.uk', external: true },
 ];
 
 export function Footer() {
@@ -47,12 +48,23 @@ export function Footer() {
             <ul className="space-y-2.5">
               {serviceLinks.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-slate-400 hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </Link>
+                  {link.external ? (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-slate-400 hover:text-white transition-colors"
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className="text-sm text-slate-400 hover:text-white transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
