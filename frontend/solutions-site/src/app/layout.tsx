@@ -1,32 +1,17 @@
-import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '../styles/globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
+import { defaultMetadata } from '@/lib/seo';
+
+export { defaultMetadata as metadata };
 
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
 });
-
-export const metadata: Metadata = {
-  title: {
-    default: 'HostingOcean Solutions — Custom LMS, AI & Web Development',
-    template: '%s | HostingOcean Solutions',
-  },
-  description:
-    'HostingOcean Solutions is a UK-based software development company specialising in custom LMS platforms, AI chatbots, React applications, and Node.js APIs.',
-  metadataBase: new URL('https://solutions.hostingocean.co.uk'),
-  openGraph: {
-    type: 'website',
-    siteName: 'HostingOcean Solutions',
-    locale: 'en_GB',
-  },
-  twitter: { card: 'summary_large_image' },
-  robots: { index: true, follow: true },
-};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
