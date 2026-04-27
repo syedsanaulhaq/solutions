@@ -523,7 +523,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* ── 8. Why Choose Us ── */
+      {/* ── 8. Why Choose Us ── */}
       <Section
         id="why-us"
         title="Why Choose Us"
@@ -547,7 +547,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* ── 9. Technologies We Use ── */
+      {/* ── 9. Technologies We Use ── */}
       <Section
         id="technologies"
         variant="muted"
@@ -580,7 +580,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* ── 10. About HostingOcean Solutions ── */
+      {/* ── 10. About HostingOcean Solutions ── */}
       <Section id="about">
         <div className="max-w-3xl mx-auto text-center">
           <Badge className="mb-5 bg-[#2563EB]/10 text-[#2563EB] border-[#2563EB]/20 hover:bg-[#2563EB]/20">
