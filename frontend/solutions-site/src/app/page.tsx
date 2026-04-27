@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { buildMetadata, pageMetadata } from '@/lib/seo';
 import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
+import { CTASection } from '@/components/CTASection';
+import { TestimonialsSection } from '@/components/Testimonials';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -615,53 +617,19 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* ── 11. Final CTA ── */}
-      <Section variant="dark">
-        <div className="text-center max-w-3xl mx-auto">
-          <Badge className="mb-6 bg-white/10 text-white border-white/20 hover:bg-white/10">
-            Let&apos;s Build Together
-          </Badge>
-          <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-5 tracking-tight leading-tight">
-            Ready to build{' '}
-            <span className="text-[#38BDF8]">something great?</span>
-          </h2>
-          <p className="text-slate-300 mb-10 text-lg leading-relaxed">
-            Tell us about your project and we will respond with a clear, no&#8209;obligation proposal
-            within one business day — no sales calls, no hard sell, just honest advice on what we
-            can build for you and how long it will take.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
-            <Link href="/contact">
-              <Button
-                size="lg"
-                className="w-full sm:w-auto text-base px-10 bg-[#2563EB] hover:bg-[#1d4ed8] shadow-lg shadow-blue-500/20"
-              >
-                Get a Quote <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-            <Link href="/contact">
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-full sm:w-auto text-base px-10 border-slate-600 text-white bg-transparent hover:bg-slate-700 hover:text-white"
-              >
-                Contact Us
-              </Button>
-            </Link>
-          </div>
-          <div className="flex flex-wrap justify-center gap-6 text-sm text-slate-400">
-            <span className="flex items-center gap-2">
-              <Shield className="h-4 w-4 text-slate-500" /> No commitment required
-            </span>
-            <span className="flex items-center gap-2">
-              <Zap className="h-4 w-4 text-slate-500" /> Response within 24 hours
-            </span>
-            <span className="flex items-center gap-2">
-              <Globe className="h-4 w-4 text-slate-500" /> UK-registered company
-            </span>
-          </div>
-        </div>
-      </Section>
+      {/* ── 11. Testimonials ── */}
+      <TestimonialsSection />
+
+      {/* ── 12. Final CTA ── */}
+      <CTASection
+        badge="Let's Build Together"
+        title="Ready to build"
+        titleAccent="something great?"
+        subtitle="Tell us about your project and we will respond with a clear, no-obligation proposal within one business day — no sales calls, no hard sell, just honest advice."
+        primary={{ label: 'Get a Free Quote' }}
+        secondary={{ label: 'Contact Us', href: '/contact' }}
+        trustItems={['No commitment required', 'Response within 24 hours', 'UK-registered company']}
+      />
     </>
   );
 }

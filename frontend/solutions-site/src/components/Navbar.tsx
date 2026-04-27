@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Menu, X, ChevronDown, Layers } from 'lucide-react';
 import { ModeToggle } from '@/components/ModeToggle';
 import { Button } from '@/components/ui/button';
+import { QuoteButton } from '@/components/QuoteModal';
 import { cn } from '@/lib/utils';
 
 const serviceLinks = [
@@ -118,6 +119,12 @@ export function Navbar() {
             </a>
 
             <Link
+              href="/blog"
+              className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-accent"
+            >
+              Blog
+            </Link>
+            <Link
               href="/contact"
               className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-accent"
             >
@@ -128,11 +135,9 @@ export function Navbar() {
           {/* ── Right actions ── */}
           <div className="flex items-center gap-2">
             <ModeToggle />
-            <Link href="/contact" className="hidden md:inline-flex">
-              <Button size="sm" className="bg-[#2563EB] hover:bg-[#1d4ed8]">
-                Get a Quote
-              </Button>
-            </Link>
+            <span className="hidden md:inline-flex">
+              <QuoteButton size="sm" />
+            </span>
             <button
               className="md:hidden p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent"
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -182,6 +187,13 @@ export function Navbar() {
               )
             )}
             <Link
+              href="/blog"
+              className="block px-3 py-2 text-sm font-medium rounded-md hover:bg-accent"
+              onClick={() => setMobileOpen(false)}
+            >
+              Blog
+            </Link>
+            <Link
               href="/contact"
               className="block px-3 py-2 text-sm font-medium rounded-md hover:bg-accent"
               onClick={() => setMobileOpen(false)}
@@ -189,9 +201,12 @@ export function Navbar() {
               Contact
             </Link>
             <div className="pt-3 pb-1">
-              <Link href="/contact" onClick={() => setMobileOpen(false)}>
-                <Button className="w-full bg-[#2563EB] hover:bg-[#1d4ed8]">Get a Quote</Button>
-              </Link>
+              <button
+                className="w-full inline-flex items-center justify-center gap-2 rounded-md bg-[#2563EB] hover:bg-[#1d4ed8] text-white text-sm font-medium h-10 px-4 transition-colors"
+                onClick={() => { setMobileOpen(false); window.dispatchEvent(new CustomEvent('open-quote-modal')); }}
+              >
+                Get a Quote
+              </button>
             </div>
           </nav>
         </div>

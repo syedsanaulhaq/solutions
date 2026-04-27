@@ -23,13 +23,13 @@ export function Hero({ badge, title, titleAccent, subtitle, cta1, cta2 }: HeroPr
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         {badge && (
-          <div className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-800/60 px-4 py-1.5 text-sm text-slate-300 mb-8 backdrop-blur-sm">
+          <div className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-800/60 px-4 py-1.5 text-sm text-slate-300 mb-8 backdrop-blur-sm animate-fade-in">
             <Zap className="h-3.5 w-3.5 text-[#38BDF8]" />
             {badge}
           </div>
         )}
 
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 max-w-4xl mx-auto leading-tight">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 max-w-4xl mx-auto leading-tight animate-fade-in animation-delay-100">
           {title}
           {titleAccent && (
             <>
@@ -39,12 +39,12 @@ export function Hero({ badge, title, titleAccent, subtitle, cta1, cta2 }: HeroPr
           )}
         </h1>
 
-        <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+        <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in animation-delay-200">
           {subtitle}
         </p>
 
         {(cta1 || cta2) && (
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in animation-delay-300">
             {cta1 && (
               <Link href={cta1.href}>
                 <Button

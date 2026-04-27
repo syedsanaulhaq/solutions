@@ -3,6 +3,7 @@ import '../styles/globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
+import { QuoteModalRoot } from '@/components/QuoteModalRoot';
 import { defaultMetadata, organizationSchema, websiteSchema } from '@/lib/seo';
 
 export { defaultMetadata as metadata };
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Navbar />
           <main className="min-h-screen">{children}</main>
           <Footer />
+          <QuoteModalRoot />
         </ThemeProvider>
       </body>
     </html>
