@@ -21,17 +21,14 @@ import {
   Lock,
   Puzzle,
   Award,
-  Headphones,
   Zap,
   Code2,
-  Search,
-  FileText,
-  Hammer,
-  FlaskConical,
-  Rocket,
+  Server,
+  Database,
+  Brain,
   LifeBuoy,
-  ChevronDown,
-  PoundSterling,
+  DollarSign,
+  Star,
 } from 'lucide-react';
 
 export const metadata: Metadata = buildMetadata({
@@ -54,86 +51,86 @@ export const metadata: Metadata = buildMetadata({
 
 const features = [
   {
-    icon: <Code2 className="h-5 w-5" />,
-    title: 'Custom React & Next.js Frontend',
+    icon: <Code2 className="h-5 w-5 text-[#2563EB]" />,
+    title: 'Custom React Frontend',
     description:
-      'A fully bespoke UI tailored to your brand — fast, accessible, and optimised for learners on desktop and mobile. No template constraints.',
+      'Pixel-perfect, branded learner interfaces built with React 18 and Next.js. Fast, responsive, and accessible — from course catalogues and lesson players to progress dashboards and certificate downloads.',
   },
   {
-    icon: <Layers className="h-5 w-5" />,
+    icon: <Server className="h-5 w-5 text-[#2563EB]" />,
     title: 'Scalable Node.js Backend',
     description:
-      'A RESTful or GraphQL API built on Node.js handling enrolments, content delivery, user management, and progress tracking at scale.',
+      'A purpose-built API layer handling enrolment, progress tracking, completion logic, notifications, and background jobs. Designed to scale from 100 to 100,000 learners without re-architecture.',
   },
   {
-    icon: <BookOpen className="h-5 w-5" />,
-    title: 'Moodle Customisation & Plugins',
+    icon: <Puzzle className="h-5 w-5 text-[#2563EB]" />,
+    title: 'Moodle Customisation',
     description:
-      'Full Moodle theme development, bespoke plugin creation, API integrations, and performance tuning for existing Moodle installations.',
+      'Full Moodle theme development, custom plugins, activity modules, blocks, and authentication connectors. We extend Moodle without modifying core — so upgrades remain straightforward.',
   },
   {
-    icon: <Globe className="h-5 w-5" />,
+    icon: <Layers className="h-5 w-5 text-[#2563EB]" />,
     title: 'Multi-Tenant Architecture',
     description:
-      'One platform, many clients. Each tenant gets isolated data, a custom domain, their own branding, and a separate user base.',
+      'A single platform powering multiple organisations — each with isolated data, custom branding, and independent administrator access. Reduce infrastructure cost without sacrificing separation.',
   },
   {
-    icon: <Award className="h-5 w-5" />,
+    icon: <Globe className="h-5 w-5 text-[#2563EB]" />,
     title: 'White-Label & Rebranding',
     description:
-      'Deploy to your clients under your own brand. Custom logo, colours, domain, email notifications, and feature set — fully white-labelled.',
+      'Full white-label delivery — custom domain, logo, colour palette, email templates, and learner-facing copy. Your clients see your brand, not ours or Moodle\'s.',
   },
   {
-    icon: <Puzzle className="h-5 w-5" />,
-    title: 'SCORM, xAPI & LTI 1.3',
+    icon: <BookOpen className="h-5 w-5 text-[#2563EB]" />,
+    title: 'SCORM / xAPI / LTI 1.3',
     description:
-      'Full compliance with industry e-learning standards — import any SCORM package, capture xAPI statements, and connect via LTI 1.3.',
+      'First-class support for all major e-learning standards. Import SCORM 1.2 and 2004 packages, capture xAPI statements to any LRS, and connect external tools via LTI 1.3 with Advantage extensions.',
   },
   {
-    icon: <Lock className="h-5 w-5" />,
+    icon: <Lock className="h-5 w-5 text-[#2563EB]" />,
     title: 'SSO, LDAP & Active Directory',
     description:
-      'Seamless single sign-on via SAML 2.0, OAuth 2.0, LDAP, or Active Directory — learners log in once and never see another password prompt.',
+      'Seamless authentication with SAML 2.0, OAuth 2.0 / OIDC, LDAP, and Active Directory. Learners sign in with corporate credentials — no separate account required.',
   },
   {
-    icon: <BarChart3 className="h-5 w-5" />,
-    title: 'Analytics & Reporting Dashboards',
+    icon: <BarChart3 className="h-5 w-5 text-[#2563EB]" />,
+    title: 'Analytics Dashboards',
     description:
-      'Real-time dashboards showing completion rates, learner progress, assessment scores, time-on-course, and engagement metrics.',
+      'Real-time reporting for learners, managers, and administrators. Completion rates, time-on-task, assessment scores, CPD tracking, and exportable reports for compliance audits.',
   },
   {
-    icon: <ShieldCheck className="h-5 w-5" />,
-    title: 'GDPR & Data Compliance',
+    icon: <ShieldCheck className="h-5 w-5 text-[#2563EB]" />,
+    title: 'GDPR Compliance',
     description:
-      'Built-in data export, right-to-erasure workflows, consent management, and UK/EU data residency options — compliance by design.',
+      'Data residency in the EU/UK, configurable retention policies, right-to-erasure workflows, consent management, and full audit logs. Built for regulated industries from day one.',
   },
 ];
 
 const techStack = [
-  { label: 'React', category: 'Frontend' },
-  { label: 'Next.js', category: 'Frontend' },
+  { label: 'React 18', category: 'Frontend' },
+  { label: 'Next.js 14', category: 'Frontend' },
   { label: 'TypeScript', category: 'Frontend' },
   { label: 'TailwindCSS', category: 'Frontend' },
   { label: 'Node.js', category: 'Backend' },
-  { label: 'Express', category: 'Backend' },
-  { label: 'PHP', category: 'Backend' },
-  { label: 'Moodle', category: 'LMS' },
-  { label: 'SCORM', category: 'LMS' },
-  { label: 'xAPI', category: 'LMS' },
+  { label: 'Express / Fastify', category: 'Backend' },
+  { label: 'PHP 8', category: 'Backend' },
+  { label: 'Moodle 4.x', category: 'LMS' },
+  { label: 'SCORM 1.2 / 2004', category: 'LMS' },
+  { label: 'xAPI / LRS', category: 'LMS' },
   { label: 'LTI 1.3', category: 'LMS' },
   { label: 'PostgreSQL', category: 'Database' },
   { label: 'MongoDB', category: 'Database' },
   { label: 'Redis', category: 'Database' },
-  { label: 'AWS S3', category: 'Infra' },
+  { label: 'AWS S3 / CloudFront', category: 'Infra' },
   { label: 'Docker', category: 'Infra' },
   { label: 'SAML 2.0', category: 'Auth' },
-  { label: 'OAuth 2.0', category: 'Auth' },
+  { label: 'OAuth 2.0 / OIDC', category: 'Auth' },
 ];
 
 const categoryColours: Record<string, string> = {
   Frontend: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
-  Backend: 'bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300',
-  LMS: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300',
+  Backend: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300',
+  LMS: 'bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300',
   Database: 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300',
   Infra: 'bg-sky-100 text-sky-700 dark:bg-sky-900/40 dark:text-sky-300',
   Auth: 'bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300',
@@ -142,64 +139,94 @@ const categoryColours: Record<string, string> = {
 const useCases = [
   {
     icon: <Building2 className="h-6 w-6" />,
-    title: 'Corporate Training Portals',
+    title: 'Corporate Training & L&D',
     description:
-      'Onboarding, compliance, and skills development platforms for HR and L&D teams. Branded per department or business unit, with line-manager reporting.',
-    points: ['Employee onboarding modules', 'Mandatory compliance tracking', 'Manager dashboards', 'Certificate generation'],
+      'Deliver mandatory compliance training, onboarding programmes, and professional development at scale. Automate enrolment by role, track completion for audit purposes, and integrate with your HRIS.',
+    points: [
+      'Automated role-based course enrolment',
+      'Compliance and regulatory training tracking',
+      'Manager dashboards and completion reports',
+      'Integration with Workday, BambooHR, and SAP',
+    ],
   },
   {
     icon: <GraduationCap className="h-6 w-6" />,
     title: 'Schools & Universities',
     description:
-      'VLE and LMS replacements or upgrades for educational institutions needing modern UX, accessibility compliance, and deep integration with existing systems.',
-    points: ['Virtual learning environments', 'Student progress tracking', 'Assignment & grade management', 'Parent/guardian portals'],
-  },
-  {
-    icon: <Users className="h-6 w-6" />,
-    title: 'Training Providers & Academies',
-    description:
-      'Multi-tenant platforms for training companies that need to run hundreds of courses across thousands of learners under a single codebase.',
-    points: ['Multi-organisation tenancy', 'Enrolment & payment flows', 'Instructor portals', 'Automated certification'],
+      'Academic LMS platforms built around curriculum structure — cohorts, timetables, assignments, peer review, and grade books. Accessible to students and staff, with parent portal options.',
+    points: [
+      'Course and cohort management with timetable sync',
+      'Assignment submission, rubrics, and Turnitin integration',
+      'WCAG 2.1 AA accessible design throughout',
+      'MIS / SIS integration (SIMS, iSAMS, Arbor)',
+    ],
   },
   {
     icon: <Briefcase className="h-6 w-6" />,
+    title: 'Training Providers & Awarding Bodies',
+    description:
+      'Commercial training platforms that sell and deliver courses to paying learners. Stripe-powered payment gates, course catalogues, certificates, and CPD credit tracking — all under your brand.',
+    points: [
+      'Course catalogue with Stripe checkout integration',
+      'Branded certificates with QR code verification',
+      'CPD credit tracking and digital badge issuance',
+      'Reseller portal for corporate bulk purchases',
+    ],
+  },
+  {
+    icon: <Award className="h-6 w-6" />,
     title: 'Professional Certification Bodies',
     description:
-      'Assessment-heavy platforms for organisations that issue professional qualifications — built around exam security, proctoring, and audit trails.',
-    points: ['Secure online assessments', 'Proctoring integrations', 'Verifiable digital certificates', 'CPD hour tracking'],
+      'Examination and certification platforms with proctoring, question bank management, adaptive testing, and automated certificate issuance. Supports recertification cycles and credential verification APIs.',
+    points: [
+      'Secure online examination with remote proctoring',
+      'Adaptive question bank with difficulty weighting',
+      'Automated recertification reminders and renewal flows',
+      'Public credential verification via API',
+    ],
   },
 ];
 
-const whyUs = [
+const whyPoints = [
   {
-    icon: <Award className="h-5 w-5 text-[#2563EB]" />,
+    icon: <Brain className="h-5 w-5 text-[#2563EB]" />,
     title: 'Senior engineers only',
-    description: 'No juniors on your LMS build. Every developer on your project has shipped production LMS platforms before.',
+    description: 'Every LMS project is led by engineers with direct experience building multi-tenant e-learning platforms — not graduates learning on your budget.',
   },
   {
     icon: <Clock className="h-5 w-5 text-[#2563EB]" />,
     title: 'On-time delivery',
-    description: 'We use fixed-scope sprints with clear milestones. You see working software every two weeks — not at the end.',
+    description: 'We plan milestones conservatively and hit them. You get a deployment calendar with every proposal and weekly progress updates throughout.',
   },
   {
     icon: <ShieldCheck className="h-5 w-5 text-[#2563EB]" />,
-    title: 'Security & compliance first',
-    description: 'GDPR, WCAG 2.1 AA, and Cyber Essentials-aligned practices baked in from day one — not bolted on at the end.',
+    title: 'Security first',
+    description: 'GDPR compliance, OWASP Top 10 controls, penetration-tested authentication, and full audit logging — built into the architecture from day one.',
   },
   {
-    icon: <Headphones className="h-5 w-5 text-[#2563EB]" />,
+    icon: <LifeBuoy className="h-5 w-5 text-[#2563EB]" />,
     title: 'Post-launch support',
-    description: 'We do not disappear after go-live. Ongoing support, feature development, and hosting management available.',
+    description: 'Every project includes a 30-day hypercare window and the option to move onto a monthly support retainer for ongoing development.',
   },
   {
-    icon: <Zap className="h-5 w-5 text-[#2563EB]" />,
-    title: 'Purpose-built, not adapted',
-    description: 'We build your LMS around your workflows — not the other way around. Off-the-shelf limitations do not apply.',
+    icon: <Puzzle className="h-5 w-5 text-[#2563EB]" />,
+    title: 'Purpose-built, not template-driven',
+    description: 'We write custom code for your requirements. Every feature is designed for your specific learner journey and integration landscape.',
   },
   {
-    icon: <Globe className="h-5 w-5 text-[#2563EB]" />,
-    title: 'UK-registered & accountable',
-    description: 'HostingOcean Solutions is UK-registered with a real team, real contracts, and real accountability.',
+    icon: <DollarSign className="h-5 w-5 text-[#2563EB]" />,
+    title: 'Transparent, fixed pricing',
+    description: 'Fixed-price proposals with no hidden costs. We define deliverables clearly before we start — and we stick to them.',
+  },
+  {
+    icon: <Users className="h-5 w-5 text-[#2563EB]" />,
+    title: 'UK-registered company',
+    description: 'HostingOcean Solutions Ltd is UK-registered. GDPR data processing agreements, UK contract law, and a team available during your working hours.',
+  },
+  {
+    icon: <Star className="h-5 w-5 text-[#2563EB]" />,
+    title: 'End-to-end ownership',
+    description: 'One team, one point of contact. We handle architecture, build, testing, migration, deployment, and ongoing support — no handoff gaps.',
   },
 ];
 
@@ -332,10 +359,10 @@ export default function LmsDevelopmentPage() {
     <>
       {/* ── Hero ── */}
       <Hero
-        badge="LMS Development"
+        badge="LMS Development · UK-Based Team"
         title="Learning Management Systems"
         titleAccent="Built For You"
-        subtitle="Bespoke LMS platforms for schools, universities, corporate training teams, and e-learning businesses — from Moodle customisation to fully custom React + Node.js builds."
+        subtitle="Custom LMS platforms designed around your learners, your content, and your integrations — not the other way around. React frontends, Node.js backends, Moodle customisation, and full SCORM / xAPI / LTI 1.3 support."
         cta1={{ label: 'Get a Free Quote', href: '/contact' }}
         cta2={{ label: 'View All Services', href: '/services' }}
       />
@@ -441,8 +468,8 @@ export default function LmsDevelopmentPage() {
 
       {/* ── Why HostingOcean Solutions ── */}
       <Section id="why-us" title="Why HostingOcean Solutions" subtitle="There are many agencies that will take your LMS project. Here is why the ones who care about quality choose us.">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
-          {whyUs.map((item) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-6xl mx-auto">
+          {whyPoints.map((item) => (
             <div key={item.title} className="flex gap-3.5 p-5 rounded-xl border border-border/50 bg-background shadow-sm">
               <div className="shrink-0 mt-0.5">{item.icon}</div>
               <div>
