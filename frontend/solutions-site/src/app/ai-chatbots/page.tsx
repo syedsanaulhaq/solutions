@@ -19,7 +19,6 @@ import {
   Zap,
   RefreshCw,
   Users,
-  Code2,
   Brain,
   Globe,
   Lock,
@@ -31,7 +30,7 @@ import {
   ChevronDown,
   PoundSterling,
   Lightbulb,
-  TestTube,
+  Code2,
 } from 'lucide-react';
 
 export const metadata: Metadata = buildMetadata({

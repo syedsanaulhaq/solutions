@@ -21,6 +21,20 @@ import {
   Cpu,
   LifeBuoy,
   PackageCheck,
+  Brain,
+  Lock,
+  Database,
+  MessageSquare,
+  BarChart3,
+  ShieldCheck,
+  Plug,
+  Cog,
+  GitBranch,
+  Building2,
+  Users,
+  LayoutDashboard,
+  RefreshCw,
+  Blocks,
 } from 'lucide-react';
 
 export const metadata: Metadata = buildMetadata({
@@ -209,6 +223,50 @@ const categoryColours: Record<string, string> = {
   Cloud: 'bg-sky-50 text-sky-700 border-sky-200 dark:bg-sky-900/30 dark:text-sky-300 dark:border-sky-800',
 };
 
+const aiSpotlight = {
+  points: [
+    { icon: <Brain className="h-4 w-4" />, label: 'RAG knowledge-base bots trained on your docs' },
+    { icon: <MessageSquare className="h-4 w-4" />, label: 'Customer support bots with live escalation' },
+    { icon: <Globe className="h-4 w-4" />, label: 'Embeddable website chat widgets (single script tag)' },
+    { icon: <Lock className="h-4 w-4" />, label: 'Internal AI assistants with SSO + GDPR compliance' },
+    { icon: <Database className="h-4 w-4" />, label: 'Vector database integration (Pinecone / pgvector)' },
+    { icon: <RefreshCw className="h-4 w-4" />, label: 'Continuous improvement via conversation analytics' },
+  ],
+};
+
+const reactSpotlight = {
+  points: [
+    { icon: <BarChart3 className="h-4 w-4" />, label: 'Real-time data dashboards with drill-down views' },
+    { icon: <ShieldCheck className="h-4 w-4" />, label: 'Admin panels with RBAC and full audit logs' },
+    { icon: <Users className="h-4 w-4" />, label: 'Customer & partner portals with self-service UX' },
+    { icon: <Blocks className="h-4 w-4" />, label: 'Custom UI component libraries and design systems' },
+    { icon: <LayoutDashboard className="h-4 w-4" />, label: 'Next.js 14 App Router — fast, SEO-optimised' },
+    { icon: <Zap className="h-4 w-4" />, label: 'TypeScript throughout — no shortcuts, ever' },
+  ],
+};
+
+const nodeSpotlight = {
+  points: [
+    { icon: <Server className="h-4 w-4" />, label: 'RESTful & GraphQL API design with OpenAPI docs' },
+    { icon: <Lock className="h-4 w-4" />, label: 'JWT, OAuth 2.0, and SSO/SAML authentication' },
+    { icon: <Plug className="h-4 w-4" />, label: 'Payment gateways, CRM, and third-party connectors' },
+    { icon: <Layers className="h-4 w-4" />, label: 'Microservices and serverless architecture' },
+    { icon: <ShieldCheck className="h-4 w-4" />, label: 'Rate limiting, structured logging, and monitoring' },
+    { icon: <Database className="h-4 w-4" />, label: 'PostgreSQL, MongoDB, Redis — optimised for scale' },
+  ],
+};
+
+const automationSpotlight = {
+  points: [
+    { icon: <Cog className="h-4 w-4" />, label: 'Business process automation — eliminate manual steps' },
+    { icon: <GitBranch className="h-4 w-4" />, label: 'Multi-step conditional workflow engines' },
+    { icon: <Plug className="h-4 w-4" />, label: 'REST, GraphQL, and webhook API integrations' },
+    { icon: <Building2 className="h-4 w-4" />, label: 'CRM & ERP connectors (Salesforce, HubSpot, SAP)' },
+    { icon: <RefreshCw className="h-4 w-4" />, label: 'Real-time data sync with retry and error handling' },
+    { icon: <BarChart3 className="h-4 w-4" />, label: 'Monitoring dashboards and alerting for every pipeline' },
+  ],
+};
+
 /* ─────────────────────────── page ─────────────────────────── */
 
 export default function HomePage() {
@@ -329,7 +387,143 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* ── 4. Why Choose Us ── */}
+      {/* ── 4. AI Chatbot Development ── */}
+      <Section id="ai-chatbots">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <Badge className="mb-4 bg-emerald-500/10 text-emerald-700 border-emerald-500/20 dark:text-emerald-400 hover:bg-emerald-500/20">
+              AI Chatbot Development
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-5 leading-tight">
+              Intelligent chatbots powered by{' '}
+              <span className="text-emerald-600 dark:text-emerald-400">GPT-4o, Claude & Gemini</span>
+            </h2>
+            <p className="text-muted-foreground leading-relaxed mb-6 text-base">
+              We build AI chatbots that actually work — grounded in your data, not the model&apos;s general knowledge. Using Retrieval-Augmented Generation (RAG), every response is backed by your documentation, support articles, or internal knowledge base. No hallucinations. No confident wrong answers.
+            </p>
+            <p className="text-muted-foreground leading-relaxed mb-8 text-base">
+              Whether you need a 24/7 support bot that deflects 60% of tickets, an embeddable website widget, or a private internal assistant for your team — we build it to production standard with full GDPR compliance, monitoring, and a continuous improvement loop.
+            </p>
+            <Link href="/ai-chatbots">
+              <Button className="bg-emerald-600 hover:bg-emerald-700 text-white">
+                Explore AI Chatbots <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {aiSpotlight.points.map((p) => (
+              <div key={p.label} className="flex items-start gap-3 p-4 rounded-xl border border-emerald-200/60 bg-emerald-50/50 dark:bg-emerald-900/10 dark:border-emerald-800/40">
+                <span className="shrink-0 mt-0.5 text-emerald-600 dark:text-emerald-400">{p.icon}</span>
+                <span className="text-sm font-medium leading-snug">{p.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* ── 5. React Development ── */}
+      <Section id="react-development" variant="muted">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="order-2 lg:order-1 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {reactSpotlight.points.map((p) => (
+              <div key={p.label} className="flex items-start gap-3 p-4 rounded-xl border border-violet-200/60 bg-violet-50/50 dark:bg-violet-900/10 dark:border-violet-800/40">
+                <span className="shrink-0 mt-0.5 text-violet-600 dark:text-violet-400">{p.icon}</span>
+                <span className="text-sm font-medium leading-snug">{p.label}</span>
+              </div>
+            ))}
+          </div>
+          <div className="order-1 lg:order-2">
+            <Badge className="mb-4 bg-violet-500/10 text-violet-700 border-violet-500/20 dark:text-violet-400 hover:bg-violet-500/20">
+              React &amp; Next.js Development
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-5 leading-tight">
+              Fast, accessible web applications built with{' '}
+              <span className="text-violet-600 dark:text-violet-400">React &amp; TypeScript</span>
+            </h2>
+            <p className="text-muted-foreground leading-relaxed mb-6 text-base">
+              We build complex React applications that go beyond a simple website. From multi-source analytics dashboards to full RBAC admin panels, customer self-service portals, and reusable UI component libraries — we handle the full breadth of the React ecosystem.
+            </p>
+            <p className="text-muted-foreground leading-relaxed mb-8 text-base">
+              TypeScript is non-negotiable. Next.js 14 App Router throughout. Optimised Core Web Vitals, accessible by default (WCAG 2.1), and responsive on every device.
+            </p>
+            <Link href="/react-development">
+              <Button className="bg-violet-600 hover:bg-violet-700 text-white">
+                Explore React Development <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </Section>
+
+      {/* ── 6. Node.js API Development ── */}
+      <Section id="node-api">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <Badge className="mb-4 bg-sky-500/10 text-sky-700 border-sky-500/20 dark:text-sky-400 hover:bg-sky-500/20">
+              Node.js API Development
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-5 leading-tight">
+              Scalable, secure APIs built for{' '}
+              <span className="text-sky-600 dark:text-sky-400">production from day one</span>
+            </h2>
+            <p className="text-muted-foreground leading-relaxed mb-6 text-base">
+              We design and build RESTful and GraphQL APIs that are performant, secure, and maintainable. Proper authentication, rate limiting, structured logging, and full OpenAPI documentation are included as standard — not bolted on later.
+            </p>
+            <p className="text-muted-foreground leading-relaxed mb-8 text-base">
+              Whether you need a standalone backend, a microservices layer, or a tightly integrated Node.js API behind your React app, we architect it correctly and document every endpoint so your team can own it after handover.
+            </p>
+            <Link href="/node-api-development">
+              <Button className="bg-sky-600 hover:bg-sky-700 text-white">
+                Explore Node.js APIs <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {nodeSpotlight.points.map((p) => (
+              <div key={p.label} className="flex items-start gap-3 p-4 rounded-xl border border-sky-200/60 bg-sky-50/50 dark:bg-sky-900/10 dark:border-sky-800/40">
+                <span className="shrink-0 mt-0.5 text-sky-600 dark:text-sky-400">{p.icon}</span>
+                <span className="text-sm font-medium leading-snug">{p.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* ── 7. Automation & Integrations ── */}
+      <Section id="automation" variant="muted">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="order-2 lg:order-1 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {automationSpotlight.points.map((p) => (
+              <div key={p.label} className="flex items-start gap-3 p-4 rounded-xl border border-amber-200/60 bg-amber-50/50 dark:bg-amber-900/10 dark:border-amber-800/40">
+                <span className="shrink-0 mt-0.5 text-amber-600 dark:text-amber-400">{p.icon}</span>
+                <span className="text-sm font-medium leading-snug">{p.label}</span>
+              </div>
+            ))}
+          </div>
+          <div className="order-1 lg:order-2">
+            <Badge className="mb-4 bg-amber-500/10 text-amber-700 border-amber-500/20 dark:text-amber-400 hover:bg-amber-500/20">
+              Automation &amp; Integrations
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-5 leading-tight">
+              Automate the repetitive. Connect{' '}
+              <span className="text-amber-600 dark:text-amber-400">every system you use.</span>
+            </h2>
+            <p className="text-muted-foreground leading-relaxed mb-6 text-base">
+              Manual data entry, approval chains over email, end-of-month reports built by hand — these are processes your team has normalised but shouldn&apos;t have to. We audit your workflows, identify the highest-ROI automation targets, and build robust pipelines that run reliably at scale.
+            </p>
+            <p className="text-muted-foreground leading-relaxed mb-8 text-base">
+              From simple webhook connectors to full multi-step workflow engines with error handling, retry logic, and dead-letter queues — we build automation that your operations team can trust.
+            </p>
+            <Link href="/automation">
+              <Button className="bg-amber-500 hover:bg-amber-600 text-white">
+                Explore Automation <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </Section>
+
+      {/* ── 8. Why Choose Us ── */
       <Section
         id="why-us"
         title="Why Choose Us"
@@ -353,7 +547,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* ── 5. Technologies ── */}
+      {/* ── 9. Technologies We Use ── */
       <Section
         id="technologies"
         variant="muted"
@@ -386,7 +580,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* ── 6. About HostingOcean Solutions ── */}
+      {/* ── 10. About HostingOcean Solutions ── */
       <Section id="about">
         <div className="max-w-3xl mx-auto text-center">
           <Badge className="mb-5 bg-[#2563EB]/10 text-[#2563EB] border-[#2563EB]/20 hover:bg-[#2563EB]/20">
@@ -421,7 +615,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* ── 7. Final CTA ── */}
+      {/* ── 11. Final CTA ── */}
       <Section variant="dark">
         <div className="text-center max-w-3xl mx-auto">
           <Badge className="mb-6 bg-white/10 text-white border-white/20 hover:bg-white/10">
