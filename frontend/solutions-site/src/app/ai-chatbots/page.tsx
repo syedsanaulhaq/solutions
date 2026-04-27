@@ -234,7 +234,7 @@ const deliveryProcess = [
   },
   {
     step: '04',
-    icon: <TestTube className="h-5 w-5" />,
+    icon: <FlaskConical className="h-5 w-5" />,
     title: 'Bot Development & Evaluation',
     description:
       'We build the bot interface, connect all integrations, and run a structured evaluation suite — a set of real questions the bot should answer correctly. We measure precision, recall, and answer quality before you see a single conversation.',
