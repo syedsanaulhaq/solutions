@@ -29,6 +29,13 @@ import {
   LifeBuoy,
   DollarSign,
   Star,
+  Search,
+  FileText,
+  Hammer,
+  FlaskConical,
+  Rocket,
+  ChevronDown,
+  PoundSterling,
 } from 'lucide-react';
 
 export const metadata: Metadata = buildMetadata({
