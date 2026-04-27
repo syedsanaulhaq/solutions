@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 
 /* ── Types ── */
@@ -75,12 +74,18 @@ export function QuoteForm({ className }: { className?: string }) {
       </div>
       <div className="space-y-1.5">
         <Label htmlFor="qf-service">Service Required *</Label>
-        <Select id="qf-service" name="service" required defaultValue="">
+        <select
+          id="qf-service"
+          name="service"
+          required
+          defaultValue=""
+          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+        >
           <option value="" disabled>Select a service…</option>
           {services.map((s) => (
             <option key={s} value={s}>{s}</option>
           ))}
-        </Select>
+        </select>
       </div>
       <div className="space-y-1.5">
         <Label htmlFor="qf-details">Project Details *</Label>
@@ -94,12 +99,17 @@ export function QuoteForm({ className }: { className?: string }) {
       </div>
       <div className="space-y-1.5">
         <Label htmlFor="qf-budget">Budget Range</Label>
-        <Select id="qf-budget" name="budget" defaultValue="">
+        <select
+          id="qf-budget"
+          name="budget"
+          defaultValue=""
+          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+        >
           <option value="" disabled>Select a budget range…</option>
           {budgets.map((b) => (
             <option key={b} value={b}>{b}</option>
           ))}
-        </Select>
+        </select>
       </div>
       <Button type="submit" className="w-full bg-[#2563EB] hover:bg-[#1d4ed8]">
         Send Enquiry <ArrowRight className="ml-2 h-4 w-4" />
