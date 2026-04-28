@@ -1,10 +1,24 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
+import { promises as fs } from 'fs';
+import path from 'path';
 import nodemailer from 'nodemailer';
-import { type QuoteLead, readLeads, writeLeads } from '@/lib/leads';
 
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
+export interface QuoteLead {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string;
+  company?: string;
+  service: string;
+  budget: string;
+  description: string;
+  source: 'form' | 'chatbot';
+  createdAt: string;
+}
+
 interface RequestBody {
   name: string;
   email: string;
@@ -14,6 +28,26 @@ interface RequestBody {
   budget: string;
   description: string;
   source?: 'form' | 'chatbot';
+}
+
+// ---------------------------------------------------------------------------
+// File storage helpers
+// ---------------------------------------------------------------------------
+const DATA_DIR = path.join(process.cwd(), 'data');
+const LEADS_FILE = path.join(DATA_DIR, 'leads.json');
+
+async function readLeads(): Promise<QuoteLead[]> {
+  try {
+    const raw = await fs.readFile(LEADS_FILE, 'utf-8');
+    return JSON.parse(raw) as QuoteLead[];
+  } catch {
+    return [];
+  }
+}
+
+async function writeLeads(leads: QuoteLead[]): Promise<void> {
+  await fs.mkdir(DATA_DIR, { recursive: true });
+  await fs.writeFile(LEADS_FILE, JSON.stringify(leads, null, 2), 'utf-8');
 }
 
 // ---------------------------------------------------------------------------
@@ -30,11 +64,7 @@ function row(label: string, value: string | undefined): string {
 
 async function sendLeadEmail(lead: QuoteLead): Promise<void> {
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, LEAD_NOTIFY_EMAIL } = process.env;
-
-  // Skip silently if any SMTP config is missing
-  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS || !LEAD_NOTIFY_EMAIL) {
-    return;
-  }
+  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS || !LEAD_NOTIFY_EMAIL) return;
 
   const transporter = nodemailer.createTransport({
     host: SMTP_HOST,
@@ -43,58 +73,37 @@ async function sendLeadEmail(lead: QuoteLead): Promise<void> {
     auth: { user: SMTP_USER, pass: SMTP_PASS },
   });
 
-  const html = `
-<!DOCTYPE html>
-<html lang="en">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+  const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"></head>
 <body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f3f4f6">
   <table width="100%" cellpadding="0" cellspacing="0" style="padding:32px 16px">
     <tr><td align="center">
       <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.1)">
-
-        <!-- Header -->
-        <tr>
-          <td style="background:#0F172A;padding:28px 32px">
-            <p style="margin:0;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#38BDF8">HostingOcean Solutions</p>
-            <h1 style="margin:6px 0 0;font-size:22px;font-weight:700;color:#ffffff">New Quote Request</h1>
-          </td>
-        </tr>
-
-        <!-- Lead details -->
-        <tr>
-          <td style="padding:28px 32px">
-            <p style="margin:0 0 16px;color:#374151;font-size:14px">
-              A new lead was submitted via the <strong>${lead.source === 'chatbot' ? 'AI chatbot' : 'Get a Quote form'}</strong>.
-            </p>
-            <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;font-size:14px">
-              ${row('Lead ID', lead.id)}
-              ${row('Name', lead.name)}
-              ${row('Email', lead.email)}
-              ${row('Phone', lead.phone)}
-              ${row('Company', lead.company)}
-              ${row('Service', lead.service)}
-              ${row('Budget', lead.budget)}
-              ${row('Description', lead.description)}
-              ${row('Source', lead.source)}
-              ${row('Submitted', new Date(lead.createdAt).toLocaleString('en-GB', { timeZone: 'Europe/London', dateStyle: 'full', timeStyle: 'short' }))}
-            </table>
-          </td>
-        </tr>
-
-        <!-- Footer -->
-        <tr>
-          <td style="background:#f9fafb;padding:16px 32px;border-top:1px solid #e5e7eb">
-            <p style="margin:0;font-size:12px;color:#6b7280">
-              This notification was sent automatically by solutions.hostingocean.co.uk. Do not reply to this email.
-            </p>
-          </td>
-        </tr>
-
+        <tr><td style="background:#0F172A;padding:28px 32px">
+          <p style="margin:0;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#38BDF8">HostingOcean Solutions</p>
+          <h1 style="margin:6px 0 0;font-size:22px;font-weight:700;color:#ffffff">New Quote Request</h1>
+        </td></tr>
+        <tr><td style="padding:28px 32px">
+          <p style="margin:0 0 16px;color:#374151;font-size:14px">A new lead was submitted via the <strong>${lead.source === 'chatbot' ? 'AI chatbot' : 'Get a Quote form'}</strong>.</p>
+          <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;font-size:14px">
+            ${row('Lead ID', lead.id)}
+            ${row('Name', lead.name)}
+            ${row('Email', lead.email)}
+            ${row('Phone', lead.phone)}
+            ${row('Company', lead.company)}
+            ${row('Service', lead.service)}
+            ${row('Budget', lead.budget)}
+            ${row('Description', lead.description)}
+            ${row('Source', lead.source)}
+            ${row('Submitted', new Date(lead.createdAt).toLocaleString('en-GB', { timeZone: 'Europe/London', dateStyle: 'full', timeStyle: 'short' }))}
+          </table>
+        </td></tr>
+        <tr><td style="background:#f9fafb;padding:16px 32px;border-top:1px solid #e5e7eb">
+          <p style="margin:0;font-size:12px;color:#6b7280">This notification was sent automatically. Do not reply.</p>
+        </td></tr>
       </table>
     </td></tr>
   </table>
-</body>
-</html>`;
+</body></html>`;
 
   const text = [
     'New Quote Request — HostingOcean Solutions',
@@ -146,7 +155,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: false, error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  // Validate required fields
   const name = sanitiseString(body.name, 100);
   const email = sanitiseString(body.email, 200);
   const service = sanitiseString(body.service, 100);
@@ -173,7 +181,6 @@ export async function POST(req: NextRequest) {
     createdAt: new Date().toISOString(),
   };
 
-  // 1 — Persist to JSON file (never fails the response)
   try {
     const leads = await readLeads();
     leads.push(lead);
@@ -183,7 +190,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: false, error: 'Failed to save lead' }, { status: 500 });
   }
 
-  // 2 — Console confirmation
   console.log(`[/api/quote] New lead received — ${lead.id}`);
   console.log(`  Name:    ${lead.name}`);
   console.log(`  Email:   ${lead.email}`);
@@ -192,7 +198,6 @@ export async function POST(req: NextRequest) {
   console.log(`  Budget:  ${lead.budget}`);
   console.log(`  Source:  ${lead.source}`);
 
-  // 3 — Email notification (fire-and-forget, never blocks or breaks the response)
   sendLeadEmail(lead).catch((err) =>
     console.error('[/api/quote] Email notification failed:', err)
   );
