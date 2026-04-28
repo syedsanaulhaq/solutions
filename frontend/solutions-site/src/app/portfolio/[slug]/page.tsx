@@ -8,8 +8,9 @@ import {
   CATEGORY_STYLES,
   formatProjectDate,
 } from '@/lib/portfolio';
-import { buildMetadata } from '@/lib/seo';
+import { buildMetadata, siteConfig } from '@/lib/seo';
 import { Button } from '@/components/ui/button';
+import { SocialShare } from '@/components/SocialShare';
 
 interface Props {
   params: { slug: string };
@@ -203,7 +204,11 @@ export default function PortfolioProjectPage({ params }: Props) {
       {/* ─────────────── Bottom CTA ─────────────── */}
       <section className="bg-[#0F172A] text-white py-16">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-3">Ready to build something like this?</h2>
+          <SocialShare
+            url={`${siteConfig.url}/portfolio/${project.slug}`}
+            title={`${project.title} — HostingOcean Solutions case study`}
+          />
+          <h2 className="text-2xl md:text-3xl font-bold mb-3 mt-8">Ready to build something like this?</h2>
           <p className="text-slate-400 mb-8 leading-relaxed">
             We scope, architect, and deliver — fixed price, no surprises.
           </p>

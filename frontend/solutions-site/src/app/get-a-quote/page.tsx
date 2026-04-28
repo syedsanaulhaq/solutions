@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Suspense } from 'react';
 import { Layers, CheckCircle2 } from 'lucide-react';
 import { buildMetadata } from '@/lib/seo';
 import { GetAQuoteForm } from '@/components/GetAQuoteForm';
@@ -56,7 +57,9 @@ export default function GetAQuotePage() {
       {/* ── Form section ── */}
       <section className="py-14 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <GetAQuoteForm />
+          <Suspense fallback={<div className="h-96 animate-pulse bg-muted rounded-2xl" />}>
+            <GetAQuoteForm />
+          </Suspense>
         </div>
       </section>
     </main>

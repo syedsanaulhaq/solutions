@@ -87,3 +87,57 @@ export function formatDate(isoDate: string): string {
     year: 'numeric',
   });
 }
+
+/** Returns all posts that carry the given tag (case-insensitive). */
+export function getPostsByTag(tag: string): BlogPost[] {
+  const lower = tag.toLowerCase();
+  return getAllPosts().filter((p) =>
+    p.tags.some((t) => t.toLowerCase() === lower),
+  );
+}
+
+/** Calculates approximate reading time from plain-text content. */
+export function calcReadTime(content: string): string {
+  const words = content.trim().split(/\s+/).length;
+  const minutes = Math.max(1, Math.round(words / 200));
+  return `${minutes} min read`;
+}
+
+// ---------------------------------------------------------------------------
+// Internal linking helpers — map blog categories to relevant site pages
+// ---------------------------------------------------------------------------
+export const categoryInternalLinks: Record<
+  string,
+  Array<{ label: string; href: string }>
+> = {
+  'LMS Development': [
+    { label: 'LMS Development Service', href: '/lms-development' },
+    { label: 'LMS Portfolio Projects', href: '/portfolio' },
+    { label: 'Get an LMS Quote', href: '/get-a-quote' },
+  ],
+  'AI Chatbots': [
+    { label: 'AI Chatbot Development', href: '/ai-chatbots' },
+    { label: 'Chatbot SaaS Platform', href: '/solutions/chatbot' },
+    { label: 'Get a Chatbot Quote', href: '/get-a-quote' },
+  ],
+  Automation: [
+    { label: 'Automation & Integrations', href: '/automation' },
+    { label: 'Automation Solutions', href: '/solutions/automation' },
+    { label: 'Get an Automation Quote', href: '/get-a-quote' },
+  ],
+  'React Development': [
+    { label: 'React Development Service', href: '/react-development' },
+    { label: 'Project Portfolio', href: '/portfolio' },
+    { label: 'Get a React Quote', href: '/get-a-quote' },
+  ],
+  'Node.js': [
+    { label: 'Node.js API Development', href: '/node-api-development' },
+    { label: 'API Project Portfolio', href: '/portfolio' },
+    { label: 'Get an API Quote', href: '/get-a-quote' },
+  ],
+  'Project Management': [
+    { label: 'Our Delivery Process', href: '/docs/project-delivery-process' },
+    { label: 'View Our Work', href: '/portfolio' },
+    { label: 'Get a Quote', href: '/get-a-quote' },
+  ],
+};

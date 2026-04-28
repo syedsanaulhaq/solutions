@@ -1,0 +1,74 @@
+[
+  {
+    "id": "t1",
+    "title": "Set up Plausible analytics domain",
+    "status": "todo",
+    "priority": "high",
+    "assignee": "Syed Fazli",
+    "due": "2025-01-20",
+    "notes": "Set NEXT_PUBLIC_PLAUSIBLE_DOMAIN env var on production. Create the domain in Plausible dashboard first."
+  },
+  {
+    "id": "t2",
+    "title": "Create /solutions overview page",
+    "status": "todo",
+    "priority": "medium",
+    "assignee": "Syed Fazli",
+    "due": "2025-01-22",
+    "notes": "Overview page linking to chatbot, lms-builder, and automation with a side-by-side comparison table."
+  },
+  {
+    "id": "t3",
+    "title": "Configure HubSpot CRM token",
+    "status": "todo",
+    "priority": "medium",
+    "assignee": "Syed Fazli",
+    "due": "2025-01-25",
+    "notes": "Create a Private App in HubSpot, set HUBSPOT_ACCESS_TOKEN env var, test /api/integrations/hubspot POST."
+  },
+  {
+    "id": "t4",
+    "title": "Send first newsletter broadcast",
+    "status": "todo",
+    "priority": "low",
+    "assignee": "Syed Fazli",
+    "due": "2025-02-01",
+    "notes": "Wait until 50 subscribers. Subject: 'What we have been building at HostingOcean Solutions'. Resend or Nodemailer."
+  },
+  {
+    "id": "t5",
+    "title": "Set up Google Analytics 4 property",
+    "status": "in-progress",
+    "priority": "high",
+    "assignee": "Syed Fazli",
+    "due": "2025-01-18",
+    "notes": "GA4 property created. Set NEXT_PUBLIC_GA_MEASUREMENT_ID env var on production server."
+  },
+  {
+    "id": "t6",
+    "title": "Write blog post: LMS vs Moodle comparison",
+    "status": "done",
+    "priority": "medium",
+    "assignee": "Syed Fazli",
+    "due": "2025-01-10",
+    "notes": "Published as b14 in blog.json. Target keyword: 'Moodle vs custom LMS'."
+  },
+  {
+    "id": "t7",
+    "title": "Add Testimonials page to footer",
+    "status": "done",
+    "priority": "low",
+    "assignee": "Syed Fazli",
+    "due": "2025-01-14",
+    "notes": "Added /testimonials link to companyLinks in Footer.tsx."
+  },
+  {
+    "id": "t8",
+    "title": "Test mobile layout on solutions pages",
+    "status": "todo",
+    "priority": "medium",
+    "assignee": "Syed Fazli",
+    "due": "2025-01-19",
+    "notes": "Check all three solutions pages at 375px. Verify tier cards stack correctly on mobile."
+  }
+]

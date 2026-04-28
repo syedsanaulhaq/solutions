@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { Layers, MapPin, Mail, ArrowRight } from 'lucide-react';
+import { NewsletterSignup } from '@/components/NewsletterSignup';
 
 const serviceLinks = [
   { label: 'LMS Development', href: '/lms-development' },
@@ -16,6 +17,7 @@ const serviceLinks = [
 const companyLinks = [
   { label: 'About Us', href: '/about' },
   { label: 'Portfolio', href: '/portfolio' },
+  { label: 'Testimonials', href: '/testimonials' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Blog', href: '/blog' },
   { label: 'Docs', href: '/docs' },
@@ -108,7 +110,17 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-3">
+        <div className="mt-10 border-t border-slate-800 pt-10">
+          <div className="max-w-lg">
+            <NewsletterSignup
+              source="footer"
+              heading="Get technical updates"
+              subheading="Guides, case studies, and product news. No spam."
+            />
+          </div>
+        </div>
+
+        <div className="mt-10 pt-8 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-3">
           <p className="text-sm text-slate-500">
             &copy; 2026 HostingOcean Solutions. All rights reserved.
           </p>

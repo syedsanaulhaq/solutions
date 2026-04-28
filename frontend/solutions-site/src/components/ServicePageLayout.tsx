@@ -2,12 +2,20 @@ import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { ServiceFAQ } from '@/components/ServiceFAQ';
+import { PricingCTA } from '@/components/PricingCTA';
+import { faqSchema } from '@/lib/schemas';
 import Link from 'next/link';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
 
 interface Feature {
   title: string;
   description: string;
+}
+
+interface FAQItem {
+  question: string;
+  answer: string;
 }
 
 interface ServicePageLayoutProps {
@@ -20,6 +28,7 @@ interface ServicePageLayoutProps {
   overview: string;
   features: Feature[];
   techStack: string[];
+  faq?: FAQItem[];
   cta: {
     title: string;
     subtitle: string;
@@ -31,10 +40,20 @@ export function ServicePageLayout({
   overview,
   features,
   techStack,
+  faq,
   cta,
 }: ServicePageLayoutProps) {
+  const faqJsonLd = faq && faq.length > 0 ? faqSchema(faq) : null;
   return (
     <>
+      {/* FAQ JSON-LD */}
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
+
       <Hero
         badge={hero.badge}
         title={hero.title}
@@ -83,6 +102,20 @@ export function ServicePageLayout({
           ))}
         </div>
       </Section>
+
+      {/* Pricing CTA */}
+      <Section variant="muted">
+        <div className="max-w-2xl mx-auto">
+          <PricingCTA />
+        </div>
+      </Section>
+
+      {/* FAQ */}
+      {faq && faq.length > 0 && (
+        <Section title="Frequently Asked Questions" variant="default">
+          <ServiceFAQ items={faq} title="" />
+        </Section>
+      )}
 
       {/* CTA */}
       <Section variant="dark">

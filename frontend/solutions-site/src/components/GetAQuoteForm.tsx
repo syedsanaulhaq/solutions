@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import {
   ArrowLeft,
@@ -304,12 +305,21 @@ function SuccessScreen() {
 // Main multi-step form
 // ---------------------------------------------------------------------------
 export function GetAQuoteForm() {
+  const searchParams = useSearchParams();
   const [step, setStep] = useState(1);
   const [data, setData] = useState<FormData>(INITIAL);
   const [errors, setErrors] = useState<Errors>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+
+  // Prefill service from URL param (?service=LMS+Development)
+  useEffect(() => {
+    const serviceParam = searchParams?.get('service');
+    if (serviceParam && SERVICES.includes(serviceParam)) {
+      setData((prev) => ({ ...prev, service: serviceParam }));
+    }
+  }, [searchParams]);
 
   function onChange(field: keyof FormData, value: string) {
     setData((prev) => ({ ...prev, [field]: value }));

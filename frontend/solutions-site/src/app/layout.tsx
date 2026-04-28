@@ -5,6 +5,7 @@ import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { QuoteModalRoot } from '@/components/QuoteModalRoot';
 import { ChatbotWidget } from '@/components/ChatbotWidget';
+import { Analytics } from '@/components/Analytics';
 import { defaultMetadata, organizationSchema, websiteSchema } from '@/lib/seo';
 
 export { defaultMetadata as metadata };
@@ -45,6 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
           <QuoteModalRoot />
           <ChatbotWidget />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>

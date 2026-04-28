@@ -17,6 +17,9 @@ interface Lead {
   description: string;
   source: 'form' | 'chatbot';
   createdAt: string;
+  score?: number;
+  tier?: 'hot' | 'warm' | 'cool';
+  tags?: string[];
 }
 
 // ---------------------------------------------------------------------------
@@ -289,7 +292,7 @@ export default function AdminLeadsPage() {
           { label: 'Total Leads', value: leads.length },
           { label: 'Form Leads', value: leads.filter((l) => l.source === 'form').length },
           { label: 'Chatbot Leads', value: leads.filter((l) => l.source === 'chatbot').length },
-          { label: 'Showing', value: filtered.length },
+          { label: 'Hot Leads', value: leads.filter((l) => l.tier === 'hot').length },
         ].map((stat) => (
           <div key={stat.label} className="bg-card border border-border rounded-xl px-4 py-3">
             <p className="text-xs text-muted-foreground">{stat.label}</p>
@@ -379,6 +382,7 @@ export default function AdminLeadsPage() {
                   <th className="text-left px-4 py-3 font-semibold text-muted-foreground whitespace-nowrap">Company</th>
                   <th className="text-left px-4 py-3 font-semibold text-muted-foreground whitespace-nowrap">Service</th>
                   <th className="text-left px-4 py-3 font-semibold text-muted-foreground whitespace-nowrap">Budget</th>
+                  <th className="text-left px-4 py-3 font-semibold text-muted-foreground whitespace-nowrap">Score</th>
                   <th className="text-left px-4 py-3 font-semibold text-muted-foreground whitespace-nowrap">Source</th>
                   <th className="text-left px-4 py-3 font-semibold text-muted-foreground whitespace-nowrap">Date</th>
                   <th className="px-4 py-3" />
@@ -400,6 +404,17 @@ export default function AdminLeadsPage() {
                       </span>
                     </td>
                     <td className="px-4 py-3 text-muted-foreground whitespace-nowrap">{lead.budget}</td>
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      {lead.score !== undefined ? (
+                        <span className={`inline-block text-xs font-semibold rounded-full px-2.5 py-0.5 ${
+                          lead.tier === 'hot' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+                          : lead.tier === 'warm' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
+                          : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400'
+                        }`}>
+                          {lead.tier?.toUpperCase()} {lead.score}
+                        </span>
+                      ) : <span className="text-muted-foreground">&mdash;</span>}
+                    </td>
                     <td className="px-4 py-3 whitespace-nowrap">
                       <span
                         className={`inline-block text-xs font-medium rounded-full px-2.5 py-0.5 ${
@@ -473,6 +488,30 @@ export default function AdminLeadsPage() {
                   <p className="text-sm text-foreground">{value}</p>
                 </div>
               ))}
+              <div>
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">
+                  Lead Score
+                </p>
+                {selectedLead.score !== undefined ? (
+                  <div className="flex items-center gap-2">
+                    <span className={`inline-block text-xs font-semibold rounded-full px-2.5 py-0.5 ${
+                      selectedLead.tier === 'hot' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+                      : selectedLead.tier === 'warm' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
+                      : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400'
+                    }`}>{selectedLead.tier?.toUpperCase()} &mdash; {selectedLead.score}/100</span>
+                  </div>
+                ) : <p className="text-sm text-muted-foreground">Not scored</p>}
+              </div>
+              {(selectedLead.tags ?? []).length > 0 && (
+                <div>
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Tags</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {selectedLead.tags!.map((tag) => (
+                      <span key={tag} className="text-xs bg-[#2563EB]/10 text-[#2563EB] rounded-full px-2.5 py-0.5 font-medium">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
               <div>
                 <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">
                   Description

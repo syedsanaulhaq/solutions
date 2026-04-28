@@ -2,6 +2,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import nodemailer from 'nodemailer';
+import { scoreLead } from '@/lib/leads';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -17,6 +18,9 @@ export interface QuoteLead {
   description: string;
   source: 'form' | 'chatbot';
   createdAt: string;
+  score: number;
+  tier: 'hot' | 'warm' | 'cool';
+  tags: string[];
 }
 
 interface RequestBody {
@@ -132,6 +136,65 @@ async function sendLeadEmail(lead: QuoteLead): Promise<void> {
 }
 
 // ---------------------------------------------------------------------------
+// Auto-reply to the lead
+// ---------------------------------------------------------------------------
+async function sendAutoReply(name: string, email: string, service: string): Promise<void> {
+  const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } = process.env;
+  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) return;
+
+  const transporter = nodemailer.createTransport({
+    host: SMTP_HOST,
+    port: Number(SMTP_PORT),
+    secure: Number(SMTP_PORT) === 465,
+    auth: { user: SMTP_USER, pass: SMTP_PASS },
+  });
+
+  const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"></head>
+<body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f3f4f6">
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:32px 16px">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.1)">
+        <tr><td style="background:#0F172A;padding:28px 32px">
+          <p style="margin:0;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#38BDF8">HostingOcean Solutions</p>
+          <h1 style="margin:6px 0 0;font-size:22px;font-weight:700;color:#ffffff">We received your request</h1>
+        </td></tr>
+        <tr><td style="padding:28px 32px">
+          <p style="margin:0 0 16px;color:#374151;font-size:15px">Hi ${name},</p>
+          <p style="margin:0 0 16px;color:#374151;font-size:15px">
+            Thank you for getting in touch! We have received your enquiry about <strong>${service}</strong> and a member of our team will review it and get back to you within one business day.
+          </p>
+          <p style="margin:0 0 16px;color:#374151;font-size:15px">
+            While you wait, you might find these resources helpful:
+          </p>
+          <ul style="margin:0 0 16px;padding-left:20px;color:#374151;font-size:14px">
+            <li style="margin-bottom:8px"><a href="https://solutions.hostingocean.co.uk/pricing-calculator" style="color:#2563EB">Try our Pricing Calculator</a> — get an instant budget estimate for your project</li>
+            <li style="margin-bottom:8px"><a href="https://solutions.hostingocean.co.uk/portfolio" style="color:#2563EB">View our Portfolio</a> — see examples of projects we have delivered</li>
+            <li style="margin-bottom:8px"><a href="https://solutions.hostingocean.co.uk/blog" style="color:#2563EB">Read our Blog</a> — technical guides and case studies</li>
+          </ul>
+          <p style="margin:0 0 8px;color:#374151;font-size:15px">Best regards,</p>
+          <p style="margin:0;color:#374151;font-size:15px;font-weight:600">The HostingOcean Solutions Team</p>
+        </td></tr>
+        <tr><td style="background:#f9fafb;padding:16px 32px;border-top:1px solid #e5e7eb">
+          <p style="margin:0;font-size:12px;color:#6b7280">
+            <a href="https://solutions.hostingocean.co.uk" style="color:#2563EB">solutions.hostingocean.co.uk</a> · 
+            This is an automated message. Please do not reply to this email.
+          </p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body></html>`;
+
+  await transporter.sendMail({
+    from: `"HostingOcean Solutions" <${SMTP_USER}>`,
+    to: email,
+    subject: 'We received your enquiry — HostingOcean Solutions',
+    text: `Hi ${name},\n\nThank you for getting in touch! We have received your enquiry about ${service} and will get back to you within one business day.\n\nBest regards,\nThe HostingOcean Solutions Team\nhttps://solutions.hostingocean.co.uk`,
+    html,
+  });
+}
+
+// ---------------------------------------------------------------------------
 // Input helpers
 // ---------------------------------------------------------------------------
 function sanitiseString(value: unknown, maxLen = 500): string {
@@ -168,6 +231,8 @@ export async function POST(req: NextRequest) {
   if (!budget) return NextResponse.json({ success: false, error: 'budget is required' }, { status: 400 });
   if (!description) return NextResponse.json({ success: false, error: 'description is required' }, { status: 400 });
 
+  const { score, tier, tags } = scoreLead({ service, budget, description });
+
   const lead: QuoteLead = {
     id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
     name,
@@ -179,6 +244,9 @@ export async function POST(req: NextRequest) {
     description,
     source: body.source === 'chatbot' ? 'chatbot' : 'form',
     createdAt: new Date().toISOString(),
+    score,
+    tier,
+    tags,
   };
 
   try {
@@ -200,6 +268,10 @@ export async function POST(req: NextRequest) {
 
   sendLeadEmail(lead).catch((err) =>
     console.error('[/api/quote] Email notification failed:', err)
+  );
+
+  sendAutoReply(name, email, service).catch((err) =>
+    console.error('[/api/quote] Auto-reply failed:', err)
   );
 
   return NextResponse.json({ success: true, id: lead.id }, { status: 201 });

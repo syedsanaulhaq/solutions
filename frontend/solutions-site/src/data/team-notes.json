@@ -1,0 +1,44 @@
+[
+  {
+    "id": "tn1",
+    "author": "Syed Fazli",
+    "category": "product",
+    "content": "The pricing calculator on the homepage is performing well. Consider A/B testing the CTA button text — 'Get an instant estimate' vs 'See project cost'.",
+    "date": "2025-01-10"
+  },
+  {
+    "id": "tn2",
+    "author": "Syed Fazli",
+    "category": "ops",
+    "content": "Newsletter subscriber list is growing. Set a reminder to send the first broadcast once we hit 50 subscribers. Use Nodemailer or switch to Resend.",
+    "date": "2025-01-12"
+  },
+  {
+    "id": "tn3",
+    "author": "Syed Fazli",
+    "category": "dev",
+    "content": "The HubSpot and Notion integrations are stubs. When a real CRM token is available, test POST /api/integrations/hubspot manually first before enabling in the lead pipeline.",
+    "date": "2025-01-13"
+  },
+  {
+    "id": "tn4",
+    "author": "Syed Fazli",
+    "category": "marketing",
+    "content": "Blog category pages and tag pages are live. Start internal linking from service pages to relevant blog posts. The categoryInternalLinks map in lib/blog.ts should be expanded.",
+    "date": "2025-01-14"
+  },
+  {
+    "id": "tn5",
+    "author": "Syed Fazli",
+    "category": "product",
+    "content": "Solutions pages for chatbot, LMS builder, and automation are live. Next step: add a /solutions overview page that links to all three, with a comparison table.",
+    "date": "2025-01-15"
+  },
+  {
+    "id": "tn6",
+    "author": "Syed Fazli",
+    "category": "ops",
+    "content": "Lead scoring is live. Hot leads (score ≥60) should be followed up within 2 hours. Check the admin dashboard daily for new hot leads.",
+    "date": "2025-01-15"
+  }
+]

@@ -5,6 +5,7 @@ import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
 import { CTASection } from '@/components/CTASection';
 import { TestimonialsSection } from '@/components/Testimonials';
+import { PricingCalculator } from '@/components/PricingCalculator';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -616,7 +617,17 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* ── 11. Testimonials ── */}
+      {/* ── 11. Pricing Calculator ── */}
+      <Section
+        id="pricing-calculator"
+        title="Estimate Your Project"
+        subtitle="Get a ballpark cost for your project in under two minutes. No sign-up required — just select your requirements and see an instant estimate."
+        variant="muted"
+      >
+        <PricingCalculator />
+      </Section>
+
+      {/* ── 12. Testimonials ── */}
       <TestimonialsSection />
 
       {/* ── 12. Final CTA ── */}

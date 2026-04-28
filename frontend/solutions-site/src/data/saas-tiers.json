@@ -1,0 +1,184 @@
+{
+  "chatbot": {
+    "name": "HostingOcean AI Chatbot",
+    "tagline": "Deploy a custom-trained AI chatbot on your website or app in days.",
+    "tiers": [
+      {
+        "id": "starter",
+        "name": "Starter",
+        "price": 299,
+        "billing": "month",
+        "description": "Perfect for small teams and simple support use cases.",
+        "features": [
+          "Up to 500 conversations/month",
+          "1 knowledge base (up to 50 documents)",
+          "Website chat widget",
+          "Email escalation",
+          "Basic analytics dashboard",
+          "Standard support (48h response)"
+        ],
+        "cta": "Start Free Trial",
+        "highlighted": false
+      },
+      {
+        "id": "professional",
+        "name": "Professional",
+        "price": 799,
+        "billing": "month",
+        "description": "For growing businesses that need more capacity and integrations.",
+        "features": [
+          "Up to 5,000 conversations/month",
+          "3 knowledge bases (up to 500 documents each)",
+          "Website widget + API access",
+          "CRM & helpdesk integrations",
+          "Human handoff routing",
+          "Advanced analytics & export",
+          "Custom branding",
+          "Priority support (24h response)"
+        ],
+        "cta": "Start Free Trial",
+        "highlighted": true
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "price": null,
+        "billing": "custom",
+        "description": "Unlimited scale, enterprise security, and white-glove onboarding.",
+        "features": [
+          "Unlimited conversations",
+          "Unlimited knowledge bases",
+          "SSO & SAML authentication",
+          "On-premise or private cloud deployment",
+          "Custom model fine-tuning",
+          "SLA with guaranteed uptime",
+          "Dedicated success manager",
+          "Custom integrations"
+        ],
+        "cta": "Contact Sales",
+        "highlighted": false
+      }
+    ]
+  },
+  "lms": {
+    "name": "HostingOcean LMS Builder",
+    "tagline": "Launch a fully branded learning management system — no LMS expertise required.",
+    "tiers": [
+      {
+        "id": "starter",
+        "name": "Starter",
+        "price": 199,
+        "billing": "month",
+        "description": "For individuals and small teams getting started with online learning.",
+        "features": [
+          "Up to 50 learners",
+          "10 courses",
+          "SCORM 1.2 support",
+          "Basic completion tracking",
+          "Branded learner portal",
+          "Email notifications",
+          "Standard support"
+        ],
+        "cta": "Start Free Trial",
+        "highlighted": false
+      },
+      {
+        "id": "professional",
+        "name": "Professional",
+        "price": 599,
+        "billing": "month",
+        "description": "For organisations delivering structured learning programmes.",
+        "features": [
+          "Up to 500 learners",
+          "Unlimited courses",
+          "SCORM 1.2 & xAPI support",
+          "Completion certificates",
+          "Custom reports & exports",
+          "Manager dashboards",
+          "SSO integration",
+          "Priority support"
+        ],
+        "cta": "Start Free Trial",
+        "highlighted": true
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "price": null,
+        "billing": "custom",
+        "description": "Multi-tenant, white-label LMS for organisations with complex requirements.",
+        "features": [
+          "Unlimited learners",
+          "Multi-tenant with per-org branding",
+          "Custom domain",
+          "HRIS & Payroll integrations",
+          "Advanced analytics",
+          "SLA & dedicated infrastructure",
+          "Onboarding & training",
+          "Custom development included"
+        ],
+        "cta": "Contact Sales",
+        "highlighted": false
+      }
+    ]
+  },
+  "automation": {
+    "name": "HostingOcean Automation",
+    "tagline": "Connect your tools, automate your workflows, and reclaim hours every week.",
+    "tiers": [
+      {
+        "id": "starter",
+        "name": "Starter",
+        "price": 149,
+        "billing": "month",
+        "description": "Automate your first workflows with minimal setup.",
+        "features": [
+          "Up to 10 active workflows",
+          "5,000 task executions/month",
+          "50+ pre-built connectors",
+          "Basic error alerts",
+          "7-day run history",
+          "Community support"
+        ],
+        "cta": "Start Free Trial",
+        "highlighted": false
+      },
+      {
+        "id": "professional",
+        "name": "Professional",
+        "price": 449,
+        "billing": "month",
+        "description": "For teams automating critical business processes.",
+        "features": [
+          "Unlimited workflows",
+          "50,000 task executions/month",
+          "200+ connectors",
+          "Custom webhook triggers",
+          "Advanced branching & logic",
+          "30-day run history",
+          "Priority support"
+        ],
+        "cta": "Start Free Trial",
+        "highlighted": true
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "price": null,
+        "billing": "custom",
+        "description": "Enterprise-grade automation with custom connectors and SLAs.",
+        "features": [
+          "Unlimited executions",
+          "Custom connector development",
+          "On-premise option",
+          "Audit logging & compliance",
+          "Role-based access control",
+          "Dedicated support engineer",
+          "SLA-backed uptime"
+        ],
+        "cta": "Contact Sales",
+        "highlighted": false
+      }
+    ]
+  }
+}

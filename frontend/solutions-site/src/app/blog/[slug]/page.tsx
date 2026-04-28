@@ -7,9 +7,15 @@ import {
   getRelatedPosts,
   buildPostMetadata,
   formatDate,
+  categoryInternalLinks,
 } from '@/lib/blog';
+import { siteConfig } from '@/lib/seo';
+import { articleSchema, breadcrumbSchema } from '@/lib/schemas';
 import { Section } from '@/components/Section';
-import { ArrowRight, ArrowLeft, Clock, Calendar, Tag, User } from 'lucide-react';
+import { SocialShare } from '@/components/SocialShare';
+import { PricingCTA } from '@/components/PricingCTA';
+import { BlogReadTracker } from '@/components/BlogReadTracker';
+import { ArrowRight, ArrowLeft, Clock, Calendar, Tag, User, Link2 } from 'lucide-react';
 
 // ---------------------------------------------------------------------------
 // Inline Markdown renderer (handles ## ### - **bold**)
@@ -92,9 +98,36 @@ export default function BlogPostPage({ params }: Props) {
   if (!post) notFound();
 
   const related = getRelatedPosts(post.slug, post.category);
+  const postUrl = `${siteConfig.url}/blog/${post.slug}`;
+  const internalLinks = categoryInternalLinks[post.category] ?? [];
+
+  const articleJsonLd = articleSchema({
+    title: post.title,
+    description: post.excerpt,
+    url: postUrl,
+    datePublished: post.date,
+    image: `${siteConfig.url}/blog/opengraph-image`,
+  });
+
+  const breadcrumbJsonLd = breadcrumbSchema([
+    { name: 'Home', href: '/' },
+    { name: 'Blog', href: '/blog' },
+    { name: post.category, href: `/blog/category/${encodeURIComponent(post.category.replace(/ /g, '-'))}` },
+    { name: post.title, href: `/blog/${post.slug}` },
+  ]);
 
   return (
     <>
+      {/* JSON-LD structured data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
       {/* Dark hero */}
       <section className="relative overflow-hidden bg-gradient-to-br from-[#0F172A] via-[#0F172A] to-slate-800 text-white pt-20 pb-16 md:pt-28 md:pb-20">
         <div aria-hidden className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -111,13 +144,14 @@ export default function BlogPostPage({ params }: Props) {
           </Link>
 
           <div className="mb-5">
-            <span
-              className={`inline-block text-xs font-medium px-3 py-1 rounded-full border ${
+            <Link
+              href={`/blog/category/${encodeURIComponent(post.category.replace(/ /g, '-'))}`}
+              className={`inline-block text-xs font-medium px-3 py-1 rounded-full border hover:opacity-80 transition-opacity ${
                 categoryColours[post.category] ?? 'bg-slate-700 text-slate-300 border-slate-600'
               }`}
             >
               {post.category}
-            </span>
+            </Link>
           </div>
 
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight mb-6">
@@ -159,14 +193,46 @@ export default function BlogPostPage({ params }: Props) {
             <div className="flex items-center gap-2 flex-wrap">
               <Tag className="h-4 w-4 text-muted-foreground flex-shrink-0" />
               {post.tags.map((tag) => (
-                <span
+                <Link
                   key={tag}
-                  className="text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2.5 py-1 rounded-full border border-slate-200 dark:border-slate-700"
+                  href={`/blog/tag/${encodeURIComponent(tag.replace(/ /g, '-'))}`}
+                  className="text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2.5 py-1 rounded-full border border-slate-200 dark:border-slate-700 hover:border-[#2563EB]/40 hover:text-[#2563EB] transition-colors"
                 >
                   {tag}
-                </span>
+                </Link>
               ))}
             </div>
+          </div>
+
+          {/* Social share */}
+          <div className="mt-8">
+            <SocialShare url={postUrl} title={post.title} />
+          </div>
+
+          {/* Internal links */}
+          {internalLinks.length > 0 && (
+            <div className="mt-8 p-5 rounded-xl bg-[#2563EB]/5 border border-[#2563EB]/20">
+              <div className="flex items-center gap-2 mb-3">
+                <Link2 className="h-4 w-4 text-[#2563EB]" aria-hidden="true" />
+                <span className="text-sm font-semibold text-[#2563EB]">Explore related services</span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {internalLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="text-sm text-[#2563EB] hover:text-[#1d4ed8] underline underline-offset-2 transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Pricing CTA */}
+          <div className="mt-10">
+            <PricingCTA />
           </div>
         </div>
       </Section>
@@ -195,6 +261,7 @@ export default function BlogPostPage({ params }: Props) {
       )}
 
       {/* CTA */}
+      <BlogReadTracker slug={post.slug} category={post.category} />
       <Section variant="dark">
         <div className="text-center max-w-2xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
