@@ -4,8 +4,6 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, X, ChevronDown, Layers } from 'lucide-react';
 import { ModeToggle } from '@/components/ModeToggle';
-import { Button } from '@/components/ui/button';
-import { QuoteButton } from '@/components/QuoteModal';
 import { cn } from '@/lib/utils';
 
 const serviceLinks = [
@@ -135,9 +133,12 @@ export function Navbar() {
           {/* ── Right actions ── */}
           <div className="flex items-center gap-2">
             <ModeToggle />
-            <span className="hidden md:inline-flex">
-              <QuoteButton size="sm" />
-            </span>
+            <Link
+              href="/get-a-quote"
+              className="hidden md:inline-flex items-center gap-1.5 rounded-md bg-[#2563EB] hover:bg-[#1d4ed8] text-white text-sm font-medium h-9 px-4 transition-colors"
+            >
+              Get a Quote
+            </Link>
             <button
               className="md:hidden p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent"
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -201,12 +202,13 @@ export function Navbar() {
               Contact
             </Link>
             <div className="pt-3 pb-1">
-              <button
+              <Link
+                href="/get-a-quote"
                 className="w-full inline-flex items-center justify-center gap-2 rounded-md bg-[#2563EB] hover:bg-[#1d4ed8] text-white text-sm font-medium h-10 px-4 transition-colors"
-                onClick={() => { setMobileOpen(false); window.dispatchEvent(new CustomEvent('open-quote-modal')); }}
+                onClick={() => setMobileOpen(false)}
               >
                 Get a Quote
-              </button>
+              </Link>
             </div>
           </nav>
         </div>

@@ -280,7 +280,7 @@ export default function HomePage() {
         title="Custom LMS, AI &"
         titleAccent="Web Development Solutions"
         subtitle="We build scalable, modern and intelligent digital systems for businesses worldwide. From LMS platforms to AI chatbots, dashboards, APIs and automation — we deliver solutions that help you grow."
-        cta1={{ label: 'Get a Quote', href: '/contact' }}
+        cta1={{ label: 'Get a Quote', href: '/get-a-quote' }}
         cta2={{ label: 'View Services', href: '/services' }}
       />
 
@@ -626,7 +626,7 @@ export default function HomePage() {
         title="Ready to build"
         titleAccent="something great?"
         subtitle="Tell us about your project and we will respond with a clear, no-obligation proposal within one business day — no sales calls, no hard sell, just honest advice."
-        primary={{ label: 'Get a Free Quote' }}
+        primary={{ label: 'Get a Free Quote', href: '/get-a-quote' }}
         secondary={{ label: 'Contact Us', href: '/contact' }}
         trustItems={['No commitment required', 'Response within 24 hours', 'UK-registered company']}
       />

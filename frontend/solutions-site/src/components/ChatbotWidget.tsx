@@ -20,6 +20,50 @@ interface ApiHistory {
 }
 
 // ---------------------------------------------------------------------------
+// Quote-intent detection
+// ---------------------------------------------------------------------------
+const QUOTE_TRIGGERS = [
+  'get a quote',
+  'get quote',
+  'request a quote',
+  'pricing',
+  'how much',
+  'cost',
+  'price',
+  'start a project',
+  'start project',
+  'contact sales',
+  'hire you',
+  'work with you',
+  'need a developer',
+  'build for me',
+];
+
+function hasQuoteIntent(text: string): boolean {
+  const lower = text.toLowerCase();
+  return QUOTE_TRIGGERS.some((trigger) => lower.includes(trigger));
+}
+
+async function submitChatbotLead(message: string): Promise<void> {
+  try {
+    await fetch('/api/quote', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: 'Chatbot Enquiry',
+        email: 'chatbot@enquiry.internal',
+        service: 'Not specified',
+        budget: 'Not specified',
+        description: message,
+        source: 'chatbot',
+      }),
+    });
+  } catch {
+    // Fire-and-forget — never block the chat UX
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------------
 const INITIAL_MESSAGES: Message[] = [
@@ -73,6 +117,11 @@ export function ChatbotWidget() {
     setMessages(updatedMessages);
     setInput('');
     setIsLoading(true);
+
+    // Fire-and-forget lead capture for quote-intent messages
+    if (hasQuoteIntent(text)) {
+      submitChatbotLead(text);
+    }
 
     // Build history for the API: all messages except the new user message, capped at 6
     const history: ApiHistory[] = updatedMessages
