@@ -7,7 +7,7 @@ import { GetAQuoteForm } from '@/components/GetAQuoteForm';
 export const metadata: Metadata = buildMetadata({
   title: 'Get a Free Quote',
   description:
-    'Tell us about your project and we'll get back within one business day with a clear, no-obligation proposal tailored to your needs.',
+    "Tell us about your project and we'll get back within one business day with a clear, no-obligation proposal tailored to your needs.",
   path: '/get-a-quote',
   ogImage: '/og-default.png',
 });
