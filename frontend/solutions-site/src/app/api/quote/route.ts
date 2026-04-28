@@ -1,24 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
 import nodemailer from 'nodemailer';
+import { type QuoteLead, readLeads, writeLeads } from '@/lib/leads';
 
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
-export interface QuoteLead {
-  id: string;
-  name: string;
-  email: string;
-  phone?: string;
-  company?: string;
-  service: string;
-  budget: string;
-  description: string;
-  source: 'form' | 'chatbot';
-  createdAt: string;
-}
-
 interface RequestBody {
   name: string;
   email: string;
@@ -28,26 +14,6 @@ interface RequestBody {
   budget: string;
   description: string;
   source?: 'form' | 'chatbot';
-}
-
-// ---------------------------------------------------------------------------
-// File storage helpers
-// ---------------------------------------------------------------------------
-const DATA_DIR = path.join(process.cwd(), 'data');
-const LEADS_FILE = path.join(DATA_DIR, 'leads.json');
-
-async function readLeads(): Promise<QuoteLead[]> {
-  try {
-    const raw = await fs.readFile(LEADS_FILE, 'utf-8');
-    return JSON.parse(raw) as QuoteLead[];
-  } catch {
-    return [];
-  }
-}
-
-async function writeLeads(leads: QuoteLead[]): Promise<void> {
-  await fs.mkdir(DATA_DIR, { recursive: true });
-  await fs.writeFile(LEADS_FILE, JSON.stringify(leads, null, 2), 'utf-8');
 }
 
 // ---------------------------------------------------------------------------
