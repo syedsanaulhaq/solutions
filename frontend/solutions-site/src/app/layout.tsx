@@ -6,6 +6,7 @@ import { Footer } from '@/components/Footer';
 import { QuoteModalRoot } from '@/components/QuoteModalRoot';
 import { ChatbotWidget } from '@/components/ChatbotWidget';
 import { Analytics } from '@/components/Analytics';
+import AnnouncementBanner from '@/components/AnnouncementBanner';
 import { defaultMetadata, organizationSchema, websiteSchema } from '@/lib/seo';
 
 export { defaultMetadata as metadata };
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           >
             Skip to main content
           </a>
+          <AnnouncementBanner />
           <Navbar />
           <main id="main-content" className="min-h-screen">{children}</main>
           <Footer />
