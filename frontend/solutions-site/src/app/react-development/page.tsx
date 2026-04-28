@@ -25,7 +25,6 @@ import {
   FileText,
   Hammer,
   Rocket,
-  LifeBuoy,
   ChevronDown,
   PoundSterling,
   Lightbulb,

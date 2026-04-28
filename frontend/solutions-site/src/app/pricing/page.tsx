@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { buildMetadata } from '@/lib/seo';
 import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
   CheckCircle2,
@@ -13,7 +12,6 @@ import {
   RefreshCw,
   GraduationCap,
   MessageSquare,
-  HelpCircle,
   Zap,
   ShieldCheck,
   ChevronDown,

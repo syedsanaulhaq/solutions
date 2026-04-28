@@ -11,6 +11,59 @@ import {
 import { Section } from '@/components/Section';
 import { ArrowRight, ArrowLeft, Clock, Calendar, Tag, User } from 'lucide-react';
 
+// ---------------------------------------------------------------------------
+// Inline Markdown renderer (handles ## ### - **bold**)
+// ---------------------------------------------------------------------------
+function renderMarkdown(md: string) {
+  const blocks = md.split(/\n\n+/);
+  return blocks.map((block, i) => {
+    const trimmed = block.trim();
+    if (!trimmed) return null;
+    if (trimmed.startsWith('## ')) {
+      return (
+        <h2 key={i} className="text-2xl font-bold mt-10 mb-4 text-foreground dark:text-white">
+          {trimmed.slice(3)}
+        </h2>
+      );
+    }
+    if (trimmed.startsWith('### ')) {
+      return (
+        <h3 key={i} className="text-xl font-semibold mt-8 mb-3 text-foreground dark:text-white">
+          {trimmed.slice(4)}
+        </h3>
+      );
+    }
+    const lines = trimmed.split('\n');
+    if (lines.every((l) => l.trim().startsWith('- '))) {
+      return (
+        <ul key={i} className="list-disc list-outside ml-5 space-y-2 my-4">
+          {lines.filter((l) => l.trim().startsWith('- ')).map((l, j) => (
+            <li key={j} className="text-muted-foreground leading-relaxed">
+              {l.replace(/^- /, '').trim()}
+            </li>
+          ))}
+        </ul>
+      );
+    }
+    if (trimmed.startsWith('```')) {
+      const codeLines = trimmed.split('\n');
+      const code = codeLines.slice(1, codeLines.length - 1).join('\n');
+      return (
+        <pre key={i} className="rounded-xl bg-slate-900 text-slate-100 p-5 overflow-x-auto text-sm my-6 leading-relaxed">
+          <code>{code}</code>
+        </pre>
+      );
+    }
+    const parts = trimmed.split(/(\*\*[^*]+\*\*)/g);
+    const inline = parts.map((part, j) =>
+      part.startsWith('**') && part.endsWith('**') ? (
+        <strong key={j} className="font-semibold text-foreground dark:text-white">{part.slice(2, -2)}</strong>
+      ) : part
+    );
+    return <p key={i} className="text-muted-foreground leading-relaxed my-4">{inline}</p>;
+  });
+}
+
 interface Props {
   params: { slug: string };
 }
@@ -30,6 +83,8 @@ const categoryColours: Record<string, string> = {
   'AI Chatbots': 'bg-sky-900/40 text-sky-300 border-sky-700',
   'Project Management': 'bg-emerald-900/40 text-emerald-300 border-emerald-700',
   Automation: 'bg-orange-900/40 text-orange-300 border-orange-700',
+  'React Development': 'bg-blue-900/40 text-blue-300 border-blue-700',
+  'Node.js': 'bg-green-900/40 text-green-300 border-green-700',
 };
 
 export default function BlogPostPage({ params }: Props) {
@@ -93,37 +148,10 @@ export default function BlogPostPage({ params }: Props) {
       {/* Article */}
       <Section variant="default">
         <div className="max-w-3xl mx-auto">
-          <article className="space-y-10">
-            {post.content.map((section, i) => (
-              <div key={i}>
-                {section.heading && (
-                  <h2 className="text-2xl font-bold text-foreground dark:text-white mb-4">
-                    {section.heading}
-                  </h2>
-                )}
-                {section.paragraphs?.map((para, j) => (
-                  <p
-                    key={j}
-                    className="text-muted-foreground leading-relaxed text-base mb-4 last:mb-0"
-                  >
-                    {para}
-                  </p>
-                ))}
-                {section.listItems && (
-                  <ul className="mt-3 space-y-2.5">
-                    {section.listItems.map((item, k) => (
-                      <li
-                        key={k}
-                        className="flex items-start gap-3 text-muted-foreground text-base"
-                      >
-                        <span className="mt-2 h-2 w-2 rounded-full bg-[#2563EB] flex-shrink-0" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
+          <article className="space-y-2">
+            {typeof post.content === 'string'
+              ? renderMarkdown(post.content)
+              : null}
           </article>
 
           {/* Tags */}

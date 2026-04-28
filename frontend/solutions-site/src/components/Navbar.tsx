@@ -123,6 +123,18 @@ export function Navbar() {
               Blog
             </Link>
             <Link
+              href="/docs"
+              className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-accent"
+            >
+              Docs
+            </Link>
+            <Link
+              href="/pricing-calculator"
+              className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-accent"
+            >
+              Calculator
+            </Link>
+            <Link
               href="/contact"
               className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-accent"
             >
@@ -193,6 +205,20 @@ export function Navbar() {
               onClick={() => setMobileOpen(false)}
             >
               Blog
+            </Link>
+            <Link
+              href="/docs"
+              className="block px-3 py-2 text-sm font-medium rounded-md hover:bg-accent"
+              onClick={() => setMobileOpen(false)}
+            >
+              Docs
+            </Link>
+            <Link
+              href="/pricing-calculator"
+              className="block px-3 py-2 text-sm font-medium rounded-md hover:bg-accent"
+              onClick={() => setMobileOpen(false)}
+            >
+              Pricing Calculator
             </Link>
             <Link
               href="/contact"

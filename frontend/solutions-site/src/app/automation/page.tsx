@@ -25,7 +25,6 @@ import {
   Search,
   Hammer,
   Rocket,
-  LifeBuoy,
   ChevronDown,
   PoundSterling,
   Lightbulb,

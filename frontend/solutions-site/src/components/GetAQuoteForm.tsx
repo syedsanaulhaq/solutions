@@ -9,7 +9,6 @@ import {
   User,
   Briefcase,
   FileText,
-  Layers,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -285,7 +284,7 @@ function SuccessScreen() {
       <div className="space-y-2">
         <h2 className="text-2xl font-bold">Quote Request Submitted!</h2>
         <p className="text-muted-foreground max-w-sm">
-          Thanks for reaching out. We'll review your project details and get back to you within one
+          Thanks for reaching out. We&apos;ll review your project details and get back to you within one
           business day with a clear, no-obligation proposal.
         </p>
       </div>

@@ -16,7 +16,6 @@ import {
   Globe,
   ArrowRight,
   CheckCircle2,
-  Shield,
   Zap,
   DollarSign,
   Layers,
