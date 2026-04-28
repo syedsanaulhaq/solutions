@@ -1,0 +1,15 @@
+{
+  "folders": [
+    { "name": "agents",         "path": "agents" },
+    { "name": "backend",        "path": "backend" },
+    { "name": "frontend",       "path": "frontend" },
+    { "name": "infrastructure", "path": "infrastructure" },
+    { "name": "clients",        "path": "clients" },
+    { "name": "products",       "path": "products" },
+    { "name": "docs",           "path": "docs" },
+    { "name": "tools",          "path": "tools" }
+  ],
+  "settings": {
+    "window.title": "HostingOcean — ${activeEditorShort}"
+  }
+}

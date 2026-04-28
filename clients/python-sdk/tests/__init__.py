@@ -1,0 +1,1 @@
+__hostingocean_sdk_test_package__ = True

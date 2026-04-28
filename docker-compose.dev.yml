@@ -1,0 +1,34 @@
+# Development overrides — mounts source for hot-reload, skips prod builds
+# Usage: docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+
+services:
+
+  backend:
+    build:
+      target: deps
+    command: ["node_modules/.bin/nodemon", "src/index.js"]
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ./backend/src:/app/src:ro
+      - ./backend/.env:/app/.env:ro
+    ports:
+      - "3000:3000"
+      - "9229:9229"   # Node.js debugger
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    command: ["npm", "run", "dev", "--", "--host"]
+    environment:
+      VITE_API_URL: http://localhost:3000/api
+    volumes:
+      - ./frontend/src:/app/src:ro
+      - ./frontend/public:/app/public:ro
+    ports:
+      - "5173:5173"
+
+  db:
+    ports:
+      - "5432:5432"   # Expose DB port locally for dev tools
