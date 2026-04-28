@@ -10,7 +10,7 @@ const serviceLinks = [
   { label: 'Node.js APIs', href: '/node-api-development' },
   { label: 'Automation & Integrations', href: '/automation' },
   { label: 'All Services', href: '/services' },
-  { label: 'Web Hosting â†—', href: 'https://www.hostingocean.co.uk', external: true },
+  { label: 'Web Hosting ↗', href: 'https://www.hostingocean.co.uk', external: true },
 ];
 
 const companyLinks = [
@@ -18,6 +18,7 @@ const companyLinks = [
   { label: 'Portfolio', href: '/portfolio' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Blog', href: '/blog' },
+  { label: 'Docs', href: '/docs' },
   { label: 'Contact Us', href: '/contact' },
   { label: 'Privacy Policy', href: '/privacy' },
   { label: 'Terms of Service', href: '/terms' },
@@ -38,12 +39,12 @@ export function Footer() {
               <span className="font-bold text-lg text-white">HostingOcean Solutions</span>
             </Link>
             <p className="text-sm text-slate-400 max-w-sm leading-relaxed">
-              Custom LMS, AI chatbots, React &amp; Node.js development, and business automation â€” built by UK engineers for modern businesses worldwide.
+              Custom LMS, AI chatbots, React &amp; Node.js development, and business automation &mdash; built by UK engineers for modern businesses worldwide.
             </p>
             <div className="space-y-2 text-sm text-slate-500">
               <div className="flex items-center gap-2">
-                <MapPin className="h-3.5 w-3.5 shrink-0" />
-                <span>United Kingdom Â· Registered Company</span>
+                <MapPin className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                <span>United Kingdom &middot; Registered Company</span>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="h-3.5 w-3.5 shrink-0" />
@@ -109,10 +110,10 @@ export function Footer() {
 
         <div className="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-3">
           <p className="text-sm text-slate-500">
-            Â© 2026 HostingOcean Solutions. All rights reserved.
+            &copy; 2026 HostingOcean Solutions. All rights reserved.
           </p>
           <p className="text-xs text-slate-700">
-            solutions.hostingocean.co.uk Â· Built with Next.js 14 &amp; TypeScript
+            solutions.hostingocean.co.uk &middot; Built with Next.js 14 &amp; TypeScript
           </p>
         </div>
       </div>

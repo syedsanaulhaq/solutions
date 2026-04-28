@@ -76,6 +76,7 @@ export function buildPostMetadata(post: BlogPost): Metadata {
     description: post.excerpt,
     path: `/blog/${post.slug}`,
     keywords: post.tags,
+    ogImage: '/blog/opengraph-image',
   });
 }
 

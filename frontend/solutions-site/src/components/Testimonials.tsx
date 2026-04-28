@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { getAllTestimonials } from '@/lib/testimonials';
 import { TestimonialCard } from '@/components/TestimonialCard';
+import { AnimatedFadeIn } from '@/components/AnimatedFadeIn';
 
 interface TestimonialsSectionProps {
   /** Max number of testimonials to show. Defaults to 3. */
@@ -44,8 +45,10 @@ export function TestimonialsSection({
 
         {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map((t) => (
-            <TestimonialCard key={t.id} testimonial={t} />
+          {testimonials.map((t, i) => (
+            <AnimatedFadeIn key={t.id} delay={i * 0.1} direction="up">
+              <TestimonialCard testimonial={t} />
+            </AnimatedFadeIn>
           ))}
         </div>
 

@@ -40,8 +40,8 @@ export function Navbar() {
         <div className="flex h-16 items-center justify-between">
 
           {/* ── Logo ── */}
-          <Link href="/" className="flex items-center gap-2.5 font-bold text-lg shrink-0">
-            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#2563EB] text-white">
+          <Link href="/" className="flex items-center gap-2.5 font-bold text-lg shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md" aria-label="HostingOcean Solutions home">
+            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#2563EB] text-white" aria-hidden="true">
               <Layers className="h-4 w-4" />
             </div>
             <span className="text-foreground hidden sm:inline">HostingOcean</span>
@@ -61,8 +61,10 @@ export function Navbar() {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setServicesOpen((o) => !o)}
+                aria-expanded={servicesOpen}
+                aria-haspopup="true"
                 className={cn(
-                  'flex items-center gap-1 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-accent',
+                  'flex items-center gap-1 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
                   servicesOpen && 'text-foreground bg-accent'
                 )}
               >
@@ -152,9 +154,10 @@ export function Navbar() {
               Get a Quote
             </Link>
             <button
-              className="md:hidden p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent"
+              className="md:hidden p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label="Toggle menu"
+              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={mobileOpen}
             >
               {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>

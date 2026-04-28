@@ -11,7 +11,7 @@ export const siteConfig = {
   email: 'info@solutions.hostingocean.co.uk',
   twitterHandle: '@hostingocean',
   locale: 'en_GB',
-  ogImage: 'https://solutions.hostingocean.co.uk/og-default.png',
+  ogImage: 'https://solutions.hostingocean.co.uk/opengraph-image',
   address: {
     country: 'GB',
     region: 'United Kingdom',
@@ -82,7 +82,7 @@ export const pageMetadata = {
       'bespoke software development',
     ],
     path: '/',
-    ogImage: '/og-home.png',
+    ogImage: '/opengraph-image',
   },
   about: {
     title: 'About Us',
@@ -243,7 +243,7 @@ export const pageMetadata = {
       'software case studies UK',
     ],
     path: '/portfolio',
-    ogImage: '/og-portfolio.png',
+    ogImage: '/portfolio/opengraph-image',
   },
   contact: {
     title: 'Contact Us',
@@ -273,7 +273,7 @@ export const pageMetadata = {
       'automation blog UK',
     ],
     path: '/blog',
-    ogImage: '/og-blog.png',
+    ogImage: '/blog/opengraph-image',
   },
 } as const;
 
@@ -353,6 +353,7 @@ export function buildMetadata({
   const fullTitle = `${title} | ${siteConfig.name}`;
   const desc = description ?? siteConfig.description;
   const canonicalUrl = `${siteConfig.url}${path}`;
+  // Prefer the provided ogImage; fall back to the dynamic /opengraph-image route.
   const image = ogImage ?? siteConfig.ogImage;
 
   return {

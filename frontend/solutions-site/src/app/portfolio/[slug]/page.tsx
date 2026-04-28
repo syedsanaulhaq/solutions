@@ -8,6 +8,7 @@ import {
   CATEGORY_STYLES,
   formatProjectDate,
 } from '@/lib/portfolio';
+import { buildMetadata } from '@/lib/seo';
 import { Button } from '@/components/ui/button';
 
 interface Props {
@@ -23,10 +24,13 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = getProjectBySlug(params.slug);
   if (!project) return {};
-  return {
+  return buildMetadata({
     title: `${project.title} | Portfolio`,
     description: project.description.slice(0, 160),
-  };
+    path: `/portfolio/${project.slug}`,
+    keywords: [project.category, project.industry, 'portfolio', 'case study', 'HostingOcean Solutions'],
+    ogImage: '/portfolio/opengraph-image',
+  });
 }
 
 /* ── Page ── */

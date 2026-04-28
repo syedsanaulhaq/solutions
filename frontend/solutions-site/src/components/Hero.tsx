@@ -1,4 +1,8 @@
+'use client';
+
 import Link from 'next/link';
+import { useReducedMotion } from 'framer-motion';
+import { AnimatedFadeIn } from '@/components/AnimatedFadeIn';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Zap } from 'lucide-react';
 
@@ -12,6 +16,8 @@ interface HeroProps {
 }
 
 export function Hero({ badge, title, titleAccent, subtitle, cta1, cta2 }: HeroProps) {
+  useReducedMotion(); // consumed by AnimatedFadeIn internally
+
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-[#0F172A] via-[#0F172A] to-slate-800 text-white py-24 md:py-32">
       {/* Decorative blobs */}
@@ -23,53 +29,62 @@ export function Hero({ badge, title, titleAccent, subtitle, cta1, cta2 }: HeroPr
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         {badge && (
-          <div className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-800/60 px-4 py-1.5 text-sm text-slate-300 mb-8 backdrop-blur-sm animate-fade-in">
-            <Zap className="h-3.5 w-3.5 text-[#38BDF8]" />
-            {badge}
-          </div>
+          <AnimatedFadeIn delay={0} direction="up">
+            <div className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-800/60 px-4 py-1.5 text-sm text-slate-300 mb-8 backdrop-blur-sm">
+              <Zap className="h-3.5 w-3.5 text-[#38BDF8]" aria-hidden="true" />
+              {badge}
+            </div>
+          </AnimatedFadeIn>
         )}
 
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 max-w-4xl mx-auto leading-tight animate-fade-in animation-delay-100">
-          {title}
-          {titleAccent && (
-            <>
-              {' '}
-              <span className="text-[#38BDF8]">{titleAccent}</span>
-            </>
-          )}
-        </h1>
+        <AnimatedFadeIn delay={0.08} direction="up">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 max-w-4xl mx-auto leading-tight">
+            {title}
+            {titleAccent && (
+              <>
+                {' '}
+                <span className="text-[#38BDF8]">{titleAccent}</span>
+              </>
+            )}
+          </h1>
+        </AnimatedFadeIn>
 
-        <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in animation-delay-200">
-          {subtitle}
-        </p>
+        <AnimatedFadeIn delay={0.16} direction="up">
+          <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+            {subtitle}
+          </p>
+        </AnimatedFadeIn>
 
         {(cta1 || cta2) && (
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in animation-delay-300">
-            {cta1 && (
-              <Link href={cta1.href}>
-                <Button
-                  size="lg"
-                  className="w-full sm:w-auto text-base px-8 bg-[#2563EB] hover:bg-[#1d4ed8] shadow-lg shadow-blue-500/25"
-                >
-                  {cta1.label}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
-            )}
-            {cta2 && (
-              <Link href={cta2.href}>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="w-full sm:w-auto text-base px-8 border-slate-600 text-white bg-transparent hover:bg-slate-700 hover:text-white"
-                >
-                  {cta2.label}
-                </Button>
-              </Link>
-            )}
-          </div>
+          <AnimatedFadeIn delay={0.24} direction="up">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              {cta1 && (
+                <Link href={cta1.href}>
+                  <Button
+                    size="lg"
+                    className="w-full sm:w-auto text-base px-8 bg-[#2563EB] hover:bg-[#1d4ed8] shadow-lg shadow-blue-500/25 focus-visible:ring-2 focus-visible:ring-white"
+                  >
+                    {cta1.label}
+                    <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+                  </Button>
+                </Link>
+              )}
+              {cta2 && (
+                <Link href={cta2.href}>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="w-full sm:w-auto text-base px-8 border-slate-600 text-white bg-transparent hover:bg-slate-700 hover:text-white focus-visible:ring-2 focus-visible:ring-white"
+                  >
+                    {cta2.label}
+                  </Button>
+                </Link>
+              )}
+            </div>
+          </AnimatedFadeIn>
         )}
       </div>
     </section>
   );
 }
+

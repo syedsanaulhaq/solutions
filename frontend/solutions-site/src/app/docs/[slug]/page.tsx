@@ -26,6 +26,7 @@ export async function generateMetadata({
     description: doc.excerpt,
     keywords: [doc.category, 'documentation', 'guide', 'HostingOcean'],
     path: `/docs/${doc.slug}`,
+    ogImage: '/opengraph-image',
   });
 }
 

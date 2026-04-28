@@ -9,7 +9,7 @@ export const metadata: Metadata = buildMetadata({
   description:
     "Tell us about your project and we'll get back within one business day with a clear, no-obligation proposal tailored to your needs.",
   path: '/get-a-quote',
-  ogImage: '/og-default.png',
+  ogImage: '/opengraph-image',
 });
 
 const TRUST_POINTS = [

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Star, X, ArrowRight, Quote } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -30,9 +30,28 @@ function StarRating({ rating, size = 'sm' }: { rating: number; size?: 'sm' | 'md
 
 export function TestimonialCard({ testimonial: t }: TestimonialCardProps) {
   const [open, setOpen] = useState(false);
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
   const PREVIEW_LENGTH = 180;
   const isLong = t.message.length > PREVIEW_LENGTH;
   const preview = isLong ? t.message.slice(0, PREVIEW_LENGTH).trimEnd() + '…' : t.message;
+
+  // Close on Escape, manage body scroll, move focus
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.activeElement as HTMLElement | null;
+    closeBtnRef.current?.focus();
+    document.body.style.overflow = 'hidden';
+
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') setOpen(false);
+    }
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+      prev?.focus();
+    };
+  }, [open]);
 
   return (
     <>
@@ -96,6 +115,9 @@ export function TestimonialCard({ testimonial: t }: TestimonialCardProps) {
       {/* ── Modal ── */}
       {open && (
         <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Full review from ${t.name}`}
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
           onClick={() => setOpen(false)}
         >
@@ -105,11 +127,12 @@ export function TestimonialCard({ testimonial: t }: TestimonialCardProps) {
           >
             {/* Close */}
             <button
+              ref={closeBtnRef}
               onClick={() => setOpen(false)}
-              className="absolute top-4 right-4 rounded-lg p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
-              aria-label="Close"
+              className="absolute top-4 right-4 rounded-lg p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors focus-visible:ring-2 focus-visible:ring-ring"
+              aria-label="Close review"
             >
-              <X className="h-5 w-5" />
+              <X className="h-5 w-5" aria-hidden="true" />
             </button>
 
             {/* Stars */}

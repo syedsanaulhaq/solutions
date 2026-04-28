@@ -5,6 +5,7 @@ import type { PortfolioProject } from '@/lib/portfolio';
 import { ProjectCard } from '@/components/ProjectCard';
 import { PortfolioFilters } from '@/components/PortfolioFilters';
 import { PortfolioSearch } from '@/components/PortfolioSearch';
+import { AnimatedFadeIn } from '@/components/AnimatedFadeIn';
 
 interface PortfolioListingProps {
   projects: PortfolioProject[];
@@ -73,8 +74,10 @@ export function PortfolioListing({ projects, categories }: PortfolioListingProps
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+          {filtered.map((project, i) => (
+            <AnimatedFadeIn key={project.id} delay={Math.min(i * 0.07, 0.35)} direction="up" className="h-full">
+              <ProjectCard project={project} />
+            </AnimatedFadeIn>
           ))}
         </div>
       )}
