@@ -4,6 +4,7 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { Analytics } from '@/components/Analytics';
+import { ChatbotWidget } from '@/components/chatbot/ChatbotWidget';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -62,6 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </main>
           <Footer />
           <Analytics />
+          <ChatbotWidget />
         </ThemeProvider>
       </body>
     </html>
