@@ -49,7 +49,7 @@ export function Footer() {
             </p>
             <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
               <Mail className="h-4 w-4 shrink-0" />
-              <a href="mailto:hello@hostingocean.co.uk" className="hover:text-foreground transition-colors">hello@hostingocean.co.uk</a>
+              <a href="mailto:info@hostingocean.co.uk" className="hover:text-foreground transition-colors">info@hostingocean.co.uk</a>
             </div>
             <div className="flex items-center gap-3 mt-4">
               <a href="https://twitter.com/hostingocean" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="text-muted-foreground hover:text-foreground transition-colors">
