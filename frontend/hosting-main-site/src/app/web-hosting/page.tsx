@@ -13,8 +13,8 @@ export const metadata: Metadata = {
 };
 
 const webFeatures = [
-  { icon: Zap, title: 'NVMe SSD Storage', description: 'Up to 10× faster than standard SSD, ensuring snappy load times.' },
-  { icon: Shield, title: 'Free SSL Certificate', description: 'Auto-renewing Let's Encrypt SSL included on every plan.' },
+  { icon: Zap, title: 'NVMe SSD Storage', description: 'Up to 10x faster than standard SSD, ensuring snappy load times.' },
+  { icon: Shield, title: 'Free SSL Certificate', description: "Auto-renewing Let's Encrypt SSL included on every plan." },
   { icon: RefreshCcw, title: 'Daily Backups', description: '30-day backup history with one-click restore.' },
   { icon: Globe, title: 'UK Data Centres', description: 'GDPR-compliant Tier-3 UK infrastructure.' },
   { icon: Headphones, title: '24/7 UK Support', description: 'Real humans, based in the UK, always available.' },

@@ -6,7 +6,8 @@ interface VPSSpecs {
   ram: string;
   storage: string;
   bandwidth: string;
-  os: string;
+  os?: string;
+  ip?: string;
 }
 
 interface VPSPlanCardProps {
@@ -20,12 +21,13 @@ interface VPSPlanCardProps {
 
 const WHMCS = process.env.NEXT_PUBLIC_WHMCS_URL || 'https://my.hostingocean.co.uk';
 
-const specIcons: Record<keyof VPSSpecs, React.ReactNode> = {
+const specIcons: Partial<Record<keyof VPSSpecs, React.ReactNode>> = {
   cpu: <Cpu className="h-3.5 w-3.5" />,
   ram: <MemoryStick className="h-3.5 w-3.5" />,
   storage: <HardDrive className="h-3.5 w-3.5" />,
   bandwidth: <Network className="h-3.5 w-3.5" />,
   os: <Globe className="h-3.5 w-3.5" />,
+  ip: <Globe className="h-3.5 w-3.5" />,
 };
 
 export function VPSPlanCard({ name, price, description, specs, popular = false, whmcsPid }: VPSPlanCardProps) {
