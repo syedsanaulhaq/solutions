@@ -1,0 +1,171 @@
+{
+  "webHosting": [
+    {
+      "id": "starter",
+      "name": "Starter",
+      "price": 2.99,
+      "billingCycle": "month",
+      "description": "Perfect for personal sites and blogs",
+      "whmcsPid": 1,
+      "popular": false,
+      "features": [
+        "1 Website",
+        "10 GB SSD Storage",
+        "Unmetered Bandwidth",
+        "Free SSL Certificate",
+        "1 Email Account",
+        "Free Domain (1st year)",
+        "cPanel Control Panel",
+        "1-Click WordPress Install",
+        "Daily Backups"
+      ]
+    },
+    {
+      "id": "business",
+      "name": "Business",
+      "price": 5.99,
+      "billingCycle": "month",
+      "description": "Ideal for growing businesses",
+      "whmcsPid": 2,
+      "popular": true,
+      "features": [
+        "Unlimited Websites",
+        "50 GB SSD Storage",
+        "Unmetered Bandwidth",
+        "Free SSL Certificate",
+        "Unlimited Email Accounts",
+        "Free Domain (1st year)",
+        "cPanel Control Panel",
+        "1-Click WordPress Install",
+        "Daily Backups",
+        "Free Website Migration",
+        "Priority Support"
+      ]
+    },
+    {
+      "id": "professional",
+      "name": "Professional",
+      "price": 9.99,
+      "billingCycle": "month",
+      "description": "High-performance for demanding sites",
+      "whmcsPid": 3,
+      "popular": false,
+      "features": [
+        "Unlimited Websites",
+        "100 GB NVMe Storage",
+        "Unmetered Bandwidth",
+        "Free SSL Certificate",
+        "Unlimited Email Accounts",
+        "Free Domain (1st year)",
+        "cPanel Control Panel",
+        "1-Click WordPress Install",
+        "Daily Backups",
+        "Free Website Migration",
+        "Priority Support",
+        "Staging Environment",
+        "Advanced CDN",
+        "Malware Scanning"
+      ]
+    }
+  ],
+  "vpsHosting": [
+    {
+      "id": "vps-1",
+      "name": "VPS 1",
+      "price": 9.99,
+      "billingCycle": "month",
+      "description": "Entry-level VPS for small projects",
+      "whmcsPid": 10,
+      "popular": false,
+      "specs": {
+        "cpu": "2 vCPU",
+        "ram": "2 GB RAM",
+        "storage": "40 GB SSD",
+        "bandwidth": "2 TB Transfer",
+        "os": "Linux/Windows"
+      }
+    },
+    {
+      "id": "vps-2",
+      "name": "VPS 2",
+      "price": 19.99,
+      "billingCycle": "month",
+      "description": "Balanced performance for web apps",
+      "whmcsPid": 11,
+      "popular": true,
+      "specs": {
+        "cpu": "4 vCPU",
+        "ram": "4 GB RAM",
+        "storage": "80 GB SSD",
+        "bandwidth": "4 TB Transfer",
+        "os": "Linux/Windows"
+      }
+    },
+    {
+      "id": "vps-3",
+      "name": "VPS 3",
+      "price": 34.99,
+      "billingCycle": "month",
+      "description": "High-performance for resource-intensive apps",
+      "whmcsPid": 12,
+      "popular": false,
+      "specs": {
+        "cpu": "6 vCPU",
+        "ram": "8 GB RAM",
+        "storage": "160 GB SSD",
+        "bandwidth": "8 TB Transfer",
+        "os": "Linux/Windows"
+      }
+    },
+    {
+      "id": "vps-4",
+      "name": "VPS 4",
+      "price": 59.99,
+      "billingCycle": "month",
+      "description": "Enterprise-grade VPS for production workloads",
+      "whmcsPid": 13,
+      "popular": false,
+      "specs": {
+        "cpu": "8 vCPU",
+        "ram": "16 GB RAM",
+        "storage": "320 GB SSD",
+        "bandwidth": "16 TB Transfer",
+        "os": "Linux/Windows"
+      }
+    }
+  ],
+  "dedicatedServers": [
+    {
+      "id": "ds-entry",
+      "name": "Entry Dedicated",
+      "price": 79.99,
+      "billingCycle": "month",
+      "description": "Your own hardware, fully managed",
+      "whmcsPid": 20,
+      "popular": false,
+      "specs": {
+        "cpu": "Intel Xeon E3 / 4 Cores",
+        "ram": "16 GB DDR4",
+        "storage": "2 × 1 TB HDD (RAID 1)",
+        "bandwidth": "Unmetered @ 100 Mbps",
+        "ip": "5 IP Addresses"
+      }
+    },
+    {
+      "id": "ds-performance",
+      "name": "Performance Dedicated",
+      "price": 149.99,
+      "billingCycle": "month",
+      "description": "Maximum power for mission-critical workloads",
+      "whmcsPid": 21,
+      "popular": true,
+      "specs": {
+        "cpu": "Intel Xeon E5 / 8 Cores",
+        "ram": "32 GB DDR4",
+        "storage": "2 × 240 GB SSD + 2 × 2 TB HDD",
+        "bandwidth": "Unmetered @ 1 Gbps",
+        "ip": "10 IP Addresses"
+      }
+    }
+  ]
+}

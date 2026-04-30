@@ -1,0 +1,22 @@
+{
+  "popular": [
+    { "tld": ".com", "registration": 10.99, "renewal": 13.99, "transfer": 10.99 },
+    { "tld": ".co.uk", "registration": 6.99, "renewal": 9.99, "transfer": 6.99 },
+    { "tld": ".uk", "registration": 5.99, "renewal": 8.99, "transfer": 5.99 },
+    { "tld": ".net", "registration": 11.99, "renewal": 14.99, "transfer": 11.99 },
+    { "tld": ".org", "registration": 11.99, "renewal": 14.99, "transfer": 11.99 },
+    { "tld": ".io", "registration": 29.99, "renewal": 34.99, "transfer": 29.99 }
+  ],
+  "business": [
+    { "tld": ".biz", "registration": 12.99, "renewal": 15.99, "transfer": 12.99 },
+    { "tld": ".ltd", "registration": 14.99, "renewal": 17.99, "transfer": 14.99 },
+    { "tld": ".ltd.uk", "registration": 8.99, "renewal": 11.99, "transfer": 8.99 },
+    { "tld": ".company", "registration": 9.99, "renewal": 12.99, "transfer": 9.99 }
+  ],
+  "creative": [
+    { "tld": ".design", "registration": 19.99, "renewal": 24.99, "transfer": 19.99 },
+    { "tld": ".digital", "registration": 17.99, "renewal": 22.99, "transfer": 17.99 },
+    { "tld": ".media", "registration": 17.99, "renewal": 22.99, "transfer": 17.99 },
+    { "tld": ".studio", "registration": 14.99, "renewal": 18.99, "transfer": 14.99 }
+  ]
+}
