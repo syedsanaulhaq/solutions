@@ -10,7 +10,7 @@ import type { RefObject } from 'react';
 // ---------------------------------------------------------------------------
 // Quick action links — direct WHMCS / internal navigation
 // ---------------------------------------------------------------------------
-const WHMCS = process.env.NEXT_PUBLIC_WHMCS_URL || 'https://my.hostingocean.co.uk';
+const WHMCS = process.env.NEXT_PUBLIC_WHMCS_URL || 'https://hostingocean.co.uk';
 
 const QUICK_ACTIONS = [
   { label: 'Login to Client Area', href: `${WHMCS}/clientarea.php` },

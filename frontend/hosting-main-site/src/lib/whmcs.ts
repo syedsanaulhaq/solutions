@@ -4,7 +4,7 @@
  * For API operations (domain check, order status), use the API routes in /app/api/.
  */
 
-const BASE = process.env.NEXT_PUBLIC_WHMCS_URL || 'https://my.hostingocean.co.uk';
+const BASE = process.env.NEXT_PUBLIC_WHMCS_URL || 'https://hostingocean.co.uk';
 
 export const whmcs = {
   /** Client area homepage */
