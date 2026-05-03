@@ -42,3 +42,9 @@ coverage/
 whmcs_db_backup*
 cpanel_full_backup*
 
+# Local WHMCS extraction (deployed to server)
+whmcs-extract/
+
+# Next.js auto-generated
+next-env.d.ts
+
