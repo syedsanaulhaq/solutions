@@ -35,3 +35,10 @@ Thumbs.db
 
 # Coverage
 coverage/
+# Large backup files
+*.tar.gz
+*.sql.gz
+*.zip
+whmcs_db_backup*
+cpanel_full_backup*
+

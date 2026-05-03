@@ -19,7 +19,7 @@ interface VPSPlanCardProps {
   whmcsPid: number;
 }
 
-const WHMCS = process.env.NEXT_PUBLIC_WHMCS_URL || 'https://my.hostingocean.co.uk';
+const WHMCS = process.env.NEXT_PUBLIC_WHMCS_URL || 'https://whmcs.hostingocean.co.uk';
 
 const specIcons: Partial<Record<keyof VPSSpecs, React.ReactNode>> = {
   cpu: <Cpu className="h-3.5 w-3.5" />,

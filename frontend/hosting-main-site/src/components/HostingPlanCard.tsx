@@ -11,7 +11,7 @@ interface HostingPlanCardProps {
   billingCycle?: string;
 }
 
-const WHMCS = process.env.NEXT_PUBLIC_WHMCS_URL || 'https://my.hostingocean.co.uk';
+const WHMCS = process.env.NEXT_PUBLIC_WHMCS_URL || 'https://whmcs.hostingocean.co.uk';
 
 export function HostingPlanCard({
   name,

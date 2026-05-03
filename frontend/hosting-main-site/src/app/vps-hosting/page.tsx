@@ -71,7 +71,7 @@ export default function VPSHostingPage() {
         heading="Ready to Scale Your Infrastructure?"
         subheading="VPS plans from £9.99/month. Deploy in minutes, scale as you grow."
         primaryLabel="Order a VPS"
-        primaryHref="https://my.hostingocean.co.uk/cart.php"
+        primaryHref="https://whmcs.hostingocean.co.uk/cart.php"
         secondaryLabel="Talk to Sales"
         secondaryHref="/contact"
       />

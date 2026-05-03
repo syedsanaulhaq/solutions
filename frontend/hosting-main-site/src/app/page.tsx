@@ -57,7 +57,7 @@ export default function HomePage() {
         heading="Ready to Get Started?"
         subheading="Join thousands of UK businesses on hosting that just works. Plans from £2.99/month."
         primaryLabel="View All Plans"
-        primaryHref="https://my.hostingocean.co.uk/cart.php"
+        primaryHref="https://whmcs.hostingocean.co.uk/cart.php"
         secondaryLabel="Contact Us"
         secondaryHref="/contact"
       />

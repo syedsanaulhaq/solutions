@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Globe, Twitter, Facebook, Linkedin, Mail, Phone } from 'lucide-react';
 
-const WHMCS = process.env.NEXT_PUBLIC_WHMCS_URL || 'https://my.hostingocean.co.uk';
+const WHMCS = process.env.NEXT_PUBLIC_WHMCS_URL || 'https://whmcs.hostingocean.co.uk';
 
 const hosting = [
   { label: 'Web Hosting', href: '/web-hosting' },

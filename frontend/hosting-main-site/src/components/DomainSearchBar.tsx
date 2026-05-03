@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react';
 import { Search } from 'lucide-react';
 
-const WHMCS = process.env.NEXT_PUBLIC_WHMCS_URL || 'https://my.hostingocean.co.uk';
+const WHMCS = process.env.NEXT_PUBLIC_WHMCS_URL || 'https://whmcs.hostingocean.co.uk';
 
 export function DomainSearchBar() {
   const [domain, setDomain] = useState('');

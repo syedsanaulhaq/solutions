@@ -10,7 +10,7 @@ ABOUT US:
 - All servers are located in Tier-3 certified UK data centres
 - Contact: support@hostingocean.co.uk
 - Website: www.hostingocean.co.uk
-- Client Area: https://my.hostingocean.co.uk/clientarea.php
+- Client Area: https://whmcs.hostingocean.co.uk/clientarea.php
 
 OUR SERVICES:
 1. Web Hosting — Shared cPanel hosting from £2.99/month. Includes free SSL, daily backups, and a free domain name for the first year. Three plans: Starter (£2.99), Business (£5.99), Professional (£9.99).
@@ -28,11 +28,11 @@ KEY FEATURES:
 - 30-day money-back guarantee on shared hosting
 
 IMPORTANT LINKS:
-- View / order hosting plans: https://my.hostingocean.co.uk/cart.php
-- Client area login: https://my.hostingocean.co.uk/clientarea.php
-- Open a support ticket: https://my.hostingocean.co.uk/submitticket.php
+- View / order hosting plans: https://whmcs.hostingocean.co.uk/cart.php
+- Client area login: https://whmcs.hostingocean.co.uk/clientarea.php
+- Open a support ticket: https://whmcs.hostingocean.co.uk/submitticket.php
 - Domain search / registration: https://www.hostingocean.co.uk/domain-registration
-- Knowledge base: https://my.hostingocean.co.uk/knowledgebase.php
+- Knowledge base: https://whmcs.hostingocean.co.uk/knowledgebase.php
 - Web hosting plans: https://www.hostingocean.co.uk/web-hosting
 - VPS hosting: https://www.hostingocean.co.uk/vps-hosting
 - Dedicated servers: https://www.hostingocean.co.uk/dedicated-servers
@@ -82,7 +82,7 @@ interface ChatMessage {
 }
 
 const FALLBACK_REPLY =
-  "I'm having trouble connecting right now. For immediate help, please visit our support portal at https://my.hostingocean.co.uk/submitticket.php or email support@hostingocean.co.uk — we respond within one business day.";
+  "I'm having trouble connecting right now. For immediate help, please visit our support portal at https://whmcs.hostingocean.co.uk/submitticket.php or email support@hostingocean.co.uk — we respond within one business day.";
 
 // ---------------------------------------------------------------------------
 // POST /api/chat

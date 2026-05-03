@@ -58,7 +58,7 @@ export default function DomainRegistrationPage() {
                     <td className="px-4 py-3 text-right">£{d.transfer.toFixed(2)}</td>
                     <td className="px-4 py-3 text-right">
                       <a
-                        href={`https://my.hostingocean.co.uk/cart.php?a=add&domain=register&query=${encodeURIComponent(d.tld)}`}
+                        href={`https://whmcs.hostingocean.co.uk/cart.php?a=add&domain=register&query=${encodeURIComponent(d.tld)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-xs font-semibold text-[#2563EB] hover:underline"
@@ -94,7 +94,7 @@ export default function DomainRegistrationPage() {
                     <td className="px-4 py-3 text-right">£{d.transfer.toFixed(2)}</td>
                     <td className="px-4 py-3 text-right">
                       <a
-                        href={`https://my.hostingocean.co.uk/cart.php?a=add&domain=register&query=${encodeURIComponent(d.tld)}`}
+                        href={`https://whmcs.hostingocean.co.uk/cart.php?a=add&domain=register&query=${encodeURIComponent(d.tld)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-xs font-semibold text-[#2563EB] hover:underline"
@@ -116,7 +116,7 @@ export default function DomainRegistrationPage() {
         primaryLabel="View Hosting Plans"
         primaryHref="/web-hosting"
         secondaryLabel="Register a Domain"
-        secondaryHref="https://my.hostingocean.co.uk/cart.php?a=add&domain=register"
+        secondaryHref="https://whmcs.hostingocean.co.uk/cart.php?a=add&domain=register"
       />
     </>
   );

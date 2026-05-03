@@ -1,7 +1,7 @@
 import { DomainSearchBar } from '@/components/DomainSearchBar';
 import { ArrowRight, Shield, Server, Headphones } from 'lucide-react';
 
-const WHMCS = process.env.NEXT_PUBLIC_WHMCS_URL || 'https://my.hostingocean.co.uk';
+const WHMCS = process.env.NEXT_PUBLIC_WHMCS_URL || 'https://whmcs.hostingocean.co.uk';
 
 const stats = [
   { value: '99.9%', label: 'Uptime SLA' },

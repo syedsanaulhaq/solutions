@@ -87,7 +87,7 @@ export default function DedicatedServersPage() {
         heading="Need Maximum Power?"
         subheading="Talk to our team about the right dedicated server for your business."
         primaryLabel="Order a Dedicated Server"
-        primaryHref="https://my.hostingocean.co.uk/cart.php"
+        primaryHref="https://whmcs.hostingocean.co.uk/cart.php"
         secondaryLabel="Request Custom Quote"
         secondaryHref="/contact"
       />

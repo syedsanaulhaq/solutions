@@ -6,7 +6,7 @@ import { Menu, X, ChevronDown, Globe } from 'lucide-react';
 import { ModeToggle } from '@/components/ModeToggle';
 import { cn } from '@/lib/utils';
 
-const WHMCS = process.env.NEXT_PUBLIC_WHMCS_URL || 'https://my.hostingocean.co.uk';
+const WHMCS = process.env.NEXT_PUBLIC_WHMCS_URL || 'https://whmcs.hostingocean.co.uk';
 
 const hostingLinks = [
   { label: 'Web Hosting', href: '/web-hosting' },

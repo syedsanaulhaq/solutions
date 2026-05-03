@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
 
   // If WHMCS API credentials are not set, return a redirect URL
   if (!apiUrl || !identifier || !secret) {
-    const whmcsBase = process.env.NEXT_PUBLIC_WHMCS_URL || 'https://my.hostingocean.co.uk';
+    const whmcsBase = process.env.NEXT_PUBLIC_WHMCS_URL || 'https://whmcs.hostingocean.co.uk';
     return NextResponse.json({
       available: null,
       redirectUrl: `${whmcsBase}/cart.php?a=add&domain=register&query=${encodeURIComponent(domain)}`,

@@ -75,7 +75,7 @@ export default function WebHostingPage() {
         heading="Get Your Website Online Today"
         subheading="Join thousands of UK businesses. Plans from £2.99/month with a free domain."
         primaryLabel="Choose a Plan"
-        primaryHref="https://my.hostingocean.co.uk/cart.php"
+        primaryHref="https://whmcs.hostingocean.co.uk/cart.php"
         secondaryLabel="Contact Sales"
         secondaryHref="/contact"
       />
