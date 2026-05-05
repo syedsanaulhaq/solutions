@@ -1,0 +1,22 @@
+{
+  "popular": [
+    { "tld": ".pk", "registration": 1999, "renewal": 2499, "transfer": 1999 },
+    { "tld": ".com.pk", "registration": 1499, "renewal": 1999, "transfer": 1499 },
+    { "tld": ".net.pk", "registration": 1499, "renewal": 1999, "transfer": 1499 },
+    { "tld": ".org.pk", "registration": 1499, "renewal": 1999, "transfer": 1499 },
+    { "tld": ".com", "registration": 3499, "renewal": 4499, "transfer": 3499 },
+    { "tld": ".net", "registration": 3799, "renewal": 4799, "transfer": 3799 }
+  ],
+  "business": [
+    { "tld": ".biz", "registration": 3999, "renewal": 4999, "transfer": 3999 },
+    { "tld": ".info", "registration": 2999, "renewal": 3999, "transfer": 2999 },
+    { "tld": ".co", "registration": 5999, "renewal": 6999, "transfer": 5999 },
+    { "tld": ".company", "registration": 3499, "renewal": 4499, "transfer": 3499 }
+  ],
+  "creative": [
+    { "tld": ".design", "registration": 5999, "renewal": 7499, "transfer": 5999 },
+    { "tld": ".digital", "registration": 5499, "renewal": 6999, "transfer": 5499 },
+    { "tld": ".media", "registration": 5499, "renewal": 6999, "transfer": 5499 },
+    { "tld": ".store", "registration": 4999, "renewal": 6499, "transfer": 4999 }
+  ]
+}

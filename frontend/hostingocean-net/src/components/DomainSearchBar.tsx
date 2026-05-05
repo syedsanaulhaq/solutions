@@ -1,0 +1,42 @@
+'use client';
+
+import { useState, useRef } from 'react';
+import { Search } from 'lucide-react';
+
+export function DomainSearchBar() {
+  const [domain, setDomain] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const q = domain.trim();
+    if (!q) return;
+    window.location.href = `/contact?domain=${encodeURIComponent(q)}`;
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto">
+      <div className="flex gap-0 rounded-xl border border-border bg-background shadow-md overflow-hidden focus-within:ring-2 focus-within:ring-[#15803D] focus-within:border-[#15803D] transition-all">
+        <input
+          ref={inputRef}
+          type="text"
+          value={domain}
+          onChange={(e) => setDomain(e.target.value)}
+          placeholder="Search for your domain (e.g. mybusiness.pk)…"
+          aria-label="Domain name"
+          className="flex-1 px-4 py-3.5 text-sm bg-transparent outline-none placeholder:text-muted-foreground"
+        />
+        <button
+          type="submit"
+          className="flex items-center gap-2 px-5 py-3.5 bg-[#15803D] text-white text-sm font-semibold hover:bg-[#166534] transition-colors"
+        >
+          <Search className="h-4 w-4" aria-hidden="true" />
+          Search
+        </button>
+      </div>
+      <p className="text-xs text-muted-foreground text-center mt-2">
+        Enter a domain name (e.g. mybusiness.pk) and we&rsquo;ll check availability for you
+      </p>
+    </form>
+  );
+}
