@@ -57,6 +57,9 @@ export function Navbar() {
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-1">
+          <Link href="/" className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors">
+            Home
+          </Link>
           {/* Hosting dropdown */}
           <div className="relative" ref={dropdownRef}>
             <button
@@ -117,6 +120,7 @@ export function Navbar() {
       {/* Mobile menu */}
       {mobileOpen && (
         <div className="md:hidden border-t border-border bg-background px-4 py-4 space-y-1">
+          <Link href="/" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-colors">Home</Link>
           {hostingLinks.map((l) => (
             <Link
               key={l.href}
