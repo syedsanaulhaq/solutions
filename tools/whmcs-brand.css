@@ -1,0 +1,552 @@
+/*!
+ * HostingOcean.net — WHMCS Brand Override CSS
+ * Syncs WHMCS Twenty-One template with pk.hostingocean.co.uk look & feel
+ * Primary green: #15803D | Dark hero: #071a0b → #0d2b14
+ */
+
+/* ===== CSS Variable Overrides ===== */
+:root {
+  --primary: #15803D;
+  --primary-hover: #166534;
+  --primary-light: #dcfce7;
+  --brand-dark: #071a0b;
+  --brand-dark2: #0d2b14;
+  --font-family-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* ===== Google Font ===== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ===== Body ===== */
+body {
+  font-family: var(--font-family-sans-serif) !important;
+  background-color: #f8f9fa !important;
+  color: #1a2e1a !important;
+}
+
+/* ===== Header / Navbar ===== */
+#header .navbar,
+#header .topbar {
+  background: linear-gradient(135deg, #071a0b 0%, #0d2b14 100%) !important;
+  border-bottom: 1px solid #15803D33 !important;
+}
+
+#header .navbar-brand,
+#header .navbar-brand:hover {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 1.25rem !important;
+  text-decoration: none !important;
+}
+
+#header .navbar-brand .logo-img {
+  max-height: 42px !important;
+}
+
+#header .main-navbar-wrapper {
+  background: #0d2b14 !important;
+  border-bottom: 1px solid #15803D44 !important;
+}
+
+#header .main-navbar-wrapper .nav-link,
+#header .main-navbar-wrapper .navbar-nav > li > a {
+  color: #d1fae5 !important;
+  font-weight: 500 !important;
+}
+
+#header .main-navbar-wrapper .nav-link:hover,
+#header .main-navbar-wrapper .navbar-nav > li > a:hover {
+  color: #ffffff !important;
+  background: #15803D33 !important;
+  border-radius: 6px !important;
+}
+
+#header .main-navbar-wrapper .dropdown-menu {
+  background: #0d2b14 !important;
+  border: 1px solid #15803D55 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4) !important;
+}
+
+#header .main-navbar-wrapper .dropdown-menu .dropdown-item {
+  color: #d1fae5 !important;
+}
+
+#header .main-navbar-wrapper .dropdown-menu .dropdown-item:hover {
+  background: #15803D !important;
+  color: #fff !important;
+}
+
+/* Topbar (logged in user bar) */
+#header .topbar {
+  background: #071a0b !important;
+  font-size: 0.85rem !important;
+}
+
+#header .topbar .btn {
+  color: #86efac !important;
+}
+
+#header .topbar .btn:hover {
+  color: #ffffff !important;
+}
+
+#header .topbar .btn-active-client {
+  color: #d1fae5 !important;
+  border-color: #15803D55 !important;
+  background: transparent !important;
+}
+
+/* Search bar in header */
+#header .search .btn {
+  background: #15803D !important;
+  border-color: #15803D !important;
+  color: #fff !important;
+}
+
+#header .search .form-control {
+  border-color: #15803D44 !important;
+  background: rgba(255,255,255,0.08) !important;
+  color: #fff !important;
+}
+
+#header .search .form-control::placeholder {
+  color: #86efac99 !important;
+}
+
+/* Cart button */
+#header .cart-btn {
+  color: #86efac !important;
+}
+
+#header .cart-btn:hover {
+  color: #fff !important;
+}
+
+#header .badge-info {
+  background-color: #15803D !important;
+}
+
+/* Hamburger icon */
+#header .navbar-toggler,
+#header .btn.nav-link {
+  color: #86efac !important;
+}
+
+/* ===== Breadcrumb ===== */
+.master-breadcrumb {
+  background: #f0fdf4 !important;
+  border-bottom: 1px solid #dcfce7 !important;
+}
+
+.master-breadcrumb .breadcrumb {
+  background: transparent !important;
+  margin-bottom: 0 !important;
+}
+
+.master-breadcrumb .breadcrumb-item a {
+  color: #15803D !important;
+  font-weight: 500 !important;
+}
+
+.master-breadcrumb .breadcrumb-item.active {
+  color: #1a2e1a !important;
+}
+
+/* ===== Buttons ===== */
+.btn-primary,
+.btn-success {
+  background-color: #15803D !important;
+  border-color: #15803D !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+}
+
+.btn-primary:hover, .btn-primary:focus,
+.btn-success:hover, .btn-success:focus {
+  background-color: #166534 !important;
+  border-color: #166534 !important;
+  color: #fff !important;
+  box-shadow: 0 0 0 0.2rem rgba(21,128,61,0.35) !important;
+}
+
+.btn-primary:active, .btn-success:active {
+  background-color: #14532d !important;
+  border-color: #14532d !important;
+}
+
+.btn-default,
+.btn-secondary {
+  border-color: #15803D55 !important;
+  color: #15803D !important;
+  border-radius: 8px !important;
+}
+
+.btn-default:hover,
+.btn-secondary:hover {
+  background-color: #f0fdf4 !important;
+  border-color: #15803D !important;
+  color: #15803D !important;
+}
+
+.btn-danger {
+  border-radius: 8px !important;
+}
+
+.btn-info {
+  background-color: #0f766e !important;
+  border-color: #0f766e !important;
+  border-radius: 8px !important;
+}
+
+/* ===== Links ===== */
+a {
+  color: #15803D !important;
+}
+
+a:hover {
+  color: #166534 !important;
+}
+
+/* ===== Forms & Inputs ===== */
+.form-control:focus {
+  border-color: #15803D !important;
+  box-shadow: 0 0 0 0.2rem rgba(21,128,61,0.25) !important;
+}
+
+.input-group-text {
+  border-color: #dee2e6 !important;
+}
+
+/* ===== Cards / Panels ===== */
+.card {
+  border-radius: 12px !important;
+  border: 1px solid #e7f5eb !important;
+  box-shadow: 0 2px 8px rgba(21,128,61,0.06) !important;
+}
+
+.card-header {
+  background: linear-gradient(135deg, #071a0b 0%, #0d2b14 100%) !important;
+  color: #fff !important;
+  border-radius: 12px 12px 0 0 !important;
+  font-weight: 600 !important;
+  border-bottom: none !important;
+}
+
+.card-header a,
+.card-header .btn {
+  color: #86efac !important;
+}
+
+.card-header a:hover,
+.card-header .btn:hover {
+  color: #fff !important;
+}
+
+/* Panel headings (older Bootstrap style) */
+.panel-heading {
+  background: linear-gradient(135deg, #071a0b 0%, #0d2b14 100%) !important;
+  color: #fff !important;
+  border-radius: 8px 8px 0 0 !important;
+}
+
+.panel {
+  border-radius: 12px !important;
+  border-color: #e7f5eb !important;
+}
+
+/* ===== Tables ===== */
+.table thead th {
+  background: #f0fdf4 !important;
+  color: #15803D !important;
+  border-color: #dcfce7 !important;
+  font-weight: 600 !important;
+}
+
+.table td {
+  border-color: #f0fdf4 !important;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f0fdf4 !important;
+}
+
+/* ===== Badges ===== */
+.badge-primary {
+  background-color: #15803D !important;
+}
+
+.badge-success {
+  background-color: #15803D !important;
+}
+
+.badge-info {
+  background-color: #0f766e !important;
+}
+
+/* ===== Alerts ===== */
+.alert-success {
+  background-color: #f0fdf4 !important;
+  border-color: #86efac !important;
+  color: #14532d !important;
+}
+
+.alert-info {
+  background-color: #ecfdf5 !important;
+  border-color: #6ee7b7 !important;
+  color: #065f46 !important;
+}
+
+.alert-warning {
+  background-color: #fefce8 !important;
+  border-color: #fde047 !important;
+}
+
+/* ===== Login Page ===== */
+.primary-bg-color {
+  background-color: #f0fdf4 !important;
+}
+
+/* Login card centering */
+main .card,
+main > .container > .card {
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px rgba(21,128,61,0.12) !important;
+  border: 1px solid #dcfce7 !important;
+}
+
+main .card .card-body h6,
+main .card .card-body h5,
+main .card .card-body h4 {
+  color: #071a0b !important;
+  font-weight: 700 !important;
+}
+
+/* ===== Sidebar ===== */
+.sidebar .list-group-item.active,
+.sidebar .list-group-item.active:hover {
+  background-color: #15803D !important;
+  border-color: #15803D !important;
+  color: #fff !important;
+}
+
+.sidebar .list-group-item:hover {
+  background-color: #f0fdf4 !important;
+  color: #15803D !important;
+}
+
+.sidebar .list-group-item a {
+  color: #1a2e1a !important;
+}
+
+.sidebar .list-group-item.active a {
+  color: #fff !important;
+}
+
+/* Sidebar panel header */
+.sidebar .card-header {
+  font-size: 0.85rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* ===== Footer ===== */
+footer,
+#footer {
+  background: linear-gradient(135deg, #071a0b 0%, #0d2b14 100%) !important;
+  color: #86efac !important;
+  border-top: 1px solid #15803D33 !important;
+  margin-top: 2rem !important;
+}
+
+footer a,
+#footer a {
+  color: #86efac !important;
+}
+
+footer a:hover,
+#footer a:hover {
+  color: #ffffff !important;
+}
+
+footer p,
+#footer p {
+  color: #86efac !important;
+}
+
+/* ===== Pagination ===== */
+.page-item.active .page-link {
+  background-color: #15803D !important;
+  border-color: #15803D !important;
+}
+
+.page-link {
+  color: #15803D !important;
+}
+
+.page-link:hover {
+  background-color: #f0fdf4 !important;
+  color: #166534 !important;
+}
+
+/* ===== Status indicators ===== */
+.text-success,
+.text-primary {
+  color: #15803D !important;
+}
+
+/* ===== Invoice / Order ===== */
+.invoice-header,
+.order-summary-header {
+  background: linear-gradient(135deg, #071a0b 0%, #0d2b14 100%) !important;
+  color: #fff !important;
+  border-radius: 12px 12px 0 0 !important;
+}
+
+/* ===== Homepage Welcome ===== */
+.home-icon-link .icon-circle {
+  background: #15803D !important;
+}
+
+.client-service-info .info-icon {
+  color: #15803D !important;
+}
+
+/* ===== Checkboxes / Radio active ===== */
+.custom-control-input:checked ~ .custom-control-label::before {
+  background-color: #15803D !important;
+  border-color: #15803D !important;
+}
+
+/* ===== Nav pills / tabs ===== */
+.nav-pills .nav-link.active {
+  background-color: #15803D !important;
+}
+
+.nav-tabs .nav-link.active {
+  color: #15803D !important;
+  border-bottom-color: #15803D !important;
+}
+
+/* ===== Progress bars ===== */
+.progress-bar {
+  background-color: #15803D !important;
+}
+
+/* ===== WHMCS specific overrides ===== */
+/* Remove red/danger look from logo text if no image */
+.navbar-brand {
+  color: #fff !important;
+}
+
+/* Shopping cart */
+#cart .product-info-area .product-name {
+  color: #071a0b !important;
+  font-weight: 600 !important;
+}
+
+/* Order form steps */
+.order-step-item.active {
+  background: #15803D !important;
+  border-color: #15803D !important;
+}
+
+/* Domain search result */
+.domain-available {
+  color: #15803D !important;
+}
+
+.domain-available .btn {
+  background: #15803D !important;
+  border-color: #15803D !important;
+}
+
+/* Knowledgebase search */
+.search-result-title a {
+  color: #15803D !important;
+  font-weight: 600 !important;
+}
+
+/* ===== Responsive tweaks ===== */
+@media (max-width: 768px) {
+  #header .main-navbar-wrapper .collapse.navbar-collapse {
+    background: #071a0b !important;
+    padding: 1rem !important;
+    border-radius: 0 0 12px 12px !important;
+  }
+}
+
+/* ===== Twenty-One actual selectors (corrected from DOM inspection) ===== */
+
+/* Header area */
+header.headermain,
+.headermain {
+  background: linear-gradient(135deg, #071a0b 0%, #0d2b14 100%) !important;
+  border-bottom: 1px solid #15803D33 !important;
+}
+
+/* Logo text */
+a.headermain-logo-text,
+.headermain-logo-text,
+.headermain-logo a {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 1.3rem !important;
+  text-decoration: none !important;
+}
+
+a.headermain-logo-text:hover,
+.headermain-logo-text:hover {
+  color: #86efac !important;
+}
+
+/* Navbar / nav */
+.navmain-container {
+  background: #0d2b14 !important;
+  border-bottom: 1px solid #15803D44 !important;
+}
+
+nav.navmain a,
+.navmain a {
+  color: #d1fae5 !important;
+  font-weight: 500 !important;
+}
+
+nav.navmain a:hover,
+.navmain a:hover {
+  color: #ffffff !important;
+  background: #15803D33 !important;
+}
+
+/* Mobile nav icon */
+.navmain-mobile-icon {
+  color: #86efac !important;
+}
+
+/* Footer */
+footer.footermain,
+.footermain,
+.footermain-background {
+  background: linear-gradient(135deg, #071a0b 0%, #0d2b14 100%) !important;
+  color: #86efac !important;
+  border-top: 1px solid #15803D33 !important;
+}
+
+footer.footermain a,
+.footermain a,
+.footermain-background a {
+  color: #86efac !important;
+}
+
+footer.footermain a:hover,
+.footermain a:hover {
+  color: #ffffff !important;
+}
+
+footer.footermain p,
+.footermain p,
+footer.footermain span,
+.footermain span {
+  color: #86efac !important;
+}
