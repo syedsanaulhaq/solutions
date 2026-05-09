@@ -71,13 +71,13 @@ export function Navbar() {
               <ChevronDown className={cn('h-3.5 w-3.5 transition-transform duration-150', hostingOpen && 'rotate-180')} />
             </button>
             {hostingOpen && (
-              <div className="absolute top-full left-0 mt-1.5 w-52 bg-popover border border-border rounded-xl shadow-lg p-1.5 z-50">
+              <div className="absolute top-full left-0 mt-1.5 w-52 bg-white dark:bg-[#0f1a10] border border-border rounded-xl shadow-xl p-1.5 z-50">
                 {hostingLinks.map((l) => (
                   <Link
                     key={l.href}
                     href={l.href}
                     onClick={() => setHostingOpen(false)}
-                    className="block px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-colors"
+                    className="block px-3 py-2 text-sm text-foreground hover:text-[#15803D] hover:bg-[#15803D]/8 rounded-lg transition-colors"
                   >
                     {l.label}
                   </Link>
