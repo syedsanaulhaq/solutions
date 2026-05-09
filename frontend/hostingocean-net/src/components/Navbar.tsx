@@ -103,12 +103,14 @@ export function Navbar() {
         {/* Actions */}
         <div className="flex items-center gap-2">
           <ModeToggle />
-          <Link
-            href="/contact"
+          <a
+            href="https://whmcs.hostingocean.co.uk/register.php"
+            target="_blank"
+            rel="noopener noreferrer"
             className="hidden md:inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg bg-[#15803D] text-white hover:bg-[#166534] transition-colors shadow-sm"
           >
             Get Started
-          </Link>
+          </a>
           {/* Mobile toggle */}
           <button
             onClick={() => setMobileOpen((o) => !o)}
@@ -138,13 +140,14 @@ export function Navbar() {
           <Link href="/blog" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-colors">Blog</Link>
           <Link href="/contact" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-colors">Contact</Link>
           <div className="pt-2">
-            <Link
-              href="/contact"
-              onClick={() => setMobileOpen(false)}
+            <a
+              href="https://whmcs.hostingocean.co.uk/register.php"
+              target="_blank"
+              rel="noopener noreferrer"
               className="block w-full text-center px-4 py-2.5 text-sm font-semibold rounded-lg bg-[#15803D] text-white hover:bg-[#166534] transition-colors"
             >
               Get Started
-            </Link>
+            </a>
           </div>
         </div>
       )}
