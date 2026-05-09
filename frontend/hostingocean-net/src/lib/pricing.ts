@@ -31,6 +31,7 @@ export interface VPSPlan {
   billingCycle: string;
   description: string;
   popular: boolean;
+  features: string[];
   specs: VPSSpecs;
 }
 
@@ -43,6 +44,7 @@ export interface DedicatedPlan {
   billingCycle: string;
   description: string;
   popular: boolean;
+  features: string[];
   specs: VPSSpecs;
 }
 

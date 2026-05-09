@@ -70,23 +70,84 @@ function getWhmcsFallbackRate(PDO $pdo): float {
     return 367.2; // hardcoded last-resort fallback
 }
 
-// ─── Step 3: Fetch GBP monthly prices from WHMCS DB ─────────────────────────
+// ─── Step 3: Fetch GBP prices + descriptions from WHMCS DB ─────────────────
 
-function fetchWhmcsPrices(PDO $pdo, array $whmcsIds): array {
+function fetchWhmcsProducts(PDO $pdo, array $whmcsIds): array {
     $placeholders = implode(',', array_fill(0, count($whmcsIds), '?'));
     $stmt = $pdo->prepare(
-        "SELECT p.id, p.name, pr.monthly
+        "SELECT p.id, p.name, p.description, pr.monthly
          FROM tblproducts p
          JOIN tblpricing pr ON pr.relid = p.id AND pr.type = 'product'
          WHERE pr.currency = 3
            AND p.id IN ($placeholders)"
     );
     $stmt->execute(array_values($whmcsIds));
-    $prices = [];
+    $products = [];
     foreach ($stmt as $row) {
-        $prices[(int)$row['id']] = (float)$row['monthly'];
+        $products[(int)$row['id']] = [
+            'name'        => $row['name'],
+            'monthly'     => (float)$row['monthly'],
+            'description' => (string)$row['description'],
+        ];
     }
-    return $prices;
+    return $products;
+}
+
+// ─── Parse HTML description → clean feature strings ─────────────────────────
+
+function parseFeatures(string $html): array {
+    preg_match_all('/<li[^>]*>(.*?)<\/li>/si', $html, $matches);
+    $features = [];
+    foreach ($matches[1] as $item) {
+        $clean = trim(strip_tags(html_entity_decode($item, ENT_QUOTES, 'UTF-8')));
+        // Collapse multiple spaces/newlines
+        $clean = preg_replace('/\s+/', ' ', $clean);
+        if ($clean !== '') {
+            $features[] = $clean;
+        }
+    }
+    return $features;
+}
+
+// ─── Parse feature list → structured VPS specs object ───────────────────────
+
+function parseVpsSpecs(array $features): array {
+    $specs = ['cpu' => '', 'ram' => '', 'storage' => '', 'bandwidth' => '', 'os' => 'Linux / Windows'];
+    foreach ($features as $f) {
+        if ($specs['cpu'] === '' && preg_match('/vcpu|cpu core/i', $f)) {
+            $specs['cpu'] = $f;
+        } elseif ($specs['ram'] === '' && preg_match('/memory|ddr|\bram\b/i', $f)) {
+            $specs['ram'] = $f;
+        } elseif ($specs['storage'] === '' && preg_match('/storage|\bssd\b|\bhdd\b|nvme/i', $f)) {
+            $specs['storage'] = $f;
+        } elseif ($specs['bandwidth'] === '' && preg_match('/bandwidth|transfer/i', $f)) {
+            $specs['bandwidth'] = $f;
+        } elseif ($specs['os'] === 'Linux / Windows' && preg_match('/cpanel|plesk|windows|linux/i', $f)) {
+            $specs['os'] = $f;
+        }
+    }
+    return $specs;
+}
+
+// ─── Parse feature list → structured Dedicated specs object ─────────────────
+
+function parseDedicatedSpecs(array $features): array {
+    $specs = ['cpu' => '', 'ram' => '', 'storage' => '', 'bandwidth' => '', 'ip' => ''];
+    $cpuSet = false;
+    foreach ($features as $f) {
+        if (!$cpuSet && preg_match('/xeon|intel|amd|ghz/i', $f)) {
+            $specs['cpu'] = $f; $cpuSet = true;
+        } elseif ($specs['ram'] === '' && preg_match('/gb ddr|\bram\b/i', $f)) {
+            $specs['ram'] = $f;
+        } elseif ($specs['storage'] === '' && preg_match('/\bx\s*[0-9]|\bsata\b|ssd|hdd|nvme/i', $f)) {
+            $specs['storage'] = $f;
+        } elseif ($specs['bandwidth'] === '' && preg_match('/bandwidth|\btb\b/i', $f)) {
+            $specs['bandwidth'] = $f;
+        } elseif ($specs['ip'] === '' && preg_match('/ip|ipv4/i', $f)) {
+            $specs['ip'] = $f;
+        }
+    }
+    return $specs;
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -126,9 +187,9 @@ log_msg("GBP→PKR rate: {$gbpToPkr} (source: {$rateSource})");
 $productMap = json_decode(PRODUCT_MAP, true);
 $whmcsIds = array_values($productMap);
 
-// 4. Fetch GBP prices from WHMCS
-$prices = fetchWhmcsPrices($pdo, $whmcsIds);
-log_msg("Fetched " . count($prices) . " GBP prices from WHMCS.");
+// 4. Fetch GBP prices + descriptions from WHMCS
+$products = fetchWhmcsProducts($pdo, $whmcsIds);
+log_msg("Fetched " . count($products) . " products from WHMCS.");
 
 // 5. Load existing plans JSON
 if (!file_exists(PLANS_JSON)) {
@@ -141,40 +202,86 @@ if (!$json) {
     exit(1);
 }
 
-// 6. Helper to update a plan array
-$updatePlan = function (array &$plan) use ($productMap, $prices, $gbpToPkr): void {
-    $planId = $plan['id'];
+// 6. Helper to update a plan — web hosting (features from <li> items)
+$updateWebPlan = function (array &$plan) use ($productMap, $products, $gbpToPkr): void {
+    $planId  = $plan['id'];
     if (!isset($productMap[$planId])) return;
-
     $whmcsId = $productMap[$planId];
-    if (!isset($prices[$whmcsId])) {
-        log_msg("  WARNING: No GBP price found for WHMCS id={$whmcsId} (plan={$planId})");
+    if (!isset($products[$whmcsId])) {
+        log_msg("  WARNING: No data for WHMCS id={$whmcsId} (plan={$planId})");
         return;
     }
-
-    $gbp = $prices[$whmcsId];
+    $product = $products[$whmcsId];
+    $gbp = $product['monthly'];
     $pkr = (int) round($gbp * $gbpToPkr);
 
     $plan['whmcsId']  = $whmcsId;
     $plan['priceGBP'] = $gbp;
     $plan['pricePKR'] = $pkr;
+    $plan['features'] = parseFeatures($product['description']);
 
-    log_msg("  {$planId}: £{$gbp} → Rs.{$pkr}");
+    log_msg("  {$planId}: £{$gbp} → Rs.{$pkr} (" . count($plan['features']) . " features)");
+};
+
+// Helper to update VPS plan — specs auto-parsed from description
+$updateVpsPlan = function (array &$plan) use ($productMap, $products, $gbpToPkr): void {
+    $planId  = $plan['id'];
+    if (!isset($productMap[$planId])) return;
+    $whmcsId = $productMap[$planId];
+    if (!isset($products[$whmcsId])) {
+        log_msg("  WARNING: No data for WHMCS id={$whmcsId} (plan={$planId})");
+        return;
+    }
+    $product  = $products[$whmcsId];
+    $gbp      = $product['monthly'];
+    $pkr      = (int) round($gbp * $gbpToPkr);
+    $features = parseFeatures($product['description']);
+
+    $plan['whmcsId']  = $whmcsId;
+    $plan['priceGBP'] = $gbp;
+    $plan['pricePKR'] = $pkr;
+    $plan['features'] = $features;
+    $plan['specs']    = parseVpsSpecs($features);
+
+    log_msg("  {$planId}: £{$gbp} → Rs.{$pkr} (" . count($features) . " features)");
+};
+
+// Helper to update Dedicated plan — specs auto-parsed from description
+$updateDedicatedPlan = function (array &$plan) use ($productMap, $products, $gbpToPkr): void {
+    $planId  = $plan['id'];
+    if (!isset($productMap[$planId])) return;
+    $whmcsId = $productMap[$planId];
+    if (!isset($products[$whmcsId])) {
+        log_msg("  WARNING: No data for WHMCS id={$whmcsId} (plan={$planId})");
+        return;
+    }
+    $product  = $products[$whmcsId];
+    $gbp      = $product['monthly'];
+    $pkr      = (int) round($gbp * $gbpToPkr);
+    $features = parseFeatures($product['description']);
+
+    $plan['whmcsId']  = $whmcsId;
+    $plan['priceGBP'] = $gbp;
+    $plan['pricePKR'] = $pkr;
+    $plan['features'] = $features;
+    $plan['specs']    = parseDedicatedSpecs($features);
+
+    log_msg("  {$planId}: £{$gbp} → Rs.{$pkr} (" . count($features) . " features)");
 };
 
 // 7. Update each plan category
 foreach ($json['webHosting'] as &$plan) {
-    $updatePlan($plan);
+    $updateWebPlan($plan);
 }
 unset($plan);
 
 foreach ($json['vpsHosting'] as &$plan) {
-    $updatePlan($plan);
+    $updateVpsPlan($plan);
 }
 unset($plan);
 
 foreach ($json['dedicatedServers'] as &$plan) {
-    $updatePlan($plan);
+    $updateDedicatedPlan($plan);
 }
 unset($plan);
 

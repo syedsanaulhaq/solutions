@@ -1,202 +1,278 @@
 {
-  "lastSynced": "2026-05-09T00:00:00Z",
-  "exchangeRate": {
-    "GBPPKR": 367.2,
-    "source": "whmcs-rates"
-  },
-  "webHosting": [
-    {
-      "id": "starter",
-      "whmcsId": 2,
-      "name": "Starter",
-      "priceGBP": 0.94,
-      "pricePKR": 345,
-      "billingCycle": "month",
-      "description": "Perfect for personal sites and blogs",
-      "popular": false,
-      "features": [
-        "1 Website",
-        "10 GB SSD Storage",
-        "Unmetered Bandwidth",
-        "Free SSL Certificate",
-        "1 Email Account",
-        "Free .pk Domain (1st year)",
-        "cPanel Control Panel",
-        "1-Click WordPress Install",
-        "Daily Backups"
-      ]
+    "lastSynced": "2026-05-09T05:27:29+00:00",
+    "exchangeRate": {
+        "GBPPKR": 367.14470000000000027284841053187847137451171875,
+        "source": "whmcs-rates"
     },
-    {
-      "id": "premium",
-      "whmcsId": 3,
-      "name": "Premium",
-      "priceGBP": 1.89,
-      "pricePKR": 694,
-      "billingCycle": "month",
-      "description": "Ideal for growing businesses",
-      "popular": true,
-      "features": [
-        "Unlimited Websites",
-        "50 GB SSD Storage",
-        "Unmetered Bandwidth",
-        "Free SSL Certificate",
-        "Unlimited Email Accounts",
-        "Free .pk Domain (1st year)",
-        "cPanel Control Panel",
-        "1-Click WordPress Install",
-        "Daily Backups",
-        "Free Website Migration",
-        "Priority Support"
-      ]
-    },
-    {
-      "id": "advanced",
-      "whmcsId": 4,
-      "name": "Advanced",
-      "priceGBP": 8.68,
-      "pricePKR": 3187,
-      "billingCycle": "month",
-      "description": "High-performance for demanding sites",
-      "popular": false,
-      "features": [
-        "Unlimited Websites",
-        "100 GB NVMe Storage",
-        "Unmetered Bandwidth",
-        "Free SSL Certificate",
-        "Unlimited Email Accounts",
-        "Free .pk Domain (1st year)",
-        "cPanel Control Panel",
-        "1-Click WordPress Install",
-        "Daily Backups",
-        "Free Website Migration",
-        "Priority Support",
-        "Staging Environment",
-        "Advanced CDN",
-        "Malware Scanning"
-      ]
-    }
-  ],
-  "vpsHosting": [
-    {
-      "id": "vps-basic",
-      "whmcsId": 8,
-      "name": "VPS Basic",
-      "priceGBP": 17.62,
-      "pricePKR": 6469,
-      "billingCycle": "month",
-      "description": "Entry-level VPS for small projects",
-      "popular": false,
-      "specs": {
-        "cpu": "2 vCPU",
-        "ram": "2 GB RAM",
-        "storage": "40 GB SSD",
-        "bandwidth": "2 TB Transfer",
-        "os": "Linux/Windows"
-      }
-    },
-    {
-      "id": "vps-starter",
-      "whmcsId": 9,
-      "name": "VPS Starter",
-      "priceGBP": 27.07,
-      "pricePKR": 9933,
-      "billingCycle": "month",
-      "description": "Balanced performance for web apps",
-      "popular": true,
-      "specs": {
-        "cpu": "4 vCPU",
-        "ram": "4 GB RAM",
-        "storage": "80 GB SSD",
-        "bandwidth": "4 TB Transfer",
-        "os": "Linux/Windows"
-      }
-    },
-    {
-      "id": "vps-business",
-      "whmcsId": 12,
-      "name": "VPS Business",
-      "priceGBP": 36.55,
-      "pricePKR": 13415,
-      "billingCycle": "month",
-      "description": "High-performance for resource-intensive apps",
-      "popular": false,
-      "specs": {
-        "cpu": "6 vCPU",
-        "ram": "8 GB RAM",
-        "storage": "160 GB SSD",
-        "bandwidth": "8 TB Transfer",
-        "os": "Linux/Windows"
-      }
-    },
-    {
-      "id": "vps-enterprise",
-      "whmcsId": 11,
-      "name": "VPS Enterprise",
-      "priceGBP": 38.35,
-      "pricePKR": 14077,
-      "billingCycle": "month",
-      "description": "Enterprise-grade VPS for production workloads",
-      "popular": false,
-      "specs": {
-        "cpu": "8 vCPU",
-        "ram": "16 GB RAM",
-        "storage": "320 GB SSD",
-        "bandwidth": "16 TB Transfer",
-        "os": "Linux/Windows"
-      }
-    }
-  ],
-  "dedicatedServers": [
-    {
-      "id": "ds-e3-standard",
-      "whmcsId": 13,
-      "name": "E3 Standard",
-      "priceGBP": 94.77,
-      "pricePKR": 34783,
-      "billingCycle": "month",
-      "description": "Your own hardware, fully managed",
-      "popular": false,
-      "specs": {
-        "cpu": "Intel Xeon E3 / 4 Cores",
-        "ram": "16 GB DDR4",
-        "storage": "2 × 1 TB HDD (RAID 1)",
-        "bandwidth": "Unmetered @ 100 Mbps",
-        "ip": "5 IP Addresses"
-      }
-    },
-    {
-      "id": "ds-e3-professional",
-      "whmcsId": 14,
-      "name": "E3 Professional",
-      "priceGBP": 121.85,
-      "pricePKR": 44743,
-      "billingCycle": "month",
-      "description": "Maximum power for mission-critical workloads",
-      "popular": false,
-      "specs": {
-        "cpu": "Intel Xeon E3 / 6 Cores",
-        "ram": "32 GB DDR4",
-        "storage": "2 × 1 TB SSD (RAID 1)",
-        "bandwidth": "Unmetered @ 1 Gbps",
-        "ip": "10 IP Addresses"
-      }
-    },
-    {
-      "id": "ds-e3-enterprise",
-      "whmcsId": 15,
-      "name": "E3 Enterprise",
-      "priceGBP": 148.93,
-      "pricePKR": 54674,
-      "billingCycle": "month",
-      "description": "Uncompromised performance for enterprise workloads",
-      "popular": false,
-      "specs": {
-        "cpu": "Intel Xeon E3 / 8 Cores",
-        "ram": "64 GB DDR4",
-        "storage": "2 × 2 TB SSD (RAID 1)",
-        "bandwidth": "Unmetered @ 1 Gbps",
-        "ip": "10 IP Addresses"
-      }
-    }
-  ]
+    "webHosting": [
+        {
+            "id": "starter",
+            "whmcsId": 2,
+            "name": "Starter",
+            "priceGBP": 0.939999999999999946709294817992486059665679931640625,
+            "pricePKR": 345,
+            "billingCycle": "month",
+            "description": "Perfect for personal sites and blogs",
+            "popular": false,
+            "features": [
+                "5GB Storage",
+                "Unmetered Bandwidth",
+                "Host 1 Websites",
+                "Unlimited Emails",
+                "Unlimited Databases",
+                "cPanel Control Panel",
+                "24x7 Technical Support",
+                "99.9% Uptime Guarantee"
+            ]
+        },
+        {
+            "id": "premium",
+            "whmcsId": 3,
+            "name": "Premium",
+            "priceGBP": 1.8899999999999999023003738329862244427204132080078125,
+            "pricePKR": 694,
+            "billingCycle": "month",
+            "description": "Ideal for growing businesses",
+            "popular": true,
+            "features": [
+                "10GB Storage",
+                "Unmetered Bandwidth",
+                "Host 1 Websites",
+                "Unlimited Emails",
+                "Unlimited Databases",
+                "cPanel Control Panel",
+                "24x7 Technical Support",
+                "99.9% Uptime Guarantee"
+            ]
+        },
+        {
+            "id": "advanced",
+            "whmcsId": 4,
+            "name": "Advanced",
+            "priceGBP": 8.67999999999999971578290569595992565155029296875,
+            "pricePKR": 3187,
+            "billingCycle": "month",
+            "description": "High-performance for demanding sites",
+            "popular": false,
+            "features": [
+                "50GB Storage",
+                "Unmetered Bandwidth",
+                "Host 1 Websites",
+                "Unlimited Emails",
+                "Unlimited Databases",
+                "cPanel Control Panel",
+                "24x7 Technical Support",
+                "99.9% Uptime Guarantee"
+            ]
+        }
+    ],
+    "vpsHosting": [
+        {
+            "id": "vps-basic",
+            "whmcsId": 8,
+            "name": "VPS Basic",
+            "priceGBP": 17.620000000000000994759830064140260219573974609375,
+            "pricePKR": 6469,
+            "billingCycle": "month",
+            "description": "Entry-level VPS for small projects",
+            "popular": false,
+            "specs": {
+                "cpu": "2 vCPU Core",
+                "ram": "1.5GB DDR4 Memory",
+                "storage": "30GB SSD Storage",
+                "bandwidth": "Unlimited Bandwidth",
+                "os": "cPanel or Plesk (Optional)"
+            },
+            "features": [
+                "2 vCPU Core",
+                "30GB SSD Storage",
+                "1.5GB DDR4 Memory",
+                "Unlimited Bandwidth",
+                "cPanel or Plesk (Optional)",
+                "1 Free IP Address",
+                "24x7 Technical Support",
+                "No Minimum Contracts"
+            ]
+        },
+        {
+            "id": "vps-starter",
+            "whmcsId": 9,
+            "name": "VPS Starter",
+            "priceGBP": 27.07000000000000028421709430404007434844970703125,
+            "pricePKR": 9939,
+            "billingCycle": "month",
+            "description": "Balanced performance for web apps",
+            "popular": true,
+            "specs": {
+                "cpu": "2 vCPU Cores",
+                "ram": "3GB DDR4 Memory",
+                "storage": "60GB SSD Storage",
+                "bandwidth": "Unlimited Bandwidth",
+                "os": "cPanel or Plesk (Optional)"
+            },
+            "features": [
+                "2 vCPU Cores",
+                "60GB SSD Storage",
+                "3GB DDR4 Memory",
+                "Unlimited Bandwidth",
+                "cPanel or Plesk (Optional)",
+                "1 Free IP Address",
+                "24x7 Technical Support",
+                "No Minimum Contracts"
+            ]
+        },
+        {
+            "id": "vps-business",
+            "whmcsId": 12,
+            "name": "VPS Business",
+            "priceGBP": 36.5499999999999971578290569595992565155029296875,
+            "pricePKR": 13419,
+            "billingCycle": "month",
+            "description": "High-performance for resource-intensive apps",
+            "popular": false,
+            "specs": {
+                "cpu": "4 vCPU Cores",
+                "ram": "4GB DDR4 Memory",
+                "storage": "120GB SSD Storage",
+                "bandwidth": "Unlimited Bandwidth",
+                "os": "cPanel or Plesk (Optional)"
+            },
+            "features": [
+                "4 vCPU Cores",
+                "120GB SSD Storage",
+                "4GB DDR4 Memory",
+                "Unlimited Bandwidth",
+                "cPanel or Plesk (Optional)",
+                "1 Free IP Address",
+                "24x7 Technical Support",
+                "No Minimum Contracts"
+            ]
+        },
+        {
+            "id": "vps-enterprise",
+            "whmcsId": 11,
+            "name": "VPS Enterprise",
+            "priceGBP": 38.35000000000000142108547152020037174224853515625,
+            "pricePKR": 14080,
+            "billingCycle": "month",
+            "description": "Enterprise-grade VPS for production workloads",
+            "popular": false,
+            "specs": {
+                "cpu": "2 vCPU Core",
+                "ram": "1.5GB DDR4 Memory",
+                "storage": "30GB SSD Storage",
+                "bandwidth": "Unlimited Bandwidth",
+                "os": "cPanel or Plesk (Optional)"
+            },
+            "features": [
+                "2 vCPU Core",
+                "30GB SSD Storage",
+                "1.5GB DDR4 Memory",
+                "Unlimited Bandwidth",
+                "cPanel or Plesk (Optional)",
+                "1 Free IP Address",
+                "24x7 Technical Support",
+                "No Minimum Contracts"
+            ]
+        }
+    ],
+    "dedicatedServers": [
+        {
+            "id": "ds-e3-standard",
+            "whmcsId": 13,
+            "name": "E3 Standard",
+            "priceGBP": 94.7699999999999960209606797434389591217041015625,
+            "pricePKR": 34794,
+            "billingCycle": "month",
+            "description": "Your own hardware, fully managed",
+            "popular": false,
+            "specs": {
+                "cpu": "Intel Xeon E3-1220v6 3.0GHz",
+                "ram": "8GB DDR4 (Max 64GB)",
+                "storage": "2 x 2TB 7.2K SATA",
+                "bandwidth": "10TB Monthly Bandwidth",
+                "ip": "1 IPv4 Address"
+            },
+            "features": [
+                "Intel Xeon E3-1220v6 3.0GHz",
+                "4 Cores \/ 4 Threads",
+                "8GB DDR4 (Max 64GB)",
+                "2 x 2TB 7.2K SATA",
+                "1 Gbit",
+                "10TB Monthly Bandwidth",
+                "Fully Managed 24x7",
+                "3.0GHz \/ 3.5GHz Turbo",
+                "8MB CPU Cache",
+                "RAID 1",
+                "Free Plan",
+                "1 IPv4 Address",
+                "Fortigate Firewall (Optional)",
+                "Linux Windows"
+            ]
+        },
+        {
+            "id": "ds-e3-professional",
+            "whmcsId": 14,
+            "name": "E3 Professional",
+            "priceGBP": 121.849999999999994315658113919198513031005859375,
+            "pricePKR": 44737,
+            "billingCycle": "month",
+            "description": "Maximum power for mission-critical workloads",
+            "popular": false,
+            "specs": {
+                "cpu": "Intel Xeon E3-1230v6 3.5GHz",
+                "ram": "16GB DDR4 (Max 64GB)",
+                "storage": "2 x 1TB 7.2K SATA",
+                "bandwidth": "10TB Monthly Bandwidth",
+                "ip": "1 IPv4 Address"
+            },
+            "features": [
+                "Intel Xeon E3-1230v6 3.5GHz",
+                "4 Cores \/ 8 Threads",
+                "16GB DDR4 (Max 64GB)",
+                "2 x 1TB 7.2K SATA",
+                "1 Gbit",
+                "10TB Monthly Bandwidth",
+                "Fully Managed 24x7",
+                "3.5GHz \/ 3.9GHz Turbo",
+                "8MB CPU Cache",
+                "RAID 1",
+                "Free Plan",
+                "1 IPv4 Address",
+                "Fortigate Firewall (Optional)",
+                "Linux Windows"
+            ]
+        },
+        {
+            "id": "ds-e3-enterprise",
+            "whmcsId": 15,
+            "name": "E3 Enterprise",
+            "priceGBP": 148.93000000000000682121026329696178436279296875,
+            "pricePKR": 54679,
+            "billingCycle": "month",
+            "description": "Uncompromised performance for enterprise workloads",
+            "popular": false,
+            "specs": {
+                "cpu": "intel Xeon E3-1270v6 3.8GHz",
+                "ram": "32GB DDR4 (Max 64GB)",
+                "storage": "2 x 2TB 7.2K SATA",
+                "bandwidth": "",
+                "ip": ""
+            },
+            "features": [
+                "intel Xeon E3-1270v6 3.8GHz",
+                "4 Cores \/ 8 Threads",
+                "32GB DDR4 (Max 64GB)",
+                "2 x 2TB 7.2K SATA",
+                "1 Gbit",
+                "10TB",
+                "3.8GHz \/ 4.2GHz Turbo",
+                "8MB CPU Cache",
+                "RAID 1",
+                "Basic Plan",
+                "Fortigate Firewall (Optional)",
+                "Linux Windows"
+            ]
+        }
+    ]
 }

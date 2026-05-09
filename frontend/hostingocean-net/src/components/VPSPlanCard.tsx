@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { Cpu, MemoryStick, HardDrive, Network, Globe } from 'lucide-react';
+import { Check, Cpu, MemoryStick, HardDrive, Network, Globe } from 'lucide-react';
 
 interface VPSSpecs {
   cpu: string;
@@ -16,6 +16,7 @@ interface VPSPlanCardProps {
   priceGBP: number;
   description: string;
   specs: VPSSpecs;
+  features?: string[];
   popular?: boolean;
 }
 
@@ -28,7 +29,16 @@ const specIcons: Partial<Record<keyof VPSSpecs, React.ReactNode>> = {
   ip: <Globe className="h-3.5 w-3.5" />,
 };
 
-export function VPSPlanCard({ name, pricePKR, priceGBP, description, specs, popular = false }: VPSPlanCardProps) {
+// Specs keys that are shown with icons — rest goes to features list
+const MAIN_SPEC_KEYS: (keyof VPSSpecs)[] = ['cpu', 'ram', 'storage', 'bandwidth'];
+
+export function VPSPlanCard({ name, pricePKR, priceGBP, description, specs, features = [], popular = false }: VPSPlanCardProps) {
+  // Features not already captured in the main specs (avoid duplication)
+  const mainSpecValues = MAIN_SPEC_KEYS.map((k) => specs[k]).filter(Boolean);
+  const extraFeatures = features.filter(
+    (f) => !mainSpecValues.some((v) => v && f.toLowerCase().includes(v.toLowerCase().split(' ')[0]))
+  );
+
   return (
     <div
       className={cn(
@@ -60,14 +70,39 @@ export function VPSPlanCard({ name, pricePKR, priceGBP, description, specs, popu
         </div>
       </div>
 
+      {/* Primary specs with icons */}
       <div className="grid grid-cols-1 gap-2">
-        {(Object.entries(specs) as [keyof VPSSpecs, string][]).map(([key, val]) => (
+        {MAIN_SPEC_KEYS.filter((k) => specs[k]).map((key) => (
           <div key={key} className="flex items-center gap-2.5 text-sm">
             <span className="text-[#15803D]">{specIcons[key]}</span>
-            <span className="text-muted-foreground">{val}</span>
+            <span className="text-muted-foreground">{specs[key]}</span>
           </div>
         ))}
+        {specs.os && (
+          <div className="flex items-center gap-2.5 text-sm">
+            <span className="text-[#15803D]">{specIcons.os}</span>
+            <span className="text-muted-foreground">{specs.os}</span>
+          </div>
+        )}
+        {specs.ip && (
+          <div className="flex items-center gap-2.5 text-sm">
+            <span className="text-[#15803D]">{specIcons.ip}</span>
+            <span className="text-muted-foreground">{specs.ip}</span>
+          </div>
+        )}
       </div>
+
+      {/* Additional features from WHMCS description */}
+      {extraFeatures.length > 0 && (
+        <ul className="space-y-1.5">
+          {extraFeatures.map((f) => (
+            <li key={f} className="flex items-start gap-2 text-sm">
+              <Check className="h-4 w-4 text-[#15803D] shrink-0 mt-0.5" />
+              <span className="text-muted-foreground">{f}</span>
+            </li>
+          ))}
+        </ul>
+      )}
 
       <a
         href={`/contact?plan=${encodeURIComponent(name)}`}
@@ -83,3 +118,4 @@ export function VPSPlanCard({ name, pricePKR, priceGBP, description, specs, popu
     </div>
   );
 }
+
