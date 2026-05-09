@@ -181,7 +181,7 @@ export function Navbar() {
             </div>
             {/* iframe */}
             <iframe
-              src="https://whmcs.hostingocean.co.uk/register.php?currency=2"
+              src="https://whmcs.hostingocean.co.uk/go-register.php?currency=2"
               title="Create Account"
               className="w-full h-full border-0"
               style={{ height: 'calc(85vh - 48px)' }}

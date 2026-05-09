@@ -202,7 +202,7 @@ export function Navbar() {
               </button>
             </div>
             <iframe
-              src={`${WHMCS}/register.php?currency=3`}
+              src={`${WHMCS}/go-register.php?currency=3`}
               title="Create Account"
               className="w-full border-0"
               style={{ height: 'calc(85vh - 48px)' }}
