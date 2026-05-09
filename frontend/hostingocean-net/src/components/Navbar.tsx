@@ -17,6 +17,7 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [hostingOpen, setHostingOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [registerOpen, setRegisterOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -36,6 +37,7 @@ export function Navbar() {
   }, []);
 
   return (
+    <>
     <header
       className={cn(
         'sticky top-0 z-50 w-full transition-all duration-200',
@@ -103,14 +105,12 @@ export function Navbar() {
         {/* Actions */}
         <div className="flex items-center gap-2">
           <ModeToggle />
-          <a
-            href="https://whmcs.hostingocean.co.uk/register.php"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={() => setRegisterOpen(true)}
             className="hidden md:inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg bg-[#15803D] text-white hover:bg-[#166534] transition-colors shadow-sm"
           >
             Get Started
-          </a>
+          </button>
           {/* Mobile toggle */}
           <button
             onClick={() => setMobileOpen((o) => !o)}
@@ -140,17 +140,49 @@ export function Navbar() {
           <Link href="/blog" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-colors">Blog</Link>
           <Link href="/contact" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-colors">Contact</Link>
           <div className="pt-2">
-            <a
-              href="https://whmcs.hostingocean.co.uk/register.php"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => { setMobileOpen(false); setRegisterOpen(true); }}
               className="block w-full text-center px-4 py-2.5 text-sm font-semibold rounded-lg bg-[#15803D] text-white hover:bg-[#166534] transition-colors"
             >
               Get Started
-            </a>
+            </button>
           </div>
         </div>
       )}
     </header>
+
+      {/* Register Modal */}
+      {registerOpen && (
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+          style={{ backgroundColor: 'rgba(0,0,0,0.65)' }}
+          onClick={(e) => { if (e.target === e.currentTarget) setRegisterOpen(false); }}
+        >
+          <div className="relative w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl" style={{ height: '85vh' }}>
+            {/* Modal header bar */}
+            <div
+              className="flex items-center justify-between px-5 py-3"
+              style={{ background: 'linear-gradient(135deg, #071a0b 0%, #0d2b14 100%)' }}
+            >
+              <span className="text-white font-semibold text-sm tracking-wide">Create Your Account — Hosting Ocean</span>
+              <button
+                onClick={() => setRegisterOpen(false)}
+                aria-label="Close"
+                className="text-white/80 hover:text-white transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            {/* iframe */}
+            <iframe
+              src="https://whmcs.hostingocean.co.uk/register.php"
+              title="Create Account"
+              className="w-full h-full border-0"
+              style={{ height: 'calc(85vh - 48px)' }}
+            />
+          </div>
+        </div>
+      )}
+    </>
   );
 }
