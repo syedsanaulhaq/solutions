@@ -71,13 +71,16 @@ export function Navbar() {
               <ChevronDown className={cn('h-3.5 w-3.5 transition-transform duration-150', hostingOpen && 'rotate-180')} />
             </button>
             {hostingOpen && (
-              <div className="absolute top-full left-0 mt-1.5 w-52 bg-white dark:bg-[#0f1a10] border border-border rounded-xl shadow-xl p-1.5 z-50">
+              <div className="absolute top-full left-0 mt-1.5 w-52 rounded-xl shadow-xl p-1.5 z-50" style={{ backgroundColor: 'white', border: '1px solid #e2e8f0' }}>
                 {hostingLinks.map((l) => (
                   <Link
                     key={l.href}
                     href={l.href}
                     onClick={() => setHostingOpen(false)}
-                    className="block px-3 py-2 text-sm text-foreground hover:text-[#15803D] hover:bg-[#15803D]/8 rounded-lg transition-colors"
+                    className="block px-3 py-2 text-sm font-medium rounded-lg transition-colors"
+                    style={{ color: '#1a2e1a' }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.backgroundColor = '#f0fdf4'; (e.currentTarget as HTMLElement).style.color = '#15803D'; }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.backgroundColor = ''; (e.currentTarget as HTMLElement).style.color = '#1a2e1a'; }}
                   >
                     {l.label}
                   </Link>
