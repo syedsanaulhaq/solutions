@@ -19,6 +19,7 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [hostingOpen, setHostingOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [registerOpen, setRegisterOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -38,6 +39,7 @@ export function Navbar() {
   }, [hostingOpen]);
 
   return (
+    <>
     <header
       className={cn(
         'sticky top-0 z-50 w-full border-b transition-all duration-200',
@@ -120,14 +122,12 @@ export function Navbar() {
             >
               Client Login
             </a>
-            <a
-              href={`${WHMCS}/cart.php`}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => setRegisterOpen(true)}
               className="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-md bg-[#2563EB] text-white hover:bg-[#1d4ed8] transition-colors shadow-sm"
             >
               Get Started
-            </a>
+            </button>
           </div>
 
           {/* Mobile menu toggle */}
@@ -168,18 +168,48 @@ export function Navbar() {
               >
                 Client Login
               </a>
-              <a
-                href={`${WHMCS}/cart.php`}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => { setMobileOpen(false); setRegisterOpen(true); }}
                 className="block px-3 py-2.5 text-sm font-semibold text-center bg-[#2563EB] text-white rounded-md hover:bg-[#1d4ed8] transition-colors"
               >
                 Get Started
-              </a>
+              </button>
             </div>
           </nav>
         </div>
       )}
     </header>
+
+      {/* Register Modal — GBP default (currency=3) */}
+      {registerOpen && (
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+          style={{ backgroundColor: 'rgba(0,0,0,0.65)' }}
+          onClick={(e) => { if (e.target === e.currentTarget) setRegisterOpen(false); }}
+        >
+          <div className="relative w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl" style={{ height: '85vh' }}>
+            <div
+              className="flex items-center justify-between px-5 py-3"
+              style={{ background: 'linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 100%)' }}
+            >
+              <span className="text-white font-semibold text-sm tracking-wide">Create Your Account — Hosting Ocean</span>
+              <button
+                onClick={() => setRegisterOpen(false)}
+                aria-label="Close"
+                className="text-white/80 hover:text-white transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <iframe
+              src={`${WHMCS}/register.php?currency=3`}
+              title="Create Account"
+              className="w-full border-0"
+              style={{ height: 'calc(85vh - 48px)' }}
+            />
+          </div>
+        </div>
+      )}
+    </>
   );
 }
