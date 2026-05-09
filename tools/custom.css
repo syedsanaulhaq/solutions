@@ -550,3 +550,37 @@ footer.footermain span,
 .footermain span {
   color: #86efac !important;
 }
+
+/* ===== Card header titles — explicit white ===== */
+.card-header .card-title,
+.card-header h1, .card-header h2, .card-header h3,
+.card-header h4, .card-header h5, .card-header h6,
+.card-header span, .card-header i {
+  color: #ffffff !important;
+}
+
+/* ===== Sub-heading tab (Sign Up / Login tab title) ===== */
+.sub-heading {
+  background: linear-gradient(135deg, #071a0b 0%, #0d2b14 100%) !important;
+  border-radius: 8px 8px 0 0 !important;
+  padding: 0.75rem 1.25rem !important;
+  margin-bottom: 0 !important;
+}
+
+.sub-heading span,
+.sub-heading a,
+.sub-heading * {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+}
+
+/* Fix: sub-heading span had white bg causing white-on-white text */
+.sub-heading span,
+.sub-heading a,
+.sub-heading * {
+  background: transparent !important;
+  background-color: transparent !important;
+}
