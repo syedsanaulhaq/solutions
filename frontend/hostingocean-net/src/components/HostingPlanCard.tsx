@@ -3,7 +3,8 @@ import { cn } from '@/lib/utils';
 
 interface HostingPlanCardProps {
   name: string;
-  price: number;
+  pricePKR: number;
+  priceGBP: number;
   description: string;
   features: string[];
   popular?: boolean;
@@ -12,7 +13,8 @@ interface HostingPlanCardProps {
 
 export function HostingPlanCard({
   name,
-  price,
+  pricePKR,
+  priceGBP,
   description,
   features,
   popular = false,
@@ -38,10 +40,15 @@ export function HostingPlanCard({
         <p className="text-sm text-muted-foreground mt-1">{description}</p>
       </div>
 
-      <div className="flex items-baseline gap-1">
-        <span className="text-sm font-semibold text-muted-foreground">Rs.</span>
-        <span className="text-3xl font-extrabold">{price.toLocaleString('en-PK')}</span>
-        <span className="text-sm text-muted-foreground">/{billingCycle}</span>
+      <div className="flex flex-col gap-0.5">
+        <div className="flex items-baseline gap-1">
+          <span className="text-sm font-semibold text-muted-foreground">Rs.</span>
+          <span className="text-3xl font-extrabold">{pricePKR.toLocaleString('en-PK')}</span>
+          <span className="text-sm text-muted-foreground">/{billingCycle}</span>
+        </div>
+        <div className="text-xs text-muted-foreground">
+          ≈ £{priceGBP.toFixed(2)}/{billingCycle}
+        </div>
       </div>
 
       <ul className="flex-1 space-y-2.5">

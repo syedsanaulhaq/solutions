@@ -1,12 +1,15 @@
 import { PricingTables } from '@/components/PricingTables';
 import { CTASection } from '@/components/CTASection';
 import { FAQSection } from '@/components/FAQSection';
+import { getPlans } from '@/lib/pricing';
 import type { Metadata } from 'next';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
-  title: 'Web Hosting Pakistan — From Rs. 999/month',
+  title: 'Web Hosting Pakistan — From Rs. 345/month',
   description:
-    'Affordable web hosting in Pakistan from Rs. 999/month. Free SSL, daily backups, cPanel, 1-click WordPress, and free .pk domain for the first year.',
+    'Affordable web hosting in Pakistan. Free SSL, daily backups, cPanel, 1-click WordPress, and free .pk domain for the first year. Prices synced from WHMCS.',
 };
 
 const faqs = [
@@ -20,7 +23,7 @@ const faqs = [
   },
   {
     question: 'Can I host multiple websites?',
-    answer: 'The Business and Professional plans support unlimited websites. The Starter plan supports one website.',
+    answer: 'The Premium and Advanced plans support unlimited websites. The Starter plan supports one website.',
   },
   {
     question: 'What control panel do you use?',
@@ -28,7 +31,8 @@ const faqs = [
   },
 ];
 
-export default function WebHostingPage() {
+export default async function WebHostingPage() {
+  const plans = await getPlans();
   return (
     <>
       <section className="py-20 px-4 bg-gradient-to-b from-[#071a0b] to-[#0d2b14] text-white text-center">
@@ -45,7 +49,7 @@ export default function WebHostingPage() {
 
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
-          <PricingTables type="web" />
+          <PricingTables type="web" plans={plans} />
         </div>
       </section>
 

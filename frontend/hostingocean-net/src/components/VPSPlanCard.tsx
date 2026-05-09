@@ -12,7 +12,8 @@ interface VPSSpecs {
 
 interface VPSPlanCardProps {
   name: string;
-  price: number;
+  pricePKR: number;
+  priceGBP: number;
   description: string;
   specs: VPSSpecs;
   popular?: boolean;
@@ -27,7 +28,7 @@ const specIcons: Partial<Record<keyof VPSSpecs, React.ReactNode>> = {
   ip: <Globe className="h-3.5 w-3.5" />,
 };
 
-export function VPSPlanCard({ name, price, description, specs, popular = false }: VPSPlanCardProps) {
+export function VPSPlanCard({ name, pricePKR, priceGBP, description, specs, popular = false }: VPSPlanCardProps) {
   return (
     <div
       className={cn(
@@ -48,10 +49,15 @@ export function VPSPlanCard({ name, price, description, specs, popular = false }
         <p className="text-sm text-muted-foreground mt-1">{description}</p>
       </div>
 
-      <div className="flex items-baseline gap-1">
-        <span className="text-sm font-semibold text-muted-foreground">Rs.</span>
-        <span className="text-3xl font-extrabold">{price.toLocaleString('en-PK')}</span>
-        <span className="text-sm text-muted-foreground">/month</span>
+      <div className="flex flex-col gap-0.5">
+        <div className="flex items-baseline gap-1">
+          <span className="text-sm font-semibold text-muted-foreground">Rs.</span>
+          <span className="text-3xl font-extrabold">{pricePKR.toLocaleString('en-PK')}</span>
+          <span className="text-sm text-muted-foreground">/month</span>
+        </div>
+        <div className="text-xs text-muted-foreground">
+          ≈ £{priceGBP.toFixed(2)}/month
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-2">

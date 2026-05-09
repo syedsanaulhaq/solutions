@@ -1,12 +1,15 @@
 import { PricingTables } from '@/components/PricingTables';
 import { CTASection } from '@/components/CTASection';
 import { FAQSection } from '@/components/FAQSection';
+import { getPlans } from '@/lib/pricing';
 import type { Metadata } from 'next';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
-  title: 'VPS Hosting Pakistan — From Rs. 3,499/month',
+  title: 'VPS Hosting Pakistan — From Rs. 6,469/month',
   description:
-    'High-performance VPS hosting for Pakistani businesses. KVM-based, full root access, SSD storage. Starting from Rs. 3,499/month.',
+    'High-performance VPS hosting for Pakistani businesses. KVM-based, full root access, SSD storage. Starting from Rs. 6,469/month.',
 };
 
 const faqs = [
@@ -28,7 +31,8 @@ const faqs = [
   },
 ];
 
-export default function VPSHostingPage() {
+export default async function VPSHostingPage() {
+  const plans = await getPlans();
   return (
     <>
       <section className="py-20 px-4 bg-gradient-to-b from-[#071a0b] to-[#0d2b14] text-white text-center">
@@ -44,7 +48,7 @@ export default function VPSHostingPage() {
 
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
-          <PricingTables type="vps" />
+          <PricingTables type="vps" plans={plans} />
         </div>
       </section>
 

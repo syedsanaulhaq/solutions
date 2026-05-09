@@ -1,6 +1,9 @@
 import { PricingTables } from '@/components/PricingTables';
 import { CTASection } from '@/components/CTASection';
+import { getPlans } from '@/lib/pricing';
 import type { Metadata } from 'next';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Dedicated Servers Pakistan — Fully Managed',
@@ -8,7 +11,8 @@ export const metadata: Metadata = {
     'Fully managed dedicated servers for Pakistani businesses. Maximum performance for high-traffic, mission-critical workloads. Contact us for pricing.',
 };
 
-export default function DedicatedServersPage() {
+export default async function DedicatedServersPage() {
+  const plans = await getPlans();
   return (
     <>
       <section className="py-20 px-4 bg-gradient-to-b from-[#071a0b] to-[#0d2b14] text-white text-center">
@@ -29,7 +33,7 @@ export default function DedicatedServersPage() {
             <h2 className="text-2xl font-extrabold mb-3">Dedicated Server Plans</h2>
             <p className="text-muted-foreground">All plans include full management, 24/7 monitoring, and DDoS protection.</p>
           </div>
-          <PricingTables type="dedicated" />
+          <PricingTables type="dedicated" plans={plans} />
         </div>
       </section>
 

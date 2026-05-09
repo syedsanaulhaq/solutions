@@ -1,9 +1,16 @@
 {
+  "lastSynced": "2026-05-09T00:00:00Z",
+  "exchangeRate": {
+    "GBPPKR": 367.2,
+    "source": "whmcs-rates"
+  },
   "webHosting": [
     {
       "id": "starter",
+      "whmcsId": 2,
       "name": "Starter",
-      "price": 999,
+      "priceGBP": 0.94,
+      "pricePKR": 345,
       "billingCycle": "month",
       "description": "Perfect for personal sites and blogs",
       "popular": false,
@@ -20,9 +27,11 @@
       ]
     },
     {
-      "id": "business",
-      "name": "Business",
-      "price": 1999,
+      "id": "premium",
+      "whmcsId": 3,
+      "name": "Premium",
+      "priceGBP": 1.89,
+      "pricePKR": 694,
       "billingCycle": "month",
       "description": "Ideal for growing businesses",
       "popular": true,
@@ -41,9 +50,11 @@
       ]
     },
     {
-      "id": "professional",
-      "name": "Professional",
-      "price": 3499,
+      "id": "advanced",
+      "whmcsId": 4,
+      "name": "Advanced",
+      "priceGBP": 8.68,
+      "pricePKR": 3187,
       "billingCycle": "month",
       "description": "High-performance for demanding sites",
       "popular": false,
@@ -67,9 +78,11 @@
   ],
   "vpsHosting": [
     {
-      "id": "vps-1",
-      "name": "VPS 1",
-      "price": 3499,
+      "id": "vps-basic",
+      "whmcsId": 8,
+      "name": "VPS Basic",
+      "priceGBP": 17.62,
+      "pricePKR": 6469,
       "billingCycle": "month",
       "description": "Entry-level VPS for small projects",
       "popular": false,
@@ -82,9 +95,11 @@
       }
     },
     {
-      "id": "vps-2",
-      "name": "VPS 2",
-      "price": 6999,
+      "id": "vps-starter",
+      "whmcsId": 9,
+      "name": "VPS Starter",
+      "priceGBP": 27.07,
+      "pricePKR": 9933,
       "billingCycle": "month",
       "description": "Balanced performance for web apps",
       "popular": true,
@@ -97,9 +112,11 @@
       }
     },
     {
-      "id": "vps-3",
-      "name": "VPS 3",
-      "price": 11999,
+      "id": "vps-business",
+      "whmcsId": 12,
+      "name": "VPS Business",
+      "priceGBP": 36.55,
+      "pricePKR": 13415,
       "billingCycle": "month",
       "description": "High-performance for resource-intensive apps",
       "popular": false,
@@ -112,9 +129,11 @@
       }
     },
     {
-      "id": "vps-4",
-      "name": "VPS 4",
-      "price": 19999,
+      "id": "vps-enterprise",
+      "whmcsId": 11,
+      "name": "VPS Enterprise",
+      "priceGBP": 38.35,
+      "pricePKR": 14077,
       "billingCycle": "month",
       "description": "Enterprise-grade VPS for production workloads",
       "popular": false,
@@ -129,9 +148,11 @@
   ],
   "dedicatedServers": [
     {
-      "id": "ds-entry",
-      "name": "Entry Dedicated",
-      "price": 27999,
+      "id": "ds-e3-standard",
+      "whmcsId": 13,
+      "name": "E3 Standard",
+      "priceGBP": 94.77,
+      "pricePKR": 34783,
       "billingCycle": "month",
       "description": "Your own hardware, fully managed",
       "popular": false,
@@ -144,16 +165,35 @@
       }
     },
     {
-      "id": "ds-performance",
-      "name": "Performance Dedicated",
-      "price": 52999,
+      "id": "ds-e3-professional",
+      "whmcsId": 14,
+      "name": "E3 Professional",
+      "priceGBP": 121.85,
+      "pricePKR": 44743,
       "billingCycle": "month",
       "description": "Maximum power for mission-critical workloads",
       "popular": false,
       "specs": {
-        "cpu": "Intel Xeon E5 / 8 Cores",
+        "cpu": "Intel Xeon E3 / 6 Cores",
         "ram": "32 GB DDR4",
         "storage": "2 × 1 TB SSD (RAID 1)",
+        "bandwidth": "Unmetered @ 1 Gbps",
+        "ip": "10 IP Addresses"
+      }
+    },
+    {
+      "id": "ds-e3-enterprise",
+      "whmcsId": 15,
+      "name": "E3 Enterprise",
+      "priceGBP": 148.93,
+      "pricePKR": 54674,
+      "billingCycle": "month",
+      "description": "Uncompromised performance for enterprise workloads",
+      "popular": false,
+      "specs": {
+        "cpu": "Intel Xeon E3 / 8 Cores",
+        "ram": "64 GB DDR4",
+        "storage": "2 × 2 TB SSD (RAID 1)",
         "bandwidth": "Unmetered @ 1 Gbps",
         "ip": "10 IP Addresses"
       }
