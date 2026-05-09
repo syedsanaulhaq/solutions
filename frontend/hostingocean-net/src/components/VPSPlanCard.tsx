@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 import { Check, Cpu, MemoryStick, HardDrive, Network, Globe } from 'lucide-react';
 
@@ -104,8 +106,8 @@ export function VPSPlanCard({ name, pricePKR, priceGBP, description, specs, feat
         </ul>
       )}
 
-      <a
-        href={`/contact?plan=${encodeURIComponent(name)}`}
+      <button
+        onClick={() => window.dispatchEvent(new Event('open-register-modal'))}
         className={cn(
           'mt-auto w-full text-center py-2.5 rounded-lg text-sm font-semibold transition-colors',
           popular
@@ -114,7 +116,7 @@ export function VPSPlanCard({ name, pricePKR, priceGBP, description, specs, feat
         )}
       >
         Order Now
-      </a>
+      </button>
     </div>
   );
 }

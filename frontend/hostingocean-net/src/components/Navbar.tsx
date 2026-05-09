@@ -36,6 +36,12 @@ export function Navbar() {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
+  useEffect(() => {
+    const openModal = () => setRegisterOpen(true);
+    window.addEventListener('open-register-modal', openModal);
+    return () => window.removeEventListener('open-register-modal', openModal);
+  }, []);
+
   return (
     <>
     <header

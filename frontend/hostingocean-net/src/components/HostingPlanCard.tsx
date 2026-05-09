@@ -1,3 +1,5 @@
+'use client';
+
 import { Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -60,8 +62,8 @@ export function HostingPlanCard({
         ))}
       </ul>
 
-      <a
-        href={`/contact?plan=${name.toLowerCase()}`}
+      <button
+        onClick={() => window.dispatchEvent(new Event('open-register-modal'))}
         className={cn(
           'w-full text-center py-2.5 rounded-lg text-sm font-semibold transition-colors',
           popular
@@ -70,7 +72,7 @@ export function HostingPlanCard({
         )}
       >
         Get Started
-      </a>
+      </button>
     </div>
   );
 }
