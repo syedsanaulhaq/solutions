@@ -59,8 +59,8 @@ export default function ContactPage() {
                 </div>
                 <h3 className="font-semibold">Phone / WhatsApp</h3>
               </div>
-              <a href="tel:+923000000000" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                +92 300 000 0000
+              <a href="tel:+923399141680" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                +92 339 914 1680
               </a>
               <p className="text-xs text-muted-foreground mt-1">Available 24/7 (PKT)</p>
             </div>
