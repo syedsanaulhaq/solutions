@@ -41,7 +41,7 @@ export function Footer() {
               <span className="font-bold text-lg text-white">HostingOcean Solutions</span>
             </Link>
             <p className="text-sm text-slate-400 max-w-sm leading-relaxed">
-              Custom LMS, AI chatbots, React &amp; Node.js development, and business automation &mdash; built by UK engineers for modern businesses worldwide.
+              Custom LMS, AI chatbots, React &amp; Node.js development, and business automation &mdash; built by expert engineers for modern businesses worldwide.
             </p>
             <div className="space-y-2 text-sm text-slate-500">
               <div className="flex items-center gap-2">

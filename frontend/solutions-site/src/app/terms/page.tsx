@@ -31,7 +31,7 @@ export default function TermsPage() {
           <p className="text-sm text-muted-foreground mb-10">Last updated: April 2026</p>
 
           <H2>1. Acceptance of Terms</H2>
-          <P>By accessing or using the HostingOcean Solutions website (solutions.hostingocean.co.uk) or engaging our services, you agree to be bound by these Terms of Service. If you do not agree, please do not use our website or services.</P>
+          <P>By accessing or using the HostingOcean Solutions website (solutions.hostingocean.net) or engaging our services, you agree to be bound by these Terms of Service. If you do not agree, please do not use our website or services.</P>
 
           <H2>2. Services</H2>
           <P>HostingOcean Solutions provides custom software development services including LMS development, AI chatbot development, React and Next.js development, Node.js API development, and business process automation. Specific terms for each engagement are governed by a separate written agreement.</P>
@@ -40,14 +40,14 @@ export default function TermsPage() {
           <P>You may use our website for lawful purposes only. You must not use the website to transmit harmful, unlawful, or deceptive content, or attempt to gain unauthorised access to any part of our systems.</P>
 
           <H2>4. Intellectual Property</H2>
-          <P>All content on this website â€” including text, graphics, logos, and code â€” is the property of HostingOcean Solutions or its licensors, protected by UK and international copyright law. You may not reproduce or distribute any content without written permission.</P>
+          <P>All content on this website — including text, graphics, logos, and code — is the property of HostingOcean Solutions or its licensors, protected by international copyright law. You may not reproduce or distribute any content without written permission.</P>
           <P>For client projects, intellectual property ownership is governed by the specific project agreement. Standard terms transfer full IP ownership to the client upon final payment.</P>
 
           <H2>5. Disclaimers</H2>
           <P>This website and its content are provided &ldquo;as is&rdquo; without warranties of any kind. We do not guarantee that the website will be error-free or uninterrupted. Any information on this website is provided for general informational purposes only and does not constitute professional advice.</P>
 
           <H2>6. Limitation of Liability</H2>
-          <P>To the fullest extent permitted by UK law, HostingOcean Solutions shall not be liable for any indirect, incidental, or consequential damages arising from your use of this website. Liability for project engagements is governed by the separate project agreement.</P>
+          <P>To the fullest extent permitted by applicable law, HostingOcean Solutions shall not be liable for any indirect, incidental, or consequential damages arising from your use of this website. Liability for project engagements is governed by the separate project agreement.</P>
 
           <H2>7. Links to Third-Party Sites</H2>
           <P>Our website may contain links to third-party websites. We are not responsible for the content or privacy practices of those sites. Links do not constitute endorsement.</P>
@@ -60,7 +60,7 @@ export default function TermsPage() {
 
           <H2>10. Contact</H2>
           <P>For any questions about these terms, contact us at{' '}
-            <a href="mailto:info@solutions.hostingocean.co.uk" className="text-[#2563EB] hover:underline">info@solutions.hostingocean.co.uk</a>.
+            <a href="mailto:info@solutions.hostingocean.net" className="text-[#2563EB] hover:underline">info@solutions.hostingocean.net</a>.
           </P>
         </div>
       </Section>

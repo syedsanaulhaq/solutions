@@ -26,9 +26,10 @@ import {
   Hammer,
   Rocket,
   ChevronDown,
-  PoundSterling,
+  DollarSign,
   Lightbulb,
 } from 'lucide-react';
+import { PriceDisplay } from '@/components/PriceDisplay';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Automation & Integrations',
@@ -39,7 +40,7 @@ export const metadata: Metadata = buildMetadata({
     'business automation',
     'API integration',
     'workflow automation',
-    'process automation UK',
+    'process automation',
     'CRM integration',
     'ERP integration',
     'event-driven automation',
@@ -239,10 +240,22 @@ const deliveryProcess = [
   },
 ];
 
-const pricingTiers = [
+interface PricingTier {
+  title: string;
+  priceLow: number;
+  priceHigh?: number;
+  highPlus?: boolean;
+  prefix?: string;
+  suffix?: string;
+  description: string;
+  includes: string[];
+  highlighted?: boolean;
+}
+
+const pricingTiers: PricingTier[] = [
   {
     title: 'Single Integration or Automation',
-    range: '£3,000 – £10,000',
+    priceLow: 3000, priceHigh: 10000,
     description:
       'A focused automation project — connecting two systems via API, automating a single business process, or replacing a manual data transfer with a reliable scheduled job.',
     includes: [
@@ -256,7 +269,7 @@ const pricingTiers = [
   },
   {
     title: 'Multi-System Automation Suite',
-    range: '£12,000 – £40,000',
+    priceLow: 12000, priceHigh: 40000,
     description:
       'A comprehensive automation programme — multiple connected workflows, CRM/ERP integrations, event-driven pipelines, and a centralised monitoring layer across all automations.',
     includes: [
@@ -271,7 +284,7 @@ const pricingTiers = [
   },
   {
     title: 'Automation Retainer',
-    range: 'From £1,200/month',
+    priceLow: 1200, prefix: 'From ', suffix: '/month',
     description:
       'Ongoing automation development — new workflow builds, integration expansions, API version upgrades, monitoring, and on-call support on a rolling monthly contract.',
     includes: [
@@ -494,10 +507,10 @@ export default function AutomationPage() {
                 </div>
               )}
               <div className="mb-4">
-                <PoundSterling className={`h-6 w-6 mb-3 ${tier.highlighted ? 'text-[#2563EB]' : 'text-muted-foreground'}`} />
+                <DollarSign className={`h-6 w-6 mb-3 ${tier.highlighted ? 'text-[#2563EB]' : 'text-muted-foreground'}`} />
                 <h3 className="font-bold text-lg mb-1">{tier.title}</h3>
                 <p className={`text-2xl font-extrabold ${tier.highlighted ? 'text-[#2563EB]' : 'text-foreground'}`}>
-                  {tier.range}
+                  <PriceDisplay low={tier.priceLow} high={tier.priceHigh} prefix={tier.prefix} suffix={tier.suffix} />
                 </p>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed mb-5">{tier.description}</p>
@@ -572,7 +585,7 @@ export default function AutomationPage() {
             fixed-price quote.
           </p>
           <p className="text-slate-400 text-sm mb-8">
-            Free process audit · No commitment · UK-based team
+            Free process audit · No commitment · Senior engineers
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact">

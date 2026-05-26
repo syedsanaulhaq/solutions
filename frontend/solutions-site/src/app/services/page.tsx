@@ -204,7 +204,7 @@ export default function ServicesPage() {
     <>
       {/* ── Hero ── */}
       <Hero
-        badge="8 Service Lines · UK-Based Team"
+        badge="8 Service Lines · Senior Engineers"
         title="Everything We Build"
         titleAccent="For You"
         subtitle="From bespoke LMS platforms to AI chatbots, Node.js APIs to full DevOps setups — one team, one point of contact, delivered to production standard."

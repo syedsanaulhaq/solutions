@@ -45,7 +45,7 @@ export default function PricingCalculatorPage() {
             No email required — just a starting point for the conversation.
           </p>
           <div className="flex flex-wrap justify-center gap-4 text-sm text-slate-400">
-            {['No sign-up required', 'Instant estimate', 'UK-based team'].map((item) => (
+            {['No sign-up required', 'Instant estimate', 'Senior engineers'].map((item) => (
               <span key={item} className="flex items-center gap-1.5">
                 <CheckCircle2 className="h-4 w-4 text-[#38BDF8]" />
                 {item}

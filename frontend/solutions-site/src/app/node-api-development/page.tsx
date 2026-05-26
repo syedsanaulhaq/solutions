@@ -27,9 +27,10 @@ import {
   Hammer,
   Rocket,
   ChevronDown,
-  PoundSterling,
+  DollarSign,
   Lightbulb,
 } from 'lucide-react';
+import { PriceDisplay } from '@/components/PriceDisplay';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Node.js API Development',
@@ -41,7 +42,7 @@ export const metadata: Metadata = buildMetadata({
     'REST API development',
     'Node.js microservices',
     'Express API',
-    'backend development UK',
+    'backend development',
     'GraphQL API',
     'authentication API',
   ],
@@ -239,10 +240,22 @@ const deliveryProcess = [
   },
 ];
 
-const pricingTiers = [
+interface PricingTier {
+  title: string;
+  priceLow: number;
+  priceHigh?: number;
+  highPlus?: boolean;
+  prefix?: string;
+  suffix?: string;
+  description: string;
+  includes: string[];
+  highlighted?: boolean;
+}
+
+const pricingTiers: PricingTier[] = [
   {
     title: 'Integration or Feature API',
-    range: '£5,000 – £15,000',
+    priceLow: 5000, priceHigh: 15000,
     description:
       'A focused API project — a new integration with a third-party platform, an authentication system, a background job service, or a set of new endpoints on an existing backend.',
     includes: [
@@ -256,7 +269,7 @@ const pricingTiers = [
   },
   {
     title: 'Full Backend API',
-    range: '£15,000 – £50,000',
+    priceLow: 15000, priceHigh: 50000,
     description:
       'A complete backend system — multi-resource REST API, full auth system, third-party integrations, background job workers, and production infrastructure.',
     includes: [
@@ -271,7 +284,7 @@ const pricingTiers = [
   },
   {
     title: 'API Retainer',
-    range: 'From £1,500/month',
+    priceLow: 1500, prefix: 'From ', suffix: '/month',
     description:
       'Ongoing Node.js backend development — new features, third-party integrations, security patches, performance tuning, and on-call support on a rolling monthly contract.',
     includes: [
@@ -494,10 +507,10 @@ export default function NodeApiDevelopmentPage() {
                 </div>
               )}
               <div className="mb-4">
-                <PoundSterling className={`h-6 w-6 mb-3 ${tier.highlighted ? 'text-[#2563EB]' : 'text-muted-foreground'}`} />
+                <DollarSign className={`h-6 w-6 mb-3 ${tier.highlighted ? 'text-[#2563EB]' : 'text-muted-foreground'}`} />
                 <h3 className="font-bold text-lg mb-1">{tier.title}</h3>
                 <p className={`text-2xl font-extrabold ${tier.highlighted ? 'text-[#2563EB]' : 'text-foreground'}`}>
-                  {tier.range}
+                  <PriceDisplay low={tier.priceLow} high={tier.priceHigh} prefix={tier.prefix} suffix={tier.suffix} />
                 </p>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed mb-5">{tier.description}</p>
@@ -572,7 +585,7 @@ export default function NodeApiDevelopmentPage() {
             quote — within one business day.
           </p>
           <p className="text-slate-400 text-sm mb-8">
-            Free scoping call · No commitment · UK-based team
+            Free scoping call · No commitment · Senior engineers
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact">

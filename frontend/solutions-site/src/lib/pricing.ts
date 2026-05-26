@@ -146,8 +146,8 @@ export function computeEstimate(
     label: a.label,
     cost:
       'monthlyCost' in a
-        ? `£${a.monthlyCost.toLocaleString()}/month`
-        : `£${(a as { value: string; label: string; oneOffCost: number }).oneOffCost.toLocaleString()} one-off`,
+        ? `$${a.monthlyCost.toLocaleString()}/month`
+        : `$${(a as { value: string; label: string; oneOffCost: number }).oneOffCost.toLocaleString()} one-off`,
   }));
 
   const totalMonthly = addOnDetails
@@ -166,9 +166,9 @@ export function computeEstimate(
   };
 }
 
-export function formatGBP(n: number): string {
+export function formatUSD(n: number): string {
   if (n >= 1000) {
-    return `£${(n / 1000).toFixed(n % 1000 === 0 ? 0 : 1)}k`;
+    return `$${(n / 1000).toFixed(n % 1000 === 0 ? 0 : 1)}k`;
   }
-  return `£${n.toLocaleString()}`;
+  return `$${n.toLocaleString()}`;
 }

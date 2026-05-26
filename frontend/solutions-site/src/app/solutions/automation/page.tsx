@@ -9,7 +9,7 @@ import tiers from '@/data/saas-tiers.json';
 export const metadata: Metadata = buildMetadata({
   title: 'Automation Platform — Connect Your Tools, Automate Your Workflows',
   description:
-    'Automate repetitive business processes and connect your SaaS tools. n8n-powered workflows built and maintained by UK engineers. Start a free trial.',
+    'Automate repetitive business processes and connect your SaaS tools. n8n-powered workflows built and maintained by expert engineers. Start a free trial.',
   path: '/solutions/automation',
   keywords: ['business automation', 'workflow automation', 'n8n', 'integrations', 'process automation', 'SaaS automation'],
 });

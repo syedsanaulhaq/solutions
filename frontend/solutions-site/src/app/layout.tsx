@@ -8,6 +8,7 @@ import { ChatbotWidget } from '@/components/ChatbotWidget';
 import { Analytics } from '@/components/Analytics';
 import AnnouncementBanner from '@/components/AnnouncementBanner';
 import { defaultMetadata, organizationSchema, websiteSchema } from '@/lib/seo';
+import { CurrencyProvider } from '@/components/CurrencyProvider';
 
 export { defaultMetadata as metadata };
 
@@ -19,7 +20,7 @@ const inter = Inter({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-GB" suppressHydrationWarning className={inter.variable}>
+    <html lang="en" suppressHydrationWarning className={inter.variable}>
       <body className="font-sans">
         {/* ── JSON-LD: Organization + WebSite ── */}
         <script
@@ -42,13 +43,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           >
             Skip to main content
           </a>
-          <AnnouncementBanner />
-          <Navbar />
-          <main id="main-content" className="min-h-screen">{children}</main>
-          <Footer />
-          <QuoteModalRoot />
-          <ChatbotWidget />
-          <Analytics />
+          <CurrencyProvider>
+            <AnnouncementBanner />
+            <Navbar />
+            <main id="main-content" className="min-h-screen">{children}</main>
+            <Footer />
+            <QuoteModalRoot />
+            <ChatbotWidget />
+            <Analytics />
+          </CurrencyProvider>
         </ThemeProvider>
       </body>
     </html>

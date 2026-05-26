@@ -19,6 +19,7 @@ import {
   Server,
   Workflow,
 } from 'lucide-react';
+import { PriceDisplay } from '@/components/PriceDisplay';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Pricing',
@@ -37,6 +38,17 @@ export const metadata: Metadata = buildMetadata({
 
 /* ─────────────────────────── data ─────────────────────────── */
 
+interface PricingItem {
+  title: string;
+  priceLow: number;
+  priceHigh?: number;
+  highPlus?: boolean;
+  prefix?: string;
+  suffix?: string;
+  description: string;
+  includes: string[];
+}
+
 const pricingModels = [
   {
     icon: <FileText className="h-6 w-6" />,
@@ -53,7 +65,7 @@ const pricingModels = [
       'Delivery to agreed acceptance criteria only',
       'Source code and full IP ownership transferred on completion',
     ],
-    from: 'From £5,000',
+    from: { low: 5000, prefix: 'From ' },
     note: 'Depends on scope and complexity',
   },
   {
@@ -71,7 +83,7 @@ const pricingModels = [
       'Suitable for advisory, architecture, and code review',
       'Minimum four hours per engagement',
     ],
-    from: '£95/hr',
+    from: { low: 95, suffix: '/hr' },
     note: 'Senior engineer rate. Discounts on volume blocks.',
   },
   {
@@ -89,15 +101,15 @@ const pricingModels = [
       'Flexible scope — features, bugs, infrastructure, content',
       'Cancel with 30 days notice — no lock-in',
     ],
-    from: 'From £1,500/month',
+    from: { low: 1500, prefix: 'From ', suffix: '/month' },
     note: 'Minimum 10 hours/month. Volume discounts apply.',
   },
 ];
 
-const lmsPricing = [
+const lmsPricing: PricingItem[] = [
   {
     title: 'Moodle Setup & Configuration',
-    range: '£2,500 – £6,000',
+    priceLow: 2500, priceHigh: 6000,
     description: 'Installation, theme configuration, plugin setup, user roles, course structure, and initial content import. Ideal for organisations moving to Moodle for the first time.',
     includes: [
       'Server deployment and configuration',
@@ -110,7 +122,7 @@ const lmsPricing = [
   },
   {
     title: 'Custom LMS Development',
-    range: '£15,000 – £60,000+',
+    priceLow: 15000, priceHigh: 60000, highPlus: true,
     description: 'A purpose-built learning platform with custom architecture, specific user flows, custom content types, integrations with your existing systems, and reporting tailored to your KPIs.',
     includes: [
       'Full product discovery and architecture design',
@@ -123,7 +135,7 @@ const lmsPricing = [
   },
   {
     title: 'LMS Migration',
-    range: '£5,000 – £18,000',
+    priceLow: 5000, priceHigh: 18000,
     description: 'Migrating your existing LMS to a new platform — typically to Moodle or a custom solution. Includes data export, transformation, import, and validation.',
     includes: [
       'Audit of existing platform and content',
@@ -136,7 +148,7 @@ const lmsPricing = [
   },
   {
     title: 'LMS Retainer Support',
-    range: 'From £1,500/month',
+    priceLow: 1500, prefix: 'From ', suffix: '/month',
     description: 'Ongoing platform maintenance, feature development, content work, and user support for your existing LMS. Fixed monthly cost, predictable capacity.',
     includes: [
       'Moodle upgrades and security patches',
@@ -149,10 +161,10 @@ const lmsPricing = [
   },
 ];
 
-const chatbotPricing = [
+const chatbotPricing: PricingItem[] = [
   {
     title: 'Knowledge-Base Chatbot',
-    range: '£5,000 – £12,000',
+    priceLow: 5000, priceHigh: 12000,
     description: 'A RAG-powered chatbot trained on your documentation, FAQs, and knowledge base. Deployable on your website or internal portal. Answers questions accurately from your own content.',
     includes: [
       'Document ingestion pipeline (PDF, Word, web)',
@@ -165,7 +177,7 @@ const chatbotPricing = [
   },
   {
     title: 'Customer Support Bot',
-    range: '£10,000 – £28,000',
+    priceLow: 10000, priceHigh: 28000,
     description: 'A full-featured support chatbot integrated with your helpdesk, CRM, and product systems. Handles tier-1 queries autonomously and escalates with context when needed.',
     includes: [
       'CRM and helpdesk integration (HubSpot, Zendesk, Freshdesk)',
@@ -178,7 +190,7 @@ const chatbotPricing = [
   },
   {
     title: 'Internal Assistant',
-    range: '£8,000 – £22,000',
+    priceLow: 8000, priceHigh: 22000,
     description: 'A private, secure AI assistant for your team — trained on internal policies, HR documents, runbooks, and institutional knowledge. Deployed inside your network.',
     includes: [
       'SSO authentication (Google, Microsoft, SAML)',
@@ -191,7 +203,7 @@ const chatbotPricing = [
   },
   {
     title: 'Custom AI Product',
-    range: '£15,000+',
+    priceLow: 15000, highPlus: true,
     description: 'A bespoke AI-powered feature or product — agents, multi-step reasoning workflows, voice interfaces, or complex integrations with your existing data and systems.',
     includes: [
       'Discovery and architecture design',
@@ -204,10 +216,10 @@ const chatbotPricing = [
   },
 ];
 
-const reactPricing = [
+const reactPricing: PricingItem[] = [
   {
     title: 'MVP / Marketing Site',
-    range: '£5,000 – £15,000',
+    priceLow: 5000, priceHigh: 15000,
     description: 'A production-quality Next.js site or web app built to a defined scope — ideal for product launches, marketing sites, or client-facing portals needing custom functionality.',
     includes: [
       'Next.js with App Router and TypeScript',
@@ -220,7 +232,7 @@ const reactPricing = [
   },
   {
     title: 'React Web Application',
-    range: '£15,000 – £50,000+',
+    priceLow: 15000, priceHigh: 50000, highPlus: true,
     description: 'A full-featured, data-driven web application — dashboards, admin panels, multi-user SaaS tools, or complex workflows with authentication, roles, and real-time data.',
     includes: [
       'Component library with design system',
@@ -233,7 +245,7 @@ const reactPricing = [
   },
   {
     title: 'Component Library / Design System',
-    range: '£8,000 – £25,000',
+    priceLow: 8000, priceHigh: 25000,
     description: 'A shared, documented component library for teams building multiple React products. Built with Storybook, tested, and published to your private npm registry.',
     includes: [
       'Core UI components (buttons, forms, tables, modals)',
@@ -246,7 +258,7 @@ const reactPricing = [
   },
   {
     title: 'React Retainer',
-    range: 'From £1,500/month',
+    priceLow: 1500, prefix: 'From ', suffix: '/month',
     description: 'Ongoing React development capacity — new features, performance tuning, dependency upgrades, and bug fixes. Works alongside your team or as your sole frontend engineering resource.',
     includes: [
       'Reserved monthly engineering hours',
@@ -259,10 +271,10 @@ const reactPricing = [
   },
 ];
 
-const nodePricing = [
+const nodePricing: PricingItem[] = [
   {
     title: 'REST API Build',
-    range: '£5,000 – £15,000',
+    priceLow: 5000, priceHigh: 15000,
     description: 'A well-structured, documented REST API for a defined set of resources — ideal for mobile apps, third-party integrations, or decoupling a monolith into services.',
     includes: [
       'Express or Fastify with TypeScript',
@@ -275,7 +287,7 @@ const nodePricing = [
   },
   {
     title: 'Full Backend System',
-    range: '£15,000 – £55,000+',
+    priceLow: 15000, priceHigh: 55000, highPlus: true,
     description: 'A production-grade backend — multi-service architecture, complex business logic, event-driven processing, third-party integrations, and a robust data model.',
     includes: [
       'Service architecture design and documentation',
@@ -288,7 +300,7 @@ const nodePricing = [
   },
   {
     title: 'API Integration Project',
-    range: '£3,000 – £12,000',
+    priceLow: 3000, priceHigh: 12000,
     description: 'Connecting your systems to third-party APIs — payment providers, CRMs, ERPs, communication platforms, or data feeds. Reliable, monitored, with error recovery.',
     includes: [
       'Integration design and data mapping',
@@ -301,7 +313,7 @@ const nodePricing = [
   },
   {
     title: 'API Retainer',
-    range: 'From £1,500/month',
+    priceLow: 1500, prefix: 'From ', suffix: '/month',
     description: 'Ongoing backend engineering — new endpoints, schema changes, integration maintenance, performance tuning, and security updates for your production API.',
     includes: [
       'Reserved monthly engineering capacity',
@@ -314,10 +326,10 @@ const nodePricing = [
   },
 ];
 
-const automationPricing = [
+const automationPricing: PricingItem[] = [
   {
     title: 'Single Workflow Automation',
-    range: '£3,000 – £10,000',
+    priceLow: 3000, priceHigh: 10000,
     description: 'Automate one defined business process end-to-end — data sync, document generation, notification workflows, report delivery, or a manual task your team repeats daily.',
     includes: [
       'Process mapping and automation design',
@@ -330,7 +342,7 @@ const automationPricing = [
   },
   {
     title: 'Multi-System Automation Platform',
-    range: '£12,000 – £40,000',
+    priceLow: 12000, priceHigh: 40000,
     description: 'A centralised automation layer connecting multiple systems — CRM, ERP, LMS, communication tools, and data warehouses — with orchestration, monitoring, and an admin UI.',
     includes: [
       'Integration architecture design',
@@ -343,7 +355,7 @@ const automationPricing = [
   },
   {
     title: 'Process Audit & Automation Roadmap',
-    range: '£1,500 – £3,500',
+    priceLow: 1500, priceHigh: 3500,
     description: 'A structured audit of your current manual processes, followed by a prioritised automation roadmap — what to automate first, estimated ROI, and recommended tooling.',
     includes: [
       'Stakeholder interviews and process mapping',
@@ -356,7 +368,7 @@ const automationPricing = [
   },
   {
     title: 'Automation Retainer',
-    range: 'From £1,200/month',
+    priceLow: 1200, prefix: 'From ', suffix: '/month',
     description: 'Ongoing automation development and maintenance — new workflows, integration updates, monitoring, and optimisation of existing automations as your systems evolve.',
     includes: [
       'Reserved monthly engineering hours',
@@ -384,7 +396,7 @@ const faqs = [
   },
   {
     q: 'Do prices include VAT?',
-    a: 'All prices shown are exclusive of VAT. VAT at the current UK rate is added to invoices for UK clients.',
+    a: 'All prices shown are exclusive of any applicable taxes. Our sales representative will confirm applicable taxes for your location during the proposal stage.',
   },
   {
     q: 'Can I start with hourly and move to fixed-price?',
@@ -436,7 +448,9 @@ export default function PricingPage() {
                   </div>
                   <p className="text-sm text-muted-foreground leading-relaxed mb-4">{pm.description}</p>
                   <div>
-                    <p className="text-2xl font-extrabold text-[#2563EB]">{pm.from}</p>
+                    <p className="text-2xl font-extrabold text-[#2563EB]">
+                      <PriceDisplay low={pm.from.low} prefix={pm.from.prefix} suffix={pm.from.suffix} />
+                    </p>
                     <p className="text-xs text-muted-foreground mt-0.5">{pm.note}</p>
                   </div>
                 </div>
@@ -473,7 +487,9 @@ export default function PricingPage() {
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300">
                   <GraduationCap className="h-5 w-5" />
                 </div>
-                <span className="text-lg font-extrabold text-[#2563EB] whitespace-nowrap">{item.range}</span>
+                <span className="text-lg font-extrabold text-[#2563EB] whitespace-nowrap">
+                  <PriceDisplay low={item.priceLow} high={item.priceHigh} highPlus={item.highPlus} prefix={item.prefix} suffix={item.suffix} />
+                </span>
               </div>
               <h3 className="font-semibold mb-1.5">{item.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4">{item.description}</p>
@@ -506,7 +522,9 @@ export default function PricingPage() {
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">
                   <MessageSquare className="h-5 w-5" />
                 </div>
-                <span className="text-lg font-extrabold text-[#2563EB] whitespace-nowrap">{item.range}</span>
+                <span className="text-lg font-extrabold text-[#2563EB] whitespace-nowrap">
+                  <PriceDisplay low={item.priceLow} high={item.priceHigh} highPlus={item.highPlus} prefix={item.prefix} suffix={item.suffix} />
+                </span>
               </div>
               <h3 className="font-semibold mb-1.5">{item.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4">{item.description}</p>
@@ -540,7 +558,9 @@ export default function PricingPage() {
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">
                   <Code2 className="h-5 w-5" />
                 </div>
-                <span className="text-lg font-extrabold text-[#2563EB] whitespace-nowrap">{item.range}</span>
+                <span className="text-lg font-extrabold text-[#2563EB] whitespace-nowrap">
+                  <PriceDisplay low={item.priceLow} high={item.priceHigh} highPlus={item.highPlus} prefix={item.prefix} suffix={item.suffix} />
+                </span>
               </div>
               <h3 className="font-semibold mb-1.5">{item.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4">{item.description}</p>
@@ -570,7 +590,9 @@ export default function PricingPage() {
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">
                   <Server className="h-5 w-5" />
                 </div>
-                <span className="text-lg font-extrabold text-[#2563EB] whitespace-nowrap">{item.range}</span>
+                <span className="text-lg font-extrabold text-[#2563EB] whitespace-nowrap">
+                  <PriceDisplay low={item.priceLow} high={item.priceHigh} highPlus={item.highPlus} prefix={item.prefix} suffix={item.suffix} />
+                </span>
               </div>
               <h3 className="font-semibold mb-1.5">{item.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4">{item.description}</p>
@@ -601,7 +623,9 @@ export default function PricingPage() {
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300">
                   <Workflow className="h-5 w-5" />
                 </div>
-                <span className="text-lg font-extrabold text-[#2563EB] whitespace-nowrap">{item.range}</span>
+                <span className="text-lg font-extrabold text-[#2563EB] whitespace-nowrap">
+                  <PriceDisplay low={item.priceLow} high={item.priceHigh} highPlus={item.highPlus} prefix={item.prefix} suffix={item.suffix} />
+                </span>
               </div>
               <h3 className="font-semibold mb-1.5">{item.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4">{item.description}</p>

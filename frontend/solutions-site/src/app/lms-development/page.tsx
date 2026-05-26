@@ -33,8 +33,8 @@ import {
   Rocket,
   LifeBuoy,
   ChevronDown,
-  PoundSterling,
 } from 'lucide-react';
+import { PriceDisplay } from '@/components/PriceDisplay';
 
 export const metadata: Metadata = buildMetadata({
   title: 'LMS Development',
@@ -48,7 +48,7 @@ export const metadata: Metadata = buildMetadata({
     'multi-tenant LMS',
     'white-label LMS',
     'SCORM compliant LMS',
-    'e-learning platform development UK',
+    'e-learning platform development',
   ],
 });
 
@@ -107,7 +107,7 @@ const features = [
     icon: <ShieldCheck className="h-5 w-5 text-[#2563EB]" />,
     title: 'GDPR Compliance',
     description:
-      'Data residency in the EU/UK, configurable retention policies, right-to-erasure workflows, consent management, and full audit logs. Built for regulated industries from day one.',
+      'Data residency in configurable regions, retention policies, right-to-erasure workflows, consent management, and full audit logs. Built for regulated industries from day one.',
   },
 ];
 
@@ -225,8 +225,8 @@ const whyPoints = [
   },
   {
     icon: <Users className="h-5 w-5 text-[#2563EB]" />,
-    title: 'UK-registered company',
-    description: 'HostingOcean Solutions Ltd is UK-registered. GDPR data processing agreements, UK contract law, and a team available during your working hours.',
+    title: 'Registered company',
+    description: 'HostingOcean Solutions is a registered company. GDPR data processing agreements, professional contracts, and a team available during your working hours.',
   },
   {
     icon: <Star className="h-5 w-5 text-[#2563EB]" />,
@@ -280,10 +280,22 @@ const process = [
   },
 ];
 
-const pricingTiers = [
+interface PricingTier {
+  title: string;
+  priceLow: number;
+  priceHigh?: number;
+  highPlus?: boolean;
+  prefix?: string;
+  suffix?: string;
+  description: string;
+  includes: string[];
+  highlighted?: boolean;
+}
+
+const pricingTiers: PricingTier[] = [
   {
     title: 'Moodle Setup & Customisation',
-    range: '£2,500 – £6,000',
+    priceLow: 2500, priceHigh: 6000,
     description:
       'Ideal for organisations that want the power of Moodle with a polished, on-brand experience. Includes installation, custom theme, essential plugins, and user onboarding.',
     includes: [
@@ -296,7 +308,7 @@ const pricingTiers = [
   },
   {
     title: 'Custom LMS Build',
-    range: '£15,000 – £60,000+',
+    priceLow: 15000, priceHigh: 60000, highPlus: true,
     description:
       'A fully bespoke LMS built on React and Node.js, designed around your exact workflows. Suitable for training providers, commercial platforms, and enterprise deployments.',
     includes: [
@@ -311,7 +323,7 @@ const pricingTiers = [
   },
   {
     title: 'LMS Retainer & Managed Growth',
-    range: 'From £1,500 / month',
+    priceLow: 1500, prefix: 'From ', suffix: ' / month',
     description:
       'Ongoing development, maintenance, and hosting management for organisations that want to continuously improve their platform without managing an in-house team.',
     includes: [
@@ -364,7 +376,7 @@ export default function LmsDevelopmentPage() {
     <>
       {/* ── Hero ── */}
       <Hero
-        badge="LMS Development · UK-Based Team"
+        badge="LMS Development · Senior Engineers"
         title="Learning Management Systems"
         titleAccent="Built For You"
         subtitle="Custom LMS platforms designed around your learners, your content, and your integrations — not the other way around. React frontends, Node.js backends, Moodle customisation, and full SCORM / xAPI / LTI 1.3 support."
@@ -543,10 +555,10 @@ export default function LmsDevelopmentPage() {
                 </div>
               )}
               <div className="mb-4">
-                <PoundSterling className={`h-6 w-6 mb-3 ${tier.highlighted ? 'text-[#2563EB]' : 'text-muted-foreground'}`} />
+                <DollarSign className={`h-6 w-6 mb-3 ${tier.highlighted ? 'text-[#2563EB]' : 'text-muted-foreground'}`} />
                 <h3 className="font-bold text-lg mb-1">{tier.title}</h3>
                 <p className={`text-2xl font-extrabold ${tier.highlighted ? 'text-[#2563EB]' : 'text-foreground'}`}>
-                  {tier.range}
+                  <PriceDisplay low={tier.priceLow} high={tier.priceHigh} highPlus={tier.highPlus} prefix={tier.prefix} suffix={tier.suffix} />
                 </p>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed mb-5">{tier.description}</p>
@@ -620,7 +632,7 @@ export default function LmsDevelopmentPage() {
             and a fixed-price quote within one business day.
           </p>
           <p className="text-slate-400 text-sm mb-8">
-            Free scoping call · No commitment · UK-based team
+            Free scoping call · No commitment · Senior engineers
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact">

@@ -39,8 +39,8 @@ export default function PrivacyPage() {
 
           <H2>1. Who We Are</H2>
           <P>
-            HostingOcean Solutions is the software development division of HostingOcean, a UK-registered technology company. For privacy enquiries, contact us at{' '}
-            <a href="mailto:info@solutions.hostingocean.co.uk" className="text-[#2563EB] hover:underline">info@solutions.hostingocean.co.uk</a>.
+            HostingOcean Solutions is the software development division of HostingOcean, a globally operating technology company. For privacy enquiries, contact us at{' '}
+            <a href="mailto:info@solutions.hostingocean.net" className="text-[#2563EB] hover:underline">info@solutions.hostingocean.net</a>.
           </P>
 
           <H2>2. What Data We Collect</H2>
@@ -57,25 +57,25 @@ export default function PrivacyPage() {
           <P>We use your personal data to respond to enquiries, provide project proposals, fulfil contractual obligations, and improve our services through aggregated analytics. We do not sell, rent, or share your personal data with third parties for marketing purposes.</P>
 
           <H2>4. Legal Basis for Processing</H2>
-          <P>Under UK GDPR, we process your data on the bases of legitimate interests (responding to enquiries), contract performance (project engagements), and consent (where you have opted in to communications).</P>
+          <P>Under applicable data protection law, we process your data on the bases of legitimate interests (responding to enquiries), contract performance (project engagements), and consent (where you have opted in to communications).</P>
 
           <H2>5. Data Retention</H2>
-          <P>Enquiry data is retained for up to 24 months. Client project data is retained for the duration of the engagement plus six years (UK tax compliance). You may request deletion at any time where retention is not legally required.</P>
+          <P>Enquiry data is retained for up to 24 months. Client project data is retained for the duration of the engagement plus six years (regulatory compliance). You may request deletion at any time where retention is not legally required.</P>
 
           <H2>6. Cookies</H2>
           <P>This website uses minimal cookies — primarily a theme preference cookie (dark/light mode) which contains no personal data. If we add analytics or marketing cookies in future, we will update this policy and obtain consent where required.</P>
 
           <H2>7. Your Rights</H2>
           <P>
-            Under UK GDPR you have the right to access, correct, or delete your data; object to processing; withdraw consent; and lodge a complaint with the ICO (ico.org.uk). To exercise these rights, contact{' '}
-            <a href="mailto:info@solutions.hostingocean.co.uk" className="text-[#2563EB] hover:underline">info@solutions.hostingocean.co.uk</a>.
+            You have the right to access, correct, or delete your data; object to processing; and withdraw consent. To exercise these rights, contact{' '}
+            <a href="mailto:info@solutions.hostingocean.net" className="text-[#2563EB] hover:underline">info@solutions.hostingocean.net</a>.
           </P>
 
           <H2>8. Data Security</H2>
-          <P>We take appropriate technical and organisational measures to protect your personal data. Our infrastructure is hosted in UK/EU data centres and access is restricted to authorised personnel.</P>
+          <P>We take appropriate technical and organisational measures to protect your personal data. Our infrastructure is hosted in secure data centres and access is restricted to authorised personnel.</P>
 
           <H2>9. Third-Party Services</H2>
-          <P>Our website may use third-party services (such as Google Fonts or hosting infrastructure). We only use services that comply with UK/EU data protection standards.</P>
+          <P>Our website may use third-party services (such as Google Fonts or hosting infrastructure). We only use services that comply with applicable data protection standards.</P>
 
           <H2>10. Changes to This Policy</H2>
           <P>We may update this Privacy Policy from time to time. Material changes will be noted on this page with an updated date.</P>
@@ -83,7 +83,7 @@ export default function PrivacyPage() {
           <H2>11. Contact</H2>
           <P>
             For any questions about this policy or your personal data, contact us at{' '}
-            <a href="mailto:info@solutions.hostingocean.co.uk" className="text-[#2563EB] hover:underline">info@solutions.hostingocean.co.uk</a>.
+            <a href="mailto:info@solutions.hostingocean.net" className="text-[#2563EB] hover:underline">info@solutions.hostingocean.net</a>.
           </P>
         </div>
       </Section>

@@ -32,13 +32,13 @@ import {
 export const metadata: Metadata = buildMetadata({
   title: 'About Us',
   description:
-    'HostingOcean Solutions is a UK-based software development company. Learn about our mission, values, approach, and the team behind our custom LMS, AI chatbot, and web development work.',
+    'HostingOcean Solutions is a global software development company. Learn about our mission, values, approach, and the team behind our custom LMS, AI chatbot, and web development work.',
   path: '/about',
   keywords: [
     'about HostingOcean Solutions',
-    'UK software development team',
+    'global software development team',
     'custom web development company',
-    'software agency UK',
+    'software agency',
   ],
 });
 
@@ -98,9 +98,9 @@ const differentiators = [
   },
   {
     icon: <Globe className="h-6 w-6 text-[#2563EB]" />,
-    title: 'UK-based, globally experienced',
+    title: 'Globally experienced',
     description:
-      'Registered and operated in the UK. We have delivered projects for clients across the UK, Europe, the Middle East, and North America.',
+      'We have delivered projects for clients across the Middle East, Europe, North America, and South Asia. We work with businesses worldwide.',
   },
   {
     icon: <Layers className="h-6 w-6 text-[#2563EB]" />,
@@ -277,7 +277,7 @@ export default function AboutPage() {
       {/* ── Hero ── */}
       <Hero
         badge="About Us"
-        title="UK-based engineers who"
+        title="Expert engineers who"
         titleAccent="build software that lasts."
         subtitle="HostingOcean Solutions is a software development company specialising in LMS platforms, AI chatbots, React applications, Node.js APIs, and automation systems — all delivered with fixed-price quotes, senior engineers, and full source ownership."
         cta1={{ label: 'Get a Free Quote', href: '/contact' }}
@@ -527,7 +527,7 @@ export default function AboutPage() {
             business day.
           </p>
           <p className="text-slate-400 text-sm mb-8">
-            No commitment · Fixed-price quotes · UK-based team
+            No commitment · Fixed-price quotes · Senior engineers
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact">

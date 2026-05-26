@@ -78,7 +78,7 @@ export default function Image() {
             textAlign: 'center',
           }}
         >
-          solutions.hostingocean.co.uk
+          solutions.hostingocean.net
         </div>
       </div>
     ),

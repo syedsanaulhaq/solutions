@@ -7,7 +7,7 @@ import {
   TIMELINES,
   ADDONS,
   computeEstimate,
-  formatGBP,
+  formatUSD,
   type ServiceType,
   type ComplexityType,
   type TimelineType,
@@ -278,7 +278,7 @@ export function PricingCalculator() {
             <div>
               <p className="text-xs font-semibold text-[#2563EB] uppercase tracking-wide">Estimated Project Cost</p>
               <p className="text-3xl font-extrabold text-foreground">
-                {formatGBP(estimate.low)} – {formatGBP(estimate.high)}
+                {formatUSD(estimate.low)} – {formatUSD(estimate.high)}
               </p>
             </div>
           </div>

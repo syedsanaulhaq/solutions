@@ -20,19 +20,19 @@ const contactDetails = [
   {
     icon: <Mail className="h-5 w-5 text-[#2563EB]" />,
     label: 'Email',
-    value: 'info@solutions.hostingocean.co.uk',
-    href: 'mailto:info@solutions.hostingocean.co.uk',
+    value: 'info@solutions.hostingocean.net',
+    href: 'mailto:info@solutions.hostingocean.net',
   },
   {
     icon: <MapPin className="h-5 w-5 text-[#2563EB]" />,
     label: 'Based in',
-    value: 'United Kingdom',
+    value: 'Pakistan',
     href: null,
   },
   {
     icon: <Clock className="h-5 w-5 text-[#2563EB]" />,
     label: 'Office hours',
-    value: 'Mon–Fri, 09:00–17:00 GMT',
+    value: 'Mon–Fri, 09:00–18:00 PKT',
     href: null,
   },
 ];
@@ -46,7 +46,7 @@ const services = [
 ];
 
 const trustItems = [
-  { icon: <Shield className="h-4 w-4 text-[#2563EB]" />, text: 'UK-registered company' },
+  { icon: <Shield className="h-4 w-4 text-[#2563EB]" />, text: 'Registered company' },
   { icon: <Star className="h-4 w-4 text-[#2563EB]" />, text: '50+ projects delivered' },
   { icon: <Users className="h-4 w-4 text-[#2563EB]" />, text: 'Senior engineers only' },
   { icon: <CheckCircle2 className="h-4 w-4 text-[#2563EB]" />, text: 'No commitment required' },
@@ -107,7 +107,7 @@ export default function ContactPage() {
             <div>
               <h2 className="text-lg font-bold mb-2">HostingOcean Solutions</h2>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                A UK-based software development company. We build custom LMS platforms,
+                A global software development company. We build custom LMS platforms,
                 AI chatbots, React applications, Node.js APIs, and automation systems for
                 businesses across education, enterprise, and technology.
               </p>

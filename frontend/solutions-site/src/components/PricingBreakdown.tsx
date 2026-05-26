@@ -4,7 +4,7 @@ import {
   COMPLEXITY,
   TIMELINES,
   computeEstimate,
-  formatGBP,
+  formatUSD,
   type ServiceType,
   type ComplexityType,
   type TimelineType,
@@ -62,7 +62,7 @@ export function PricingBreakdown({
         Estimated Project Cost
       </p>
       <p className="text-3xl font-extrabold text-foreground mb-5">
-        {formatGBP(estimate.low)} &ndash; {formatGBP(estimate.high)}
+        {formatUSD(estimate.low)} &ndash; {formatUSD(estimate.high)}
       </p>
 
       {/* Breakdown */}

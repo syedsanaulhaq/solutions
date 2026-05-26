@@ -5,16 +5,16 @@ import type { Metadata } from 'next';
 export const siteConfig = {
   name: 'HostingOcean Solutions',
   tagline: 'Custom LMS, AI, and Web Development — Built for Modern Businesses.',
-  url: 'https://solutions.hostingocean.co.uk',
+  url: 'https://solutions.hostingocean.net',
   description:
-    'HostingOcean Solutions is a UK-based software development company specialising in custom LMS platforms, AI chatbots, React applications, Node.js APIs, and automation systems for businesses worldwide.',
-  email: 'info@solutions.hostingocean.co.uk',
+    'HostingOcean Solutions is a global software development company specialising in custom LMS platforms, AI chatbots, React applications, Node.js APIs, and automation systems for businesses worldwide.',
+  email: 'info@solutions.hostingocean.net',
   twitterHandle: '@hostingocean',
-  locale: 'en_GB',
-  ogImage: 'https://solutions.hostingocean.co.uk/opengraph-image',
+  locale: 'en_US',
+  ogImage: 'https://solutions.hostingocean.net/opengraph-image',
   address: {
-    country: 'GB',
-    region: 'United Kingdom',
+    country: 'PK',
+    region: 'Pakistan',
   },
   foundingYear: '2019',
 } as const;
@@ -24,40 +24,40 @@ export const siteConfig = {
 const defaultKeywords: string[] = [
   // Brand
   'HostingOcean Solutions',
-  'UK software development company',
-  'custom software development UK',
+  'global software development company',
+  'custom software development',
   // LMS
   'LMS development',
   'custom LMS platform',
   'learning management system development',
   'Moodle development',
-  'e-learning platform UK',
+  'e-learning platform development',
   // AI
   'AI chatbot development',
   'RAG chatbot',
   'AI assistant development',
   'OpenAI integration',
-  'custom AI solutions UK',
+  'custom AI solutions',
   // React
   'React development',
   'Next.js development',
   'React dashboard development',
-  'frontend development UK',
+  'frontend development',
   // Node.js / API
   'Node.js API development',
-  'REST API development UK',
-  'backend development UK',
+  'REST API development',
+  'backend development',
   'API integration',
   // Automation
   'business process automation',
-  'workflow automation UK',
+  'workflow automation',
   'automation and integrations',
-  'API integrations UK',
+  'API integrations',
   'CRM integration',
   // General
-  'web application development UK',
+  'web application development',
   'bespoke web development',
-  'software agency UK',
+  'software agency',
 ];
 
 /* ─────────────────────── per-page metadata registry ─────────────────────── */
@@ -71,14 +71,14 @@ export const pageMetadata = {
   home: {
     title: 'HostingOcean Solutions',
     description:
-      'UK-based software development company specialising in custom LMS platforms, AI chatbots, React applications, Node.js APIs, and business automation for companies worldwide.',
+      'Global software development company specialising in custom LMS platforms, AI chatbots, React applications, Node.js APIs, and business automation for companies worldwide.',
     keywords: [
-      'software development company UK',
+      'software development company',
       'custom LMS development',
-      'AI chatbot development UK',
+      'AI chatbot development',
       'React development company',
-      'Node.js development UK',
-      'business automation UK',
+      'Node.js development',
+      'business automation',
       'bespoke software development',
     ],
     path: '/',
@@ -87,15 +87,14 @@ export const pageMetadata = {
   about: {
     title: 'About Us',
     description:
-      'HostingOcean Solutions is a UK-based software development company. Learn about our mission, values, approach, and the senior engineers behind our LMS, AI, and web development work.',
+      'HostingOcean Solutions is a global software development company. Learn about our mission, values, approach, and the senior engineers behind our LMS, AI, and web development work.',
     keywords: [
       'about HostingOcean Solutions',
-      'UK software development team',
+      'global software development team',
       'custom web development company',
-      'software agency UK',
+      'software agency',
       'fixed price software development',
-      'senior software engineers UK',
-      'UK software development values',
+      'senior software engineers',
     ],
     path: '/about',
     ogImage: '/og-about.png',
@@ -103,15 +102,15 @@ export const pageMetadata = {
   services: {
     title: 'Services',
     description:
-      'Full-service software development — LMS platforms, AI chatbots, React apps, Node.js APIs, automation, DevOps, custom dashboards, and SDK development. UK-based, senior engineers only.',
+      'Full-service software development — LMS platforms, AI chatbots, React apps, Node.js APIs, automation, DevOps, custom dashboards, and SDK development. Senior engineers, worldwide clients.',
     keywords: [
-      'software development services UK',
+      'software development services',
       'LMS platform development',
       'AI chatbot service',
       'React development service',
       'Node.js API service',
-      'automation service UK',
-      'DevOps UK',
+      'automation service',
+      'DevOps service',
       'full-stack development service',
     ],
     path: '/services',
@@ -122,15 +121,15 @@ export const pageMetadata = {
     description:
       'Custom learning management systems built with React, Node.js, and Moodle. Multi-tenant, white-label, SCORM-compliant LMS platforms for education and enterprise.',
     keywords: [
-      'custom LMS development UK',
+      'custom LMS development',
       'Moodle development',
       'SCORM LMS platform',
       'xAPI learning platform',
-      'e-learning development UK',
+      'e-learning development',
       'white-label LMS',
       'multi-tenant LMS',
       'H5P content development',
-      'learning management system cost UK',
+      'learning management system cost',
       'corporate LMS development',
     ],
     path: '/lms-development',
@@ -139,9 +138,9 @@ export const pageMetadata = {
   aiChatbots: {
     title: 'AI Chatbot Development',
     description:
-      'Custom AI chatbots and assistants powered by RAG, OpenAI, and LangChain. Knowledge-base bots, customer support AI, and internal assistants built for UK businesses.',
+      'Custom AI chatbots and assistants powered by RAG, OpenAI, and LangChain. Knowledge-base bots, customer support AI, and internal assistants built for growing businesses.',
     keywords: [
-      'AI chatbot development UK',
+      'AI chatbot development',
       'RAG chatbot development',
       'OpenAI chatbot',
       'LangChain development',
@@ -150,7 +149,7 @@ export const pageMetadata = {
       'internal AI assistant',
       'GPT-4 chatbot development',
       'vector search chatbot',
-      'AI assistant UK',
+      'AI assistant',
     ],
     path: '/ai-chatbots',
     ogImage: '/og-ai-chatbots.png',
@@ -160,15 +159,15 @@ export const pageMetadata = {
     description:
       'Production-quality React and Next.js applications. Dashboards, web apps, and component libraries built with TypeScript, TailwindCSS, and modern best practices.',
     keywords: [
-      'React development UK',
+      'React development',
       'Next.js development',
       'TypeScript React',
       'React dashboard development',
-      'web application development UK',
-      'frontend development company UK',
+      'web application development',
+      'frontend development company',
       'React component library',
       'SaaS frontend development',
-      'React web app UK',
+      'React web app',
     ],
     path: '/react-development',
     ogImage: '/og-react-development.png',
@@ -178,16 +177,16 @@ export const pageMetadata = {
     description:
       'Scalable Node.js REST APIs and backend systems. Authentication, integrations, microservices, and full-stack backends built for production with TypeScript and PostgreSQL.',
     keywords: [
-      'Node.js API development UK',
+      'Node.js API development',
       'REST API development',
       'Express API development',
       'Fastify API',
-      'backend development UK',
-      'API integration UK',
+      'backend development',
+      'API integration',
       'microservices development',
       'Node.js TypeScript',
       'PostgreSQL backend development',
-      'API backend UK',
+      'API backend',
     ],
     path: '/node-api-development',
     ogImage: '/og-node-api-development.png',
@@ -197,16 +196,15 @@ export const pageMetadata = {
     description:
       'Business process automation and system integrations. Connect your CRM, ERP, LMS, and custom systems with reliable, monitored automation workflows.',
     keywords: [
-      'business process automation UK',
+      'business process automation',
       'workflow automation',
       'CRM integration development',
       'ERP integration',
-      'API integration UK',
+      'API integration',
       'n8n automation',
       'HubSpot integration',
-      'automation development UK',
-      'system integration UK',
-      'Zapier alternative UK',
+      'automation development',
+      'system integration',
     ],
     path: '/automation',
     ogImage: '/og-automation.png',
@@ -216,15 +214,15 @@ export const pageMetadata = {
     description:
       'Transparent pricing for LMS development, AI chatbots, React applications, Node.js APIs, and automation. Fixed-price quotes, hourly rates, and monthly retainers.',
     keywords: [
-      'software development pricing UK',
+      'software development pricing',
       'LMS development cost',
       'AI chatbot pricing',
-      'web development rates UK',
+      'web development rates',
       'fixed price software development',
       'monthly retainer software agency',
-      'software development quote UK',
-      'hourly rate software developer UK',
-      'how much does software development cost UK',
+      'software development quote',
+      'hourly rate software developer',
+      'how much does software development cost',
     ],
     path: '/pricing',
     ogImage: '/og-pricing.png',
@@ -232,15 +230,15 @@ export const pageMetadata = {
   portfolio: {
     title: 'Portfolio',
     description:
-      'Example projects from HostingOcean Solutions — LMS platforms, React dashboards, Node.js APIs, AI chatbots, and automation systems delivered for clients across the UK and beyond.',
+      'Example projects from HostingOcean Solutions — LMS platforms, React dashboards, Node.js APIs, AI chatbots, and automation systems delivered for clients around the world.',
     keywords: [
       'LMS development examples',
       'React dashboard portfolio',
       'Node.js API case studies',
       'AI chatbot portfolio',
-      'automation examples UK',
-      'software development portfolio UK',
-      'software case studies UK',
+      'automation examples',
+      'software development portfolio',
+      'software case studies',
     ],
     path: '/portfolio',
     ogImage: '/portfolio/opengraph-image',
@@ -251,11 +249,11 @@ export const pageMetadata = {
       'Get in touch with HostingOcean Solutions. Tell us about your project and receive a no-obligation proposal within one business day.',
     keywords: [
       'contact HostingOcean Solutions',
-      'software development quote UK',
-      'hire React developer UK',
+      'software development quote',
+      'hire React developer',
       'LMS development enquiry',
-      'get a software quote UK',
-      'software project proposal UK',
+      'get a software quote',
+      'software project proposal',
     ],
     path: '/contact',
     ogImage: '/og-contact.png',
@@ -269,8 +267,8 @@ export const pageMetadata = {
       'AI chatbot blog',
       'React development tips',
       'Node.js API blog',
-      'software development blog UK',
-      'automation blog UK',
+      'software development blog',
+      'automation blog',
     ],
     path: '/blog',
     ogImage: '/blog/opengraph-image',
@@ -449,8 +447,8 @@ export function websiteSchema() {
  *
  * @example
  * breadcrumbSchema([
- *   { name: 'Home', url: 'https://solutions.hostingocean.co.uk' },
- *   { name: 'LMS Development', url: 'https://solutions.hostingocean.co.uk/lms-development' },
+ *   { name: 'Home', url: 'https://solutions.hostingocean.net' },
+ *   { name: 'LMS Development', url: 'https://solutions.hostingocean.net/lms-development' },
  * ])
  */
 export function breadcrumbSchema(items: { name: string; url: string }[]) {
@@ -495,7 +493,7 @@ export function serviceSchema({
     },
     areaServed: {
       '@type': 'Country',
-      name: 'United Kingdom',
+      name: 'Worldwide',
     },
     availableChannel: {
       '@type': 'ServiceChannel',

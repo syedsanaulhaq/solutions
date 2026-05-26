@@ -159,8 +159,8 @@ const services = [
 const whyItems = [
   {
     icon: <Globe className="h-6 w-6" />,
-    title: 'UK-Registered Company',
-    body: 'Fully registered and operating in the United Kingdom — proper contracts, UK invoicing, and GDPR-compliant data handling as standard.',
+    title: 'Registered Company',
+    body: 'Properly registered and operating globally — professional contracts, compliant invoicing, and GDPR-compliant data handling as standard.',
   },
   {
     icon: <Layers className="h-6 w-6" />,
@@ -276,7 +276,7 @@ export default function HomePage() {
     <>
       {/* ── 1. Hero ── */}
       <Hero
-        badge="UK-Registered Software Development Company"
+        badge="Professional Software Development Company"
         title="Custom LMS, AI &"
         titleAccent="Web Development Solutions"
         subtitle="We build scalable, modern and intelligent digital systems for businesses worldwide. From LMS platforms to AI chatbots, dashboards, APIs and automation — we deliver solutions that help you grow."
@@ -299,7 +299,7 @@ export default function HomePage() {
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-5 text-base">
               HostingOcean Solutions is the software&#8209;development division of HostingOcean — a
-              UK&#8209;registered technology company. We specialise in building custom LMS platforms,
+              globally&#8209;operating technology company. We specialise in building custom LMS platforms,
               AI&#8209;powered systems, modern web applications and automation tools tailored to your
               business needs.
             </p>
@@ -594,7 +594,7 @@ export default function HomePage() {
           </h2>
           <p className="text-muted-foreground leading-relaxed text-base mb-5">
             HostingOcean Solutions was established to serve businesses that need more than off&#8209;the&#8209;shelf
-            software. As the development arm of HostingOcean — a UK&#8209;registered technology company — we
+            software. As the development arm of HostingOcean — a globally&#8209;operating technology company — we
             bring enterprise&#8209;level engineering to organisations of every size, from fast&#8209;growing
             startups to established enterprises.
           </p>
@@ -638,7 +638,7 @@ export default function HomePage() {
         subtitle="Tell us about your project and we will respond with a clear, no-obligation proposal within one business day — no sales calls, no hard sell, just honest advice."
         primary={{ label: 'Get a Free Quote', href: '/get-a-quote' }}
         secondary={{ label: 'Contact Us', href: '/contact' }}
-        trustItems={['No commitment required', 'Response within 24 hours', 'UK-registered company']}
+        trustItems={['No commitment required', 'Response within 24 hours', 'Fixed-price quotes']}
       />
     </>
   );

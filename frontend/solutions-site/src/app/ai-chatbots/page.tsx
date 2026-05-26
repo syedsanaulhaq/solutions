@@ -25,15 +25,16 @@ import {
   Rocket,
   LifeBuoy,
   ChevronDown,
-  PoundSterling,
+  DollarSign,
   Lightbulb,
   Code2,
 } from 'lucide-react';
+import { PriceDisplay } from '@/components/PriceDisplay';
 
 export const metadata: Metadata = buildMetadata({
   title: 'AI Chatbot Development',
   description:
-    'Custom AI chatbots powered by GPT-4o, Claude, and Gemini. RAG pipelines, knowledge-base bots, support bots, and embeddable website chat widgets — built by UK engineers.',
+    'Custom AI chatbots powered by GPT-4o, Claude, and Gemini. RAG pipelines, knowledge-base bots, support bots, and embeddable website chat widgets — built by expert engineers.',
   path: '/ai-chatbots',
   keywords: [
     'AI chatbot development',
@@ -252,10 +253,23 @@ const deliveryProcess = [
   },
 ];
 
-const pricingTiers = [
+interface PricingTier {
+  title: string;
+  priceLow: number;
+  priceHigh?: number;
+  highPlus?: boolean;
+  prefix?: string;
+  suffix?: string;
+  description: string;
+  includes: string[];
+  highlighted?: boolean;
+}
+
+const pricingTiers: PricingTier[] = [
   {
     title: 'Knowledge-Base Bot',
-    range: '£5,000 – £12,000',
+    priceLow: 5000,
+    priceHigh: 12000,
     description:
       'A RAG chatbot trained on your documentation, FAQs, or knowledge base — embedded on your website or internal tool. Ideal for support deflection and self-service.',
     includes: [
@@ -269,7 +283,8 @@ const pricingTiers = [
   },
   {
     title: 'Customer Support Bot',
-    range: '£10,000 – £28,000',
+    priceLow: 10000,
+    priceHigh: 28000,
     description:
       'A full support automation system integrated with your ticketing platform. Handles tier-1 queries, escalates intelligently, and tracks resolution rates.',
     includes: [
@@ -284,7 +299,8 @@ const pricingTiers = [
   },
   {
     title: 'Internal AI Assistant',
-    range: '£8,000 – £22,000',
+    priceLow: 8000,
+    priceHigh: 22000,
     description:
       'A private, role-aware assistant for your team — trained on internal SOPs, HR docs, and technical knowledge. SSO-authenticated, audit-logged, and deployable on-premise.',
     includes: [
@@ -534,10 +550,10 @@ export default function AiChatbotsPage() {
                 </div>
               )}
               <div className="mb-4">
-                <PoundSterling className={`h-6 w-6 mb-3 ${tier.highlighted ? 'text-[#2563EB]' : 'text-muted-foreground'}`} />
+                <DollarSign className={`h-6 w-6 mb-3 ${tier.highlighted ? 'text-[#2563EB]' : 'text-muted-foreground'}`} />
                 <h3 className="font-bold text-lg mb-1">{tier.title}</h3>
                 <p className={`text-2xl font-extrabold ${tier.highlighted ? 'text-[#2563EB]' : 'text-foreground'}`}>
-                  {tier.range}
+                  <PriceDisplay low={tier.priceLow} high={tier.priceHigh} />
                 </p>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed mb-5">{tier.description}</p>
@@ -611,7 +627,7 @@ export default function AiChatbotsPage() {
             production-ready system — complete with admin dashboard and embed widget.
           </p>
           <p className="text-slate-400 text-sm mb-8">
-            Free scoping call · No commitment · UK-based team
+            Free scoping call · No commitment · Senior engineers
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact">

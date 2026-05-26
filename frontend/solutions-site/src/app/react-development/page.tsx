@@ -26,14 +26,15 @@ import {
   Hammer,
   Rocket,
   ChevronDown,
-  PoundSterling,
+  DollarSign,
   Lightbulb,
 } from 'lucide-react';
+import { PriceDisplay } from '@/components/PriceDisplay';
 
 export const metadata: Metadata = buildMetadata({
   title: 'React & Next.js Development',
   description:
-    'Custom React and Next.js development — dashboards, admin portals, customer-facing applications, and UI component libraries. Built by UK engineers with TypeScript throughout.',
+    'Custom React and Next.js development — dashboards, admin portals, customer-facing applications, and UI component libraries. Built by expert engineers with TypeScript throughout.',
   path: '/react-development',
   keywords: [
     'React development',
@@ -233,10 +234,22 @@ const deliveryProcess = [
   },
 ];
 
-const pricingTiers = [
+interface PricingTier {
+  title: string;
+  priceLow: number;
+  priceHigh?: number;
+  highPlus?: boolean;
+  prefix?: string;
+  suffix?: string;
+  description: string;
+  includes: string[];
+  highlighted?: boolean;
+}
+
+const pricingTiers: PricingTier[] = [
   {
     title: 'Dashboard or Admin Panel',
-    range: '£8,000 – £25,000',
+    priceLow: 8000, priceHigh: 25000,
     description:
       'A data-rich internal tool — operations dashboard, admin panel, or reporting interface. Connected to your APIs, with role-based access and full TypeScript codebase.',
     includes: [
@@ -250,7 +263,7 @@ const pricingTiers = [
   },
   {
     title: 'Customer or Partner Portal',
-    range: '£15,000 – £45,000',
+    priceLow: 15000, priceHigh: 45000,
     description:
       'A customer-facing product — account management, self-service portal, or SaaS front-end. Built for scale, polished UX, and long-term maintainability.',
     includes: [
@@ -265,7 +278,7 @@ const pricingTiers = [
   },
   {
     title: 'Component Library',
-    range: '£5,000 – £18,000',
+    priceLow: 5000, priceHigh: 18000,
     description:
       'A reusable, documented, fully typed component library — published as a private npm package with Storybook, design tokens, and accessibility compliance baked in.',
     includes: [
@@ -489,10 +502,10 @@ export default function ReactDevelopmentPage() {
                 </div>
               )}
               <div className="mb-4">
-                <PoundSterling className={`h-6 w-6 mb-3 ${tier.highlighted ? 'text-[#2563EB]' : 'text-muted-foreground'}`} />
+                <DollarSign className={`h-6 w-6 mb-3 ${tier.highlighted ? 'text-[#2563EB]' : 'text-muted-foreground'}`} />
                 <h3 className="font-bold text-lg mb-1">{tier.title}</h3>
                 <p className={`text-2xl font-extrabold ${tier.highlighted ? 'text-[#2563EB]' : 'text-foreground'}`}>
-                  {tier.range}
+                  <PriceDisplay low={tier.priceLow} high={tier.priceHigh} prefix={tier.prefix} suffix={tier.suffix} />
                 </p>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed mb-5">{tier.description}</p>
@@ -566,7 +579,7 @@ export default function ReactDevelopmentPage() {
             timeline, and a fixed-price quote within one business day.
           </p>
           <p className="text-slate-400 text-sm mb-8">
-            Free scoping call · No commitment · UK-based team
+            Free scoping call · No commitment · Senior engineers
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact">

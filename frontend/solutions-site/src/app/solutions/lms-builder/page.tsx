@@ -9,7 +9,7 @@ import tiers from '@/data/saas-tiers.json';
 export const metadata: Metadata = buildMetadata({
   title: 'LMS Builder — Launch a Branded Learning Management System',
   description:
-    'Deploy a fully branded LMS for your organisation. SCORM support, completion certificates, SSO, and custom reporting. Built by UK engineers.',
+    'Deploy a fully branded LMS for your organisation. SCORM support, completion certificates, SSO, and custom reporting. Built by expert engineers.',
   path: '/solutions/lms-builder',
   keywords: ['LMS', 'learning management system', 'SCORM', 'e-learning platform', 'branded LMS', 'online learning'],
 });

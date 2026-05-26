@@ -104,11 +104,11 @@ export function ContactForm() {
               <SelectValue placeholder="Select a range" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="under-5k">Under £5,000</SelectItem>
-              <SelectItem value="5k-15k">£5,000 – £15,000</SelectItem>
-              <SelectItem value="15k-30k">£15,000 – £30,000</SelectItem>
-              <SelectItem value="30k-50k">£30,000 – £50,000</SelectItem>
-              <SelectItem value="50k-plus">£50,000+</SelectItem>
+              <SelectItem value="under-5k">Under $5,000</SelectItem>
+              <SelectItem value="5k-15k">$5,000 – $15,000</SelectItem>
+              <SelectItem value="15k-30k">$15,000 – $30,000</SelectItem>
+              <SelectItem value="30k-50k">$30,000 – $50,000</SelectItem>
+              <SelectItem value="50k-plus">$50,000+</SelectItem>
               <SelectItem value="not-sure">Not sure yet</SelectItem>
             </SelectContent>
           </Select>
