@@ -249,7 +249,7 @@ interface PricingTier {
 const pricingTiers: PricingTier[] = [
   {
     title: 'Dashboard or Admin Panel',
-    priceLow: 8000, priceHigh: 25000,
+    priceLow: 4000, priceHigh: 12000,
     description:
       'A data-rich internal tool — operations dashboard, admin panel, or reporting interface. Connected to your APIs, with role-based access and full TypeScript codebase.',
     includes: [
@@ -263,7 +263,7 @@ const pricingTiers: PricingTier[] = [
   },
   {
     title: 'Customer or Partner Portal',
-    priceLow: 15000, priceHigh: 45000,
+    priceLow: 8000, priceHigh: 22000,
     description:
       'A customer-facing product — account management, self-service portal, or SaaS front-end. Built for scale, polished UX, and long-term maintainability.',
     includes: [
@@ -278,7 +278,7 @@ const pricingTiers: PricingTier[] = [
   },
   {
     title: 'Component Library',
-    priceLow: 5000, priceHigh: 18000,
+    priceLow: 2500, priceHigh: 7000,
     description:
       'A reusable, documented, fully typed component library — published as a private npm package with Storybook, design tokens, and accessibility compliance baked in.',
     includes: [

@@ -295,7 +295,7 @@ interface PricingTier {
 const pricingTiers: PricingTier[] = [
   {
     title: 'Moodle Setup & Customisation',
-    priceLow: 2500, priceHigh: 6000,
+    priceLow: 1200, priceHigh: 4000,
     description:
       'Ideal for organisations that want the power of Moodle with a polished, on-brand experience. Includes installation, custom theme, essential plugins, and user onboarding.',
     includes: [
@@ -308,7 +308,7 @@ const pricingTiers: PricingTier[] = [
   },
   {
     title: 'Custom LMS Build',
-    priceLow: 15000, priceHigh: 60000, highPlus: true,
+    priceLow: 8000, priceHigh: 25000, highPlus: true,
     description:
       'A fully bespoke LMS built on React and Node.js, designed around your exact workflows. Suitable for training providers, commercial platforms, and enterprise deployments.',
     includes: [
@@ -323,7 +323,7 @@ const pricingTiers: PricingTier[] = [
   },
   {
     title: 'LMS Retainer & Managed Growth',
-    priceLow: 1500, prefix: 'From ', suffix: ' / month',
+    priceLow: 800, prefix: 'From ', suffix: ' / month',
     description:
       'Ongoing development, maintenance, and hosting management for organisations that want to continuously improve their platform without managing an in-house team.',
     includes: [

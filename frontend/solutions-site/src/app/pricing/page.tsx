@@ -65,7 +65,7 @@ const pricingModels = [
       'Delivery to agreed acceptance criteria only',
       'Source code and full IP ownership transferred on completion',
     ],
-    from: { low: 5000, prefix: 'From ' },
+    from: { low: 1500, prefix: 'From ' },
     note: 'Depends on scope and complexity',
   },
   {
@@ -83,7 +83,7 @@ const pricingModels = [
       'Suitable for advisory, architecture, and code review',
       'Minimum four hours per engagement',
     ],
-    from: { low: 95, suffix: '/hr' },
+    from: { low: 30, suffix: '/hr' },
     note: 'Senior engineer rate. Discounts on volume blocks.',
   },
   {
@@ -101,7 +101,7 @@ const pricingModels = [
       'Flexible scope — features, bugs, infrastructure, content',
       'Cancel with 30 days notice — no lock-in',
     ],
-    from: { low: 1500, prefix: 'From ', suffix: '/month' },
+    from: { low: 800, prefix: 'From ', suffix: '/month' },
     note: 'Minimum 10 hours/month. Volume discounts apply.',
   },
 ];
@@ -109,7 +109,7 @@ const pricingModels = [
 const lmsPricing: PricingItem[] = [
   {
     title: 'Moodle Setup & Configuration',
-    priceLow: 2500, priceHigh: 6000,
+    priceLow: 1200, priceHigh: 4000,
     description: 'Installation, theme configuration, plugin setup, user roles, course structure, and initial content import. Ideal for organisations moving to Moodle for the first time.',
     includes: [
       'Server deployment and configuration',
@@ -122,7 +122,7 @@ const lmsPricing: PricingItem[] = [
   },
   {
     title: 'Custom LMS Development',
-    priceLow: 15000, priceHigh: 60000, highPlus: true,
+    priceLow: 8000, priceHigh: 25000, highPlus: true,
     description: 'A purpose-built learning platform with custom architecture, specific user flows, custom content types, integrations with your existing systems, and reporting tailored to your KPIs.',
     includes: [
       'Full product discovery and architecture design',
@@ -135,7 +135,7 @@ const lmsPricing: PricingItem[] = [
   },
   {
     title: 'LMS Migration',
-    priceLow: 5000, priceHigh: 18000,
+    priceLow: 2500, priceHigh: 8000,
     description: 'Migrating your existing LMS to a new platform — typically to Moodle or a custom solution. Includes data export, transformation, import, and validation.',
     includes: [
       'Audit of existing platform and content',
@@ -148,7 +148,7 @@ const lmsPricing: PricingItem[] = [
   },
   {
     title: 'LMS Retainer Support',
-    priceLow: 1500, prefix: 'From ', suffix: '/month',
+    priceLow: 800, prefix: 'From ', suffix: '/month',
     description: 'Ongoing platform maintenance, feature development, content work, and user support for your existing LMS. Fixed monthly cost, predictable capacity.',
     includes: [
       'Moodle upgrades and security patches',
@@ -164,7 +164,7 @@ const lmsPricing: PricingItem[] = [
 const chatbotPricing: PricingItem[] = [
   {
     title: 'Knowledge-Base Chatbot',
-    priceLow: 5000, priceHigh: 12000,
+    priceLow: 1500, priceHigh: 4500,
     description: 'A RAG-powered chatbot trained on your documentation, FAQs, and knowledge base. Deployable on your website or internal portal. Answers questions accurately from your own content.',
     includes: [
       'Document ingestion pipeline (PDF, Word, web)',
@@ -177,7 +177,7 @@ const chatbotPricing: PricingItem[] = [
   },
   {
     title: 'Customer Support Bot',
-    priceLow: 10000, priceHigh: 28000,
+    priceLow: 4000, priceHigh: 10000,
     description: 'A full-featured support chatbot integrated with your helpdesk, CRM, and product systems. Handles tier-1 queries autonomously and escalates with context when needed.',
     includes: [
       'CRM and helpdesk integration (HubSpot, Zendesk, Freshdesk)',
@@ -190,7 +190,7 @@ const chatbotPricing: PricingItem[] = [
   },
   {
     title: 'Internal Assistant',
-    priceLow: 8000, priceHigh: 22000,
+    priceLow: 3000, priceHigh: 8000,
     description: 'A private, secure AI assistant for your team — trained on internal policies, HR documents, runbooks, and institutional knowledge. Deployed inside your network.',
     includes: [
       'SSO authentication (Google, Microsoft, SAML)',
@@ -203,7 +203,7 @@ const chatbotPricing: PricingItem[] = [
   },
   {
     title: 'Custom AI Product',
-    priceLow: 15000, highPlus: true,
+    priceLow: 6000, highPlus: true,
     description: 'A bespoke AI-powered feature or product — agents, multi-step reasoning workflows, voice interfaces, or complex integrations with your existing data and systems.',
     includes: [
       'Discovery and architecture design',
@@ -219,7 +219,7 @@ const chatbotPricing: PricingItem[] = [
 const reactPricing: PricingItem[] = [
   {
     title: 'MVP / Marketing Site',
-    priceLow: 5000, priceHigh: 15000,
+    priceLow: 2500, priceHigh: 8000,
     description: 'A production-quality Next.js site or web app built to a defined scope — ideal for product launches, marketing sites, or client-facing portals needing custom functionality.',
     includes: [
       'Next.js with App Router and TypeScript',
@@ -232,7 +232,7 @@ const reactPricing: PricingItem[] = [
   },
   {
     title: 'React Web Application',
-    priceLow: 15000, priceHigh: 50000, highPlus: true,
+    priceLow: 8000, priceHigh: 22000, highPlus: true,
     description: 'A full-featured, data-driven web application — dashboards, admin panels, multi-user SaaS tools, or complex workflows with authentication, roles, and real-time data.',
     includes: [
       'Component library with design system',
@@ -245,7 +245,7 @@ const reactPricing: PricingItem[] = [
   },
   {
     title: 'Component Library / Design System',
-    priceLow: 8000, priceHigh: 25000,
+    priceLow: 4000, priceHigh: 12000,
     description: 'A shared, documented component library for teams building multiple React products. Built with Storybook, tested, and published to your private npm registry.',
     includes: [
       'Core UI components (buttons, forms, tables, modals)',
@@ -258,7 +258,7 @@ const reactPricing: PricingItem[] = [
   },
   {
     title: 'React Retainer',
-    priceLow: 1500, prefix: 'From ', suffix: '/month',
+    priceLow: 800, prefix: 'From ', suffix: '/month',
     description: 'Ongoing React development capacity — new features, performance tuning, dependency upgrades, and bug fixes. Works alongside your team or as your sole frontend engineering resource.',
     includes: [
       'Reserved monthly engineering hours',
@@ -274,7 +274,7 @@ const reactPricing: PricingItem[] = [
 const nodePricing: PricingItem[] = [
   {
     title: 'REST API Build',
-    priceLow: 5000, priceHigh: 15000,
+    priceLow: 2500, priceHigh: 8000,
     description: 'A well-structured, documented REST API for a defined set of resources — ideal for mobile apps, third-party integrations, or decoupling a monolith into services.',
     includes: [
       'Express or Fastify with TypeScript',
@@ -287,7 +287,7 @@ const nodePricing: PricingItem[] = [
   },
   {
     title: 'Full Backend System',
-    priceLow: 15000, priceHigh: 55000, highPlus: true,
+    priceLow: 8000, priceHigh: 25000, highPlus: true,
     description: 'A production-grade backend — multi-service architecture, complex business logic, event-driven processing, third-party integrations, and a robust data model.',
     includes: [
       'Service architecture design and documentation',
@@ -300,7 +300,7 @@ const nodePricing: PricingItem[] = [
   },
   {
     title: 'API Integration Project',
-    priceLow: 3000, priceHigh: 12000,
+    priceLow: 1500, priceHigh: 6000,
     description: 'Connecting your systems to third-party APIs — payment providers, CRMs, ERPs, communication platforms, or data feeds. Reliable, monitored, with error recovery.',
     includes: [
       'Integration design and data mapping',
@@ -313,7 +313,7 @@ const nodePricing: PricingItem[] = [
   },
   {
     title: 'API Retainer',
-    priceLow: 1500, prefix: 'From ', suffix: '/month',
+    priceLow: 800, prefix: 'From ', suffix: '/month',
     description: 'Ongoing backend engineering — new endpoints, schema changes, integration maintenance, performance tuning, and security updates for your production API.',
     includes: [
       'Reserved monthly engineering capacity',
@@ -329,7 +329,7 @@ const nodePricing: PricingItem[] = [
 const automationPricing: PricingItem[] = [
   {
     title: 'Single Workflow Automation',
-    priceLow: 3000, priceHigh: 10000,
+    priceLow: 1500, priceHigh: 5000,
     description: 'Automate one defined business process end-to-end — data sync, document generation, notification workflows, report delivery, or a manual task your team repeats daily.',
     includes: [
       'Process mapping and automation design',
@@ -342,7 +342,7 @@ const automationPricing: PricingItem[] = [
   },
   {
     title: 'Multi-System Automation Platform',
-    priceLow: 12000, priceHigh: 40000,
+    priceLow: 6000, priceHigh: 18000,
     description: 'A centralised automation layer connecting multiple systems — CRM, ERP, LMS, communication tools, and data warehouses — with orchestration, monitoring, and an admin UI.',
     includes: [
       'Integration architecture design',
@@ -355,7 +355,7 @@ const automationPricing: PricingItem[] = [
   },
   {
     title: 'Process Audit & Automation Roadmap',
-    priceLow: 1500, priceHigh: 3500,
+    priceLow: 800, priceHigh: 2000,
     description: 'A structured audit of your current manual processes, followed by a prioritised automation roadmap — what to automate first, estimated ROI, and recommended tooling.',
     includes: [
       'Stakeholder interviews and process mapping',
@@ -368,7 +368,7 @@ const automationPricing: PricingItem[] = [
   },
   {
     title: 'Automation Retainer',
-    priceLow: 1200, prefix: 'From ', suffix: '/month',
+    priceLow: 800, prefix: 'From ', suffix: '/month',
     description: 'Ongoing automation development and maintenance — new workflows, integration updates, monitoring, and optimisation of existing automations as your systems evolve.',
     includes: [
       'Reserved monthly engineering hours',

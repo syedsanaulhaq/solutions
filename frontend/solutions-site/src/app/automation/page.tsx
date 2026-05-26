@@ -255,7 +255,7 @@ interface PricingTier {
 const pricingTiers: PricingTier[] = [
   {
     title: 'Single Integration or Automation',
-    priceLow: 3000, priceHigh: 10000,
+    priceLow: 1500, priceHigh: 5000,
     description:
       'A focused automation project — connecting two systems via API, automating a single business process, or replacing a manual data transfer with a reliable scheduled job.',
     includes: [
@@ -269,7 +269,7 @@ const pricingTiers: PricingTier[] = [
   },
   {
     title: 'Multi-System Automation Suite',
-    priceLow: 12000, priceHigh: 40000,
+    priceLow: 6000, priceHigh: 18000,
     description:
       'A comprehensive automation programme — multiple connected workflows, CRM/ERP integrations, event-driven pipelines, and a centralised monitoring layer across all automations.',
     includes: [
@@ -284,7 +284,7 @@ const pricingTiers: PricingTier[] = [
   },
   {
     title: 'Automation Retainer',
-    priceLow: 1200, prefix: 'From ', suffix: '/month',
+    priceLow: 800, prefix: 'From ', suffix: '/month',
     description:
       'Ongoing automation development — new workflow builds, integration expansions, API version upgrades, monitoring, and on-call support on a rolling monthly contract.',
     includes: [
