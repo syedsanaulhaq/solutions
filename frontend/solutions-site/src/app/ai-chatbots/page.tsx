@@ -268,8 +268,8 @@ interface PricingTier {
 const pricingTiers: PricingTier[] = [
   {
     title: 'Knowledge-Base Bot',
-    priceLow: 1500,
-    priceHigh: 4500,
+    priceLow: 800,
+    priceHigh: 2200,
     description:
       'A RAG chatbot trained on your documentation, FAQs, or knowledge base — embedded on your website or internal tool. Ideal for support deflection and self-service.',
     includes: [
@@ -283,8 +283,8 @@ const pricingTiers: PricingTier[] = [
   },
   {
     title: 'Customer Support Bot',
-    priceLow: 4000,
-    priceHigh: 10000,
+    priceLow: 2000,
+    priceHigh: 5000,
     description:
       'A full support automation system integrated with your ticketing platform. Handles tier-1 queries, escalates intelligently, and tracks resolution rates.',
     includes: [
@@ -299,8 +299,8 @@ const pricingTiers: PricingTier[] = [
   },
   {
     title: 'Internal AI Assistant',
-    priceLow: 3000,
-    priceHigh: 8000,
+    priceLow: 1500,
+    priceHigh: 4000,
     description:
       'A private, role-aware assistant for your team — trained on internal SOPs, HR docs, and technical knowledge. SSO-authenticated, audit-logged, and deployable on-premise.',
     includes: [

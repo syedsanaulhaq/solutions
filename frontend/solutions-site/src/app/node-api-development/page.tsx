@@ -255,7 +255,7 @@ interface PricingTier {
 const pricingTiers: PricingTier[] = [
   {
     title: 'Integration or Feature API',
-    priceLow: 2500, priceHigh: 7000,
+    priceLow: 1200, priceHigh: 3500,
     description:
       'A focused API project — a new integration with a third-party platform, an authentication system, a background job service, or a set of new endpoints on an existing backend.',
     includes: [
@@ -269,7 +269,7 @@ const pricingTiers: PricingTier[] = [
   },
   {
     title: 'Full Backend API',
-    priceLow: 8000, priceHigh: 22000,
+    priceLow: 4000, priceHigh: 11000,
     description:
       'A complete backend system — multi-resource REST API, full auth system, third-party integrations, background job workers, and production infrastructure.',
     includes: [
@@ -284,7 +284,7 @@ const pricingTiers: PricingTier[] = [
   },
   {
     title: 'API Retainer',
-    priceLow: 800, prefix: 'From ', suffix: '/month',
+    priceLow: 400, prefix: 'From ', suffix: '/month',
     description:
       'Ongoing Node.js backend development — new features, third-party integrations, security patches, performance tuning, and on-call support on a rolling monthly contract.',
     includes: [
