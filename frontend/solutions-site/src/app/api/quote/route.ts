@@ -68,13 +68,13 @@ function row(label: string, value: string | undefined): string {
 
 async function sendLeadEmail(lead: QuoteLead): Promise<void> {
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, LEAD_NOTIFY_EMAIL } = process.env;
-  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS || !LEAD_NOTIFY_EMAIL) return;
+  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !LEAD_NOTIFY_EMAIL) return;
 
   const transporter = nodemailer.createTransport({
     host: SMTP_HOST,
     port: Number(SMTP_PORT),
     secure: Number(SMTP_PORT) === 465,
-    auth: { user: SMTP_USER, pass: SMTP_PASS },
+    ...(SMTP_PASS ? { auth: { user: SMTP_USER, pass: SMTP_PASS } } : {}),
   });
 
   const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"></head>
@@ -140,13 +140,13 @@ async function sendLeadEmail(lead: QuoteLead): Promise<void> {
 // ---------------------------------------------------------------------------
 async function sendAutoReply(name: string, email: string, service: string): Promise<void> {
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } = process.env;
-  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) return;
+  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER) return;
 
   const transporter = nodemailer.createTransport({
     host: SMTP_HOST,
     port: Number(SMTP_PORT),
     secure: Number(SMTP_PORT) === 465,
-    auth: { user: SMTP_USER, pass: SMTP_PASS },
+    ...(SMTP_PASS ? { auth: { user: SMTP_USER, pass: SMTP_PASS } } : {}),
   });
 
   const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"></head>
