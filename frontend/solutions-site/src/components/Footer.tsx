@@ -46,12 +46,12 @@ export function Footer() {
             <div className="space-y-2 text-sm text-slate-500">
               <div className="flex items-center gap-2">
                 <MapPin className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                <span>United Kingdom &middot; Registered Company</span>
+                <span>Pakistan &middot; Registered Company</span>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="h-3.5 w-3.5 shrink-0" />
-                <a href="mailto:info@solutions.hostingocean.co.uk" className="hover:text-white transition-colors">
-                  info@solutions.hostingocean.co.uk
+                <a href="mailto:info@hostingocean.net" className="hover:text-white transition-colors">
+                  info@hostingocean.net
                 </a>
               </div>
             </div>

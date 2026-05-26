@@ -77,7 +77,7 @@ const INITIAL_MESSAGES: Message[] = [
 const SUGGESTIONS = ['Pricing', 'LMS Development', 'AI Chatbot', 'Get a Quote'];
 
 const ERROR_REPLY =
-  "Sorry, I couldn't get a response right now. Please try again or contact us at info@solutions.hostingocean.co.uk.";
+  "Sorry, I couldn't get a response right now. Please try again or contact us at info@hostingocean.net.";
 
 // ---------------------------------------------------------------------------
 // Component

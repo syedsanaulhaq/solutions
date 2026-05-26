@@ -7,8 +7,8 @@ const SYSTEM_PROMPT = `You are the AI assistant for HostingOcean Solutions, a gl
 
 ABOUT US:
 - We build custom digital solutions for businesses of all sizes
-- Based in the United Kingdom
-- Contact: info@solutions.hostingocean.co.uk
+- Based in Pakistan
+- Contact: info@hostingocean.net
 - Website: solutions.hostingocean.co.uk
 
 OUR SERVICES:
@@ -70,7 +70,7 @@ interface ChatMessage {
 }
 
 const FALLBACK_REPLY =
-  "I'm having a bit of trouble connecting right now. For immediate help, please email us at info@solutions.hostingocean.co.uk or visit our Contact page — we respond within one business day.";
+  "I'm having a bit of trouble connecting right now. For immediate help, please email us at info@hostingocean.net or visit our Contact page — we respond within one business day.";
 
 // ---------------------------------------------------------------------------
 // POST /api/chat
