@@ -162,16 +162,16 @@ async function sendAutoReply(name: string, email: string, service: string): Prom
             While you wait, you might find these resources helpful:
           </p>
           <ul style="margin:0 0 16px;padding-left:20px;color:#374151;font-size:14px">
-            <li style="margin-bottom:8px"><a href="https://solutions.hostingocean.co.uk/pricing-calculator" style="color:#2563EB">Try our Pricing Calculator</a> — get an instant budget estimate for your project</li>
-            <li style="margin-bottom:8px"><a href="https://solutions.hostingocean.co.uk/portfolio" style="color:#2563EB">View our Portfolio</a> — see examples of projects we have delivered</li>
-            <li style="margin-bottom:8px"><a href="https://solutions.hostingocean.co.uk/blog" style="color:#2563EB">Read our Blog</a> — technical guides and case studies</li>
+            <li style="margin-bottom:8px"><a href="https://solutions.hostingocean.net/pricing-calculator" style="color:#2563EB">Try our Pricing Calculator</a> — get an instant budget estimate for your project</li>
+            <li style="margin-bottom:8px"><a href="https://solutions.hostingocean.net/portfolio" style="color:#2563EB">View our Portfolio</a> — see examples of projects we have delivered</li>
+            <li style="margin-bottom:8px"><a href="https://solutions.hostingocean.net/blog" style="color:#2563EB">Read our Blog</a> — technical guides and case studies</li>
           </ul>
           <p style="margin:0 0 8px;color:#374151;font-size:15px">Best regards,</p>
           <p style="margin:0;color:#374151;font-size:15px;font-weight:600">The HostingOcean Solutions Team</p>
         </td></tr>
         <tr><td style="background:#f9fafb;padding:16px 32px;border-top:1px solid #e5e7eb">
           <p style="margin:0;font-size:12px;color:#6b7280">
-            <a href="https://solutions.hostingocean.co.uk" style="color:#2563EB">solutions.hostingocean.co.uk</a> · 
+            <a href="https://solutions.hostingocean.net" style="color:#2563EB">solutions.hostingocean.net</a> · 
             This is an automated message. Please do not reply to this email.
           </p>
         </td></tr>
