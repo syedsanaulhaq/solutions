@@ -721,12 +721,30 @@ function micReset() {
 }
 
 async function startMic() {
+  // Check secure context + mediaDevices API availability
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    setStatus('idle', '\u26a0\ufe0f Mic API not available \u2014 ensure the page is on HTTPS and try Chrome or Edge');
+    return;
+  }
+  // Check permission state before calling getUserMedia (avoids silent failures)
+  try {
+    const perm = await navigator.permissions.query({ name: 'microphone' });
+    console.log('Mic permission state:', perm.state);
+  } catch(e) { /* permissions API not available, proceed anyway */ }
+
   try {
     micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
   } catch (err) {
-    setStatus('idle', err.name === 'NotAllowedError'
-      ? '\u26a0\ufe0f Mic blocked \u2014 allow microphone in the \ud83d\udd12 address bar, then refresh'
-      : '\u26a0\ufe0f Mic unavailable \u2014 type your order instead');
+    console.error('getUserMedia failed:', err.name, err.message);
+    let msg;
+    if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+      msg = '\u26a0\ufe0f Mic access denied \u2014 check: (1) browser site permission \ud83d\udd12, (2) Windows Settings \u2192 Privacy \u2192 Microphone, then refresh';
+    } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
+      msg = '\u26a0\ufe0f No microphone found \u2014 plug one in or type your order below';
+    } else {
+      msg = '\u26a0\ufe0f Mic error (' + err.name + ') \u2014 type your order instead';
+    }
+    setStatus('idle', msg);
     return;
   }
 
