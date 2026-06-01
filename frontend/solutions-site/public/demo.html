@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Order Taker ΓÇö Voice AI Demo</title>
+  <title>Order Taker — Voice AI Demo</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -29,7 +29,7 @@
       height: 720px;
     }
 
-    /* ΓöÇΓöÇ Header ΓöÇΓöÇ */
+    /* ── Header ── */
     .chat-header {
       background: linear-gradient(135deg, #e74c3c, #c0392b);
       padding: 16px 20px;
@@ -89,7 +89,7 @@
     }
     .voice-badge-dot { width: 6px; height: 6px; background: #2ecc71; border-radius: 50%; }
 
-    /* ΓöÇΓöÇ Settings gear ΓöÇΓöÇ */
+    /* ── Settings gear ── */
     #settings-btn {
       background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
       border-radius: 50%; width: 32px; height: 32px;
@@ -99,7 +99,7 @@
     }
     #settings-btn:hover { background: rgba(255,255,255,0.3); }
 
-    /* ΓöÇΓöÇ End Session button ΓöÇΓöÇ */
+    /* ── End Session button ── */
     #end-btn {
       background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.35);
       border-radius: 50%; width: 32px; height: 32px;
@@ -109,7 +109,7 @@
     }
     #end-btn:hover { background: rgba(220,30,30,0.75); }
 
-    /* ΓöÇΓöÇ End screen overlay ΓöÇΓöÇ */
+    /* ── End screen overlay ── */
     #end-screen {
       position: absolute; inset: 0;
       background: linear-gradient(160deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
@@ -134,7 +134,7 @@
     }
     #restart-btn:hover { transform: scale(1.05); box-shadow: 0 6px 24px rgba(231,76,60,0.6); }
 
-    /* ΓöÇΓöÇ Settings panel ΓöÇΓöÇ */
+    /* ── Settings panel ── */
     #settings-panel {
       display: none;
       background: #fff8f0; border-bottom: 1px solid #fde8c8;
@@ -166,7 +166,7 @@
     }
     #voice-indicator.neural { color: #27ae60; font-weight: 600; }
 
-    /* ΓöÇΓöÇ Status bar ΓöÇΓöÇ */
+    /* ── Status bar ── */
     #status-bar {
       background: #fef9f0;
       border-bottom: 1px solid #fde8c8;
@@ -183,7 +183,7 @@
     #status-bar.listening { background: #f0f9ff; border-color: #b3e0ff; color: #0077cc; }
     #status-bar.speaking  { background: #f0fff4; border-color: #b3f0c8; color: #1a8a4a; }
 
-    /* ΓöÇΓöÇ Messages ΓöÇΓöÇ */
+    /* ── Messages ── */
     .messages {
       flex: 1; overflow-y: auto;
       padding: 16px 18px;
@@ -215,7 +215,7 @@
     .bubble strong { color: #c0392b; }
     .msg.user .bubble strong { color: #ffe; }
 
-    /* ΓöÇΓöÇ Menu card ΓöÇΓöÇ */
+    /* ── Menu card ── */
     .menu-card {
       background: #fff;
       border: 2px solid #e74c3c;
@@ -286,7 +286,7 @@
     .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
     @keyframes bounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
 
-    /* ΓöÇΓöÇ Quick replies ΓöÇΓöÇ */
+    /* ── Quick replies ── */
     .quick-replies {
       display: flex; flex-wrap: wrap; gap: 7px;
       padding: 8px 18px 4px;
@@ -299,7 +299,7 @@
     }
     .quick-btn:hover { background: #e74c3c; color: #fff; }
 
-    /* ΓöÇΓöÇ Input row ΓöÇΓöÇ */
+    /* ── Input row ── */
     .input-row {
       display: flex; align-items: center;
       padding: 12px 16px; gap: 10px;
@@ -323,7 +323,7 @@
     }
     #send-btn:hover { transform: scale(1.07); }
 
-    /* ΓöÇΓöÇ Mic button ΓöÇΓöÇ */
+    /* ── Mic button ── */
     #mic-btn {
       width: 48px; height: 48px; flex-shrink: 0;
       border: none; border-radius: 50%;
@@ -350,7 +350,7 @@
       100% { transform: scale(1.8); opacity: 0; }
     }
 
-    /* ΓöÇΓöÇ Waveform ΓöÇΓöÇ */
+    /* ── Waveform ── */
     #waveform {
       display: none;
       align-items: center; gap: 3px;
@@ -381,7 +381,7 @@
     .powered span { color: #e74c3c; font-weight: 600; }
     #no-speech-msg { display: none; color: #e74c3c; font-size: 11px; margin-top: 2px; }
 
-    /* ΓöÇΓöÇ Start screen overlay ΓöÇΓöÇ */
+    /* ── Start screen overlay ── */
     #start-screen {
       position: absolute; inset: 0;
       background: linear-gradient(160deg, #c0392b 0%, #e74c3c 50%, #922b21 100%);
@@ -421,55 +421,55 @@
 <body>
 <div class="chat-container" style="position:relative">
 
-  <!-- Start screen ΓÇö satisfies browser autoplay requirement -->
+  <!-- Start screen — satisfies browser autoplay requirement -->
   <div id="start-screen">
-    <div class="start-avatar">≡ƒæ¿ΓÇì≡ƒì│</div>
+    <div class="start-avatar">👨‍🍳</div>
     <div class="start-title">Hey! I'm Alex<br>Your Voice Order Taker</div>
-    <div class="start-sub">Tap the button and I'll take your order ΓÇö just speak or type!</div>
-    <button id="start-btn">≡ƒÄñ Tap to Start</button>
+    <div class="start-sub">Tap the button and I'll take your order — just speak or type!</div>
+    <button id="start-btn">🎤 Tap to Start</button>
   </div>
 
   <div class="chat-header">
     <div class="avatar-wrap">
-      <div class="avatar" id="alex-avatar">≡ƒæ¿ΓÇì≡ƒì│</div>
+      <div class="avatar" id="alex-avatar">👨‍🍳</div>
     </div>
     <div class="header-info">
-      <h2>Alex ΓÇö Voice Order Taker</h2>
+      <h2>Alex — Voice Order Taker</h2>
       <p><span class="status-dot"></span>Listening for your order</p>
     </div>
     <div class="voice-badge"><div class="voice-badge-dot"></div>Voice AI</div>
-    <button id="settings-btn" title="Settings">ΓÜÖ∩╕Å</button>
-    <button id="end-btn" title="End session">Γ£ò</button>
+    <button id="settings-btn" title="Settings">⚙️</button>
+    <button id="end-btn" title="End session">✕</button>
   </div>
 
   <!-- End screen overlay -->
   <div id="end-screen">
-    <div class="end-icon">≡ƒæï</div>
+    <div class="end-icon">👋</div>
     <div class="end-title">Session Ended</div>
     <div class="end-sub">Thanks for stopping by! Your conversation has been cleared.</div>
-    <button id="restart-btn">≡ƒÄñ Start New Session</button>
+    <button id="restart-btn">🎤 Start New Session</button>
   </div>
 
   <!-- Settings panel -->
   <div id="settings-panel">
-    <h4>≡ƒÄñ Voice (ElevenLabs TTS)</h4>
+    <h4>🎤 Voice (ElevenLabs TTS)</h4>
     <div class="setting-row">
       <label>EL Key</label>
-      <input id="el-key-input" type="password" placeholder="ElevenLabs API keyΓÇª" />
+      <input id="el-key-input" type="password" placeholder="ElevenLabs API key…" />
     </div>
     <div class="setting-row">
       <label>Voice</label>
       <select id="el-voice-select">
-        <option value="pNInz6obpgDQGcFmaJgB">Adam ΓÇö Deep, Warm American Γ¡É</option>
-        <option value="TxGEqnHWrfWFTfGW9XjX">Josh ΓÇö Young, Casual American</option>
-        <option value="VR6AewLTigWG4xSOukaG">Arnold ΓÇö Confident American</option>
-        <option value="ErXwobaYiN019PkySvjV">Antoni ΓÇö Friendly American</option>
+        <option value="pNInz6obpgDQGcFmaJgB">Adam — Deep, Warm American ⭐</option>
+        <option value="TxGEqnHWrfWFTfGW9XjX">Josh — Young, Casual American</option>
+        <option value="VR6AewLTigWG4xSOukaG">Arnold — Confident American</option>
+        <option value="ErXwobaYiN019PkySvjV">Antoni — Friendly American</option>
       </select>
     </div>
-    <h4 style="margin-top:12px">≡ƒºá AI Brain (LLM)</h4>
+    <h4 style="margin-top:12px">🧠 AI Brain (LLM)</h4>
     <div class="setting-row">
       <label>AI Key</label>
-      <input id="llm-key-input" type="password" placeholder="Groq or OpenAI API keyΓÇª" />
+      <input id="llm-key-input" type="password" placeholder="Groq or OpenAI API key…" />
     </div>
     <div class="setting-row">
       <label>Endpoint</label>
@@ -481,14 +481,14 @@
     </div>
     <button id="save-settings">Save &amp; Apply</button>
     <div class="setting-hint">
-      Free AI key at <a href="https://console.groq.com" target="_blank">console.groq.com</a> &nbsp;┬╖&nbsp;
+      Free AI key at <a href="https://console.groq.com" target="_blank">console.groq.com</a> &nbsp;·&nbsp;
       ElevenLabs at <a href="https://elevenlabs.io" target="_blank">elevenlabs.io</a>
     </div>
   </div>
 
-  <div id="voice-indicator">Using browser voice ΓÇö add ElevenLabs key ΓÜÖ∩╕Å for human-sounding voice</div>
+  <div id="voice-indicator">Using browser voice — add ElevenLabs key ⚙️ for human-sounding voice</div>
   <div id="status-bar">
-    <span id="status-text">≡ƒæï Alex is getting readyΓÇª</span>
+    <span id="status-text">👋 Alex is getting ready…</span>
   </div>
 
   <div class="messages" id="messages"></div>
@@ -500,19 +500,19 @@
       <div class="bar"></div><div class="bar"></div><div class="bar"></div>
       <div class="bar"></div>
     </div>
-    <input id="user-input" type="text" placeholder="≡ƒÄñ Click mic to speak, or type hereΓÇª" autocomplete="off" />
+    <input id="user-input" type="text" placeholder="🎤 Click mic to speak, or type here…" autocomplete="off" />
     <button id="send-btn" title="Send">&#9658;</button>
-    <button id="mic-btn" title="Click to speak">≡ƒÄñ</button>
+    <button id="mic-btn" title="Click to speak">🎤</button>
   </div>
 
   <div class="powered">
-    Powered by <span>Voice AI Order Taker</span> ΓÇö Demo
-    <div id="no-speech-msg">ΓÜá∩╕Å Use Chrome or Edge for full voice support</div>
+    Powered by <span>Voice AI Order Taker</span> — Demo
+    <div id="no-speech-msg">⚠️ Use Chrome or Edge for full voice support</div>
   </div>
 </div>
 
 <script>
-// ΓöÇΓöÇΓöÇ LLM CONFIGURATION ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ─── LLM CONFIGURATION ───────────────────────────
 const LLM_DEFAULT_URL   = 'https://api.groq.com/openai/v1/chat/completions';
 const LLM_DEFAULT_MODEL = 'llama-3.1-8b-instant';
 const LLM_KEY_DEFAULT   = '';
@@ -521,17 +521,17 @@ function getLLMKey()   { return localStorage.getItem('llm_key')   || LLM_KEY_DEF
 function getLLMUrl()   { return localStorage.getItem('llm_url')   || LLM_DEFAULT_URL; }
 function getLLMModel() { return localStorage.getItem('llm_model') || LLM_DEFAULT_MODEL; }
 
-// ΓöÇΓöÇΓöÇ CONVERSATION HISTORY ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ─── CONVERSATION HISTORY ─────────────────────────
 let conversationHistory = [];
 
-const SYSTEM_PROMPT = `You are Alex, a warm, casual, upbeat American voice AI order taker at a restaurant. Keep every response SHORT ΓÇö 1 to 3 sentences maximum ΓÇö because your words will be spoken aloud.
+const SYSTEM_PROMPT = `You are Alex, a warm, casual, upbeat American voice AI order taker at a restaurant. Keep every response SHORT — 1 to 3 sentences maximum — because your words will be spoken aloud.
 
 FULL MENU (prices in Pakistani Rupees):
 FOOD: Margherita Pizza Rs.850 | Grilled Burger Rs.650 | Pasta Carbonara Rs.750 | Caesar Salad Rs.550 | Garlic Bread Rs.350 | French Fries Rs.350 | Grilled Steak Rs.1,200 | Soup of the Day Rs.450 | Chicken Wings Rs.750 | Fish & Chips Rs.850
 DRINKS: Coke Rs.150 | Still Water Rs.100 | Orange Juice Rs.200 | Latte Rs.250 | Tea Rs.150 | Lemonade Rs.180 | Milkshake Rs.350
 
 YOUR JOB:
-1. Greet and take the food order ΓÇö confirm each item as added
+1. Greet and take the food order — confirm each item as added
 2. Ask if they want anything to drink
 3. Ask about any special requests (allergies, extras, preferences)
 4. Read back the full order with itemized prices and total
@@ -541,23 +541,23 @@ YOUR JOB:
 PERSONALITY: Use casual phrases like "You got it!", "Awesome!", "Sure thing!", "No worries!". Be genuinely friendly, not robotic.
 
 RULES:
-- Keep responses SHORT ΓÇö voice will read them out loud
+- Keep responses SHORT — voice will read them out loud
 - If something is not on the menu, politely say so and suggest alternatives
 - Always use PKR for prices
 - Never break character as Alex
 
-QUICK REPLIES: After every response (except the final order confirmation), add this line with 3ΓÇô5 short button suggestions relevant to the current step:
+QUICK REPLIES: After every response (except the final order confirmation), add this line with 3–5 short button suggestions relevant to the current step:
 [QUICK:["Option A","Option B","Option C"]]
 
-FINAL ORDER: When the customer has chosen a payment method and confirmed the order is placed, append on a new line ΓÇö NOTHING after it:
+FINAL ORDER: When the customer has chosen a payment method and confirmed the order is placed, append on a new line — NOTHING after it:
 [ORDER_COMPLETE]{"food":["Item"],"drinks":["Item"],"special":"None","total":1000,"payment":"Cash on Delivery"}[/ORDER_COMPLETE]
 Do NOT include [QUICK:] on the same message as [ORDER_COMPLETE].`;
 
-// ΓöÇΓöÇΓöÇ AI RESPONSE ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ─── AI RESPONSE ─────────────────────────────────
 async function getAIResponse(userMessage) {
   const llmKey = getLLMKey();
   if (!llmKey) {
-    return "Hey! I need an AI brain to give real answers ΓÇö tap the ΓÜÖ∩╕Å gear icon and add a free Groq API key. Get one at console.groq.com in under a minute!\n[QUICK:[\"Open Settings ΓÜÖ∩╕Å\"]]";
+    return "Hey! I need an AI brain to give real answers — tap the ⚙️ gear icon and add a free Groq API key. Get one at console.groq.com in under a minute!\n[QUICK:[\"Open Settings ⚙️\"]]";
   }
 
   conversationHistory.push({ role: 'user', content: userMessage });
@@ -581,7 +581,7 @@ async function getAIResponse(userMessage) {
       const err = await resp.json().catch(() => ({}));
       console.error('LLM API error:', err);
       conversationHistory.pop(); // remove the user message we just added
-      return "Hmm, I had trouble connecting to my brain just now ΓÇö could you try again in a sec?";
+      return "Hmm, I had trouble connecting to my brain just now — could you try again in a sec?";
     }
 
     const data = await resp.json();
@@ -591,11 +591,11 @@ async function getAIResponse(userMessage) {
   } catch (e) {
     console.error('LLM fetch error:', e);
     conversationHistory.pop();
-    return "Oops, network hiccup ΓÇö give that one more shot?";
+    return "Oops, network hiccup — give that one more shot?";
   }
 }
 
-// ΓöÇΓöÇΓöÇ PRICES (for summary card) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ─── PRICES (for summary card) ────────────────────
 const PRICES = {
   'Margherita Pizza': 850, 'Grilled Burger': 650, 'Pasta Carbonara': 750,
   'Caesar Salad': 550, 'Garlic Bread': 350, 'French Fries': 350,
@@ -610,11 +610,11 @@ function itemPrice(name) {
   return 500;
 }
 
-// ΓöÇΓöÇΓöÇ OLD STATE MACHINE (REMOVED) ΓÇö replaced by LLM
+// ─── OLD STATE MACHINE (REMOVED) — replaced by LLM
 // The QR object below is kept only as fallback initial hints
-const INITIAL_QR = ['Margherita Pizza ≡ƒìò','Grilled Burger ≡ƒìö','Caesar Salad ≡ƒÑù','Pasta Carbonara ≡ƒì¥','Garlic Bread ≡ƒÑû'];
+const INITIAL_QR = ['Margherita Pizza 🍕','Grilled Burger 🍔','Caesar Salad 🥗','Pasta Carbonara 🍝','Garlic Bread 🥖'];
 
-// ΓöÇΓöÇΓöÇ SPEECH SYNTHESIS (Alex speaks) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ─── SPEECH SYNTHESIS (Alex speaks) ─────────────
 let voices = [], alexVoice = null;
 
 function loadVoices() {
@@ -641,7 +641,7 @@ if ('speechSynthesis' in window) {
   loadVoices();
 }
 
-// ΓöÇ ElevenLabs neural TTS ΓöÇ
+// ─ ElevenLabs neural TTS ─
 const EL_API   = 'https://api.elevenlabs.io/v1/text-to-speech';
 const EL_KEY_DEFAULT   = 'sk_2a2f13379f1b44c316d33b10550f96f747bbbb6063b122cc';
 const EL_VOICE_DEFAULT = 'pNInz6obpgDQGcFmaJgB';
@@ -660,18 +660,18 @@ async function alexSpeak(rawText, onEnd) {
 
   const clean = stripForSpeech(rawText);
   const av    = document.getElementById('alex-avatar');
-  setStatus('speaking', '≡ƒöè Alex is speakingΓÇª');
+  setStatus('speaking', '🔊 Alex is speaking…');
   av.classList.add('speaking');
 
   const finish = () => {
     av.classList.remove('speaking');
-    setStatus('idle', '≡ƒÄñ Click the mic button or type to respond');
+    setStatus('idle', '🎤 Click the mic button or type to respond');
     onEnd && onEnd();
   };
 
   const elKey = getELKey();
   if (elKey) {
-    // ΓöÇ Neural voice via ElevenLabs ΓöÇ
+    // ─ Neural voice via ElevenLabs ─
     try {
       const res = await fetch(`${EL_API}/${getELVoice()}`, {
         method: 'POST',
@@ -698,7 +698,7 @@ async function alexSpeak(rawText, onEnd) {
     } catch (e) { console.warn('ElevenLabs fetch failed, using browser TTS:', e.message); }
   }
 
-  // ΓöÇ Fallback: browser TTS ΓöÇ
+  // ─ Fallback: browser TTS ─
   const utter = new SpeechSynthesisUtterance(clean);
   utter.rate = 0.93; utter.pitch = 0.97; utter.volume = 1; utter.lang = 'en-US';
   if (alexVoice) utter.voice = alexVoice;
@@ -706,20 +706,20 @@ async function alexSpeak(rawText, onEnd) {
   speechSynthesis.speak(utter);
 }
 
-// ΓöÇΓöÇΓöÇ SPEECH RECOGNITION (customer speaks) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ─── SPEECH RECOGNITION (customer speaks) ───────
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
 let recog = null, isListening = false;
 let micStream = null; // held alive to avoid repeated permission popups
 
-// Request mic permission once ΓÇö browser won't re-prompt while stream is alive
+// Request mic permission once — browser won't re-prompt while stream is alive
 function primeMic() {
   if (!SR || micStream) return;
   navigator.mediaDevices.getUserMedia({ audio: true })
     .then(stream => {
-      micStream = stream; // keep alive ΓÇö browser won't re-prompt while this stream is open
+      micStream = stream; // keep alive — browser won't re-prompt while this stream is open
     })
     .catch(() => {
-      // Permission denied or unavailable ΓÇö mic button stays enabled,
+      // Permission denied or unavailable — mic button stays enabled,
       // recognition.start() will surface the error if user tries it
       console.warn('Mic pre-prime failed; will retry on first click.');
     });
@@ -734,9 +734,9 @@ if (SR) {
 
   recog.onstart = () => {
     isListening = true;
-    setStatus('listening','≡ƒÄÖ∩╕Å ListeningΓÇª speak now');
+    setStatus('listening','🎙️ Listening… speak now');
     document.getElementById('mic-btn').classList.add('listening');
-    document.getElementById('mic-btn').textContent = 'ΓÅ╣';
+    document.getElementById('mic-btn').textContent = '⏹';
     document.getElementById('waveform').classList.add('active');
     document.getElementById('user-input').style.display = 'none';
     document.getElementById('send-btn').style.display = 'none';
@@ -755,23 +755,23 @@ if (SR) {
   recog.onend = () => {
     isListening = false;
     document.getElementById('mic-btn').classList.remove('listening');
-    document.getElementById('mic-btn').textContent = '≡ƒÄñ';
+    document.getElementById('mic-btn').textContent = '🎤';
     document.getElementById('waveform').classList.remove('active');
     document.getElementById('user-input').style.display = '';
     document.getElementById('send-btn').style.display = '';
     const val = document.getElementById('user-input').value.trim();
     if (val) { document.getElementById('user-input').classList.remove('interim'); handleSend(val); }
-    else setStatus('idle','≡ƒÄñ Click the mic button or type to respond');
+    else setStatus('idle','🎤 Click the mic button or type to respond');
   };
 
   recog.onerror = (e) => {
     isListening = false;
     document.getElementById('mic-btn').classList.remove('listening');
-    document.getElementById('mic-btn').textContent = '≡ƒÄñ';
+    document.getElementById('mic-btn').textContent = '🎤';
     document.getElementById('waveform').classList.remove('active');
     document.getElementById('user-input').style.display = '';
     document.getElementById('send-btn').style.display = '';
-    setStatus('idle', e.error === 'not-allowed' ? 'ΓÜá∩╕Å Microphone blocked ΓÇö please allow mic access' : '≡ƒÄñ Click the mic button or type to respond');
+    setStatus('idle', e.error === 'not-allowed' ? '⚠️ Microphone blocked — please allow mic access' : '🎤 Click the mic button or type to respond');
   };
 } else {
   document.getElementById('no-speech-msg').style.display = 'block';
@@ -784,14 +784,14 @@ function toggleMic() {
   else { document.getElementById('user-input').value = ''; recog.start(); }
 }
 
-// ΓöÇΓöÇΓöÇ STATUS BAR ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ─── STATUS BAR ──────────────────────────────────
 function setStatus(mode, text) {
   const bar = document.getElementById('status-bar');
   bar.className = mode === 'listening' ? 'listening' : mode === 'speaking' ? 'speaking' : '';
   document.getElementById('status-text').textContent = text;
 }
 
-// ΓöÇΓöÇΓöÇ DOM ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ─── DOM ─────────────────────────────────────────
 const messagesEl = document.getElementById('messages');
 const inputEl    = document.getElementById('user-input');
 const qrEl       = document.getElementById('quick-replies');
@@ -802,7 +802,7 @@ function appendMessage(text, role) {
 
   if (role === 'bot') {
     const av = document.createElement('div');
-    av.className = 'msg-avatar'; av.textContent = '≡ƒæ¿ΓÇì≡ƒì│';
+    av.className = 'msg-avatar'; av.textContent = '👨‍🍳';
     msg.appendChild(av);
   }
 
@@ -814,42 +814,42 @@ function appendMessage(text, role) {
   scrollToBottom();
 }
 
-// ΓöÇΓöÇΓöÇ MENU CARD ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ─── MENU CARD ───────────────────────────────────
 function renderMenuCard() {
   const food = [
-    { name: '≡ƒìò Margherita Pizza', price: 'Rs. 850' },
-    { name: '≡ƒìö Grilled Burger',   price: 'Rs. 650' },
-    { name: '≡ƒì¥ Pasta Carbonara',  price: 'Rs. 750' },
-    { name: '≡ƒÑù Caesar Salad',     price: 'Rs. 550' },
-    { name: '≡ƒºä Garlic Bread',     price: 'Rs. 350' },
-    { name: '≡ƒìƒ French Fries',     price: 'Rs. 350' },
-    { name: '≡ƒÑ⌐ Grilled Steak',    price: 'Rs. 1,200' },
-    { name: '≡ƒì£ Soup of the Day',  price: 'Rs. 450' },
-    { name: '≡ƒìù Chicken Wings',    price: 'Rs. 750' },
-    { name: '≡ƒÉƒ Fish & Chips',     price: 'Rs. 850' },
+    { name: '🍕 Margherita Pizza', price: 'Rs. 850' },
+    { name: '🍔 Grilled Burger',   price: 'Rs. 650' },
+    { name: '🍝 Pasta Carbonara',  price: 'Rs. 750' },
+    { name: '🥗 Caesar Salad',     price: 'Rs. 550' },
+    { name: '🧄 Garlic Bread',     price: 'Rs. 350' },
+    { name: '🍟 French Fries',     price: 'Rs. 350' },
+    { name: '🥩 Grilled Steak',    price: 'Rs. 1,200' },
+    { name: '🍜 Soup of the Day',  price: 'Rs. 450' },
+    { name: '🍗 Chicken Wings',    price: 'Rs. 750' },
+    { name: '🐟 Fish & Chips',     price: 'Rs. 850' },
   ];
   const drinks = [
-    { name: '≡ƒÑñ Coke',          price: 'Rs. 150' },
-    { name: '≡ƒÆº Still Water',   price: 'Rs. 100' },
-    { name: '≡ƒìè Orange Juice',  price: 'Rs. 200' },
-    { name: 'Γÿò Latte',         price: 'Rs. 250' },
-    { name: '≡ƒì╡ Tea',           price: 'Rs. 150' },
-    { name: '≡ƒìï Lemonade',      price: 'Rs. 180' },
-    { name: '≡ƒÑ¢ Milkshake',     price: 'Rs. 350' },
+    { name: '🥤 Coke',          price: 'Rs. 150' },
+    { name: '💧 Still Water',   price: 'Rs. 100' },
+    { name: '🍊 Orange Juice',  price: 'Rs. 200' },
+    { name: '☕ Latte',         price: 'Rs. 250' },
+    { name: '🍵 Tea',           price: 'Rs. 150' },
+    { name: '🍋 Lemonade',      price: 'Rs. 180' },
+    { name: '🥛 Milkshake',     price: 'Rs. 350' },
   ];
   const cardMsg = document.createElement('div');
   cardMsg.className = 'msg bot';
   const av = document.createElement('div');
-  av.className = 'msg-avatar'; av.textContent = '≡ƒæ¿\u200d≡ƒì│';
+  av.className = 'msg-avatar'; av.textContent = '👨\u200d🍳';
   const card = document.createElement('div');
   card.className = 'menu-card';
   card.innerHTML = `
-    <div class="menu-card-header">≡ƒì╜∩╕Å Today's Menu</div>
-    <div class="menu-section-title">≡ƒÑÿ Food</div>
+    <div class="menu-card-header">🍽️ Today's Menu</div>
+    <div class="menu-section-title">🥘 Food</div>
     ${food.map(i => `<div class="menu-item"><span class="menu-item-name">${i.name}</span><span class="menu-item-price">${i.price}</span></div>`).join('')}
-    <div class="menu-section-title">≡ƒÑñ Drinks</div>
+    <div class="menu-section-title">🥤 Drinks</div>
     ${drinks.map(i => `<div class="menu-item"><span class="menu-item-name">${i.name}</span><span class="menu-item-price">${i.price}</span></div>`).join('')}
-    <div class="menu-card-footer">Just say or type what you'd like! ≡ƒÿè</div>
+    <div class="menu-card-footer">Just say or type what you'd like! 😊</div>
   `;
   cardMsg.appendChild(av);
   cardMsg.appendChild(card);
@@ -857,23 +857,23 @@ function renderMenuCard() {
   scrollToBottom();
 }
 
-// ΓöÇΓöÇΓöÇ ORDER SUMMARY CARD ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ─── ORDER SUMMARY CARD ───────────────────────────
 function showOrderSummary(data) {
   const { food = [], drinks = [], special = 'None', total = 0, payment = '' } = data;
   const cardMsg = document.createElement('div');
   cardMsg.className = 'msg bot';
   const cardAv = document.createElement('div');
-  cardAv.className = 'msg-avatar'; cardAv.textContent = '≡ƒæ¿ΓÇì≡ƒì│';
+  cardAv.className = 'msg-avatar'; cardAv.textContent = '👨‍🍳';
   const card = document.createElement('div');
   card.className = 'summary-card';
   const calcTotal = total || [...food, ...drinks].reduce((s, n) => s + itemPrice(n), 0);
   card.innerHTML = `
-    <h3>≡ƒº╛ Your Order Summary</h3>
-    ${food.map(f => `<div class="item"><span>≡ƒì╜∩╕Å ${f}</span><span class="price">Rs. ${itemPrice(f).toLocaleString()}</span></div>`).join('')}
-    ${drinks.length ? drinks.map(d => `<div class="item"><span>≡ƒÑñ ${d}</span><span class="price">Rs. ${itemPrice(d).toLocaleString()}</span></div>`).join('') : ''}
-    <div class="special">≡ƒô¥ Special: ${special || 'None'}</div>
-    <div class="total-line"><span>≡ƒÆ░ Total</span><span>Rs. ${calcTotal.toLocaleString()}</span></div>
-    <div class="thanks">Γ£à Order Confirmed!</div>`;
+    <h3>🧾 Your Order Summary</h3>
+    ${food.map(f => `<div class="item"><span>🍽️ ${f}</span><span class="price">Rs. ${itemPrice(f).toLocaleString()}</span></div>`).join('')}
+    ${drinks.length ? drinks.map(d => `<div class="item"><span>🥤 ${d}</span><span class="price">Rs. ${itemPrice(d).toLocaleString()}</span></div>`).join('') : ''}
+    <div class="special">📝 Special: ${special || 'None'}</div>
+    <div class="total-line"><span>💰 Total</span><span>Rs. ${calcTotal.toLocaleString()}</span></div>
+    <div class="thanks">✅ Order Confirmed!</div>`;
   cardMsg.appendChild(cardAv); cardMsg.appendChild(card);
   messagesEl.appendChild(cardMsg);
   scrollToBottom();
@@ -882,7 +882,7 @@ function showOrderSummary(data) {
 function showTyping() {
   const t = document.createElement('div');
   t.className = 'msg bot'; t.id = 'typing';
-  const av = document.createElement('div'); av.className = 'msg-avatar'; av.textContent = '≡ƒæ¿ΓÇì≡ƒì│';
+  const av = document.createElement('div'); av.className = 'msg-avatar'; av.textContent = '👨‍🍳';
   const b = document.createElement('div'); b.className = 'bubble';
   b.innerHTML = '<div class="typing-indicator"><span></span><span></span><span></span></div>';
   t.appendChild(av); t.appendChild(b);
@@ -902,14 +902,14 @@ function renderQuickReplies(replies) {
   });
 }
 
-// ΓöÇΓöÇΓöÇ SEND (AI-powered) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ─── SEND (AI-powered) ────────────────────────────
 async function handleSend(text) {
   const msg = (text || inputEl.value).trim();
   if (!msg) return;
   inputEl.value = ''; inputEl.classList.remove('interim');
   renderQuickReplies([]);
   appendMessage(msg, 'user');
-  setStatus('idle', 'ΓÅ│ Alex is thinkingΓÇª');
+  setStatus('idle', '⏳ Alex is thinking…');
   showTyping();
 
   const rawReply = await getAIResponse(msg);
@@ -923,7 +923,7 @@ async function handleSend(text) {
   // Extract [ORDER_COMPLETE]{...}[/ORDER_COMPLETE]
   const orderMatch = rawReply.match(/\[ORDER_COMPLETE\]([\s\S]*?)\[\/ORDER_COMPLETE\]/);
 
-  // Clean display text ΓÇö strip all special tags
+  // Clean display text — strip all special tags
   const cleanText = rawReply
     .replace(/\[QUICK:[\s\S]*?\]/g, '')
     .replace(/\[ORDER_COMPLETE\][\s\S]*?\[\/ORDER_COMPLETE\]/g, '')
@@ -945,12 +945,12 @@ async function handleSend(text) {
   }
 }
 
-// ΓöÇΓöÇΓöÇ EVENTS ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ─── EVENTS ──────────────────────────────────────
 document.getElementById('send-btn').addEventListener('click', () => handleSend());
 inputEl.addEventListener('keydown', e => { if (e.key === 'Enter') handleSend(); });
 document.getElementById('mic-btn').addEventListener('click', toggleMic);
 
-// ΓöÇ Settings panel ΓöÇ
+// ─ Settings panel ─
 const settingsBtn   = document.getElementById('settings-btn');
 const settingsPanel = document.getElementById('settings-panel');
 const elKeyInput    = document.getElementById('el-key-input');
@@ -960,17 +960,17 @@ const indicator     = document.getElementById('voice-indicator');
 function updateIndicator() {
   const elKey  = getELKey();
   const llmKey = getLLMKey();
-  const voiceName = elVoiceSelect.options[elVoiceSelect.selectedIndex]?.text.split(' ΓÇö')[0] || 'Neural';
+  const voiceName = elVoiceSelect.options[elVoiceSelect.selectedIndex]?.text.split(' —')[0] || 'Neural';
 
   const parts = [];
-  if (elKey)  parts.push(`Γ£à Voice: ${voiceName}`);
-  if (llmKey) parts.push(`≡ƒºá AI: Active`);
+  if (elKey)  parts.push(`✅ Voice: ${voiceName}`);
+  if (llmKey) parts.push(`🧠 AI: Active`);
 
   if (parts.length) {
-    indicator.textContent = parts.join('  ┬╖  ');
+    indicator.textContent = parts.join('  ·  ');
     indicator.className = 'neural';
   } else {
-    indicator.textContent = 'ΓÜÖ∩╕Å Add API keys in Settings for full AI experience';
+    indicator.textContent = '⚙️ Add API keys in Settings for full AI experience';
     indicator.className = '';
   }
 }
@@ -1005,33 +1005,33 @@ document.getElementById('save-settings').addEventListener('click', () => {
 
 updateIndicator();
 
-// ΓöÇΓöÇΓöÇ INIT ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ─── INIT ─────────────────────────────────────────
 function startDemo() {
   const screen = document.getElementById('start-screen');
   screen.classList.add('hidden');
 
   primeMic();
-  setStatus('idle','≡ƒæï Alex is warming upΓÇª');
+  setStatus('idle','👋 Alex is warming up…');
 
-  // Initialise conversation history ΓÇö seed with the greeting so LLM knows the context
-  const greetingText = "Hey, how's it going! I'm Alex, your order taker for today. Super glad you stopped by! So, what can I get started for ya? And no rush ΓÇö just tell me what sounds good!";
+  // Initialise conversation history — seed with the greeting so LLM knows the context
+  const greetingText = "Hey, how's it going! I'm Alex, your order taker for today. Super glad you stopped by! So, what can I get started for ya? And no rush — just tell me what sounds good!";
   conversationHistory = [
     { role: 'system',    content: SYSTEM_PROMPT },
     { role: 'assistant', content: greetingText }
   ];
 
   setTimeout(() => {
-    const g1 = "Hey, how's it going! I'm <strong>Alex</strong>, your order taker for today ≡ƒÿè Super glad you stopped by ΓÇö so what can I get started for ya?";
-    const g2 = "Here's our menu ΓÇö take a look and just say what catches your eye! ≡ƒæç";
+    const g1 = "Hey, how's it going! I'm <strong>Alex</strong>, your order taker for today 😊 Super glad you stopped by — so what can I get started for ya?";
+    const g2 = "Here's our menu — take a look and just say what catches your eye! 👇";
     appendMessage(g1, 'bot');
 
     alexSpeak("Hey, how's it going! I'm Alex, your order taker for today. Super glad you stopped by! So, what can I get started for ya?", () => {
       setTimeout(() => {
         appendMessage(g2, 'bot');
         renderMenuCard();
-        alexSpeak("Here's our menu ΓÇö take a look and just let me know what sounds good!", () => {
+        alexSpeak("Here's our menu — take a look and just let me know what sounds good!", () => {
           renderQuickReplies(INITIAL_QR);
-          setStatus('idle','≡ƒÄñ Click the mic button or tap a suggestion below');
+          setStatus('idle','🎤 Click the mic button or tap a suggestion below');
         });
       }, 400);
     });
@@ -1040,7 +1040,7 @@ function startDemo() {
 
 document.getElementById('start-btn').addEventListener('click', startDemo);
 
-// ΓöÇΓöÇΓöÇ END SESSION ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ─── END SESSION ─────────────────────────────────
 function endSession() {
   // Stop mic immediately
   if (isListening && recog) recog.stop();
@@ -1057,7 +1057,7 @@ function endSession() {
     inputEl.classList.remove('interim');
     document.getElementById('alex-avatar').classList.remove('speaking');
     document.getElementById('mic-btn').classList.remove('listening');
-    document.getElementById('mic-btn').textContent = '≡ƒÄñ';
+    document.getElementById('mic-btn').textContent = '🎤';
     document.getElementById('waveform').classList.remove('active');
     document.getElementById('user-input').style.display = '';
     document.getElementById('send-btn').style.display = '';
