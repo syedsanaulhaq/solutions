@@ -761,7 +761,7 @@ if (SR) {
     document.getElementById('send-btn').style.display = '';
     const val = document.getElementById('user-input').value.trim();
     if (val) { document.getElementById('user-input').classList.remove('interim'); handleSend(val); }
-    else setStatus('idle','🎤 Click the mic button or type to respond');
+    else setStatus('idle','�️ Ready — tap 🎤 and speak clearly after the button changes');
   };
 
   recog.onerror = (e) => {
@@ -790,8 +790,12 @@ function toggleMic() {
   speechSynthesis.cancel();
   if (isListening) { recog.stop(); return; }
   document.getElementById('user-input').value = '';
-  // Try recognition directly — if mic is already granted it starts immediately.
-  // If denied, onerror fires and we call getUserMedia there to show the popup.
+  // Release any open getUserMedia stream before starting SpeechRecognition —
+  // keeping both active at once causes Chrome to drop recognition immediately.
+  if (micStream) {
+    micStream.getTracks().forEach(t => t.stop());
+    micStream = null;
+  }
   recog.start();
 }
 
