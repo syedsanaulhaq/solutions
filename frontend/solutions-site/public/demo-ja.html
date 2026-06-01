@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Order Taker — Voice AI Demo</title>
+  <title>注文受付 — 音声AI デモ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-family: 'Noto Sans JP', 'Segoe UI', system-ui, sans-serif;
       background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
       min-height: 100vh;
       display: flex;
@@ -31,7 +33,7 @@
 
     /* ── Header ── */
     .chat-header {
-      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      background: linear-gradient(135deg, #d63031, #a81a1a);
       padding: 16px 20px;
       display: flex;
       align-items: center;
@@ -109,31 +111,6 @@
     }
     #end-btn:hover { background: rgba(220,30,30,0.75); }
 
-    /* ── End screen overlay ── */
-    #end-screen {
-      position: absolute; inset: 0;
-      background: linear-gradient(160deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
-      border-radius: 24px;
-      display: none;
-      flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 18px; z-index: 200;
-    }
-    #end-screen.visible { display: flex; }
-    .end-icon { font-size: 52px; }
-    .end-title { color: #fff; font-size: 20px; font-weight: 700; }
-    .end-sub   { color: rgba(255,255,255,0.65); font-size: 13px; text-align: center; max-width: 220px; line-height: 1.5; }
-    #restart-btn {
-      background: #e74c3c; color: #fff;
-      border: none; border-radius: 50px;
-      padding: 12px 36px; font-size: 15px; font-weight: 700;
-      cursor: pointer; font-family: inherit;
-      box-shadow: 0 4px 18px rgba(231,76,60,0.45);
-      transition: transform 0.15s, box-shadow 0.15s;
-      margin-top: 6px;
-    }
-    #restart-btn:hover { transform: scale(1.05); box-shadow: 0 6px 24px rgba(231,76,60,0.6); }
-
     /* ── Settings panel ── */
     #settings-panel {
       display: none;
@@ -148,37 +125,27 @@
       flex: 1; border: 1.5px solid #e0e0e0; border-radius: 8px;
       padding: 6px 10px; font-size: 12px; font-family: inherit; outline: none;
     }
-    .setting-row input:focus, .setting-row select:focus { border-color: #e74c3c; }
+    .setting-row input:focus, .setting-row select:focus { border-color: #d63031; }
     #save-settings {
-      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      background: linear-gradient(135deg, #d63031, #a81a1a);
       color: #fff; border: none; border-radius: 8px;
       padding: 7px 18px; font-size: 12px; cursor: pointer;
       font-family: inherit; transition: opacity 0.2s;
     }
     #save-settings:hover { opacity: 0.88; }
-    .setting-hint {
-      font-size: 11px; color: #999; margin-top: 6px;
-    }
-    .setting-hint a { color: #e74c3c; text-decoration: none; }
-    #voice-indicator {
-      font-size: 11px; text-align: center; padding: 3px 0;
-      color: #888;
-    }
+    .setting-hint { font-size: 11px; color: #999; margin-top: 6px; }
+    .setting-hint a { color: #d63031; text-decoration: none; }
+    #voice-indicator { font-size: 11px; text-align: center; padding: 3px 0; color: #888; }
     #voice-indicator.neural { color: #27ae60; font-weight: 600; }
 
     /* ── Status bar ── */
     #status-bar {
-      background: #fef9f0;
-      border-bottom: 1px solid #fde8c8;
-      padding: 7px 18px;
-      font-size: 12px;
-      color: #e67e22;
-      text-align: center;
-      flex-shrink: 0;
+      background: #fef9f0; border-bottom: 1px solid #fde8c8;
+      padding: 7px 18px; font-size: 12px; color: #e67e22;
+      text-align: center; flex-shrink: 0;
       min-height: 32px;
       display: flex; align-items: center; justify-content: center;
-      gap: 6px;
-      transition: background 0.3s, color 0.3s;
+      gap: 6px; transition: background 0.3s, color 0.3s;
     }
     #status-bar.listening { background: #f0f9ff; border-color: #b3e0ff; color: #0077cc; }
     #status-bar.speaking  { background: #f0fff4; border-color: #b3f0c8; color: #1a8a4a; }
@@ -188,8 +155,7 @@
       flex: 1; overflow-y: auto;
       padding: 16px 18px;
       display: flex; flex-direction: column;
-      gap: 14px;
-      background: #f8f9fa;
+      gap: 14px; background: #f8f9fa;
     }
     .messages::-webkit-scrollbar { width: 4px; }
     .messages::-webkit-scrollbar-thumb { background: #ddd; border-radius: 4px; }
@@ -200,67 +166,49 @@
 
     .msg-avatar {
       width: 32px; height: 32px; border-radius: 50%;
-      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      background: linear-gradient(135deg, #d63031, #a81a1a);
       display: flex; align-items: center; justify-content: center;
       font-size: 15px; flex-shrink: 0;
     }
 
     .bubble {
       padding: 11px 15px; border-radius: 18px;
-      font-size: 14px; line-height: 1.55;
+      font-size: 14px; line-height: 1.65;
       max-width: 100%; word-break: break-word;
     }
     .msg.bot  .bubble { background: #fff; color: #222; border-bottom-left-radius: 4px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
-    .msg.user .bubble { background: linear-gradient(135deg, #e74c3c, #c0392b); color: #fff; border-bottom-right-radius: 4px; }
-    .bubble strong { color: #c0392b; }
+    .msg.user .bubble { background: linear-gradient(135deg, #d63031, #a81a1a); color: #fff; border-bottom-right-radius: 4px; }
+    .bubble strong { color: #a81a1a; }
     .msg.user .bubble strong { color: #ffe; }
 
     /* ── Menu card ── */
     .menu-card {
-      background: #fff;
-      border: 2px solid #e74c3c;
-      border-radius: 16px;
-      overflow: hidden;
-      font-size: 13px;
-      width: 260px;
-      box-shadow: 0 2px 10px rgba(231,76,60,0.12);
+      background: #fff; border: 2px solid #d63031;
+      border-radius: 16px; overflow: hidden;
+      font-size: 13px; width: 270px;
+      box-shadow: 0 2px 10px rgba(214,48,49,0.12);
     }
     .menu-card-header {
-      background: linear-gradient(135deg, #e74c3c, #c0392b);
-      color: #fff;
-      padding: 11px 14px;
-      font-size: 15px;
-      font-weight: 800;
-      text-align: center;
-      letter-spacing: 0.5px;
+      background: linear-gradient(135deg, #d63031, #a81a1a);
+      color: #fff; padding: 11px 14px; font-size: 15px;
+      font-weight: 800; text-align: center; letter-spacing: 0.5px;
     }
     .menu-section-title {
-      background: #fdf2f2;
-      color: #c0392b;
-      font-weight: 700;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      padding: 6px 14px 4px;
-      border-top: 1px solid #f5e0e0;
+      background: #fdf2f2; color: #a81a1a; font-weight: 700;
+      font-size: 11px; letter-spacing: 1px;
+      padding: 6px 14px 4px; border-top: 1px solid #f5e0e0;
     }
     .menu-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 5px 14px;
-      border-bottom: 1px dashed #f5e0e0;
-      gap: 8px;
+      display: flex; justify-content: space-between;
+      align-items: center; padding: 5px 14px;
+      border-bottom: 1px dashed #f5e0e0; gap: 8px;
     }
     .menu-item:last-of-type { border-bottom: none; }
     .menu-item-name { color: #333; flex: 1; }
-    .menu-item-price { color: #e74c3c; font-weight: 700; flex-shrink: 0; white-space: nowrap; }
+    .menu-item-price { color: #d63031; font-weight: 700; flex-shrink: 0; white-space: nowrap; }
     .menu-card-footer {
-      background: #fdf2f2;
-      padding: 7px 14px;
-      font-size: 11.5px;
-      color: #888;
-      text-align: center;
+      background: #fdf2f2; padding: 7px 14px;
+      font-size: 11.5px; color: #888; text-align: center;
       border-top: 1px solid #f5e0e0;
     }
 
@@ -273,7 +221,7 @@
     .summary-card .item { padding: 2px 0; border-bottom: 1px dashed #f0d9b0; display: flex; justify-content: space-between; align-items: center; }
     .summary-card .item:last-of-type { border-bottom: none; }
     .summary-card .price { color: #e67e22; font-weight: 600; font-size: 13px; flex-shrink: 0; margin-left: 8px; }
-    .summary-card .total-line { margin-top: 8px; padding-top: 8px; border-top: 2px solid #f39c12; display: flex; justify-content: space-between; font-weight: 700; font-size: 15px; color: #c0392b; }
+    .summary-card .total-line { margin-top: 8px; padding-top: 8px; border-top: 2px solid #f39c12; display: flex; justify-content: space-between; font-weight: 700; font-size: 15px; color: #a81a1a; }
     .summary-card .special { margin-top: 8px; color: #888; font-size: 12.5px; }
     .summary-card .thanks { margin-top: 10px; color: #27ae60; font-weight: 600; }
 
@@ -289,226 +237,195 @@
     /* ── Quick replies ── */
     .quick-replies {
       display: flex; flex-wrap: wrap; gap: 7px;
-      padding: 8px 18px 4px;
-      background: #f8f9fa; flex-shrink: 0;
+      padding: 8px 18px 4px; background: #f8f9fa; flex-shrink: 0;
     }
     .quick-btn {
-      background: #fff; border: 1.5px solid #e74c3c; color: #e74c3c;
+      background: #fff; border: 1.5px solid #d63031; color: #d63031;
       border-radius: 20px; padding: 6px 14px; font-size: 12.5px;
       cursor: pointer; transition: all 0.2s; font-family: inherit;
     }
-    .quick-btn:hover { background: #e74c3c; color: #fff; }
+    .quick-btn:hover { background: #d63031; color: #fff; }
 
     /* ── Input row ── */
     .input-row {
-      display: flex; align-items: center;
-      padding: 12px 16px; gap: 10px;
+      display: flex; gap: 8px; padding: 12px 16px;
       background: #fff; border-top: 1px solid #eee; flex-shrink: 0;
+      align-items: center;
     }
-
     #user-input {
-      flex: 1; border: 1.5px solid #e0e0e0; border-radius: 24px;
-      padding: 10px 18px; font-size: 14px; font-family: inherit;
-      outline: none; transition: border-color 0.2s; background: #fafafa;
+      flex: 1; border: 1.5px solid #ddd; border-radius: 22px;
+      padding: 10px 16px; font-size: 14px; font-family: inherit;
+      outline: none; transition: border-color 0.2s;
     }
-    #user-input:focus { border-color: #e74c3c; background: #fff; }
-    #user-input.interim { color: #999; font-style: italic; }
+    #user-input:focus { border-color: #d63031; }
+    #user-input.interim { color: #aaa; font-style: italic; }
 
     #send-btn {
-      width: 40px; height: 40px; flex-shrink: 0;
-      background: linear-gradient(135deg, #e74c3c, #c0392b);
-      border: none; border-radius: 50%; color: #fff; font-size: 18px;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-      transition: transform 0.15s;
-    }
-    #send-btn:hover { transform: scale(1.07); }
-
-    /* ── Mic button ── */
-    #mic-btn {
-      width: 48px; height: 48px; flex-shrink: 0;
-      border: none; border-radius: 50%;
-      background: linear-gradient(135deg, #2c3e50, #34495e);
-      color: #fff; font-size: 20px; cursor: pointer;
+      width: 42px; height: 42px; border-radius: 50%;
+      background: linear-gradient(135deg, #d63031, #a81a1a);
+      color: #fff; border: none; font-size: 18px;
+      cursor: pointer; flex-shrink: 0; transition: transform 0.15s;
       display: flex; align-items: center; justify-content: center;
-      position: relative; transition: transform 0.15s;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
-    #mic-btn:hover { transform: scale(1.08); }
+    #send-btn:hover { transform: scale(1.08); }
+
+    #mic-btn {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: linear-gradient(135deg, #636e72, #2d3436);
+      color: #fff; border: none; font-size: 18px;
+      cursor: pointer; flex-shrink: 0; transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center;
+    }
     #mic-btn.listening {
-      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      background: linear-gradient(135deg, #d63031, #a81a1a);
+      animation: micpulse 1s ease-in-out infinite;
     }
-    #mic-btn.listening::before {
-      content: '';
-      position: absolute;
-      width: 100%; height: 100%;
-      border-radius: 50%;
-      background: rgba(231,76,60,0.35);
-      animation: micRing 1s ease-out infinite;
-    }
-    @keyframes micRing {
-      0%   { transform: scale(1); opacity: 0.8; }
-      100% { transform: scale(1.8); opacity: 0; }
-    }
+    @keyframes micpulse { 0%,100% { box-shadow: 0 0 0 0 rgba(214,48,49,0.5); } 50% { box-shadow: 0 0 0 10px rgba(214,48,49,0); } }
 
     /* ── Waveform ── */
     #waveform {
-      display: none;
-      align-items: center; gap: 3px;
-      height: 28px; padding: 0 2px;
+      display: none; align-items: center; gap: 2px;
+      height: 20px; padding: 0 4px;
     }
     #waveform.active { display: flex; }
-    #waveform .bar {
-      width: 3px; border-radius: 3px;
-      background: #e74c3c;
+    #waveform span {
+      display: inline-block; width: 3px; border-radius: 2px;
+      background: #d63031; height: 6px;
       animation: wave 0.8s ease-in-out infinite;
     }
-    #waveform .bar:nth-child(1) { height: 8px;  animation-delay: 0s;    }
-    #waveform .bar:nth-child(2) { height: 16px; animation-delay: 0.1s;  }
-    #waveform .bar:nth-child(3) { height: 24px; animation-delay: 0.2s;  }
-    #waveform .bar:nth-child(4) { height: 16px; animation-delay: 0.3s;  }
-    #waveform .bar:nth-child(5) { height: 10px; animation-delay: 0.15s; }
-    #waveform .bar:nth-child(6) { height: 20px; animation-delay: 0.25s; }
-    #waveform .bar:nth-child(7) { height: 8px;  animation-delay: 0.05s; }
-    @keyframes wave {
-      0%,100% { transform: scaleY(1); }
-      50%      { transform: scaleY(0.25); }
-    }
+    #waveform span:nth-child(2) { animation-delay: 0.1s; height: 14px; }
+    #waveform span:nth-child(3) { animation-delay: 0.2s; height: 20px; }
+    #waveform span:nth-child(4) { animation-delay: 0.3s; height: 14px; }
+    #waveform span:nth-child(5) { animation-delay: 0.4s; height: 6px; }
+    @keyframes wave { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(1.8); } }
 
-    .powered {
-      text-align: center; font-size: 11px; color: #bbb;
-      padding: 5px 0 9px; background: #fff; flex-shrink: 0;
-    }
-    .powered span { color: #e74c3c; font-weight: 600; }
-    #no-speech-msg { display: none; color: #e74c3c; font-size: 11px; margin-top: 2px; }
-
-    /* ── Start screen overlay ── */
+    /* ── Start screen ── */
     #start-screen {
       position: absolute; inset: 0;
-      background: linear-gradient(160deg, #c0392b 0%, #e74c3c 50%, #922b21 100%);
+      background: linear-gradient(160deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
       border-radius: 24px;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      gap: 24px; z-index: 100;
-      transition: opacity 0.5s ease;
+      gap: 18px; z-index: 100;
     }
-    #start-screen.hidden { opacity: 0; pointer-events: none; }
-    .start-avatar {
-      width: 90px; height: 90px;
-      background: rgba(255,255,255,0.2);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 46px;
-      box-shadow: 0 0 0 12px rgba(255,255,255,0.1), 0 0 0 24px rgba(255,255,255,0.05);
+    #start-screen.hidden { display: none; }
+    .start-icon { font-size: 56px; }
+    .start-title {
+      color: #fff; font-size: 22px; font-weight: 700; text-align: center;
+      line-height: 1.3;
     }
-    .start-title { color: #fff; font-size: 22px; font-weight: 700; text-align: center; line-height: 1.3; }
-    .start-sub   { color: rgba(255,255,255,0.78); font-size: 13.5px; text-align: center; max-width: 230px; line-height: 1.5; }
+    .start-sub {
+      color: rgba(255,255,255,0.65); font-size: 13px;
+      text-align: center; max-width: 260px; line-height: 1.6;
+    }
     #start-btn {
-      background: #fff; color: #c0392b;
-      border: none; border-radius: 50px;
-      padding: 14px 44px; font-size: 16px; font-weight: 700;
+      background: linear-gradient(135deg, #d63031, #a81a1a);
+      color: #fff; border: none; border-radius: 50px;
+      padding: 14px 40px; font-size: 16px; font-weight: 700;
       cursor: pointer; font-family: inherit;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+      box-shadow: 0 6px 24px rgba(214,48,49,0.5);
       transition: transform 0.15s, box-shadow 0.15s;
-      animation: startPulse 2s ease-in-out infinite;
     }
-    #start-btn:hover { transform: scale(1.05); box-shadow: 0 10px 32px rgba(0,0,0,0.3); }
-    @keyframes startPulse {
-      0%,100% { box-shadow: 0 6px 24px rgba(0,0,0,0.25); }
-      50%      { box-shadow: 0 6px 24px rgba(0,0,0,0.25), 0 0 0 10px rgba(255,255,255,0.15); }
-    }
+    #start-btn:hover { transform: scale(1.05); box-shadow: 0 8px 30px rgba(214,48,49,0.65); }
+
+    .footer-note { font-size: 11.5px; color: #555; text-align: center; padding: 8px 0; flex-shrink: 0; }
+    #no-speech-msg { display: none; color: #e67e22; font-size: 12px; padding: 6px 18px; text-align: center; }
   </style>
 </head>
 <body>
-<div class="chat-container" style="position:relative">
+<div class="chat-container" style="position:relative;">
 
-  <!-- Start screen — satisfies browser autoplay requirement -->
+  <!-- Start screen overlay -->
   <div id="start-screen">
-    <div class="start-avatar">👨‍🍳</div>
-    <div class="start-title">Hey! I'm Alex<br>Your Voice Order Taker</div>
-    <div class="start-sub">Tap the button and I'll take your order — just speak or type!</div>
-    <button id="start-btn">🎤 Tap to Start</button>
+    <div class="start-icon">👩‍🍳</div>
+    <div class="start-title">こんにちは！<br>私はハナです</div>
+    <div class="start-sub">音声AI注文受付スタッフです。<br>ボタンを押してご注文をどうぞ！</div>
+    <button id="start-btn">🎤 タップして始める</button>
   </div>
 
+  <!-- Header -->
   <div class="chat-header">
     <div class="avatar-wrap">
-      <div class="avatar" id="alex-avatar">👨‍🍳</div>
+      <div class="avatar" id="alex-avatar">👩‍🍳</div>
     </div>
     <div class="header-info">
-      <h2>Alex — Voice Order Taker</h2>
-      <p><span class="status-dot"></span>Listening for your order</p>
+      <h2>ハナ — 音声注文受付</h2>
+      <p><span class="status-dot"></span>ご注文をお伺いします</p>
     </div>
-    <div class="voice-badge"><div class="voice-badge-dot"></div>Voice AI</div>
-    <button id="settings-btn" title="Settings">⚙️</button>
-    <button id="end-btn" title="End session">✕</button>
-  </div>
-
-  <!-- End screen overlay -->
-  <div id="end-screen">
-    <div class="end-icon">👋</div>
-    <div class="end-title">Session Ended</div>
-    <div class="end-sub">Thanks for stopping by! Your conversation has been cleared.</div>
-    <button id="restart-btn">🎤 Start New Session</button>
+    <div class="voice-badge">
+      <div class="voice-badge-dot"></div>
+      音声AI
+    </div>
+    <button id="settings-btn" title="設定">⚙️</button>
+    <button id="end-btn" title="終了">✕</button>
   </div>
 
   <!-- Settings panel -->
   <div id="settings-panel">
-    <h4>🎤 Voice (ElevenLabs TTS)</h4>
+    <h4>⚙️ API 設定</h4>
     <div class="setting-row">
-      <label>EL Key</label>
-      <input id="el-key-input" type="password" placeholder="ElevenLabs API key…" />
+      <label>ElevenLabs Key</label>
+      <input id="el-key-input" type="password" placeholder="sk_…" />
     </div>
     <div class="setting-row">
-      <label>Voice</label>
+      <label>音声</label>
       <select id="el-voice-select">
-        <option value="pNInz6obpgDQGcFmaJgB">Adam — Deep, Warm American ⭐</option>
-        <option value="TxGEqnHWrfWFTfGW9XjX">Josh — Young, Casual American</option>
-        <option value="VR6AewLTigWG4xSOukaG">Arnold — Confident American</option>
-        <option value="ErXwobaYiN019PkySvjV">Antoni — Friendly American</option>
+        <option value="pNInz6obpgDQGcFmaJgB">Adam — 英語ベース</option>
+        <option value="XrExE9yKIg1WjnnlVkGX">Matilda — 多言語</option>
+        <option value="pFZP5JQG7iQjIQuC4Bku">Lily — 多言語</option>
+        <option value="jsCqWAovK2LkecY7zXl4">Freya — 多言語</option>
       </select>
     </div>
-    <h4 style="margin-top:12px">🧠 AI Brain (LLM)</h4>
     <div class="setting-row">
-      <label>AI Key</label>
-      <input id="llm-key-input" type="password" placeholder="Groq or OpenAI API key…" />
+      <label>Groq Key</label>
+      <input id="llm-key-input" type="password" placeholder="gsk_…" />
     </div>
     <div class="setting-row">
-      <label>Endpoint</label>
-      <input id="llm-url-input" type="text" placeholder="https://api.groq.com/openai/v1/chat/completions" style="font-size:11px" />
+      <label>LLM URL</label>
+      <input id="llm-url-input" type="text" placeholder="https://api.groq.com/openai/v1/chat/completions" />
     </div>
     <div class="setting-row">
-      <label>Model</label>
+      <label>モデル</label>
       <input id="llm-model-input" type="text" placeholder="llama-3.1-8b-instant" />
     </div>
-    <button id="save-settings">Save &amp; Apply</button>
+    <button id="save-settings">保存</button>
     <div class="setting-hint">
-      Free AI key at <a href="https://console.groq.com" target="_blank">console.groq.com</a> &nbsp;·&nbsp;
-      ElevenLabs at <a href="https://elevenlabs.io" target="_blank">elevenlabs.io</a>
+      APIキーを取得: <a href="https://console.groq.com" target="_blank">Groq</a> ·
+      <a href="https://elevenlabs.io" target="_blank">ElevenLabs</a>
     </div>
   </div>
 
-  <div id="voice-indicator">Using browser voice — add ElevenLabs key ⚙️ for human-sounding voice</div>
+  <!-- Voice indicator -->
+  <div id="voice-indicator"></div>
+
+  <!-- Status bar -->
   <div id="status-bar">
-    <span id="status-text">👋 Alex is getting ready…</span>
+    <span id="status-text">👋 ハナが準備中です…</span>
+    <div id="waveform">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
   </div>
 
-  <div class="messages" id="messages"></div>
+  <!-- Messages -->
+  <div class="messages" id="messages">
+    <div class="msg bot" id="welcome-msg">
+      <div class="msg-avatar">👩‍🍳</div>
+      <div class="bubble">👋 ハナが起動中です…</div>
+    </div>
+  </div>
+
+  <!-- Quick replies -->
   <div class="quick-replies" id="quick-replies"></div>
 
+  <!-- Input row -->
   <div class="input-row">
-    <div id="waveform">
-      <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-      <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-      <div class="bar"></div>
-    </div>
-    <input id="user-input" type="text" placeholder="🎤 Click mic to speak, or type here…" autocomplete="off" />
-    <button id="send-btn" title="Send">&#9658;</button>
-    <button id="mic-btn" title="Click to speak">🎤</button>
+    <input id="user-input" type="text" placeholder="🎤 マイクを押すか、こちらにご入力ください…" />
+    <button id="send-btn">&#9658;</button>
+    <button id="mic-btn">🎤</button>
   </div>
 
-  <div class="powered">
-    Powered by <span>Voice AI Order Taker</span> — Demo
-    <div id="no-speech-msg">⚠️ Use Chrome or Edge for full voice support</div>
-  </div>
+  <div class="footer-note" id="no-speech-msg">⚠️ Chrome または Edge をご使用ください</div>
+  <div class="footer-note">Powered by 音声AI注文受付 — デモ</div>
 </div>
 
 <script>
@@ -524,40 +441,40 @@ function getLLMModel() { return localStorage.getItem('llm_model') || LLM_DEFAULT
 // ─── CONVERSATION HISTORY ─────────────────────────
 let conversationHistory = [];
 
-const SYSTEM_PROMPT = `You are Alex, a warm, casual, upbeat American voice AI order taker at a restaurant. Keep every response SHORT — 1 to 3 sentences maximum — because your words will be spoken aloud.
+const SYSTEM_PROMPT = `あなたはハナ（Hana）、居酒屋レストランの親切で明るい音声AI注文受付スタッフです。お客様の注文を日本語でお伺いします。返答は必ず短く — 1〜3文以内にしてください。音声で読み上げるためです。
 
-FULL MENU (prices in Pakistani Rupees):
-FOOD: Margherita Pizza Rs.850 | Grilled Burger Rs.650 | Pasta Carbonara Rs.750 | Caesar Salad Rs.550 | Garlic Bread Rs.350 | French Fries Rs.350 | Grilled Steak Rs.1,200 | Soup of the Day Rs.450 | Chicken Wings Rs.750 | Fish & Chips Rs.850
-DRINKS: Coke Rs.150 | Still Water Rs.100 | Orange Juice Rs.200 | Latte Rs.250 | Tea Rs.150 | Lemonade Rs.180 | Milkshake Rs.350
+メニュー（価格は円）:
+食べ物: 幕の内弁当¥1,200 | 醤油ラーメン¥950 | 寿司セット¥1,800 | 唐揚げ定食¥1,100 | 天ぷら盛り合わせ¥1,400 | おにぎり2個¥400 | シーザーサラダ¥600 | おでん盛り合わせ¥800 | 焼き鳥セット¥950 | 刺身盛り合わせ¥2,200
+飲み物: 生ビール¥600 | 日本酒¥700 | 緑茶¥300 | コーラ¥350 | お水¥無料 | 梅酒サワー¥550 | オレンジジュース¥400
 
-YOUR JOB:
-1. Greet and take the food order — confirm each item as added
-2. Ask if they want anything to drink
-3. Ask about any special requests (allergies, extras, preferences)
-4. Read back the full order with itemized prices and total
-5. Ask for payment: Cash on Delivery, Easypaisa (0300-1234567), or Credit Card
-6. Confirm the order is placed
+お仕事:
+1. お客様にご挨拶し、ご注文をお伺いする（追加するたびに確認する）
+2. お飲み物はいかがですかとお聞きする
+3. アレルギーや特別なご要望をお聞きする
+4. ご注文全体の内容と合計金額をお伝えする
+5. お支払い方法をお聞きする: 現金、PayPay、クレジットカード、交通系IC
+6. ご注文の確定をお知らせする
 
-PERSONALITY: Use casual phrases like "You got it!", "Awesome!", "Sure thing!", "No worries!". Be genuinely friendly, not robotic.
+話し方: 「かしこまりました！」「ありがとうございます！」「承知しました！」「少々お待ちください！」などの丁寧で温かい言葉を使ってください。フレンドリーに、でも丁寧に。
 
-RULES:
-- Keep responses SHORT — voice will read them out loud
-- If something is not on the menu, politely say so and suggest alternatives
-- Always use PKR for prices
-- Never break character as Alex
+ルール:
+- 返答は短く（音声で読み上げます）
+- メニューにないものは丁寧にお断りし、代替品をご提案する
+- 価格は必ず円（¥）で表示する
+- ハナとしてのキャラクターを崩さない
 
-QUICK REPLIES: After every response (except the final order confirmation), add this line with 3–5 short button suggestions relevant to the current step:
-[QUICK:["Option A","Option B","Option C"]]
+クイックリプライ: 毎回の返答の後（最後の注文確定メッセージを除く）、次の行を追加してください。3〜5個の短い選択肢:
+[QUICK:["選択肢A","選択肢B","選択肢C"]]
 
-FINAL ORDER: When the customer has chosen a payment method and confirmed the order is placed, append on a new line — NOTHING after it:
-[ORDER_COMPLETE]{"food":["Item"],"drinks":["Item"],"special":"None","total":1000,"payment":"Cash on Delivery"}[/ORDER_COMPLETE]
-Do NOT include [QUICK:] on the same message as [ORDER_COMPLETE].`;
+最終注文: お支払い方法を確認し注文が確定したら、次の行を追加してください:
+[ORDER_COMPLETE]{"food":["商品名"],"drinks":["商品名"],"special":"なし","total":1000,"payment":"現金"}[/ORDER_COMPLETE]
+[ORDER_COMPLETE]と同じメッセージに[QUICK:]は含めないでください。`;
 
 // ─── AI RESPONSE ─────────────────────────────────
 async function getAIResponse(userMessage) {
   const llmKey = getLLMKey();
   if (!llmKey) {
-    return "Hey! I need an AI brain to give real answers — tap the ⚙️ gear icon and add a free Groq API key. Get one at console.groq.com in under a minute!\n[QUICK:[\"Open Settings ⚙️\"]]";
+    return 'すみません、AIの設定が必要です。⚙️ 設定ボタンを押してGroq APIキーを入力してください。\n[QUICK:["設定を開く ⚙️"]]';
   }
 
   conversationHistory.push({ role: 'user', content: userMessage });
@@ -580,8 +497,8 @@ async function getAIResponse(userMessage) {
     if (!resp.ok) {
       const err = await resp.json().catch(() => ({}));
       console.error('LLM API error:', err);
-      conversationHistory.pop(); // remove the user message we just added
-      return "Hmm, I had trouble connecting to my brain just now — could you try again in a sec?";
+      conversationHistory.pop();
+      return 'すみません、接続に問題が発生しました。もう一度お試しください。';
     }
 
     const data = await resp.json();
@@ -591,48 +508,44 @@ async function getAIResponse(userMessage) {
   } catch (e) {
     console.error('LLM fetch error:', e);
     conversationHistory.pop();
-    return "Oops, network hiccup — give that one more shot?";
+    return '通信エラーが発生しました。もう一度お試しください。';
   }
 }
 
 // ─── PRICES (for summary card) ────────────────────
 const PRICES = {
-  'Margherita Pizza': 850, 'Grilled Burger': 650, 'Pasta Carbonara': 750,
-  'Caesar Salad': 550, 'Garlic Bread': 350, 'French Fries': 350,
-  'Grilled Steak': 1200, 'Soup of the Day': 450, 'Chicken Wings': 750,
-  'Fish & Chips': 850, 'Coke': 150, 'Still Water': 100,
-  'Orange Juice': 200, 'Latte': 250, 'Tea': 150, 'Lemonade': 180, 'Milkshake': 350
+  '幕の内弁当': 1200, '醤油ラーメン': 950, '寿司セット': 1800,
+  '唐揚げ定食': 1100, '天ぷら盛り合わせ': 1400, 'おにぎり2個': 400,
+  'シーザーサラダ': 600, 'おでん盛り合わせ': 800, '焼き鳥セット': 950,
+  '刺身盛り合わせ': 2200, '生ビール': 600, '日本酒': 700,
+  '緑茶': 300, 'コーラ': 350, 'お水': 0, '梅酒サワー': 550, 'オレンジジュース': 400
 };
 function itemPrice(name) {
   for (const [k, v] of Object.entries(PRICES)) {
-    if (name.toLowerCase().includes(k.toLowerCase()) || k.toLowerCase().includes(name.toLowerCase())) return v;
+    if (name.includes(k) || k.includes(name)) return v;
   }
-  return 500;
+  return 800;
 }
 
-// ─── OLD STATE MACHINE (REMOVED) — replaced by LLM
-// The QR object below is kept only as fallback initial hints
-const INITIAL_QR = ['Margherita Pizza 🍕','Grilled Burger 🍔','Caesar Salad 🥗','Pasta Carbonara 🍝','Garlic Bread 🥖'];
+const INITIAL_QR = ['醤油ラーメン 🍜', '寿司セット 🍣', '唐揚げ定食 🍱', '幕の内弁当 🍱', '天ぷら盛り合わせ 🥢'];
 
-// ─── SPEECH SYNTHESIS (Alex speaks) ─────────────
-let voices = [], alexVoice = null;
+// ─── SPEECH SYNTHESIS fallback (Japanese) ────────
+let voices = [], hanaVoice = null;
 
 function loadVoices() {
   voices = speechSynthesis.getVoices();
-  // Prioritise natural American male voices
   const prefer = [
-    'Microsoft Christopher Online','Microsoft Guy Online',
-    'Microsoft Eric Online','Microsoft Davis Online',
-    'Google US English','Microsoft David Desktop',
-    'Microsoft Mark','Microsoft Zira' // fallbacks
+    'Microsoft Haruka Online', 'Microsoft Nanami Online',
+    'Microsoft Ayumi Online', 'Google 日本語',
+    'Microsoft Ichiro Online', 'Microsoft Keita Online',
+    'Microsoft Haruka', 'Microsoft Nanami'
   ];
   for (const p of prefer) {
     const v = voices.find(x => x.name.includes(p));
-    if (v) { alexVoice = v; break; }
+    if (v) { hanaVoice = v; break; }
   }
-  // Final fallback: any en-US voice
-  if (!alexVoice) alexVoice = voices.find(v => v.lang === 'en-US') ||
-                               voices.find(v => v.lang.startsWith('en')) ||
+  if (!hanaVoice) hanaVoice = voices.find(v => v.lang === 'ja-JP') ||
+                               voices.find(v => v.lang.startsWith('ja')) ||
                                voices[0] || null;
 }
 
@@ -642,7 +555,7 @@ if ('speechSynthesis' in window) {
 }
 
 // ─ ElevenLabs neural TTS ─
-const EL_API   = 'https://api.elevenlabs.io/v1/text-to-speech';
+const EL_API           = 'https://api.elevenlabs.io/v1/text-to-speech';
 const EL_KEY_DEFAULT   = 'sk_2a2f13379f1b44c316d33b10550f96f747bbbb6063b122cc';
 const EL_VOICE_DEFAULT = 'pNInz6obpgDQGcFmaJgB';
 let currentAudio = null;
@@ -651,7 +564,7 @@ function getELKey()   { return localStorage.getItem('el_key')   || EL_KEY_DEFAUL
 function getELVoice() { return localStorage.getItem('el_voice') || EL_VOICE_DEFAULT; }
 
 function stripForSpeech(raw) {
-  return raw.replace(/<[^>]+>/g,'').replace(/[\u{1F300}-\u{1FFFF}]/gu,'').replace(/&amp;/g,'and').trim();
+  return raw.replace(/<[^>]+>/g, '').replace(/[\u{1F300}-\u{1FFFF}]/gu, '').replace(/&amp;/g, 'and').trim();
 }
 
 async function alexSpeak(rawText, onEnd) {
@@ -660,26 +573,25 @@ async function alexSpeak(rawText, onEnd) {
 
   const clean = stripForSpeech(rawText);
   const av    = document.getElementById('alex-avatar');
-  setStatus('speaking', '🔊 Alex is speaking…');
+  setStatus('speaking', '\ud83d\udd0a \u30cf\u30ca\u304c\u8a71\u3057\u3066\u3044\u307e\u3059\u2026');
   av.classList.add('speaking');
 
   const finish = () => {
     av.classList.remove('speaking');
-    setStatus('idle', '🎤 Click the mic button or type to respond');
+    setStatus('idle', '\ud83c\udfa4 \u30de\u30a4\u30af\u30dc\u30bf\u30f3\u3092\u62bc\u3059\u304b\u3001\u3053\u3061\u3089\u306b\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044');
     onEnd && onEnd();
   };
 
   const elKey = getELKey();
   if (elKey) {
-    // ─ Neural voice via ElevenLabs ─
     try {
       const res = await fetch(`${EL_API}/${getELVoice()}`, {
         method: 'POST',
         headers: { 'xi-api-key': elKey, 'Content-Type': 'application/json', 'Accept': 'audio/mpeg' },
         body: JSON.stringify({
           text: clean,
-          model_id: 'eleven_turbo_v2_5',
-          voice_settings: { stability: 0.45, similarity_boost: 0.80, style: 0.30, use_speaker_boost: true }
+          model_id: 'eleven_multilingual_v2',
+          voice_settings: { stability: 0.50, similarity_boost: 0.80, style: 0.25, use_speaker_boost: true }
         })
       });
       if (res.ok) {
@@ -698,16 +610,15 @@ async function alexSpeak(rawText, onEnd) {
     } catch (e) { console.warn('ElevenLabs fetch failed, using browser TTS:', e.message); }
   }
 
-  // ─ Fallback: browser TTS ─
+  // ─ Fallback: browser TTS (Japanese) ─
   const utter = new SpeechSynthesisUtterance(clean);
-  utter.rate = 0.93; utter.pitch = 0.97; utter.volume = 1; utter.lang = 'en-US';
-  if (alexVoice) utter.voice = alexVoice;
+  utter.rate = 0.90; utter.pitch = 1.05; utter.volume = 1; utter.lang = 'ja-JP';
+  if (hanaVoice) utter.voice = hanaVoice;
   utter.onend = finish; utter.onerror = finish;
   speechSynthesis.speak(utter);
 }
 
 // ─── VOICE INPUT: MediaRecorder + Groq Whisper ─────────────
-// Uses the same Groq key already used for chat — no Google servers needed.
 let mediaRec = null, audioChunks = [], isListening = false;
 let micStream = null;
 
@@ -721,16 +632,14 @@ function micReset() {
 }
 
 async function startMic() {
-  // Check secure context + mediaDevices API availability
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    setStatus('idle', '\u26a0\ufe0f Mic API not available \u2014 ensure the page is on HTTPS and try Chrome or Edge');
+    setStatus('idle', '\u26a0\ufe0f \u30de\u30a4\u30af\u304c\u5229\u7528\u3067\u304d\u307e\u305b\u3093\u3002HTTPS\u74b0\u5883\u3067Chrome\u307e\u305f\u306fEdge\u3092\u304a\u4f7f\u3044\u304f\u3060\u3055\u3044');
     return;
   }
-  // Check permission state before calling getUserMedia (avoids silent failures)
   try {
     const perm = await navigator.permissions.query({ name: 'microphone' });
     console.log('Mic permission state:', perm.state);
-  } catch(e) { /* permissions API not available, proceed anyway */ }
+  } catch(e) {}
 
   try {
     micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -738,11 +647,11 @@ async function startMic() {
     console.error('getUserMedia failed:', err.name, err.message);
     let msg;
     if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
-      msg = '\u26a0\ufe0f Mic access denied \u2014 check: (1) browser site permission \ud83d\udd12, (2) Windows Settings \u2192 Privacy \u2192 Microphone, then refresh';
+      msg = '\u26a0\ufe0f \u30de\u30a4\u30af\u304c\u30d6\u30ed\u30c3\u30af\u3055\u308c\u3066\u3044\u307e\u3059\u3002\ud83d\udd12\u30a2\u30c9\u30ec\u30b9\u30d0\u30fc\u3067\u8a31\u53ef\u3057\u3001\u30da\u30fc\u30b8\u3092\u66f4\u65b0\u3057\u3066\u304f\u3060\u3055\u3044';
     } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
-      msg = '\u26a0\ufe0f No microphone found \u2014 plug one in or type your order below';
+      msg = '\u26a0\ufe0f \u30de\u30a4\u30af\u304c\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3002\u63a5\u7d9a\u3092\u78ba\u8a8d\u3059\u308b\u304b\u3001\u6587\u5b57\u3067\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044';
     } else {
-      msg = '\u26a0\ufe0f Mic error (' + err.name + ') \u2014 type your order instead';
+      msg = '\u26a0\ufe0f \u30de\u30a4\u30af\u30a8\u30e9\u30fc (' + err.name + ') \u2014 \u6587\u5b57\u3067\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044';
     }
     setStatus('idle', msg);
     return;
@@ -752,9 +661,9 @@ async function startMic() {
   mediaRec    = new MediaRecorder(micStream, mimeType ? { mimeType } : {});
   audioChunks = [];
 
-  // ── Silence detection (auto-stop after ~1.8 s of quiet) ──────
-  const SILENCE_THRESHOLD = 18;   // amplitude deviation from 128 (0-127 scale)
-  const SILENCE_DELAY_MS  = 1800; // ms of silence before auto-stop
+  // ── Silence detection ──────────────────────────
+  const SILENCE_THRESHOLD = 18;
+  const SILENCE_DELAY_MS  = 1800;
   let audioCtx = null, analyser = null, silenceStart = null, silenceRaf = null;
 
   function detectSilence() {
@@ -776,7 +685,7 @@ async function startMic() {
     if (silenceRaf) { cancelAnimationFrame(silenceRaf); silenceRaf = null; }
     if (audioCtx)   { audioCtx.close();                  audioCtx = null; }
   }
-  // ─────────────────────────────────────────────────────────────
+  // ──────────────────────────────────────────────
 
   mediaRec.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
 
@@ -784,14 +693,15 @@ async function startMic() {
     stopSilenceDetector();
     micReset();
     if (micStream) { micStream.getTracks().forEach(t => t.stop()); micStream = null; }
-    if (!audioChunks.length) { setStatus('idle', '\ud83c\udf99 Click the mic button or type to respond'); return; }
-    setStatus('idle', '\u23f3 Transcribing\u2026');
+    if (!audioChunks.length) { setStatus('idle', '\ud83c\udfa4 \u30de\u30a4\u30af\u30dc\u30bf\u30f3\u3092\u62bc\u3059\u304b\u3001\u3053\u3061\u3089\u306b\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044'); return; }
+    setStatus('idle', '\u23f3 \u6587\u5b57\u8d77\u3053\u3057\u4e2d\u2026');
     try {
       const ext  = (mediaRec.mimeType || '').split(';')[0].split('/')[1] || 'webm';
       const blob = new Blob(audioChunks, { type: mediaRec.mimeType || 'audio/webm' });
       const form = new FormData();
       form.append('file',            blob, `audio.${ext}`);
       form.append('model',           'whisper-large-v3-turbo');
+      form.append('language',        'ja');
       form.append('response_format', 'json');
       const resp = await fetch('https://api.groq.com/openai/v1/audio/transcriptions', {
         method:  'POST',
@@ -801,14 +711,14 @@ async function startMic() {
       if (resp.ok) {
         const text = (await resp.json()).text?.trim();
         if (text) { handleSend(text); }
-        else { setStatus('idle', '\ud83c\udf99 No speech detected \u2014 tap mic and try again'); }
+        else { setStatus('idle', '\ud83c\udfa4 \u97f3\u58f0\u304c\u691c\u51fa\u3055\u308c\u307e\u305b\u3093\u3067\u3057\u305f\u3002\u3082\u3046\u4e00\u5ea6\u304a\u8a66\u3057\u304f\u3060\u3055\u3044'); }
       } else {
         console.warn('Whisper error:', resp.status);
-        setStatus('idle', '\ud83c\udf99 Could not transcribe \u2014 type your order instead');
+        setStatus('idle', '\ud83c\udfa4 \u6587\u5b57\u8d77\u3053\u3057\u306b\u5931\u6557\u3057\u307e\u3057\u305f\u3002\u6587\u5b57\u3067\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044');
       }
     } catch (e) {
       console.warn('Whisper fetch error:', e);
-      setStatus('idle', '\ud83c\udf99 Voice error \u2014 type your order instead');
+      setStatus('idle', '\ud83c\udfa4 \u97f3\u58f0\u30a8\u30e9\u30fc\u3002\u6587\u5b57\u3067\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044');
     }
     audioChunks = [];
     mediaRec    = null;
@@ -816,24 +726,20 @@ async function startMic() {
 
   mediaRec.start();
   isListening = true;
-  setStatus('listening', '\ud83c\udfa4 Listening\u2026 (auto-sends on silence)');
+  setStatus('listening', '\ud83c\udfa4 \u8074\u3044\u3066\u3044\u307e\u3059\u2026\uff08\u7121\u97f3\u3067\u81ea\u52d5\u9001\u4fe1\uff09');
   document.getElementById('mic-btn').classList.add('listening');
   document.getElementById('mic-btn').textContent = '\u23f9';
   document.getElementById('waveform').classList.add('active');
   document.getElementById('user-input').style.display = 'none';
   document.getElementById('send-btn').style.display = 'none';
 
-  // Start silence detector after a short grace period so an initial pause
-  // before speaking doesn't immediately trigger auto-stop.
   try {
-    audioCtx  = new (window.AudioContext || window.webkitAudioContext)();
-    analyser  = audioCtx.createAnalyser();
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    analyser = audioCtx.createAnalyser();
     analyser.fftSize = 256;
     audioCtx.createMediaStreamSource(micStream).connect(analyser);
     setTimeout(() => { if (mediaRec && mediaRec.state === 'recording') detectSilence(); }, 800);
-  } catch(e) {
-    console.warn('Silence detection unavailable:', e);
-  }
+  } catch(e) { console.warn('Silence detection unavailable:', e); }
 }
 
 function stopMic() {
@@ -841,7 +747,7 @@ function stopMic() {
   else micReset();
 }
 
-function primeMic() {} // kept so startDemo() call does not break
+function primeMic() {}
 
 if (!window.MediaRecorder) {
   document.getElementById('no-speech-msg').style.display = 'block';
@@ -872,7 +778,7 @@ function appendMessage(text, role) {
 
   if (role === 'bot') {
     const av = document.createElement('div');
-    av.className = 'msg-avatar'; av.textContent = '👨‍🍳';
+    av.className = 'msg-avatar'; av.textContent = '\ud83d\udc69\u200d\ud83c\udf73';
     msg.appendChild(av);
   }
 
@@ -887,39 +793,39 @@ function appendMessage(text, role) {
 // ─── MENU CARD ───────────────────────────────────
 function renderMenuCard() {
   const food = [
-    { name: '🍕 Margherita Pizza', price: 'Rs. 850' },
-    { name: '🍔 Grilled Burger',   price: 'Rs. 650' },
-    { name: '🍝 Pasta Carbonara',  price: 'Rs. 750' },
-    { name: '🥗 Caesar Salad',     price: 'Rs. 550' },
-    { name: '🧄 Garlic Bread',     price: 'Rs. 350' },
-    { name: '🍟 French Fries',     price: 'Rs. 350' },
-    { name: '🥩 Grilled Steak',    price: 'Rs. 1,200' },
-    { name: '🍜 Soup of the Day',  price: 'Rs. 450' },
-    { name: '🍗 Chicken Wings',    price: 'Rs. 750' },
-    { name: '🐟 Fish & Chips',     price: 'Rs. 850' },
+    { name: '\ud83c\udf71 \u5e55\u306e\u5185\u5f01\u5f53',     price: '\uffe51,200' },
+    { name: '\ud83c\udf5c \u91a4\u6cb9\u30e9\u30fc\u30e1\u30f3',   price: '\uffe5950' },
+    { name: '\ud83c\udf63 \u5bff\u53f8\u30bb\u30c3\u30c8',         price: '\uffe51,800' },
+    { name: '\ud83c\udf71 \u5510\u63da\u3052\u5b9a\u98df',         price: '\uffe51,100' },
+    { name: '\ud83e\udd62 \u5929\u3077\u3089\u76db\u308a\u5408\u308f\u305b', price: '\uffe51,400' },
+    { name: '\ud83c\udf59 \u304a\u306b\u304e\u308a2\u500b',        price: '\uffe5400' },
+    { name: '\ud83e\udd57 \u30b7\u30fc\u30b6\u30fc\u30b5\u30e9\u30c0',  price: '\uffe5600' },
+    { name: '\ud83c\udf62 \u304a\u3067\u3093\u76db\u308a\u5408\u308f\u305b', price: '\uffe5800' },
+    { name: '\ud83d\udc14 \u713c\u304d\u9ce5\u30bb\u30c3\u30c8',   price: '\uffe5950' },
+    { name: '\ud83d\udc1f \u523a\u8eab\u76db\u308a\u5408\u308f\u305b', price: '\uffe52,200' },
   ];
   const drinks = [
-    { name: '🥤 Coke',          price: 'Rs. 150' },
-    { name: '💧 Still Water',   price: 'Rs. 100' },
-    { name: '🍊 Orange Juice',  price: 'Rs. 200' },
-    { name: '☕ Latte',         price: 'Rs. 250' },
-    { name: '🍵 Tea',           price: 'Rs. 150' },
-    { name: '🍋 Lemonade',      price: 'Rs. 180' },
-    { name: '🥛 Milkshake',     price: 'Rs. 350' },
+    { name: '\ud83c\udf7a \u751f\u30d3\u30fc\u30eb',       price: '\uffe5600' },
+    { name: '\ud83c\udf76 \u65e5\u672c\u9152',             price: '\uffe5700' },
+    { name: '\ud83c\udf75 \u7dd1\u8336',                   price: '\uffe5300' },
+    { name: '\ud83e\udd64 \u30b3\u30fc\u30e9',             price: '\uffe5350' },
+    { name: '\ud83d\udca7 \u304a\u6c34',                   price: '\u7121\u6599' },
+    { name: '\ud83c\udf79 \u6885\u9152\u30b5\u30ef\u30fc', price: '\uffe5550' },
+    { name: '\ud83e\udde3 \u30aa\u30ec\u30f3\u30b8\u30b8\u30e5\u30fc\u30b9', price: '\uffe5400' },
   ];
   const cardMsg = document.createElement('div');
   cardMsg.className = 'msg bot';
   const av = document.createElement('div');
-  av.className = 'msg-avatar'; av.textContent = '👨\u200d🍳';
+  av.className = 'msg-avatar'; av.textContent = '\ud83d\udc69\u200d\ud83c\udf73';
   const card = document.createElement('div');
   card.className = 'menu-card';
   card.innerHTML = `
-    <div class="menu-card-header">🍽️ Today's Menu</div>
-    <div class="menu-section-title">🥘 Food</div>
+    <div class="menu-card-header">\ud83c\udf7d\ufe0f \u672c\u65e5\u306e\u30e1\u30cb\u30e5\u30fc</div>
+    <div class="menu-section-title">\ud83c\udf7d\ufe0f \u98df\u3079\u7269</div>
     ${food.map(i => `<div class="menu-item"><span class="menu-item-name">${i.name}</span><span class="menu-item-price">${i.price}</span></div>`).join('')}
-    <div class="menu-section-title">🥤 Drinks</div>
+    <div class="menu-section-title">\ud83e\udd64 \u304a\u98f2\u307f\u7269</div>
     ${drinks.map(i => `<div class="menu-item"><span class="menu-item-name">${i.name}</span><span class="menu-item-price">${i.price}</span></div>`).join('')}
-    <div class="menu-card-footer">Just say or type what you'd like! 😊</div>
+    <div class="menu-card-footer">\u304a\u597d\u304d\u306a\u3082\u306e\u3092\u304a\u77e5\u3089\u305b\u304f\u3060\u3055\u3044\uff01 \ud83d\ude0a</div>
   `;
   cardMsg.appendChild(av);
   cardMsg.appendChild(card);
@@ -929,21 +835,21 @@ function renderMenuCard() {
 
 // ─── ORDER SUMMARY CARD ───────────────────────────
 function showOrderSummary(data) {
-  const { food = [], drinks = [], special = 'None', total = 0, payment = '' } = data;
+  const { food = [], drinks = [], special = '\u306a\u3057', total = 0, payment = '' } = data;
   const cardMsg = document.createElement('div');
   cardMsg.className = 'msg bot';
   const cardAv = document.createElement('div');
-  cardAv.className = 'msg-avatar'; cardAv.textContent = '👨‍🍳';
+  cardAv.className = 'msg-avatar'; cardAv.textContent = '\ud83d\udc69\u200d\ud83c\udf73';
   const card = document.createElement('div');
   card.className = 'summary-card';
   const calcTotal = total || [...food, ...drinks].reduce((s, n) => s + itemPrice(n), 0);
   card.innerHTML = `
-    <h3>🧾 Your Order Summary</h3>
-    ${food.map(f => `<div class="item"><span>🍽️ ${f}</span><span class="price">Rs. ${itemPrice(f).toLocaleString()}</span></div>`).join('')}
-    ${drinks.length ? drinks.map(d => `<div class="item"><span>🥤 ${d}</span><span class="price">Rs. ${itemPrice(d).toLocaleString()}</span></div>`).join('') : ''}
-    <div class="special">📝 Special: ${special || 'None'}</div>
-    <div class="total-line"><span>💰 Total</span><span>Rs. ${calcTotal.toLocaleString()}</span></div>
-    <div class="thanks">✅ Order Confirmed!</div>`;
+    <h3>\ud83e\uddfe \u3054\u6ce8\u6587\u5185\u5bb9</h3>
+    ${food.map(f => `<div class="item"><span>\ud83c\udf7d\ufe0f ${f}</span><span class="price">\uffe5${itemPrice(f).toLocaleString()}</span></div>`).join('')}
+    ${drinks.length ? drinks.map(d => `<div class="item"><span>\ud83e\udd64 ${d}</span><span class="price">\uffe5${itemPrice(d).toLocaleString()}</span></div>`).join('') : ''}
+    <div class="special">\ud83d\udcdd \u7279\u5225\u30ea\u30af\u30a8\u30b9\u30c8: ${special || '\u306a\u3057'}</div>
+    <div class="total-line"><span>\ud83d\udcb0 \u5408\u8a08</span><span>\uffe5${calcTotal.toLocaleString()}</span></div>
+    <div class="thanks">\u2705 \u3054\u6ce8\u6587\u304c\u78ba\u5b9a\u3057\u307e\u3057\u305f\uff01</div>`;
   cardMsg.appendChild(cardAv); cardMsg.appendChild(card);
   messagesEl.appendChild(cardMsg);
   scrollToBottom();
@@ -952,7 +858,7 @@ function showOrderSummary(data) {
 function showTyping() {
   const t = document.createElement('div');
   t.className = 'msg bot'; t.id = 'typing';
-  const av = document.createElement('div'); av.className = 'msg-avatar'; av.textContent = '👨‍🍳';
+  const av = document.createElement('div'); av.className = 'msg-avatar'; av.textContent = '\ud83d\udc69\u200d\ud83c\udf73';
   const b = document.createElement('div'); b.className = 'bubble';
   b.innerHTML = '<div class="typing-indicator"><span></span><span></span><span></span></div>';
   t.appendChild(av); t.appendChild(b);
@@ -979,21 +885,18 @@ async function handleSend(text) {
   inputEl.value = ''; inputEl.classList.remove('interim');
   renderQuickReplies([]);
   appendMessage(msg, 'user');
-  setStatus('idle', '⏳ Alex is thinking…');
+  setStatus('idle', '\u23f3 \u30cf\u30ca\u304c\u8003\u3048\u3066\u3044\u307e\u3059\u2026');
   showTyping();
 
   const rawReply = await getAIResponse(msg);
   removeTyping();
 
-  // Extract [QUICK:["a","b"]] suggestions
   const qrMatch = rawReply.match(/\[QUICK:([\s\S]*?)\]/);
   let quickReplies = [];
   try { if (qrMatch) quickReplies = JSON.parse(qrMatch[1]); } catch(e) {}
 
-  // Extract [ORDER_COMPLETE]{...}[/ORDER_COMPLETE]
   const orderMatch = rawReply.match(/\[ORDER_COMPLETE\]([\s\S]*?)\[\/ORDER_COMPLETE\]/);
 
-  // Clean display text — strip all special tags
   const cleanText = rawReply
     .replace(/\[QUICK:[\s\S]*?\]/g, '')
     .replace(/\[ORDER_COMPLETE\][\s\S]*?\[\/ORDER_COMPLETE\]/g, '')
@@ -1031,16 +934,14 @@ function updateIndicator() {
   const elKey  = getELKey();
   const llmKey = getLLMKey();
   const voiceName = elVoiceSelect.options[elVoiceSelect.selectedIndex]?.text.split(' —')[0] || 'Neural';
-
   const parts = [];
-  if (elKey)  parts.push(`✅ Voice: ${voiceName}`);
-  if (llmKey) parts.push(`🧠 AI: Active`);
-
+  if (elKey)  parts.push(`\u2705 \u97f3\u58f0: ${voiceName}`);
+  if (llmKey) parts.push('\ud83e\udde0 AI: \u6709\u52b9');
   if (parts.length) {
-    indicator.textContent = parts.join('  ·  ');
+    indicator.textContent = parts.join('  \u00b7  ');
     indicator.className = 'neural';
   } else {
-    indicator.textContent = '⚙️ Add API keys in Settings for full AI experience';
+    indicator.textContent = '\u2699\ufe0f \u8a2d\u5b9a\u304b\u3089API\u30ad\u30fc\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044';
     indicator.className = '';
   }
 }
@@ -1062,13 +963,11 @@ document.getElementById('save-settings').addEventListener('click', () => {
   const llmKey   = document.getElementById('llm-key-input').value.trim();
   const llmUrl   = document.getElementById('llm-url-input').value.trim();
   const llmModel = document.getElementById('llm-model-input').value.trim();
-
   if (elKey)    localStorage.setItem('el_key',    elKey);    else localStorage.removeItem('el_key');
   if (voice)    localStorage.setItem('el_voice',  voice);
   if (llmKey)   localStorage.setItem('llm_key',   llmKey);   else localStorage.removeItem('llm_key');
   if (llmUrl)   localStorage.setItem('llm_url',   llmUrl);   else localStorage.removeItem('llm_url');
   if (llmModel) localStorage.setItem('llm_model', llmModel); else localStorage.removeItem('llm_model');
-
   settingsPanel.classList.remove('open');
   updateIndicator();
 });
@@ -1077,31 +976,27 @@ updateIndicator();
 
 // ─── INIT ─────────────────────────────────────────
 function startDemo() {
-  const screen = document.getElementById('start-screen');
-  screen.classList.add('hidden');
-
+  document.getElementById('start-screen').classList.add('hidden');
   primeMic();
-  setStatus('idle','👋 Alex is warming up…');
+  setStatus('idle', '\ud83d\udc4b \u30cf\u30ca\u304c\u6e96\u5099\u4e2d\u3067\u3059\u2026');
 
-  // Initialise conversation history — seed with the greeting so LLM knows the context
-  const greetingText = "Hey, how's it going! I'm Alex, your order taker for today. Super glad you stopped by! So, what can I get started for ya? And no rush — just tell me what sounds good!";
+  const greetingText = '\u3053\u3093\u306b\u3061\u306f\uff01\u79c1\u306f\u30cf\u30ca\u3067\u3059\u3002\u672c\u65e5\u306e\u6ce8\u6587\u53d7\u4ed8\u3092\u62c5\u5f53\u3057\u307e\u3059\u3002\u3054\u6765\u5e97\u3042\u308a\u304c\u3068\u3046\u3054\u3056\u3044\u307e\u3059\uff01\u3054\u6ce8\u6587\u306f\u304a\u6c7a\u307e\u308a\u3067\u3059\u304b\uff1f';
   conversationHistory = [
     { role: 'system',    content: SYSTEM_PROMPT },
     { role: 'assistant', content: greetingText }
   ];
 
   setTimeout(() => {
-    const g1 = "Hey, how's it going! I'm <strong>Alex</strong>, your order taker for today 😊 Super glad you stopped by — so what can I get started for ya?";
-    const g2 = "Here's our menu — take a look and just say what catches your eye! 👇";
+    const g1 = '\u3053\u3093\u306b\u3061\u306f\uff01\u79c1\u306f<strong>\u30cf\u30ca</strong>\u3067\u3059 \ud83d\ude0a \u3054\u6765\u5e97\u3042\u308a\u304c\u3068\u3046\u3054\u3056\u3044\u307e\u3059\uff01\u3054\u6ce8\u6587\u306f\u304a\u6c7a\u307e\u308a\u3067\u3059\u304b\uff1f';
+    const g2 = '\u672c\u65e5\u306e\u30e1\u30cb\u30e5\u30fc\u3067\u3054\u3056\u3044\u307e\u3059\u3002\u304a\u597d\u304d\u306a\u3082\u306e\u3092\u304a\u77e5\u3089\u305b\u304f\u3060\u3055\u3044\uff01 \ud83d\udc47';
     appendMessage(g1, 'bot');
-
-    alexSpeak("Hey, how's it going! I'm Alex, your order taker for today. Super glad you stopped by! So, what can I get started for ya?", () => {
+    alexSpeak('\u3053\u3093\u306b\u3061\u306f\uff01\u79c1\u306f\u30cf\u30ca\u3067\u3059\u3002\u3054\u6765\u5e97\u3042\u308a\u304c\u3068\u3046\u3054\u3056\u3044\u307e\u3059\uff01\u3054\u6ce8\u6587\u306f\u304a\u6c7a\u307e\u308a\u3067\u3059\u304b\uff1f', () => {
       setTimeout(() => {
         appendMessage(g2, 'bot');
         renderMenuCard();
-        alexSpeak("Here's our menu — take a look and just let me know what sounds good!", () => {
+        alexSpeak('\u672c\u65e5\u306e\u30e1\u30cb\u30e5\u30fc\u3067\u3054\u3056\u3044\u307e\u3059\u3002\u304a\u597d\u304d\u306a\u3082\u306e\u3092\u304a\u77e5\u3089\u305b\u304f\u3060\u3055\u3044\uff01', () => {
           renderQuickReplies(INITIAL_QR);
-          setStatus('idle','🎤 Click the mic button or tap a suggestion below');
+          setStatus('idle', '\ud83c\udfa4 \u30de\u30a4\u30af\u30dc\u30bf\u30f3\u3092\u62bc\u3059\u304b\u3001\u63d0\u6848\u3092\u30bf\u30c3\u30d7\u3057\u3066\u304f\u3060\u3055\u3044');
         });
       }, 400);
     });
@@ -1112,27 +1007,19 @@ document.getElementById('start-btn').addEventListener('click', startDemo);
 
 // ─── END SESSION ─────────────────────────────────
 function endSession() {
-  // Stop mic immediately
   if (isListening) stopMic();
-
-  // Say bye, then return to start screen
-  alexSpeak('Bye! Hope to see you again soon!', () => {
-    // Reset conversation
+  alexSpeak('\u3042\u308a\u304c\u3068\u3046\u3054\u3056\u3044\u307e\u3057\u305f\uff01\u307e\u305f\u306e\u3054\u6765\u5e97\u3092\u304a\u5f85\u3061\u3057\u3066\u304a\u308a\u307e\u3059\u3002', () => {
     conversationHistory = [];
-
-    // Clear UI
     messagesEl.innerHTML = '';
     qrEl.innerHTML = '';
     inputEl.value = '';
     inputEl.classList.remove('interim');
     document.getElementById('alex-avatar').classList.remove('speaking');
     document.getElementById('mic-btn').classList.remove('listening');
-    document.getElementById('mic-btn').textContent = '🎤';
+    document.getElementById('mic-btn').textContent = '\ud83c\udfa4';
     document.getElementById('waveform').classList.remove('active');
     document.getElementById('user-input').style.display = '';
     document.getElementById('send-btn').style.display = '';
-
-    // Return to start screen
     document.getElementById('start-screen').classList.remove('hidden');
   });
 }
