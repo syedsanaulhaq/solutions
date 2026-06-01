@@ -706,97 +706,95 @@ async function alexSpeak(rawText, onEnd) {
   speechSynthesis.speak(utter);
 }
 
-// ─── SPEECH RECOGNITION (customer speaks) ───────
-const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-let recog = null, isListening = false;
-let micStream = null; // held alive to avoid repeated permission popups
+// ─── VOICE INPUT: MediaRecorder + Groq Whisper ─────────────
+// Uses the same Groq key already used for chat — no Google servers needed.
+let mediaRec = null, audioChunks = [], isListening = false;
+let micStream = null;
 
-// Request mic permission once — browser won't re-prompt while stream is alive
-function primeMic() {
-  if (!SR || micStream) return;
-  navigator.mediaDevices.getUserMedia({ audio: true })
-    .then(stream => {
-      micStream = stream; // keep alive — browser won't re-prompt while this stream is open
-    })
-    .catch(() => {
-      // Permission denied or unavailable — mic button stays enabled,
-      // recognition.start() will surface the error if user tries it
-      console.warn('Mic pre-prime failed; will retry on first click.');
-    });
+function micReset() {
+  isListening = false;
+  document.getElementById('mic-btn').classList.remove('listening');
+  document.getElementById('mic-btn').textContent = '\ud83c\udfa4';
+  document.getElementById('waveform').classList.remove('active');
+  document.getElementById('user-input').style.display = '';
+  document.getElementById('send-btn').style.display = '';
 }
 
-if (SR) {
-  recog = new SR();
-  recog.lang = 'en-US';
-  recog.interimResults = true;
-  recog.continuous = false;
-  recog.maxAlternatives = 1;
+async function startMic() {
+  try {
+    micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  } catch (err) {
+    setStatus('idle', err.name === 'NotAllowedError'
+      ? '\u26a0\ufe0f Mic blocked \u2014 click the \ud83d\udd12 in your address bar and allow microphone'
+      : '\u26a0\ufe0f Mic unavailable \u2014 type your order instead');
+    return;
+  }
 
-  recog.onstart = () => {
-    isListening = true;
-    setStatus('listening','🎙️ Listening… speak now');
-    document.getElementById('mic-btn').classList.add('listening');
-    document.getElementById('mic-btn').textContent = '⏹';
-    document.getElementById('waveform').classList.add('active');
-    document.getElementById('user-input').style.display = 'none';
-    document.getElementById('send-btn').style.display = 'none';
-  };
+  const mimeType = ['audio/webm', 'audio/ogg', 'audio/mp4'].find(t => MediaRecorder.isTypeSupported(t)) || '';
+  mediaRec    = new MediaRecorder(micStream, mimeType ? { mimeType } : {});
+  audioChunks = [];
 
-  recog.onresult = (e) => {
-    let interim = '', final = '';
-    for (let i = e.resultIndex; i < e.results.length; i++) {
-      e.results[i].isFinal ? (final += e.results[i][0].transcript) : (interim += e.results[i][0].transcript);
+  mediaRec.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
+
+  mediaRec.onstop = async () => {
+    micReset();
+    if (micStream) { micStream.getTracks().forEach(t => t.stop()); micStream = null; }
+    if (!audioChunks.length) { setStatus('idle', '\ud83c\udf99 Click the mic button or type to respond'); return; }
+    setStatus('idle', '\u23f3 Transcribing\u2026');
+    try {
+      const ext  = (mediaRec.mimeType || '').split(';')[0].split('/')[1] || 'webm';
+      const blob = new Blob(audioChunks, { type: mediaRec.mimeType || 'audio/webm' });
+      const form = new FormData();
+      form.append('file',            blob, `audio.${ext}`);
+      form.append('model',           'whisper-large-v3-turbo');
+      form.append('response_format', 'json');
+      const resp = await fetch('https://api.groq.com/openai/v1/audio/transcriptions', {
+        method:  'POST',
+        headers: { 'Authorization': `Bearer ${getLLMKey()}` },
+        body:    form
+      });
+      if (resp.ok) {
+        const text = (await resp.json()).text?.trim();
+        if (text) { handleSend(text); }
+        else { setStatus('idle', '\ud83c\udf99 No speech detected \u2014 tap mic and try again'); }
+      } else {
+        console.warn('Whisper error:', resp.status);
+        setStatus('idle', '\ud83c\udf99 Could not transcribe \u2014 type your order instead');
+      }
+    } catch (e) {
+      console.warn('Whisper fetch error:', e);
+      setStatus('idle', '\ud83c\udf99 Voice error \u2014 type your order instead');
     }
-    const inp = document.getElementById('user-input');
-    if (interim) { inp.value = interim; inp.classList.add('interim'); }
-    if (final)   { inp.value = final;   inp.classList.remove('interim'); }
+    audioChunks = [];
+    mediaRec    = null;
   };
 
-  recog.onend = () => {
-    isListening = false;
-    document.getElementById('mic-btn').classList.remove('listening');
-    document.getElementById('mic-btn').textContent = '🎤';
-    document.getElementById('waveform').classList.remove('active');
-    document.getElementById('user-input').style.display = '';
-    document.getElementById('send-btn').style.display = '';
-    const val = document.getElementById('user-input').value.trim();
-    if (val) { document.getElementById('user-input').classList.remove('interim'); handleSend(val); }
-    else setStatus('idle','�️ Ready — tap 🎤 and speak clearly after the button changes');
-  };
+  mediaRec.start();
+  isListening = true;
+  setStatus('listening', '\ud83c\udfa4 Listening\u2026 tap \u23f9 to send');
+  document.getElementById('mic-btn').classList.add('listening');
+  document.getElementById('mic-btn').textContent = '\u23f9';
+  document.getElementById('waveform').classList.add('active');
+  document.getElementById('user-input').style.display = 'none';
+  document.getElementById('send-btn').style.display = 'none';
+}
 
-  recog.onerror = (e) => {
-    isListening = false;
-    document.getElementById('mic-btn').classList.remove('listening');
-    document.getElementById('mic-btn').textContent = '🎤';
-    document.getElementById('waveform').classList.remove('active');
-    document.getElementById('user-input').style.display = '';
-    document.getElementById('send-btn').style.display = '';
-    if (e.error === 'not-allowed') {
-      // SpeechRecognition was denied — call getUserMedia to surface the browser
-      // permission popup (recog.start() alone doesn't show it inside iframes)
-      navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(stream => { micStream = stream; setStatus('idle', '✅ Mic access granted — tap 🎤 again to speak!'); })
-        .catch(() => { setStatus('idle', '⚠️ Mic blocked — click the 🔒 in your address bar and allow microphone'); });
-    } else {
-      setStatus('idle', e.error === 'no-speech' ? '🎤 No speech detected — tap mic and try again' : '🎤 Click the mic button or type to respond');
-    }
-  };
-} else {
+function stopMic() {
+  if (mediaRec && mediaRec.state !== 'inactive') mediaRec.stop();
+  else micReset();
+}
+
+function primeMic() {} // kept so startDemo() call does not break
+
+if (!window.MediaRecorder) {
   document.getElementById('no-speech-msg').style.display = 'block';
 }
 
 function toggleMic() {
-  if (!recog) return;
   speechSynthesis.cancel();
-  if (isListening) { recog.stop(); return; }
+  if (isListening) { stopMic(); return; }
   document.getElementById('user-input').value = '';
-  // Release any open getUserMedia stream before starting SpeechRecognition —
-  // keeping both active at once causes Chrome to drop recognition immediately.
-  if (micStream) {
-    micStream.getTracks().forEach(t => t.stop());
-    micStream = null;
-  }
-  recog.start();
+  startMic();
 }
 
 // ─── STATUS BAR ──────────────────────────────────
