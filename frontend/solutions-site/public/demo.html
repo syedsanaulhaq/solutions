@@ -780,8 +780,22 @@ if (SR) {
 function toggleMic() {
   if (!recog) return;
   speechSynthesis.cancel();
-  if (isListening) recog.stop();
-  else { document.getElementById('user-input').value = ''; recog.start(); }
+  if (isListening) { recog.stop(); return; }
+
+  document.getElementById('user-input').value = '';
+
+  // If we already have a live mic stream, start recognition directly.
+  // Otherwise call getUserMedia first — this is what triggers the browser
+  // permission popup inside an iframe (recog.start() alone doesn't).
+  if (micStream) {
+    recog.start();
+  } else {
+    navigator.mediaDevices.getUserMedia({ audio: true })
+      .then(stream => { micStream = stream; recog.start(); })
+      .catch(() => {
+        setStatus('idle', '⚠️ Mic blocked — click the 🔒 icon in your address bar and allow microphone');
+      });
+  }
 }
 
 // ─── STATUS BAR ──────────────────────────────────
