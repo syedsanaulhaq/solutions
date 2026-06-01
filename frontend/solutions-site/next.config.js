@@ -9,8 +9,8 @@ const nextConfig = {
   async headers() {
     return [
       {
-        // Allow demo.html to be embedded in an iframe on the same origin
-        source: '/demo.html',
+        // Allow demo pages to be embedded in an iframe on the same origin
+        source: '/demo:path((?:-ja)?).html',
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
@@ -18,7 +18,7 @@ const nextConfig = {
         ],
       },
       {
-        source: '/((?!demo\.html$).*)',
+        source: '/((?!demo(?:-ja)?\.html$).*)',
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'X-Frame-Options', value: 'DENY' },
