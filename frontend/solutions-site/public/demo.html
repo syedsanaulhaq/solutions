@@ -1,215 +1,1073 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Order Taker — Voice AI Demo</title>
+  <title>Order Taker ΓÇö Voice AI Demo</title>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --blue:    #2563EB;
-      --blue-dk: #1d4ed8;
-      --bg:      #ffffff;
-      --surface: #f8fafc;
-      --border:  #e2e8f0;
-      --text:    #0f172a;
-      --muted:   #64748b;
-      --green:   #16a34a;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg:      #0f172a;
-        --surface: #1e293b;
-        --border:  #334155;
-        --text:    #f1f5f9;
-        --muted:   #94a3b8;
-      }
-    }
-
-    html, body {
-      height: 100%;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .chat-container {
+      width: 100%;
+      max-width: 520px;
+      background: #fff;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.4);
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100%;
-      padding: 2rem 1rem;
+      height: 720px;
     }
 
-    .card {
-      width: 100%;
-      max-width: 480px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 1.25rem;
-      overflow: hidden;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-    }
-
-    .card-header {
-      background: rgba(37,99,235,0.06);
-      border-bottom: 1px solid rgba(37,99,235,0.15);
-      padding: 1rem 1.5rem;
+    /* ΓöÇΓöÇ Header ΓöÇΓöÇ */
+    .chat-header {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      padding: 16px 20px;
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-    }
-
-    .card-header-icon {
-      width: 2.25rem;
-      height: 2.25rem;
-      background: var(--blue);
-      border-radius: 0.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      gap: 14px;
+      color: #fff;
       flex-shrink: 0;
     }
 
-    .card-header-icon svg { width: 1.1rem; height: 1.1rem; color: white; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .avatar-wrap { position: relative; flex-shrink: 0; }
 
-    .card-header-text h2 { font-size: 0.9rem; font-weight: 600; color: var(--text); }
-    .card-header-text p  { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
-
-    .card-body { padding: 2rem 1.5rem; }
-
-    /* Status indicator */
-    .status-row {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-    }
-    .dot {
-      width: 0.55rem;
-      height: 0.55rem;
+    .avatar {
+      width: 48px; height: 48px;
+      background: rgba(255,255,255,0.25);
       border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 0 3px rgba(22,163,74,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      transition: transform 0.2s;
+    }
+
+    .avatar.speaking::before,
+    .avatar.speaking::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.6);
+      animation: ring 1.4s ease-out infinite;
+    }
+    .avatar.speaking::after { animation-delay: 0.7s; }
+    @keyframes ring {
+      0%   { width: 48px; height: 48px; opacity: 0.8; }
+      100% { width: 80px; height: 80px; opacity: 0; }
+    }
+
+    .header-info { flex: 1; }
+    .header-info h2 { font-size: 17px; font-weight: 700; }
+    .header-info p  { font-size: 12px; opacity: 0.85; margin-top: 2px; }
+
+    .status-dot {
+      width: 9px; height: 9px;
+      background: #2ecc71; border-radius: 50%;
+      display: inline-block; margin-right: 5px;
       animation: pulse 2s infinite;
     }
-    @keyframes pulse { 0%,100% { box-shadow: 0 0 0 3px rgba(22,163,74,0.2); } 50% { box-shadow: 0 0 0 6px rgba(22,163,74,0.1); } }
-    .status-text { font-size: 0.75rem; font-weight: 500; color: var(--green); }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
 
-    /* Widget mount point */
-    #widget-mount {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 1.5rem;
-      min-height: 80px;
+    .voice-badge {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: 11px;
+      display: flex; align-items: center; gap: 5px;
     }
+    .voice-badge-dot { width: 6px; height: 6px; background: #2ecc71; border-radius: 50%; }
 
-    /* Microphone prompt */
-    .mic-note {
-      font-size: 0.72rem;
-      color: var(--muted);
+    /* ΓöÇΓöÇ Settings gear ΓöÇΓöÇ */
+    #settings-btn {
+      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 50%; width: 32px; height: 32px;
+      color: #fff; font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: background 0.2s;
+    }
+    #settings-btn:hover { background: rgba(255,255,255,0.3); }
+
+    /* ΓöÇΓöÇ End Session button ΓöÇΓöÇ */
+    #end-btn {
+      background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 50%; width: 32px; height: 32px;
+      color: #fff; font-size: 17px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: background 0.2s;
+    }
+    #end-btn:hover { background: rgba(220,30,30,0.75); }
+
+    /* ΓöÇΓöÇ End screen overlay ΓöÇΓöÇ */
+    #end-screen {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+      border-radius: 24px;
+      display: none;
+      flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 18px; z-index: 200;
+    }
+    #end-screen.visible { display: flex; }
+    .end-icon { font-size: 52px; }
+    .end-title { color: #fff; font-size: 20px; font-weight: 700; }
+    .end-sub   { color: rgba(255,255,255,0.65); font-size: 13px; text-align: center; max-width: 220px; line-height: 1.5; }
+    #restart-btn {
+      background: #e74c3c; color: #fff;
+      border: none; border-radius: 50px;
+      padding: 12px 36px; font-size: 15px; font-weight: 700;
+      cursor: pointer; font-family: inherit;
+      box-shadow: 0 4px 18px rgba(231,76,60,0.45);
+      transition: transform 0.15s, box-shadow 0.15s;
+      margin-top: 6px;
+    }
+    #restart-btn:hover { transform: scale(1.05); box-shadow: 0 6px 24px rgba(231,76,60,0.6); }
+
+    /* ΓöÇΓöÇ Settings panel ΓöÇΓöÇ */
+    #settings-panel {
+      display: none;
+      background: #fff8f0; border-bottom: 1px solid #fde8c8;
+      padding: 14px 18px; flex-shrink: 0;
+    }
+    #settings-panel.open { display: block; }
+    #settings-panel h4 { font-size: 13px; color: #c0392b; margin-bottom: 10px; }
+    .setting-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+    .setting-row label { font-size: 12px; color: #555; min-width: 80px; flex-shrink: 0; }
+    .setting-row input, .setting-row select {
+      flex: 1; border: 1.5px solid #e0e0e0; border-radius: 8px;
+      padding: 6px 10px; font-size: 12px; font-family: inherit; outline: none;
+    }
+    .setting-row input:focus, .setting-row select:focus { border-color: #e74c3c; }
+    #save-settings {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      color: #fff; border: none; border-radius: 8px;
+      padding: 7px 18px; font-size: 12px; cursor: pointer;
+      font-family: inherit; transition: opacity 0.2s;
+    }
+    #save-settings:hover { opacity: 0.88; }
+    .setting-hint {
+      font-size: 11px; color: #999; margin-top: 6px;
+    }
+    .setting-hint a { color: #e74c3c; text-decoration: none; }
+    #voice-indicator {
+      font-size: 11px; text-align: center; padding: 3px 0;
+      color: #888;
+    }
+    #voice-indicator.neural { color: #27ae60; font-weight: 600; }
+
+    /* ΓöÇΓöÇ Status bar ΓöÇΓöÇ */
+    #status-bar {
+      background: #fef9f0;
+      border-bottom: 1px solid #fde8c8;
+      padding: 7px 18px;
+      font-size: 12px;
+      color: #e67e22;
       text-align: center;
-      padding: 0.75rem 1rem;
-      background: rgba(37,99,235,0.04);
-      border: 1px solid rgba(37,99,235,0.12);
-      border-radius: 0.75rem;
-      line-height: 1.5;
+      flex-shrink: 0;
+      min-height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      gap: 6px;
+      transition: background 0.3s, color 0.3s;
+    }
+    #status-bar.listening { background: #f0f9ff; border-color: #b3e0ff; color: #0077cc; }
+    #status-bar.speaking  { background: #f0fff4; border-color: #b3f0c8; color: #1a8a4a; }
+
+    /* ΓöÇΓöÇ Messages ΓöÇΓöÇ */
+    .messages {
+      flex: 1; overflow-y: auto;
+      padding: 16px 18px;
+      display: flex; flex-direction: column;
+      gap: 14px;
+      background: #f8f9fa;
+    }
+    .messages::-webkit-scrollbar { width: 4px; }
+    .messages::-webkit-scrollbar-thumb { background: #ddd; border-radius: 4px; }
+
+    .msg { display: flex; align-items: flex-end; gap: 8px; max-width: 88%; }
+    .msg.bot  { align-self: flex-start; }
+    .msg.user { align-self: flex-end; flex-direction: row-reverse; }
+
+    .msg-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; flex-shrink: 0;
     }
 
-    .menu-preview {
-      margin-top: 1.5rem;
+    .bubble {
+      padding: 11px 15px; border-radius: 18px;
+      font-size: 14px; line-height: 1.55;
+      max-width: 100%; word-break: break-word;
     }
-    .menu-preview h3 {
-      font-size: 0.75rem;
-      font-weight: 600;
+    .msg.bot  .bubble { background: #fff; color: #222; border-bottom-left-radius: 4px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+    .msg.user .bubble { background: linear-gradient(135deg, #e74c3c, #c0392b); color: #fff; border-bottom-right-radius: 4px; }
+    .bubble strong { color: #c0392b; }
+    .msg.user .bubble strong { color: #ffe; }
+
+    /* ΓöÇΓöÇ Menu card ΓöÇΓöÇ */
+    .menu-card {
+      background: #fff;
+      border: 2px solid #e74c3c;
+      border-radius: 16px;
+      overflow: hidden;
+      font-size: 13px;
+      width: 260px;
+      box-shadow: 0 2px 10px rgba(231,76,60,0.12);
+    }
+    .menu-card-header {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      color: #fff;
+      padding: 11px 14px;
+      font-size: 15px;
+      font-weight: 800;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+    .menu-section-title {
+      background: #fdf2f2;
+      color: #c0392b;
+      font-weight: 700;
+      font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      margin-bottom: 0.75rem;
-    }
-    .menu-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.5rem;
+      letter-spacing: 1px;
+      padding: 6px 14px 4px;
+      border-top: 1px solid #f5e0e0;
     }
     .menu-item {
-      font-size: 0.78rem;
-      padding: 0.45rem 0.65rem;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 0.5rem;
-      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 14px;
+      border-bottom: 1px dashed #f5e0e0;
+      gap: 8px;
     }
-    .menu-item strong { color: var(--text); display: block; font-weight: 500; }
-
-    .footer-note {
-      margin-top: 1.5rem;
-      font-size: 0.7rem;
-      color: var(--muted);
+    .menu-item:last-of-type { border-bottom: none; }
+    .menu-item-name { color: #333; flex: 1; }
+    .menu-item-price { color: #e74c3c; font-weight: 700; flex-shrink: 0; white-space: nowrap; }
+    .menu-card-footer {
+      background: #fdf2f2;
+      padding: 7px 14px;
+      font-size: 11.5px;
+      color: #888;
       text-align: center;
-      line-height: 1.6;
+      border-top: 1px solid #f5e0e0;
     }
-    .footer-note a { color: var(--blue); text-decoration: none; }
-    .footer-note a:hover { text-decoration: underline; }
+
+    .summary-card {
+      background: #fff8f0; border: 1.5px solid #f39c12;
+      border-radius: 14px; padding: 14px 16px;
+      font-size: 13.5px; line-height: 1.7;
+    }
+    .summary-card h3 { color: #e67e22; margin-bottom: 8px; font-size: 14px; }
+    .summary-card .item { padding: 2px 0; border-bottom: 1px dashed #f0d9b0; display: flex; justify-content: space-between; align-items: center; }
+    .summary-card .item:last-of-type { border-bottom: none; }
+    .summary-card .price { color: #e67e22; font-weight: 600; font-size: 13px; flex-shrink: 0; margin-left: 8px; }
+    .summary-card .total-line { margin-top: 8px; padding-top: 8px; border-top: 2px solid #f39c12; display: flex; justify-content: space-between; font-weight: 700; font-size: 15px; color: #c0392b; }
+    .summary-card .special { margin-top: 8px; color: #888; font-size: 12.5px; }
+    .summary-card .thanks { margin-top: 10px; color: #27ae60; font-weight: 600; }
+
+    .typing-indicator { display: flex; gap: 4px; padding: 8px 12px; }
+    .typing-indicator span {
+      width: 7px; height: 7px; background: #ccc; border-radius: 50%;
+      animation: bounce 1.2s infinite;
+    }
+    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+
+    /* ΓöÇΓöÇ Quick replies ΓöÇΓöÇ */
+    .quick-replies {
+      display: flex; flex-wrap: wrap; gap: 7px;
+      padding: 8px 18px 4px;
+      background: #f8f9fa; flex-shrink: 0;
+    }
+    .quick-btn {
+      background: #fff; border: 1.5px solid #e74c3c; color: #e74c3c;
+      border-radius: 20px; padding: 6px 14px; font-size: 12.5px;
+      cursor: pointer; transition: all 0.2s; font-family: inherit;
+    }
+    .quick-btn:hover { background: #e74c3c; color: #fff; }
+
+    /* ΓöÇΓöÇ Input row ΓöÇΓöÇ */
+    .input-row {
+      display: flex; align-items: center;
+      padding: 12px 16px; gap: 10px;
+      background: #fff; border-top: 1px solid #eee; flex-shrink: 0;
+    }
+
+    #user-input {
+      flex: 1; border: 1.5px solid #e0e0e0; border-radius: 24px;
+      padding: 10px 18px; font-size: 14px; font-family: inherit;
+      outline: none; transition: border-color 0.2s; background: #fafafa;
+    }
+    #user-input:focus { border-color: #e74c3c; background: #fff; }
+    #user-input.interim { color: #999; font-style: italic; }
+
+    #send-btn {
+      width: 40px; height: 40px; flex-shrink: 0;
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      border: none; border-radius: 50%; color: #fff; font-size: 18px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: transform 0.15s;
+    }
+    #send-btn:hover { transform: scale(1.07); }
+
+    /* ΓöÇΓöÇ Mic button ΓöÇΓöÇ */
+    #mic-btn {
+      width: 48px; height: 48px; flex-shrink: 0;
+      border: none; border-radius: 50%;
+      background: linear-gradient(135deg, #2c3e50, #34495e);
+      color: #fff; font-size: 20px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; transition: transform 0.15s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    #mic-btn:hover { transform: scale(1.08); }
+    #mic-btn.listening {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+    }
+    #mic-btn.listening::before {
+      content: '';
+      position: absolute;
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      background: rgba(231,76,60,0.35);
+      animation: micRing 1s ease-out infinite;
+    }
+    @keyframes micRing {
+      0%   { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(1.8); opacity: 0; }
+    }
+
+    /* ΓöÇΓöÇ Waveform ΓöÇΓöÇ */
+    #waveform {
+      display: none;
+      align-items: center; gap: 3px;
+      height: 28px; padding: 0 2px;
+    }
+    #waveform.active { display: flex; }
+    #waveform .bar {
+      width: 3px; border-radius: 3px;
+      background: #e74c3c;
+      animation: wave 0.8s ease-in-out infinite;
+    }
+    #waveform .bar:nth-child(1) { height: 8px;  animation-delay: 0s;    }
+    #waveform .bar:nth-child(2) { height: 16px; animation-delay: 0.1s;  }
+    #waveform .bar:nth-child(3) { height: 24px; animation-delay: 0.2s;  }
+    #waveform .bar:nth-child(4) { height: 16px; animation-delay: 0.3s;  }
+    #waveform .bar:nth-child(5) { height: 10px; animation-delay: 0.15s; }
+    #waveform .bar:nth-child(6) { height: 20px; animation-delay: 0.25s; }
+    #waveform .bar:nth-child(7) { height: 8px;  animation-delay: 0.05s; }
+    @keyframes wave {
+      0%,100% { transform: scaleY(1); }
+      50%      { transform: scaleY(0.25); }
+    }
+
+    .powered {
+      text-align: center; font-size: 11px; color: #bbb;
+      padding: 5px 0 9px; background: #fff; flex-shrink: 0;
+    }
+    .powered span { color: #e74c3c; font-weight: 600; }
+    #no-speech-msg { display: none; color: #e74c3c; font-size: 11px; margin-top: 2px; }
+
+    /* ΓöÇΓöÇ Start screen overlay ΓöÇΓöÇ */
+    #start-screen {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, #c0392b 0%, #e74c3c 50%, #922b21 100%);
+      border-radius: 24px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 24px; z-index: 100;
+      transition: opacity 0.5s ease;
+    }
+    #start-screen.hidden { opacity: 0; pointer-events: none; }
+    .start-avatar {
+      width: 90px; height: 90px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 46px;
+      box-shadow: 0 0 0 12px rgba(255,255,255,0.1), 0 0 0 24px rgba(255,255,255,0.05);
+    }
+    .start-title { color: #fff; font-size: 22px; font-weight: 700; text-align: center; line-height: 1.3; }
+    .start-sub   { color: rgba(255,255,255,0.78); font-size: 13.5px; text-align: center; max-width: 230px; line-height: 1.5; }
+    #start-btn {
+      background: #fff; color: #c0392b;
+      border: none; border-radius: 50px;
+      padding: 14px 44px; font-size: 16px; font-weight: 700;
+      cursor: pointer; font-family: inherit;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+      transition: transform 0.15s, box-shadow 0.15s;
+      animation: startPulse 2s ease-in-out infinite;
+    }
+    #start-btn:hover { transform: scale(1.05); box-shadow: 0 10px 32px rgba(0,0,0,0.3); }
+    @keyframes startPulse {
+      0%,100% { box-shadow: 0 6px 24px rgba(0,0,0,0.25); }
+      50%      { box-shadow: 0 6px 24px rgba(0,0,0,0.25), 0 0 0 10px rgba(255,255,255,0.15); }
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="card-header">
-      <div class="card-header-icon">
-        <!-- mic icon -->
-        <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-      </div>
-      <div class="card-header-text">
-        <h2>Order Taker — Voice AI</h2>
-        <p>Restaurant demo · Powered by ElevenLabs &amp; GPT-4o</p>
-      </div>
+<div class="chat-container" style="position:relative">
+
+  <!-- Start screen ΓÇö satisfies browser autoplay requirement -->
+  <div id="start-screen">
+    <div class="start-avatar">≡ƒæ¿ΓÇì≡ƒì│</div>
+    <div class="start-title">Hey! I'm Alex<br>Your Voice Order Taker</div>
+    <div class="start-sub">Tap the button and I'll take your order ΓÇö just speak or type!</div>
+    <button id="start-btn">≡ƒÄñ Tap to Start</button>
+  </div>
+
+  <div class="chat-header">
+    <div class="avatar-wrap">
+      <div class="avatar" id="alex-avatar">≡ƒæ¿ΓÇì≡ƒì│</div>
     </div>
+    <div class="header-info">
+      <h2>Alex ΓÇö Voice Order Taker</h2>
+      <p><span class="status-dot"></span>Listening for your order</p>
+    </div>
+    <div class="voice-badge"><div class="voice-badge-dot"></div>Voice AI</div>
+    <button id="settings-btn" title="Settings">ΓÜÖ∩╕Å</button>
+    <button id="end-btn" title="End session">Γ£ò</button>
+  </div>
 
-    <div class="card-body">
-      <div class="status-row">
-        <div class="dot"></div>
-        <span class="status-text">Ready to take your order</span>
-      </div>
+  <!-- End screen overlay -->
+  <div id="end-screen">
+    <div class="end-icon">≡ƒæï</div>
+    <div class="end-title">Session Ended</div>
+    <div class="end-sub">Thanks for stopping by! Your conversation has been cleared.</div>
+    <button id="restart-btn">≡ƒÄñ Start New Session</button>
+  </div>
 
-      <!-- ElevenLabs Conversational AI widget -->
-      <!--
-        SETUP: Replace REPLACE_WITH_ELEVENLABS_AGENT_ID below with your
-        ElevenLabs Conversational AI agent ID.
-        Find it at: https://elevenlabs.io/app/conversational-ai → your agent → Agent ID
-      -->
-      <div id="widget-mount">
-        <elevenlabs-convai agent-id="REPLACE_WITH_ELEVENLABS_AGENT_ID"></elevenlabs-convai>
-      </div>
-
-      <p class="mic-note">
-        🎙️ Allow microphone access when prompted, then tap <strong>Start</strong> to speak with the AI ordering bot.
-        Try saying: <em>"I'd like a large Margherita pizza and two Cokes."</em>
-      </p>
-
-      <div class="menu-preview">
-        <h3>Sample Menu</h3>
-        <div class="menu-grid">
-          <div class="menu-item"><strong>Margherita Pizza</strong>£11 / £14</div>
-          <div class="menu-item"><strong>Pepperoni Pizza</strong>£12 / £15</div>
-          <div class="menu-item"><strong>Garlic Bread</strong>£4.50</div>
-          <div class="menu-item"><strong>Caesar Salad</strong>£7.50</div>
-          <div class="menu-item"><strong>Soft Drinks</strong>£2.50 each</div>
-          <div class="menu-item"><strong>Tiramisu</strong>£5.50</div>
-        </div>
-      </div>
-
-      <p class="footer-note">
-        This is a live demo agent. Orders placed here are not real.<br />
-        <a href="https://solutions.hostingocean.net/ai-chatbots" target="_blank">Build your own voice AI →</a>
-      </p>
+  <!-- Settings panel -->
+  <div id="settings-panel">
+    <h4>≡ƒÄñ Voice (ElevenLabs TTS)</h4>
+    <div class="setting-row">
+      <label>EL Key</label>
+      <input id="el-key-input" type="password" placeholder="ElevenLabs API keyΓÇª" />
+    </div>
+    <div class="setting-row">
+      <label>Voice</label>
+      <select id="el-voice-select">
+        <option value="pNInz6obpgDQGcFmaJgB">Adam ΓÇö Deep, Warm American Γ¡É</option>
+        <option value="TxGEqnHWrfWFTfGW9XjX">Josh ΓÇö Young, Casual American</option>
+        <option value="VR6AewLTigWG4xSOukaG">Arnold ΓÇö Confident American</option>
+        <option value="ErXwobaYiN019PkySvjV">Antoni ΓÇö Friendly American</option>
+      </select>
+    </div>
+    <h4 style="margin-top:12px">≡ƒºá AI Brain (LLM)</h4>
+    <div class="setting-row">
+      <label>AI Key</label>
+      <input id="llm-key-input" type="password" placeholder="Groq or OpenAI API keyΓÇª" />
+    </div>
+    <div class="setting-row">
+      <label>Endpoint</label>
+      <input id="llm-url-input" type="text" placeholder="https://api.groq.com/openai/v1/chat/completions" style="font-size:11px" />
+    </div>
+    <div class="setting-row">
+      <label>Model</label>
+      <input id="llm-model-input" type="text" placeholder="llama-3.1-8b-instant" />
+    </div>
+    <button id="save-settings">Save &amp; Apply</button>
+    <div class="setting-hint">
+      Free AI key at <a href="https://console.groq.com" target="_blank">console.groq.com</a> &nbsp;┬╖&nbsp;
+      ElevenLabs at <a href="https://elevenlabs.io" target="_blank">elevenlabs.io</a>
     </div>
   </div>
 
-  <!-- ElevenLabs Conversational AI widget script -->
-  <script src="https://unpkg.com/@11labs/convai-widget-embed" async type="text/javascript"></script>
+  <div id="voice-indicator">Using browser voice ΓÇö add ElevenLabs key ΓÜÖ∩╕Å for human-sounding voice</div>
+  <div id="status-bar">
+    <span id="status-text">≡ƒæï Alex is getting readyΓÇª</span>
+  </div>
+
+  <div class="messages" id="messages"></div>
+  <div class="quick-replies" id="quick-replies"></div>
+
+  <div class="input-row">
+    <div id="waveform">
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+    <input id="user-input" type="text" placeholder="≡ƒÄñ Click mic to speak, or type hereΓÇª" autocomplete="off" />
+    <button id="send-btn" title="Send">&#9658;</button>
+    <button id="mic-btn" title="Click to speak">≡ƒÄñ</button>
+  </div>
+
+  <div class="powered">
+    Powered by <span>Voice AI Order Taker</span> ΓÇö Demo
+    <div id="no-speech-msg">ΓÜá∩╕Å Use Chrome or Edge for full voice support</div>
+  </div>
+</div>
+
+<script>
+// ΓöÇΓöÇΓöÇ LLM CONFIGURATION ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+const LLM_DEFAULT_URL   = 'https://api.groq.com/openai/v1/chat/completions';
+const LLM_DEFAULT_MODEL = 'llama-3.1-8b-instant';
+const LLM_KEY_DEFAULT   = '';
+
+function getLLMKey()   { return localStorage.getItem('llm_key')   || LLM_KEY_DEFAULT; }
+function getLLMUrl()   { return localStorage.getItem('llm_url')   || LLM_DEFAULT_URL; }
+function getLLMModel() { return localStorage.getItem('llm_model') || LLM_DEFAULT_MODEL; }
+
+// ΓöÇΓöÇΓöÇ CONVERSATION HISTORY ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+let conversationHistory = [];
+
+const SYSTEM_PROMPT = `You are Alex, a warm, casual, upbeat American voice AI order taker at a restaurant. Keep every response SHORT ΓÇö 1 to 3 sentences maximum ΓÇö because your words will be spoken aloud.
+
+FULL MENU (prices in Pakistani Rupees):
+FOOD: Margherita Pizza Rs.850 | Grilled Burger Rs.650 | Pasta Carbonara Rs.750 | Caesar Salad Rs.550 | Garlic Bread Rs.350 | French Fries Rs.350 | Grilled Steak Rs.1,200 | Soup of the Day Rs.450 | Chicken Wings Rs.750 | Fish & Chips Rs.850
+DRINKS: Coke Rs.150 | Still Water Rs.100 | Orange Juice Rs.200 | Latte Rs.250 | Tea Rs.150 | Lemonade Rs.180 | Milkshake Rs.350
+
+YOUR JOB:
+1. Greet and take the food order ΓÇö confirm each item as added
+2. Ask if they want anything to drink
+3. Ask about any special requests (allergies, extras, preferences)
+4. Read back the full order with itemized prices and total
+5. Ask for payment: Cash on Delivery, Easypaisa (0300-1234567), or Credit Card
+6. Confirm the order is placed
+
+PERSONALITY: Use casual phrases like "You got it!", "Awesome!", "Sure thing!", "No worries!". Be genuinely friendly, not robotic.
+
+RULES:
+- Keep responses SHORT ΓÇö voice will read them out loud
+- If something is not on the menu, politely say so and suggest alternatives
+- Always use PKR for prices
+- Never break character as Alex
+
+QUICK REPLIES: After every response (except the final order confirmation), add this line with 3ΓÇô5 short button suggestions relevant to the current step:
+[QUICK:["Option A","Option B","Option C"]]
+
+FINAL ORDER: When the customer has chosen a payment method and confirmed the order is placed, append on a new line ΓÇö NOTHING after it:
+[ORDER_COMPLETE]{"food":["Item"],"drinks":["Item"],"special":"None","total":1000,"payment":"Cash on Delivery"}[/ORDER_COMPLETE]
+Do NOT include [QUICK:] on the same message as [ORDER_COMPLETE].`;
+
+// ΓöÇΓöÇΓöÇ AI RESPONSE ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+async function getAIResponse(userMessage) {
+  const llmKey = getLLMKey();
+  if (!llmKey) {
+    return "Hey! I need an AI brain to give real answers ΓÇö tap the ΓÜÖ∩╕Å gear icon and add a free Groq API key. Get one at console.groq.com in under a minute!\n[QUICK:[\"Open Settings ΓÜÖ∩╕Å\"]]";
+  }
+
+  conversationHistory.push({ role: 'user', content: userMessage });
+
+  try {
+    const resp = await fetch(getLLMUrl(), {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${llmKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: getLLMModel(),
+        messages: conversationHistory,
+        temperature: 0.75,
+        max_tokens: 300
+      })
+    });
+
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({}));
+      console.error('LLM API error:', err);
+      conversationHistory.pop(); // remove the user message we just added
+      return "Hmm, I had trouble connecting to my brain just now ΓÇö could you try again in a sec?";
+    }
+
+    const data = await resp.json();
+    const reply = data.choices[0].message.content;
+    conversationHistory.push({ role: 'assistant', content: reply });
+    return reply;
+  } catch (e) {
+    console.error('LLM fetch error:', e);
+    conversationHistory.pop();
+    return "Oops, network hiccup ΓÇö give that one more shot?";
+  }
+}
+
+// ΓöÇΓöÇΓöÇ PRICES (for summary card) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+const PRICES = {
+  'Margherita Pizza': 850, 'Grilled Burger': 650, 'Pasta Carbonara': 750,
+  'Caesar Salad': 550, 'Garlic Bread': 350, 'French Fries': 350,
+  'Grilled Steak': 1200, 'Soup of the Day': 450, 'Chicken Wings': 750,
+  'Fish & Chips': 850, 'Coke': 150, 'Still Water': 100,
+  'Orange Juice': 200, 'Latte': 250, 'Tea': 150, 'Lemonade': 180, 'Milkshake': 350
+};
+function itemPrice(name) {
+  for (const [k, v] of Object.entries(PRICES)) {
+    if (name.toLowerCase().includes(k.toLowerCase()) || k.toLowerCase().includes(name.toLowerCase())) return v;
+  }
+  return 500;
+}
+
+// ΓöÇΓöÇΓöÇ OLD STATE MACHINE (REMOVED) ΓÇö replaced by LLM
+// The QR object below is kept only as fallback initial hints
+const INITIAL_QR = ['Margherita Pizza ≡ƒìò','Grilled Burger ≡ƒìö','Caesar Salad ≡ƒÑù','Pasta Carbonara ≡ƒì¥','Garlic Bread ≡ƒÑû'];
+
+// ΓöÇΓöÇΓöÇ SPEECH SYNTHESIS (Alex speaks) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+let voices = [], alexVoice = null;
+
+function loadVoices() {
+  voices = speechSynthesis.getVoices();
+  // Prioritise natural American male voices
+  const prefer = [
+    'Microsoft Christopher Online','Microsoft Guy Online',
+    'Microsoft Eric Online','Microsoft Davis Online',
+    'Google US English','Microsoft David Desktop',
+    'Microsoft Mark','Microsoft Zira' // fallbacks
+  ];
+  for (const p of prefer) {
+    const v = voices.find(x => x.name.includes(p));
+    if (v) { alexVoice = v; break; }
+  }
+  // Final fallback: any en-US voice
+  if (!alexVoice) alexVoice = voices.find(v => v.lang === 'en-US') ||
+                               voices.find(v => v.lang.startsWith('en')) ||
+                               voices[0] || null;
+}
+
+if ('speechSynthesis' in window) {
+  speechSynthesis.onvoiceschanged = loadVoices;
+  loadVoices();
+}
+
+// ΓöÇ ElevenLabs neural TTS ΓöÇ
+const EL_API   = 'https://api.elevenlabs.io/v1/text-to-speech';
+const EL_KEY_DEFAULT   = 'sk_2a2f13379f1b44c316d33b10550f96f747bbbb6063b122cc';
+const EL_VOICE_DEFAULT = 'pNInz6obpgDQGcFmaJgB';
+let currentAudio = null;
+
+function getELKey()   { return localStorage.getItem('el_key')   || EL_KEY_DEFAULT; }
+function getELVoice() { return localStorage.getItem('el_voice') || EL_VOICE_DEFAULT; }
+
+function stripForSpeech(raw) {
+  return raw.replace(/<[^>]+>/g,'').replace(/[\u{1F300}-\u{1FFFF}]/gu,'').replace(/&amp;/g,'and').trim();
+}
+
+async function alexSpeak(rawText, onEnd) {
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+  speechSynthesis.cancel();
+
+  const clean = stripForSpeech(rawText);
+  const av    = document.getElementById('alex-avatar');
+  setStatus('speaking', '≡ƒöè Alex is speakingΓÇª');
+  av.classList.add('speaking');
+
+  const finish = () => {
+    av.classList.remove('speaking');
+    setStatus('idle', '≡ƒÄñ Click the mic button or type to respond');
+    onEnd && onEnd();
+  };
+
+  const elKey = getELKey();
+  if (elKey) {
+    // ΓöÇ Neural voice via ElevenLabs ΓöÇ
+    try {
+      const res = await fetch(`${EL_API}/${getELVoice()}`, {
+        method: 'POST',
+        headers: { 'xi-api-key': elKey, 'Content-Type': 'application/json', 'Accept': 'audio/mpeg' },
+        body: JSON.stringify({
+          text: clean,
+          model_id: 'eleven_turbo_v2_5',
+          voice_settings: { stability: 0.45, similarity_boost: 0.80, style: 0.30, use_speaker_boost: true }
+        })
+      });
+      if (res.ok) {
+        const blob  = await res.blob();
+        const url   = URL.createObjectURL(blob);
+        const audio = new Audio(url);
+        currentAudio = audio;
+        audio.onended = () => { URL.revokeObjectURL(url); currentAudio = null; finish(); };
+        audio.onerror = () => { URL.revokeObjectURL(url); currentAudio = null; finish(); };
+        audio.play();
+        return;
+      } else {
+        const err = await res.json().catch(() => ({}));
+        console.warn('ElevenLabs error:', err.detail || res.status);
+      }
+    } catch (e) { console.warn('ElevenLabs fetch failed, using browser TTS:', e.message); }
+  }
+
+  // ΓöÇ Fallback: browser TTS ΓöÇ
+  const utter = new SpeechSynthesisUtterance(clean);
+  utter.rate = 0.93; utter.pitch = 0.97; utter.volume = 1; utter.lang = 'en-US';
+  if (alexVoice) utter.voice = alexVoice;
+  utter.onend = finish; utter.onerror = finish;
+  speechSynthesis.speak(utter);
+}
+
+// ΓöÇΓöÇΓöÇ SPEECH RECOGNITION (customer speaks) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recog = null, isListening = false;
+let micStream = null; // held alive to avoid repeated permission popups
+
+// Request mic permission once ΓÇö browser won't re-prompt while stream is alive
+function primeMic() {
+  if (!SR || micStream) return;
+  navigator.mediaDevices.getUserMedia({ audio: true })
+    .then(stream => {
+      micStream = stream; // keep alive ΓÇö browser won't re-prompt while this stream is open
+    })
+    .catch(() => {
+      // Permission denied or unavailable ΓÇö mic button stays enabled,
+      // recognition.start() will surface the error if user tries it
+      console.warn('Mic pre-prime failed; will retry on first click.');
+    });
+}
+
+if (SR) {
+  recog = new SR();
+  recog.lang = 'en-US';
+  recog.interimResults = true;
+  recog.continuous = false;
+  recog.maxAlternatives = 1;
+
+  recog.onstart = () => {
+    isListening = true;
+    setStatus('listening','≡ƒÄÖ∩╕Å ListeningΓÇª speak now');
+    document.getElementById('mic-btn').classList.add('listening');
+    document.getElementById('mic-btn').textContent = 'ΓÅ╣';
+    document.getElementById('waveform').classList.add('active');
+    document.getElementById('user-input').style.display = 'none';
+    document.getElementById('send-btn').style.display = 'none';
+  };
+
+  recog.onresult = (e) => {
+    let interim = '', final = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      e.results[i].isFinal ? (final += e.results[i][0].transcript) : (interim += e.results[i][0].transcript);
+    }
+    const inp = document.getElementById('user-input');
+    if (interim) { inp.value = interim; inp.classList.add('interim'); }
+    if (final)   { inp.value = final;   inp.classList.remove('interim'); }
+  };
+
+  recog.onend = () => {
+    isListening = false;
+    document.getElementById('mic-btn').classList.remove('listening');
+    document.getElementById('mic-btn').textContent = '≡ƒÄñ';
+    document.getElementById('waveform').classList.remove('active');
+    document.getElementById('user-input').style.display = '';
+    document.getElementById('send-btn').style.display = '';
+    const val = document.getElementById('user-input').value.trim();
+    if (val) { document.getElementById('user-input').classList.remove('interim'); handleSend(val); }
+    else setStatus('idle','≡ƒÄñ Click the mic button or type to respond');
+  };
+
+  recog.onerror = (e) => {
+    isListening = false;
+    document.getElementById('mic-btn').classList.remove('listening');
+    document.getElementById('mic-btn').textContent = '≡ƒÄñ';
+    document.getElementById('waveform').classList.remove('active');
+    document.getElementById('user-input').style.display = '';
+    document.getElementById('send-btn').style.display = '';
+    setStatus('idle', e.error === 'not-allowed' ? 'ΓÜá∩╕Å Microphone blocked ΓÇö please allow mic access' : '≡ƒÄñ Click the mic button or type to respond');
+  };
+} else {
+  document.getElementById('no-speech-msg').style.display = 'block';
+}
+
+function toggleMic() {
+  if (!recog) return;
+  speechSynthesis.cancel();
+  if (isListening) recog.stop();
+  else { document.getElementById('user-input').value = ''; recog.start(); }
+}
+
+// ΓöÇΓöÇΓöÇ STATUS BAR ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+function setStatus(mode, text) {
+  const bar = document.getElementById('status-bar');
+  bar.className = mode === 'listening' ? 'listening' : mode === 'speaking' ? 'speaking' : '';
+  document.getElementById('status-text').textContent = text;
+}
+
+// ΓöÇΓöÇΓöÇ DOM ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+const messagesEl = document.getElementById('messages');
+const inputEl    = document.getElementById('user-input');
+const qrEl       = document.getElementById('quick-replies');
+
+function appendMessage(text, role) {
+  const msg = document.createElement('div');
+  msg.className = `msg ${role}`;
+
+  if (role === 'bot') {
+    const av = document.createElement('div');
+    av.className = 'msg-avatar'; av.textContent = '≡ƒæ¿ΓÇì≡ƒì│';
+    msg.appendChild(av);
+  }
+
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  bubble.innerHTML = text;
+  msg.appendChild(bubble);
+  messagesEl.appendChild(msg);
+  scrollToBottom();
+}
+
+// ΓöÇΓöÇΓöÇ MENU CARD ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+function renderMenuCard() {
+  const food = [
+    { name: '≡ƒìò Margherita Pizza', price: 'Rs. 850' },
+    { name: '≡ƒìö Grilled Burger',   price: 'Rs. 650' },
+    { name: '≡ƒì¥ Pasta Carbonara',  price: 'Rs. 750' },
+    { name: '≡ƒÑù Caesar Salad',     price: 'Rs. 550' },
+    { name: '≡ƒºä Garlic Bread',     price: 'Rs. 350' },
+    { name: '≡ƒìƒ French Fries',     price: 'Rs. 350' },
+    { name: '≡ƒÑ⌐ Grilled Steak',    price: 'Rs. 1,200' },
+    { name: '≡ƒì£ Soup of the Day',  price: 'Rs. 450' },
+    { name: '≡ƒìù Chicken Wings',    price: 'Rs. 750' },
+    { name: '≡ƒÉƒ Fish & Chips',     price: 'Rs. 850' },
+  ];
+  const drinks = [
+    { name: '≡ƒÑñ Coke',          price: 'Rs. 150' },
+    { name: '≡ƒÆº Still Water',   price: 'Rs. 100' },
+    { name: '≡ƒìè Orange Juice',  price: 'Rs. 200' },
+    { name: 'Γÿò Latte',         price: 'Rs. 250' },
+    { name: '≡ƒì╡ Tea',           price: 'Rs. 150' },
+    { name: '≡ƒìï Lemonade',      price: 'Rs. 180' },
+    { name: '≡ƒÑ¢ Milkshake',     price: 'Rs. 350' },
+  ];
+  const cardMsg = document.createElement('div');
+  cardMsg.className = 'msg bot';
+  const av = document.createElement('div');
+  av.className = 'msg-avatar'; av.textContent = '≡ƒæ¿\u200d≡ƒì│';
+  const card = document.createElement('div');
+  card.className = 'menu-card';
+  card.innerHTML = `
+    <div class="menu-card-header">≡ƒì╜∩╕Å Today's Menu</div>
+    <div class="menu-section-title">≡ƒÑÿ Food</div>
+    ${food.map(i => `<div class="menu-item"><span class="menu-item-name">${i.name}</span><span class="menu-item-price">${i.price}</span></div>`).join('')}
+    <div class="menu-section-title">≡ƒÑñ Drinks</div>
+    ${drinks.map(i => `<div class="menu-item"><span class="menu-item-name">${i.name}</span><span class="menu-item-price">${i.price}</span></div>`).join('')}
+    <div class="menu-card-footer">Just say or type what you'd like! ≡ƒÿè</div>
+  `;
+  cardMsg.appendChild(av);
+  cardMsg.appendChild(card);
+  messagesEl.appendChild(cardMsg);
+  scrollToBottom();
+}
+
+// ΓöÇΓöÇΓöÇ ORDER SUMMARY CARD ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+function showOrderSummary(data) {
+  const { food = [], drinks = [], special = 'None', total = 0, payment = '' } = data;
+  const cardMsg = document.createElement('div');
+  cardMsg.className = 'msg bot';
+  const cardAv = document.createElement('div');
+  cardAv.className = 'msg-avatar'; cardAv.textContent = '≡ƒæ¿ΓÇì≡ƒì│';
+  const card = document.createElement('div');
+  card.className = 'summary-card';
+  const calcTotal = total || [...food, ...drinks].reduce((s, n) => s + itemPrice(n), 0);
+  card.innerHTML = `
+    <h3>≡ƒº╛ Your Order Summary</h3>
+    ${food.map(f => `<div class="item"><span>≡ƒì╜∩╕Å ${f}</span><span class="price">Rs. ${itemPrice(f).toLocaleString()}</span></div>`).join('')}
+    ${drinks.length ? drinks.map(d => `<div class="item"><span>≡ƒÑñ ${d}</span><span class="price">Rs. ${itemPrice(d).toLocaleString()}</span></div>`).join('') : ''}
+    <div class="special">≡ƒô¥ Special: ${special || 'None'}</div>
+    <div class="total-line"><span>≡ƒÆ░ Total</span><span>Rs. ${calcTotal.toLocaleString()}</span></div>
+    <div class="thanks">Γ£à Order Confirmed!</div>`;
+  cardMsg.appendChild(cardAv); cardMsg.appendChild(card);
+  messagesEl.appendChild(cardMsg);
+  scrollToBottom();
+}
+
+function showTyping() {
+  const t = document.createElement('div');
+  t.className = 'msg bot'; t.id = 'typing';
+  const av = document.createElement('div'); av.className = 'msg-avatar'; av.textContent = '≡ƒæ¿ΓÇì≡ƒì│';
+  const b = document.createElement('div'); b.className = 'bubble';
+  b.innerHTML = '<div class="typing-indicator"><span></span><span></span><span></span></div>';
+  t.appendChild(av); t.appendChild(b);
+  messagesEl.appendChild(t);
+  scrollToBottom();
+}
+function removeTyping() { document.getElementById('typing')?.remove(); }
+function scrollToBottom() { messagesEl.scrollTop = messagesEl.scrollHeight; }
+
+function renderQuickReplies(replies) {
+  qrEl.innerHTML = '';
+  replies.forEach(r => {
+    const btn = document.createElement('button');
+    btn.className = 'quick-btn'; btn.textContent = r;
+    btn.onclick = () => handleSend(r);
+    qrEl.appendChild(btn);
+  });
+}
+
+// ΓöÇΓöÇΓöÇ SEND (AI-powered) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+async function handleSend(text) {
+  const msg = (text || inputEl.value).trim();
+  if (!msg) return;
+  inputEl.value = ''; inputEl.classList.remove('interim');
+  renderQuickReplies([]);
+  appendMessage(msg, 'user');
+  setStatus('idle', 'ΓÅ│ Alex is thinkingΓÇª');
+  showTyping();
+
+  const rawReply = await getAIResponse(msg);
+  removeTyping();
+
+  // Extract [QUICK:["a","b"]] suggestions
+  const qrMatch = rawReply.match(/\[QUICK:([\s\S]*?)\]/);
+  let quickReplies = [];
+  try { if (qrMatch) quickReplies = JSON.parse(qrMatch[1]); } catch(e) {}
+
+  // Extract [ORDER_COMPLETE]{...}[/ORDER_COMPLETE]
+  const orderMatch = rawReply.match(/\[ORDER_COMPLETE\]([\s\S]*?)\[\/ORDER_COMPLETE\]/);
+
+  // Clean display text ΓÇö strip all special tags
+  const cleanText = rawReply
+    .replace(/\[QUICK:[\s\S]*?\]/g, '')
+    .replace(/\[ORDER_COMPLETE\][\s\S]*?\[\/ORDER_COMPLETE\]/g, '')
+    .trim();
+
+  if (orderMatch) {
+    try {
+      const orderData = JSON.parse(orderMatch[1]);
+      if (cleanText) appendMessage(cleanText, 'bot');
+      alexSpeak(cleanText);
+      setTimeout(() => showOrderSummary(orderData), 1200);
+    } catch(e) {
+      appendMessage(cleanText, 'bot');
+      alexSpeak(cleanText, () => { if (quickReplies.length) renderQuickReplies(quickReplies); });
+    }
+  } else {
+    appendMessage(cleanText, 'bot');
+    alexSpeak(cleanText, () => { if (quickReplies.length) renderQuickReplies(quickReplies); });
+  }
+}
+
+// ΓöÇΓöÇΓöÇ EVENTS ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+document.getElementById('send-btn').addEventListener('click', () => handleSend());
+inputEl.addEventListener('keydown', e => { if (e.key === 'Enter') handleSend(); });
+document.getElementById('mic-btn').addEventListener('click', toggleMic);
+
+// ΓöÇ Settings panel ΓöÇ
+const settingsBtn   = document.getElementById('settings-btn');
+const settingsPanel = document.getElementById('settings-panel');
+const elKeyInput    = document.getElementById('el-key-input');
+const elVoiceSelect = document.getElementById('el-voice-select');
+const indicator     = document.getElementById('voice-indicator');
+
+function updateIndicator() {
+  const elKey  = getELKey();
+  const llmKey = getLLMKey();
+  const voiceName = elVoiceSelect.options[elVoiceSelect.selectedIndex]?.text.split(' ΓÇö')[0] || 'Neural';
+
+  const parts = [];
+  if (elKey)  parts.push(`Γ£à Voice: ${voiceName}`);
+  if (llmKey) parts.push(`≡ƒºá AI: Active`);
+
+  if (parts.length) {
+    indicator.textContent = parts.join('  ┬╖  ');
+    indicator.className = 'neural';
+  } else {
+    indicator.textContent = 'ΓÜÖ∩╕Å Add API keys in Settings for full AI experience';
+    indicator.className = '';
+  }
+}
+
+settingsBtn.addEventListener('click', () => {
+  settingsPanel.classList.toggle('open');
+  if (settingsPanel.classList.contains('open')) {
+    elKeyInput.value = localStorage.getItem('el_key') || EL_KEY_DEFAULT;
+    elVoiceSelect.value = getELVoice();
+    document.getElementById('llm-key-input').value   = getLLMKey();
+    document.getElementById('llm-url-input').value   = getLLMUrl();
+    document.getElementById('llm-model-input').value = getLLMModel();
+  }
+});
+
+document.getElementById('save-settings').addEventListener('click', () => {
+  const elKey    = elKeyInput.value.trim();
+  const voice    = elVoiceSelect.value;
+  const llmKey   = document.getElementById('llm-key-input').value.trim();
+  const llmUrl   = document.getElementById('llm-url-input').value.trim();
+  const llmModel = document.getElementById('llm-model-input').value.trim();
+
+  if (elKey)    localStorage.setItem('el_key',    elKey);    else localStorage.removeItem('el_key');
+  if (voice)    localStorage.setItem('el_voice',  voice);
+  if (llmKey)   localStorage.setItem('llm_key',   llmKey);   else localStorage.removeItem('llm_key');
+  if (llmUrl)   localStorage.setItem('llm_url',   llmUrl);   else localStorage.removeItem('llm_url');
+  if (llmModel) localStorage.setItem('llm_model', llmModel); else localStorage.removeItem('llm_model');
+
+  settingsPanel.classList.remove('open');
+  updateIndicator();
+});
+
+updateIndicator();
+
+// ΓöÇΓöÇΓöÇ INIT ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+function startDemo() {
+  const screen = document.getElementById('start-screen');
+  screen.classList.add('hidden');
+
+  primeMic();
+  setStatus('idle','≡ƒæï Alex is warming upΓÇª');
+
+  // Initialise conversation history ΓÇö seed with the greeting so LLM knows the context
+  const greetingText = "Hey, how's it going! I'm Alex, your order taker for today. Super glad you stopped by! So, what can I get started for ya? And no rush ΓÇö just tell me what sounds good!";
+  conversationHistory = [
+    { role: 'system',    content: SYSTEM_PROMPT },
+    { role: 'assistant', content: greetingText }
+  ];
+
+  setTimeout(() => {
+    const g1 = "Hey, how's it going! I'm <strong>Alex</strong>, your order taker for today ≡ƒÿè Super glad you stopped by ΓÇö so what can I get started for ya?";
+    const g2 = "Here's our menu ΓÇö take a look and just say what catches your eye! ≡ƒæç";
+    appendMessage(g1, 'bot');
+
+    alexSpeak("Hey, how's it going! I'm Alex, your order taker for today. Super glad you stopped by! So, what can I get started for ya?", () => {
+      setTimeout(() => {
+        appendMessage(g2, 'bot');
+        renderMenuCard();
+        alexSpeak("Here's our menu ΓÇö take a look and just let me know what sounds good!", () => {
+          renderQuickReplies(INITIAL_QR);
+          setStatus('idle','≡ƒÄñ Click the mic button or tap a suggestion below');
+        });
+      }, 400);
+    });
+  }, 400);
+}
+
+document.getElementById('start-btn').addEventListener('click', startDemo);
+
+// ΓöÇΓöÇΓöÇ END SESSION ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+function endSession() {
+  // Stop mic immediately
+  if (isListening && recog) recog.stop();
+
+  // Say bye, then return to start screen
+  alexSpeak('Bye! Hope to see you again soon!', () => {
+    // Reset conversation
+    conversationHistory = [];
+
+    // Clear UI
+    messagesEl.innerHTML = '';
+    qrEl.innerHTML = '';
+    inputEl.value = '';
+    inputEl.classList.remove('interim');
+    document.getElementById('alex-avatar').classList.remove('speaking');
+    document.getElementById('mic-btn').classList.remove('listening');
+    document.getElementById('mic-btn').textContent = '≡ƒÄñ';
+    document.getElementById('waveform').classList.remove('active');
+    document.getElementById('user-input').style.display = '';
+    document.getElementById('send-btn').style.display = '';
+
+    // Return to start screen
+    document.getElementById('start-screen').classList.remove('hidden');
+  });
+}
+
+document.getElementById('end-btn').addEventListener('click', endSession);
+</script>
 </body>
 </html>
