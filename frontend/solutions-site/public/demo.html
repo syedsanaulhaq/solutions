@@ -725,7 +725,7 @@ async function startMic() {
     micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
   } catch (err) {
     setStatus('idle', err.name === 'NotAllowedError'
-      ? '\u26a0\ufe0f Mic blocked \u2014 click the \ud83d\udd12 in your address bar and allow microphone'
+      ? '\u26a0\ufe0f Mic blocked \u2014 allow microphone in the \ud83d\udd12 address bar, then refresh'
       : '\u26a0\ufe0f Mic unavailable \u2014 type your order instead');
     return;
   }
