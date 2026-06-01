@@ -771,7 +771,15 @@ if (SR) {
     document.getElementById('waveform').classList.remove('active');
     document.getElementById('user-input').style.display = '';
     document.getElementById('send-btn').style.display = '';
-    setStatus('idle', e.error === 'not-allowed' ? '⚠️ Microphone blocked — please allow mic access' : '🎤 Click the mic button or type to respond');
+    if (e.error === 'not-allowed') {
+      // SpeechRecognition was denied — call getUserMedia to surface the browser
+      // permission popup (recog.start() alone doesn't show it inside iframes)
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(stream => { micStream = stream; setStatus('idle', '✅ Mic access granted — tap 🎤 again to speak!'); })
+        .catch(() => { setStatus('idle', '⚠️ Mic blocked — click the 🔒 in your address bar and allow microphone'); });
+    } else {
+      setStatus('idle', e.error === 'no-speech' ? '🎤 No speech detected — tap mic and try again' : '🎤 Click the mic button or type to respond');
+    }
   };
 } else {
   document.getElementById('no-speech-msg').style.display = 'block';
@@ -781,21 +789,10 @@ function toggleMic() {
   if (!recog) return;
   speechSynthesis.cancel();
   if (isListening) { recog.stop(); return; }
-
   document.getElementById('user-input').value = '';
-
-  // If we already have a live mic stream, start recognition directly.
-  // Otherwise call getUserMedia first — this is what triggers the browser
-  // permission popup inside an iframe (recog.start() alone doesn't).
-  if (micStream) {
-    recog.start();
-  } else {
-    navigator.mediaDevices.getUserMedia({ audio: true })
-      .then(stream => { micStream = stream; recog.start(); })
-      .catch(() => {
-        setStatus('idle', '⚠️ Mic blocked — click the 🔒 icon in your address bar and allow microphone');
-      });
-  }
+  // Try recognition directly — if mic is already granted it starts immediately.
+  // If denied, onerror fires and we call getUserMedia there to show the popup.
+  recog.start();
 }
 
 // ─── STATUS BAR ──────────────────────────────────
