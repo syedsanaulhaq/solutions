@@ -1012,8 +1012,7 @@ function endSession() {
   if (isListening) stopMic();
 
   // Stop all audio immediately
-  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
-  speechSynthesis.cancel();
+  stopAllAudio();
 
   // Reset conversation
   conversationHistory = [];
