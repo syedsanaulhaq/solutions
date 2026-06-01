@@ -451,6 +451,38 @@ export default function AiChatbotsPage() {
         </div>
       </Section>
 
+      {/* ── Live Demo ── */}
+      <Section
+        id="demo"
+        title="See It In Action"
+        subtitle="A live voice AI ordering bot built for a restaurant client. Tap Start and place your order by voice."
+      >
+        <div className="max-w-4xl mx-auto">
+          <div className="rounded-2xl border border-border/60 bg-background overflow-hidden shadow-lg">
+            <div className="bg-[#2563EB]/5 border-b border-[#2563EB]/20 px-6 py-3 flex items-center gap-3">
+              <div className="flex gap-1.5">
+                <div className="w-3 h-3 rounded-full bg-red-400" />
+                <div className="w-3 h-3 rounded-full bg-yellow-400" />
+                <div className="w-3 h-3 rounded-full bg-green-400" />
+              </div>
+              <span className="text-sm text-muted-foreground ml-2 font-medium">
+                Order Taker — Voice AI Demo
+              </span>
+            </div>
+            <iframe
+              src="/demo.html"
+              className="w-full"
+              style={{ height: '860px', border: 'none' }}
+              title="Voice AI Order Taker Demo"
+              allow="microphone"
+            />
+          </div>
+          <p className="text-center text-sm text-muted-foreground mt-4">
+            Powered by ElevenLabs neural voice · GPT-4o conversation engine · Works in Chrome &amp; Edge
+          </p>
+        </div>
+      </Section>
+
       {/* ── Integrations ── */}
       <Section id="integrations" variant="muted" title="Integrations" subtitle="We connect your chatbot to the tools your team already uses — from support desks to CRMs to content platforms.">
         <div className="space-y-5 max-w-4xl mx-auto">
