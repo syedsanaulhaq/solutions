@@ -646,10 +646,10 @@ const EL_API   = 'https://api.elevenlabs.io/v1/text-to-speech';
 const EL_KEY_DEFAULT   = 'sk_2a2f13379f1b44c316d33b10550f96f747bbbb6063b122cc';
 const EL_VOICE_DEFAULT = 'pNInz6obpgDQGcFmaJgB';
 let currentAudio = null;
-let ttsAbort = null;
+let ttsSession = 0;
 
 function stopAllAudio() {
-  if (ttsAbort) { ttsAbort.abort(); ttsAbort = null; }
+  ttsSession++;                                          // invalidate all pending alexSpeak calls
   if (currentAudio) { currentAudio.pause(); currentAudio = null; }
   speechSynthesis.cancel();
 }
@@ -663,6 +663,7 @@ function stripForSpeech(raw) {
 
 async function alexSpeak(rawText, onEnd) {
   stopAllAudio();
+  const mySession = ttsSession;                          // capture session at start
 
   const clean = stripForSpeech(rawText);
   const av    = document.getElementById('alex-avatar');
@@ -679,11 +680,8 @@ async function alexSpeak(rawText, onEnd) {
   if (elKey) {
     // ─ Neural voice via ElevenLabs ─
     try {
-      const abort = new AbortController();
-      ttsAbort = abort;
       const res = await fetch(`${EL_API}/${getELVoice()}`, {
         method: 'POST',
-        signal: abort.signal,
         headers: { 'xi-api-key': elKey, 'Content-Type': 'application/json', 'Accept': 'audio/mpeg' },
         body: JSON.stringify({
           text: clean,
@@ -691,9 +689,10 @@ async function alexSpeak(rawText, onEnd) {
           voice_settings: { stability: 0.45, similarity_boost: 0.80, style: 0.30, use_speaker_boost: true }
         })
       });
-      ttsAbort = null;
+      if (ttsSession !== mySession) return;              // closed during fetch
       if (res.ok) {
         const blob  = await res.blob();
+        if (ttsSession !== mySession) return;            // closed during blob download
         const url   = URL.createObjectURL(blob);
         const audio = new Audio(url);
         currentAudio = audio;
@@ -705,9 +704,10 @@ async function alexSpeak(rawText, onEnd) {
         const err = await res.json().catch(() => ({}));
         console.warn('ElevenLabs error:', err.detail || res.status);
       }
-    } catch (e) { if (e.name !== 'AbortError') console.warn('ElevenLabs fetch failed, using browser TTS:', e.message); else return; }
+    } catch (e) { console.warn('ElevenLabs fetch failed, using browser TTS:', e.message); }
   }
 
+  if (ttsSession !== mySession) return;                  // closed before fallback TTS
   // ─ Fallback: browser TTS ─
   const utter = new SpeechSynthesisUtterance(clean);
   utter.rate = 0.93; utter.pitch = 0.97; utter.volume = 1; utter.lang = 'en-US';
