@@ -1115,26 +1115,27 @@ function endSession() {
   // Stop mic immediately
   if (isListening) stopMic();
 
-  // Say bye, then return to start screen
-  alexSpeak('Bye! Hope to see you again soon!', () => {
-    // Reset conversation
-    conversationHistory = [];
+  // Stop all audio immediately
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+  speechSynthesis.cancel();
 
-    // Clear UI
-    messagesEl.innerHTML = '';
-    qrEl.innerHTML = '';
-    inputEl.value = '';
-    inputEl.classList.remove('interim');
-    document.getElementById('alex-avatar').classList.remove('speaking');
-    document.getElementById('mic-btn').classList.remove('listening');
-    document.getElementById('mic-btn').textContent = '🎤';
-    document.getElementById('waveform').classList.remove('active');
-    document.getElementById('user-input').style.display = '';
-    document.getElementById('send-btn').style.display = '';
+  // Reset conversation
+  conversationHistory = [];
 
-    // Return to start screen
-    document.getElementById('start-screen').classList.remove('hidden');
-  });
+  // Clear UI
+  messagesEl.innerHTML = '';
+  qrEl.innerHTML = '';
+  inputEl.value = '';
+  inputEl.classList.remove('interim');
+  document.getElementById('alex-avatar').classList.remove('speaking');
+  document.getElementById('mic-btn').classList.remove('listening');
+  document.getElementById('mic-btn').textContent = '🎤';
+  document.getElementById('waveform').classList.remove('active');
+  document.getElementById('user-input').style.display = '';
+  document.getElementById('send-btn').style.display = '';
+
+  // Return to start screen immediately
+  document.getElementById('start-screen').classList.remove('hidden');
 }
 
 document.getElementById('end-btn').addEventListener('click', endSession);
