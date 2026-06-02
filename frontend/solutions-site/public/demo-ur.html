@@ -604,10 +604,24 @@ async function alexSpeak(rawText, onEnd) {
     onEnd && onEnd();
   };
 
-  // ─ Groq TTS (primary — Arabic model reads Urdu/Arabic script) ─
+  // ─ Helper: play audio blob safely ─
+  function playBlob(blob, onDone) {
+    const url   = URL.createObjectURL(blob);
+    const audio = new Audio(url);
+    currentAudio = audio;
+    audio.onended = () => { URL.revokeObjectURL(url); currentAudio = null; onDone(); };
+    audio.onerror = () => { URL.revokeObjectURL(url); currentAudio = null; onDone(); };
+    audio.play().catch(e => {
+      console.warn('audio.play() rejected:', e.message);
+      URL.revokeObjectURL(url); currentAudio = null; onDone();
+    });
+  }
+
+  // ─ Groq TTS primary (Arabic model — also handles Urdu script) ─
   const groqKey = getLLMKey();
   if (groqKey) {
     try {
+      console.log('[TTS] Trying Groq playai-tts-arabic…');
       const res = await fetch('https://api.groq.com/openai/v1/audio/speech', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${groqKey}`, 'Content-Type': 'application/json' },
@@ -620,27 +634,28 @@ async function alexSpeak(rawText, onEnd) {
       });
       if (ttsSession !== mySession) return;
       if (res.ok) {
-        const blob  = await res.blob();
+        const blob = await res.blob();
         if (ttsSession !== mySession) return;
-        const url   = URL.createObjectURL(blob);
-        const audio = new Audio(url);
-        currentAudio = audio;
-        audio.onended = () => { URL.revokeObjectURL(url); currentAudio = null; finish(); };
-        audio.onerror = () => { URL.revokeObjectURL(url); currentAudio = null; finish(); };
-        audio.play();
-        return;
+        if (blob.size > 200) {
+          console.log('[TTS] Groq OK, blob', blob.size, 'bytes');
+          playBlob(blob, finish);
+          return;
+        }
+        console.warn('[TTS] Groq returned tiny blob:', blob.size, '— skipping');
       } else {
         const err = await res.json().catch(() => ({}));
-        console.warn('Groq TTS error:', err);
+        console.warn('[TTS] Groq error', res.status, err);
       }
-    } catch (e) { console.warn('Groq TTS failed:', e.message); }
+    } catch (e) { console.warn('[TTS] Groq fetch failed:', e.message); }
   }
 
   if (ttsSession !== mySession) return;
+
   // ─ ElevenLabs (secondary) ─
   const elKey = getELKey();
   if (elKey) {
     try {
+      console.log('[TTS] Trying ElevenLabs…');
       const res = await fetch(`${EL_API}/${getELVoice()}`, {
         method: 'POST',
         headers: { 'xi-api-key': elKey, 'Content-Type': 'application/json', 'Accept': 'audio/mpeg' },
@@ -652,28 +667,39 @@ async function alexSpeak(rawText, onEnd) {
       });
       if (ttsSession !== mySession) return;
       if (res.ok) {
-        const blob  = await res.blob();
+        const blob = await res.blob();
         if (ttsSession !== mySession) return;
-        const url   = URL.createObjectURL(blob);
-        const audio = new Audio(url);
-        currentAudio = audio;
-        audio.onended = () => { URL.revokeObjectURL(url); currentAudio = null; finish(); };
-        audio.onerror = () => { URL.revokeObjectURL(url); currentAudio = null; finish(); };
-        audio.play();
+        console.log('[TTS] ElevenLabs OK, blob', blob.size, 'bytes');
+        playBlob(blob, finish);
         return;
       } else {
         const err = await res.json().catch(() => ({}));
-        console.warn('ElevenLabs error:', err.detail || res.status);
+        console.warn('[TTS] ElevenLabs error:', err.detail || res.status);
       }
-    } catch (e) { console.warn('ElevenLabs failed:', e.message); }
+    } catch (e) { console.warn('[TTS] ElevenLabs failed:', e.message); }
   }
 
   if (ttsSession !== mySession) return;
-  // ─ Fallback: browser TTS (Urdu) ─
+
+  // ─ Fallback: browser speech synthesis ─
+  // Prefer Urdu voice; if none available, use any voice (silent beats nothing)
+  console.log('[TTS] Using browser TTS, available voices:', voices.length);
+  const urVoice = voices.find(v => v.lang === 'ur-PK') ||
+                  voices.find(v => v.lang === 'ur-IN') ||
+                  voices.find(v => v.lang.startsWith('ur'));
+  console.log('[TTS] Urdu voice:', urVoice ? urVoice.name : 'none, using default');
   const utter = new SpeechSynthesisUtterance(clean);
-  utter.rate = 0.90; utter.pitch = 1.05; utter.volume = 1; utter.lang = 'ur-PK';
-  if (aishaVoice && (aishaVoice.lang === 'ur-PK' || aishaVoice.lang.startsWith('ur'))) utter.voice = aishaVoice;
-  utter.onend = finish; utter.onerror = finish;
+  utter.rate = 0.90; utter.pitch = 1.05; utter.volume = 1;
+  if (urVoice) {
+    utter.voice = urVoice;
+    utter.lang  = urVoice.lang;
+  } else if (aishaVoice) {
+    // No Urdu voice — use any available voice without lang restriction
+    utter.voice = aishaVoice;
+  }
+  // If neither, browser will use its default voice — still produces audio
+  utter.onend  = finish;
+  utter.onerror = (e) => { console.warn('[TTS] speechSynthesis error:', e.error); finish(); };
   speechSynthesis.speak(utter);
 }
 
