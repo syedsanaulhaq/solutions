@@ -604,6 +604,40 @@ async function alexSpeak(rawText, onEnd) {
     onEnd && onEnd();
   };
 
+  // ─ Groq TTS (primary — Arabic model reads Urdu/Arabic script) ─
+  const groqKey = getLLMKey();
+  if (groqKey) {
+    try {
+      const res = await fetch('https://api.groq.com/openai/v1/audio/speech', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${groqKey}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'playai-tts-arabic',
+          input: clean,
+          voice: 'Noor-PlayAI',
+          response_format: 'mp3'
+        })
+      });
+      if (ttsSession !== mySession) return;
+      if (res.ok) {
+        const blob  = await res.blob();
+        if (ttsSession !== mySession) return;
+        const url   = URL.createObjectURL(blob);
+        const audio = new Audio(url);
+        currentAudio = audio;
+        audio.onended = () => { URL.revokeObjectURL(url); currentAudio = null; finish(); };
+        audio.onerror = () => { URL.revokeObjectURL(url); currentAudio = null; finish(); };
+        audio.play();
+        return;
+      } else {
+        const err = await res.json().catch(() => ({}));
+        console.warn('Groq TTS error:', err);
+      }
+    } catch (e) { console.warn('Groq TTS failed:', e.message); }
+  }
+
+  if (ttsSession !== mySession) return;
+  // ─ ElevenLabs (secondary) ─
   const elKey = getELKey();
   if (elKey) {
     try {
@@ -631,7 +665,7 @@ async function alexSpeak(rawText, onEnd) {
         const err = await res.json().catch(() => ({}));
         console.warn('ElevenLabs error:', err.detail || res.status);
       }
-    } catch (e) { console.warn('ElevenLabs fetch failed, using browser TTS:', e.message); }
+    } catch (e) { console.warn('ElevenLabs failed:', e.message); }
   }
 
   if (ttsSession !== mySession) return;
