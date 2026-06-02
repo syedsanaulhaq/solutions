@@ -353,7 +353,7 @@
   <!-- Start screen overlay -->
   <div id="start-screen">
     <div class="start-icon">🧕</div>
-    <div class="start-title">Hey! Assalam o Alaikum!<br>میں عائشہ ہوں 😊</div>
+    <div class="start-title">السلام علیکم!<br>میں عائشہ ہوں</div>
     <div class="start-sub">آواز AI آرڈر سروس۔<br>بٹن دبائیں اور آرڈر دیں!</div>
     <button id="start-btn">🎤 شروع کریں</button>
   </div>
@@ -550,7 +550,7 @@ function itemPrice(name) {
   return 200;
 }
 
-const INITIAL_QR = ['Chicken Biryani 🍛', 'Mutton Nihari 🍲', 'Chicken Karahi 🍳', 'Kabab Platter 🍢', 'Menu dekho 📋'];
+const INITIAL_QR = ['چکن بریانی 🍛', 'مٹن نہاری 🍲', 'چکن کڑاہی 🍳', 'کباب پلیٹر 🍢', 'مینو دیکھیں 📋'];
 
 // ─── SPEECH SYNTHESIS fallback (Urdu) ────────────
 let voices = [], aishaVoice = null;
@@ -1103,21 +1103,21 @@ function startDemo() {
   primeMic();
   setStatus('idle', '👋 عائشہ تیار ہو رہی ہے…');
 
-  const greetingText = 'Assalam o Alaikum! میں عائشہ ہوں۔ Welcome to our restaurant! Aaj kya lena chahenge?';
+  const greetingText = 'السلام علیکم! میں عائشہ ہوں۔ آج کی آرڈر سروس میں آپ کا استقبال ہے! آپ کا آرڈر کیا ہوگا؟';
   conversationHistory = [
     { role: 'system',    content: SYSTEM_PROMPT },
     { role: 'assistant', content: greetingText }
   ];
 
   setTimeout(() => {
-    const g1 = 'Assalam o Alaikum! میں <strong>عائشہ</strong> ہوں 😊 Welcome! Aaj kya lena chahenge?';
-    const g2 = 'Ye raha hamara menu — jo bhi pasand aaye, bata dein! 👇';
+    const g1 = 'السلام علیکم! میں <strong>عائشہ</strong> ہوں 😊 آج آپ کا خیر مقدم ہے! آپ کا آرڈر کیا ہوگا؟';
+    const g2 = 'آج کا مینو پیش ہے۔ جو پسند ہو بتائیں! 👇';
     appendMessage(g1, 'bot');
-    alexSpeak('Assalam o Alaikum! میں عائشہ ہوں۔ Welcome! Aaj kya lena chahenge?', () => {
+    alexSpeak('السلام علیکم! میں عائشہ ہوں۔ آج آپ کا خیر مقدم ہے! آپ کا آرڈر کیا ہوگا؟', () => {
       setTimeout(() => {
         appendMessage(g2, 'bot');
         renderMenuCard();
-        alexSpeak('Ye raha hamara menu — jo bhi pasand aaye bata dein!', () => {
+        alexSpeak('آج کا مینو پیش ہے۔ جو پسند ہو بتائیں!', () => {
           renderQuickReplies(INITIAL_QR);
           setStatus('idle', '🎤 مائیک دبائیں یا آپشن چنیں');
         });
