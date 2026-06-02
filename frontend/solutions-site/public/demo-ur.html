@@ -612,7 +612,7 @@ async function alexSpeak(rawText, onEnd) {
         headers: { 'xi-api-key': elKey, 'Content-Type': 'application/json', 'Accept': 'audio/mpeg' },
         body: JSON.stringify({
           text: clean,
-          model_id: 'eleven_turbo_v2_5',
+          model_id: 'eleven_multilingual_v2',
           voice_settings: { stability: 0.50, similarity_boost: 0.80, style: 0.25, use_speaker_boost: true }
         })
       });
@@ -638,7 +638,7 @@ async function alexSpeak(rawText, onEnd) {
   // ─ Fallback: browser TTS (Urdu) ─
   const utter = new SpeechSynthesisUtterance(clean);
   utter.rate = 0.90; utter.pitch = 1.05; utter.volume = 1; utter.lang = 'ur-PK';
-  if (aishaVoice) utter.voice = aishaVoice;
+  if (aishaVoice && (aishaVoice.lang === 'ur-PK' || aishaVoice.lang.startsWith('ur'))) utter.voice = aishaVoice;
   utter.onend = finish; utter.onerror = finish;
   speechSynthesis.speak(utter);
 }
