@@ -617,7 +617,28 @@ async function alexSpeak(rawText, onEnd) {
     });
   }
 
-  // ─ Groq TTS primary (Arabic model — also handles Urdu script) ─
+  // ─ PRIMARY: server-side Google TTS proxy (proper Urdu voice) ─
+  try {
+    console.log('[TTS] Trying /api/tts-ur proxy…');
+    const res = await fetch('/api/tts-ur?' + new URLSearchParams({ q: clean.substring(0, 200) }));
+    if (ttsSession !== mySession) return;
+    if (res.ok) {
+      const blob = await res.blob();
+      if (ttsSession !== mySession) return;
+      if (blob.size > 200) {
+        console.log('[TTS] Server TTS OK, blob', blob.size, 'bytes');
+        playBlob(blob, finish);
+        return;
+      }
+      console.warn('[TTS] Server TTS tiny blob:', blob.size);
+    } else {
+      console.warn('[TTS] Server TTS error:', res.status);
+    }
+  } catch (e) { console.warn('[TTS] Server TTS failed:', e.message); }
+
+  if (ttsSession !== mySession) return;
+
+  // ─ Groq TTS fallback (Arabic model — may handle Urdu script) ─
   const groqKey = getLLMKey();
   if (groqKey) {
     try {
