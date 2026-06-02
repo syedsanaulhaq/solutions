@@ -19,10 +19,18 @@ const LANGS = [
     title: 'Voice AI Order Taker Demo — Japanese',
     barLabel: 'ハナ — 音声注文受付 (日本語)',
   },
+  {
+    code: 'ur',
+    label: 'اردو',
+    flag: '🇵🇰',
+    src: '/demo-ur.html',
+    title: 'Voice AI Order Taker Demo — Urdu',
+    barLabel: 'عائشہ — آواز آرڈر سروس (اردو)',
+  },
 ] as const;
 
 export function DemoLangSwitcher() {
-  const [active, setActive] = useState<'en' | 'ja'>('en');
+  const [active, setActive] = useState<'en' | 'ja' | 'ur'>('en');
   const lang = LANGS.find((l) => l.code === active)!;
 
   return (

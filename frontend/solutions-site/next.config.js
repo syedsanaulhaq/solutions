@@ -10,7 +10,7 @@ const nextConfig = {
     return [
       {
         // Allow demo pages to be embedded in an iframe on the same origin
-        source: '/demo:path((?:-ja)?).html',
+        source: '/demo:path((?:-ja|-ur)?).html',
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
@@ -18,7 +18,7 @@ const nextConfig = {
         ],
       },
       {
-        source: '/((?!demo(?:-ja)?\.html$).*)',
+        source: '/((?!demo(?:-ja|-ur)?\.html$).*)' ,
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'X-Frame-Options', value: 'DENY' },
