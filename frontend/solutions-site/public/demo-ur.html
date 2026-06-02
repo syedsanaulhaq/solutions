@@ -353,7 +353,7 @@
   <!-- Start screen overlay -->
   <div id="start-screen">
     <div class="start-icon">🧕</div>
-    <div class="start-title">السلام علیکم!<br>میں عائشہ ہوں</div>
+    <div class="start-title">Hey! Assalam o Alaikum!<br>میں عائشہ ہوں 😊</div>
     <div class="start-sub">آواز AI آرڈر سروس۔<br>بٹن دبائیں اور آرڈر دیں!</div>
     <button id="start-btn">🎤 شروع کریں</button>
   </div>
@@ -456,35 +456,41 @@ function getLLMModel() { return localStorage.getItem('llm_model') || LLM_DEFAULT
 // ─── CONVERSATION HISTORY ─────────────────────────
 let conversationHistory = [];
 
-const SYSTEM_PROMPT = `آپ عائشہ ہیں، ایک پاکستانی ریستوران کی خوش اخلاق اور مددگار آواز AI آرڈر لینے والی ہیں۔ آپ اردو میں گاہکوں کے آرڈر لیتی ہیں۔ جوابات ہمیشہ مختصر رکھیں — 1 سے 3 جملے۔ یہ آواز میں پڑھا جائے گا۔
+const SYSTEM_PROMPT = `آپ عائشہ ہیں — ایک cool اور friendly پاکستانی restaurant کی voice AI order لینے والی ہیں۔ آپ casual Pakistani Urdu میں بات کرتی ہیں جس میں English words naturally mix ہوتے ہیں، جیسے real Pakistanis بولتے ہیں۔ جوابات short رکھیں — 1 سے 3 sentences۔ یہ voice میں پڑھا جائے گا۔
 
-مینو (قیمتیں روپوں میں):
-کھانے: چکن بریانی Rs.350 | مٹن نہاری Rs.450 | چکن کڑاہی Rs.400 | مٹن کباب 6 پیس Rs.300 | دال مکھنی Rs.200 | چکن تکہ 4 پیس Rs.350 | مکس سبزی Rs.180 | آلو گوشت Rs.300 | فرائیڈ رائس Rs.250 | رائتہ Rs.80
-روٹی: نان Rs.30 | تندوری روٹی Rs.25 | لچھا پراٹھا Rs.40
-مشروبات: لسی Rs.80 | چائے Rs.60 | کولڈ ڈرنک Rs.70 | منگو لسی Rs.100 | پانی Rs.30 | جوس Rs.120
+مینو (prices روپوں میں):
+کھانے: Chicken Biryani Rs.350 | Mutton Nihari Rs.450 | Chicken Karahi Rs.400 | Mutton Kabab 6 pcs Rs.300 | Daal Makhni Rs.200 | Chicken Tikka 4 pcs Rs.350 | Mix Sabzi Rs.180 | Aloo Gosht Rs.300 | Fried Rice Rs.250 | Raita Rs.80
+روٹی: Naan Rs.30 | Tandoori Roti Rs.25 | Laccha Paratha Rs.40
+Drinks: Lassi Rs.80 | Chai Rs.60 | Cold Drink Rs.70 | Mango Lassi Rs.100 | Water Rs.30 | Juice Rs.120
 
 آپ کا کام:
-1. گاہک کو سلام کریں اور آرڈر پوچھیں
-2. مشروبات کے بارے میں پوچھیں
-3. کوئی خاص فرمائش یا الرجی پوچھیں
-4. پورے آرڈر کا خلاصہ اور کل رقم بتائیں
-5. ادائیگی کا طریقہ پوچھیں: نقد، کارڈ، JazzCash، Easypaisa
-6. آرڈر کی تصدیق کریں
+1. Customer کو greet کریں اور order پوچھیں
+2. Drinks کے بارے میں پوچھیں
+3. کوئی special request یا allergy پوچھیں
+4. پورے order کا summary اور total amount بتائیں
+5. Payment method پوچھیں: Cash، Card، JazzCash، Easypaisa
+6. Order confirm کریں
 
-بات کرنے کا انداز: "جی بالکل!" "شکریہ!" "ضرور!" "ٹھیک ہے!" جیسے مہذب اور گرم جوش الفاظ استعمال کریں۔ فرینڈلی لیکن پیشہ ورانہ انداز رکھیں۔
+بات کرنے کا انداز: Casual اور fun رکھیں۔ Phrases جیسے "Haan bilkul!", "Sure!", "Okay done!", "Acha ji!", "No problem!", "Awesome choice!", "Theek hai!" استعمال کریں۔ Urdu اور English naturally mix کریں جیسے پاکستانی young لوگ بولتے ہیں۔
 
-اصول:
-- جوابات مختصر رکھیں کیونکہ آواز میں پڑھے جائیں گے
-- مینو سے باہر کی چیزیں نہ دیں، بلکہ متبادل بتائیں
-- قیمتیں Rs. میں دکھائیں
-- عائشہ کا کردار برقرار رکھیں
+مثالیں:
+- "Haan ji, Chicken Biryani ek plate — great choice یار!"
+- "Koi drinks لیں گے? Mango Lassi try کریں، بہت ہٹ ہے!"
+- "Okay so آپ کا total Rs.430 بنتا ہے — Cash یا JazzCash?"
+- "Perfect! Order confirm ہو گیا، thank you so much!"
 
-کوئک ریپلائز: ہر جواب کے بعد (آخری آرڈر تصدیق کے علاوہ) یہ لائن شامل کریں۔ 3 سے 5 مختصر آپشن:
-[QUICK:["آپشن A","آپشن B","آپشن C"]]
+Rules:
+- Voice میں پڑھا جائے گا، اس لیے short رکھیں
+- مینو سے باہر کی چیزیں نہ دیں، متبادل suggest کریں
+- Prices Rs. میں بتائیں
+- عائشہ کا fun اور friendly character رکھیں
 
-آخری آرڈر: جب ادائیگی کا طریقہ لے کر آرڈر مکمل ہو تو یہ لائن شامل کریں:
-[ORDER_COMPLETE]{"food":["آئٹم"],"drinks":["آئٹم"],"special":"نہیں","total":1000,"payment":"نقد"}[/ORDER_COMPLETE]
-[ORDER_COMPLETE] والے پیغام میں [QUICK:] شامل نہ کریں۔`;
+Quick Replies: ہر جواب کے بعد (آخری order confirmation کے علاوہ) یہ line شامل کریں۔ 3 سے 5 short options:
+[QUICK:["Option A","Option B","Option C"]]
+
+Final Order: جب payment method لے کر order مکمل ہو تو یہ line شامل کریں:
+[ORDER_COMPLETE]{"food":["item"],"drinks":["item"],"special":"none","total":1000,"payment":"Cash"}[/ORDER_COMPLETE]
+[ORDER_COMPLETE] والے message میں [QUICK:] شامل نہ کریں۔`;
 
 // ─── AI RESPONSE ─────────────────────────────────
 async function getAIResponse(userMessage) {
@@ -544,7 +550,7 @@ function itemPrice(name) {
   return 200;
 }
 
-const INITIAL_QR = ['چکن بریانی 🍛', 'مٹن نہاری 🍲', 'چکن کڑاہی 🍳', 'کباب پلیٹر 🍢', 'مینو دیکھیں 📋'];
+const INITIAL_QR = ['Chicken Biryani 🍛', 'Mutton Nihari 🍲', 'Chicken Karahi 🍳', 'Kabab Platter 🍢', 'Menu dekho 📋'];
 
 // ─── SPEECH SYNTHESIS fallback (Urdu) ────────────
 let voices = [], aishaVoice = null;
@@ -1097,21 +1103,21 @@ function startDemo() {
   primeMic();
   setStatus('idle', '👋 عائشہ تیار ہو رہی ہے…');
 
-  const greetingText = 'السلام علیکم! میں عائشہ ہوں۔ آج کی آرڈر سروس میں آپ کا استقبال ہے! آپ کا آرڈر کیا ہوگا؟';
+  const greetingText = 'Assalam o Alaikum! میں عائشہ ہوں۔ Welcome to our restaurant! Aaj kya lena chahenge?';
   conversationHistory = [
     { role: 'system',    content: SYSTEM_PROMPT },
     { role: 'assistant', content: greetingText }
   ];
 
   setTimeout(() => {
-    const g1 = 'السلام علیکم! میں <strong>عائشہ</strong> ہوں 😊 آج آپ کا خیر مقدم ہے! آپ کا آرڈر کیا ہوگا؟';
-    const g2 = 'آج کا مینو پیش ہے۔ جو پسند ہو بتائیں! 👇';
+    const g1 = 'Assalam o Alaikum! میں <strong>عائشہ</strong> ہوں 😊 Welcome! Aaj kya lena chahenge?';
+    const g2 = 'Ye raha hamara menu — jo bhi pasand aaye, bata dein! 👇';
     appendMessage(g1, 'bot');
-    alexSpeak('السلام علیکم! میں عائشہ ہوں۔ آج آپ کا خیر مقدم ہے! آپ کا آرڈر کیا ہوگا؟', () => {
+    alexSpeak('Assalam o Alaikum! میں عائشہ ہوں۔ Welcome! Aaj kya lena chahenge?', () => {
       setTimeout(() => {
         appendMessage(g2, 'bot');
         renderMenuCard();
-        alexSpeak('آج کا مینو پیش ہے۔ جو پسند ہو بتائیں!', () => {
+        alexSpeak('Ye raha hamara menu — jo bhi pasand aaye bata dein!', () => {
           renderQuickReplies(INITIAL_QR);
           setStatus('idle', '🎤 مائیک دبائیں یا آپشن چنیں');
         });
