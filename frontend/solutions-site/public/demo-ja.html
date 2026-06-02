@@ -590,6 +590,7 @@ async function alexSpeak(rawText, onEnd) {
     onEnd && onEnd();
   };
 
+  // ─ ElevenLabs (primary when quota available; Groq has no Japanese TTS model) ─
   const elKey = getELKey();
   if (elKey) {
     try {
