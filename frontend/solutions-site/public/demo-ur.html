@@ -1017,14 +1017,14 @@ async function handleSend(text) {
   const rawReply = await getAIResponse(msg);
   removeTyping();
 
-  const qrMatch = rawReply.match(/\[QUICK:([\s\S]*?)\]/);
+  const qrMatch = rawReply.match(/\[QUICK:(\[[\s\S]*?\])\]?/);
   let quickReplies = [];
   try { if (qrMatch) quickReplies = JSON.parse(qrMatch[1]); } catch(e) {}
 
   const orderMatch = rawReply.match(/\[ORDER_COMPLETE\]([\s\S]*?)\[\/ORDER_COMPLETE\]/);
 
   const cleanText = rawReply
-    .replace(/\[QUICK:[\s\S]*?\]\]/g, '')
+    .replace(/\[QUICK:[\s\S]*?\]\]?/g, '')
     .replace(/\[ORDER_COMPLETE\][\s\S]*?\[\/ORDER_COMPLETE\]/g, '')
     .trim();
 
