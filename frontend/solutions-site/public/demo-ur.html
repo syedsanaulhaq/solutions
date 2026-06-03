@@ -1021,7 +1021,7 @@ async function handleSend(text) {
   const orderMatch = rawReply.match(/\[ORDER_COMPLETE\]([\s\S]*?)\[\/ORDER_COMPLETE\]/);
 
   const cleanText = rawReply
-    .replace(/\[QUICK:[\s\S]*?\]/g, '')
+    .replace(/\[QUICK:[\s\S]*?\]\]/g, '')
     .replace(/\[ORDER_COMPLETE\][\s\S]*?\[\/ORDER_COMPLETE\]/g, '')
     .trim();
 
