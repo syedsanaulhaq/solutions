@@ -30,6 +30,7 @@ export function PricingTables({ type, plans }: PricingTablesProps) {
             description={plan.description}
             specs={plan.specs}
             popular={plan.popular}
+            whmcsId={plan.whmcsId}
           />
         ))}
       </div>

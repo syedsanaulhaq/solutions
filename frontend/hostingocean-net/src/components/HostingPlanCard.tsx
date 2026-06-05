@@ -11,7 +11,10 @@ interface HostingPlanCardProps {
   features: string[];
   popular?: boolean;
   billingCycle?: string;
+  whmcsId?: number;
 }
+
+const WHMCS_URL = 'https://whmcs.hostingocean.net';
 
 export function HostingPlanCard({
   name,
@@ -21,6 +24,7 @@ export function HostingPlanCard({
   features,
   popular = false,
   billingCycle = 'month',
+  whmcsId,
 }: HostingPlanCardProps) {
   return (
     <div
@@ -62,17 +66,19 @@ export function HostingPlanCard({
         ))}
       </ul>
 
-      <button
-        onClick={() => window.dispatchEvent(new Event('open-register-modal'))}
+      <a
+        href={whmcsId ? `${WHMCS_URL}/cart.php?a=add&pid=${whmcsId}` : `${WHMCS_URL}/cart.php`}
+        target="_blank"
+        rel="noopener noreferrer"
         className={cn(
-          'w-full text-center py-2.5 rounded-lg text-sm font-semibold transition-colors',
+          'w-full text-center py-2.5 rounded-lg text-sm font-semibold transition-colors block',
           popular
             ? 'bg-[#15803D] text-white hover:bg-[#166534]'
             : 'border border-[#15803D] text-[#15803D] hover:bg-[#15803D] hover:text-white'
         )}
       >
-        Get Started
-      </button>
+        Order Now
+      </a>
     </div>
   );
 }

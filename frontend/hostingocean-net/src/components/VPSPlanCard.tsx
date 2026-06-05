@@ -20,7 +20,10 @@ interface VPSPlanCardProps {
   specs: VPSSpecs;
   features?: string[];
   popular?: boolean;
+  whmcsId?: number;
 }
+
+const WHMCS_URL = 'https://whmcs.hostingocean.net';
 
 const specIcons: Partial<Record<keyof VPSSpecs, React.ReactNode>> = {
   cpu: <Cpu className="h-3.5 w-3.5" />,
@@ -34,7 +37,7 @@ const specIcons: Partial<Record<keyof VPSSpecs, React.ReactNode>> = {
 // Specs keys that are shown with icons — rest goes to features list
 const MAIN_SPEC_KEYS: (keyof VPSSpecs)[] = ['cpu', 'ram', 'storage', 'bandwidth'];
 
-export function VPSPlanCard({ name, pricePKR, priceGBP, description, specs, features = [], popular = false }: VPSPlanCardProps) {
+export function VPSPlanCard({ name, pricePKR, priceGBP, description, specs, features = [], popular = false, whmcsId }: VPSPlanCardProps) {
   // Features not already captured in the main specs (avoid duplication)
   const mainSpecValues = MAIN_SPEC_KEYS.map((k) => specs[k]).filter(Boolean);
   const extraFeatures = features.filter(
@@ -106,17 +109,19 @@ export function VPSPlanCard({ name, pricePKR, priceGBP, description, specs, feat
         </ul>
       )}
 
-      <button
-        onClick={() => window.dispatchEvent(new Event('open-register-modal'))}
+      <a
+        href={whmcsId ? `${WHMCS_URL}/cart.php?a=add&pid=${whmcsId}` : `${WHMCS_URL}/cart.php`}
+        target="_blank"
+        rel="noopener noreferrer"
         className={cn(
-          'mt-auto w-full text-center py-2.5 rounded-lg text-sm font-semibold transition-colors',
+          'mt-auto w-full text-center py-2.5 rounded-lg text-sm font-semibold transition-colors block',
           popular
             ? 'bg-[#15803D] text-white hover:bg-[#166534]'
             : 'border border-[#15803D] text-[#15803D] hover:bg-[#15803D] hover:text-white'
         )}
       >
         Order Now
-      </button>
+      </a>
     </div>
   );
 }
