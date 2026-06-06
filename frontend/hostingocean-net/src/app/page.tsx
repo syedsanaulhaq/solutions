@@ -4,6 +4,7 @@ import { FeaturesSection } from '@/sections/FeaturesSection';
 import { TestimonialsSection } from '@/sections/TestimonialsSection';
 import { CTASection } from '@/components/CTASection';
 import { FAQSection } from '@/components/FAQSection';
+import { SolutionsPromoPopup } from '@/components/SolutionsPromoPopup';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -48,6 +49,7 @@ const homeFaqs = [
 export default function HomePage() {
   return (
     <>
+      <SolutionsPromoPopup />
       <HeroSection />
       <PlansSection />
       <FeaturesSection />
