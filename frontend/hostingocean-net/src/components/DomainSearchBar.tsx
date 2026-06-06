@@ -3,6 +3,8 @@
 import { useState, useRef } from 'react';
 import { Search } from 'lucide-react';
 
+const WHMCS_URL = 'https://whmcs.hostingocean.net';
+
 export function DomainSearchBar() {
   const [domain, setDomain] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -11,7 +13,11 @@ export function DomainSearchBar() {
     e.preventDefault();
     const q = domain.trim();
     if (!q) return;
-    window.location.href = `/contact?domain=${encodeURIComponent(q)}`;
+    window.open(
+      `${WHMCS_URL}/cart.php?a=add&domain=register&query=${encodeURIComponent(q)}`,
+      '_blank',
+      'noopener,noreferrer'
+    );
   };
 
   return (
@@ -35,7 +41,7 @@ export function DomainSearchBar() {
         </button>
       </div>
       <p className="text-xs text-muted-foreground text-center mt-2">
-        Enter a domain name (e.g. mybusiness.pk) and we&rsquo;ll check availability for you
+        Enter a domain name (e.g. mybusiness.pk) and we&rsquo;ll check its availability
       </p>
     </form>
   );
