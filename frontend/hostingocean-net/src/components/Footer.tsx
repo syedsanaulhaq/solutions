@@ -20,11 +20,15 @@ const support = [
   { label: 'Open a Ticket', href: '/contact', external: false },
   { label: 'Privacy Policy', href: '/privacy-policy', external: false },
   { label: 'Terms of Service', href: '/terms-of-service', external: false },
+  { label: 'Refund & Return Policy', href: '/refund-return-policy', external: false },
+  { label: 'Order Cancellation Policy', href: '/order-cancellation-policy', external: false },
 ];
 
 const legal = [
   { label: 'Privacy Policy', href: '/privacy-policy' },
   { label: 'Terms of Service', href: '/terms-of-service' },
+  { label: 'Refund & Returns', href: '/refund-return-policy' },
+  { label: 'Order Cancellation', href: '/order-cancellation-policy' },
 ];
 
 export function Footer() {
@@ -51,7 +55,7 @@ export function Footer() {
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
               <Phone className="h-4 w-4 shrink-0" />
-              <a href="tel:+923399141680" className="hover:text-foreground transition-colors">+92 339 914 1680</a>
+              <a href="tel:+923339141680" className="hover:text-foreground transition-colors">+92 333 9141680</a>
             </div>
             <div className="flex items-center gap-3 mt-2">
               <a href="https://twitter.com/hostingocean" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="text-muted-foreground hover:text-foreground transition-colors">
