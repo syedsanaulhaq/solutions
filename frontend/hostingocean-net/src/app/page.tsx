@@ -1,67 +1,65 @@
 import { HeroSection } from '@/sections/HeroSection';
-import { PlansSection } from '@/sections/PlansSection';
 import { FeaturesSection } from '@/sections/FeaturesSection';
+import { WhyChooseSection } from '@/sections/WhyChooseSection';
 import { TestimonialsSection } from '@/sections/TestimonialsSection';
 import { CTASection } from '@/components/CTASection';
 import { FAQSection } from '@/components/FAQSection';
-import { SolutionsPromoPopup } from '@/components/SolutionsPromoPopup';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'HostingOcean.net — Pakistan Web Hosting, VPS & Domains',
+  title: 'HostingOcean — Reliable Hosting & Custom Web Systems for Businesses',
   description:
-    'Pakistan\'s most trusted web hosting from Rs. 999/month. Free SSL, daily backups, cPanel, and 24/7 Pakistan support. VPS, dedicated servers and .pk domain registration also available.',
+    'Secure web hosting, professional web portals, and custom development solutions for businesses in Pakistan and beyond. Fast setup, responsive support, built for long-term growth.',
 };
 
 const homeFaqs = [
   {
-    question: 'Where are your servers located?',
+    question: 'What kind of businesses do you work with?',
     answer:
-      'Our servers are hosted in high-availability data centres with low-latency routing optimised for Pakistani ISPs. This ensures fast loading times for visitors across Karachi, Lahore, Islamabad and all of Pakistan.',
+      'We work with businesses of all sizes — from startups to established organisations. Our clients include eCommerce stores, NGOs, service businesses, and companies that need custom internal portals or web systems.',
   },
   {
-    question: 'Do I get a free domain with hosting?',
+    question: 'What is the difference between web hosting and a web portal?',
     answer:
-      'Yes — all our web hosting plans include a free .pk or .com.pk domain name for the first year. Choose from .pk, .com.pk, .net.pk, .org.pk and more.',
+      'Web hosting is the infrastructure that keeps your website online. A web portal is a custom-built platform — such as a client portal, staff dashboard, or booking system — tailored to how your business operates.',
   },
   {
-    question: 'Can I upgrade my plan later?',
+    question: 'How does custom development work?',
     answer:
-      'Absolutely. You can upgrade to any higher plan at any time. We apply a pro-rata adjustment, so you only pay the difference for the remaining billing period.',
+      'We start with a free consultation to understand your requirements. From there we scope the project, agree on a timeline and cost, then build and deploy your solution with ongoing support included.',
   },
   {
-    question: 'Do you offer a money-back guarantee?',
+    question: 'Do you offer support after the project is delivered?',
     answer:
-      'Yes — we offer a 30-day money-back guarantee on all shared web hosting plans. If you\'re not satisfied, contact us within 30 days for a full refund.',
+      'Yes. We provide long-term technical support for everything we build. You will have a direct point of contact, not a generic support ticket queue.',
   },
   {
-    question: 'Is your support available in Urdu?',
+    question: 'How do I get started?',
     answer:
-      'Yes! Our support team can assist you in both English and Urdu. Reach us via ticket, live chat, email or WhatsApp — 24/7.',
+      'Simply book a free call or send us a message via the contact page. We will get back to you within one business day to discuss your requirements.',
   },
   {
-    question: 'Can I host a WordPress website?',
+    question: 'Do you serve businesses outside Pakistan?',
     answer:
-      'Yes — all our hosting plans include a 1-click WordPress installer via Softaculous. WordPress sites run beautifully on our SSD-powered hosting infrastructure.',
+      'Yes — while we are based in Pakistan, we work with clients globally. Our infrastructure and development services are not limited by geography.',
   },
 ];
 
 export default function HomePage() {
   return (
     <>
-      <SolutionsPromoPopup />
       <HeroSection />
-      <PlansSection />
       <FeaturesSection />
+      <WhyChooseSection />
       <TestimonialsSection />
       <FAQSection items={homeFaqs} />
       <CTASection
         dark
-        heading="Ready to launch your Pakistani business online?"
-        subheading="Join thousands of Pakistani businesses who trust HostingOcean.net for fast, reliable hosting."
-        primaryLabel="Get Started Today"
-        primaryHref="/web-hosting"
-        secondaryLabel="Contact Us"
+        heading="Have a project in mind?"
+        subheading="Let's talk about the right hosting or development solution for your business."
+        primaryLabel="Book a Free Call"
+        primaryHref="/contact"
+        secondaryLabel="Get a Custom Quote"
         secondaryHref="/contact"
       />
     </>

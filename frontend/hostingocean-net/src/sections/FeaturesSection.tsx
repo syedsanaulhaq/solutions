@@ -1,61 +1,26 @@
-import { FeatureGrid } from '@/components/FeatureGrid';
-import {
-  Shield,
-  Zap,
-  Headphones,
-  RefreshCcw,
-  Globe,
-  Lock,
-  Server,
-  BarChart3,
-  Wrench,
-} from 'lucide-react';
+import { ArrowRight, Server, Layout, Code2 } from 'lucide-react';
 
-const features = [
-  {
-    icon: Zap,
-    title: 'Lightning-Fast NVMe Storage',
-    description: 'NVMe SSD drives deliver up to 10× faster read/write speeds — keep your Pakistani visitors happy.',
-  },
-  {
-    icon: Shield,
-    title: 'Free SSL on Every Plan',
-    description: "Let's Encrypt SSL certificates auto-renewed — every site secured by default at no extra cost.",
-  },
-  {
-    icon: Headphones,
-    title: '24/7 Pakistan Support',
-    description: 'Reach our expert team any time via ticket, live chat or WhatsApp — we speak your language.',
-  },
-  {
-    icon: RefreshCcw,
-    title: 'Daily Automated Backups',
-    description: 'We back up your data every day with 30-day retention. Restore with one click when needed.',
-  },
-  {
-    icon: Globe,
-    title: 'Pakistan-Optimised Network',
-    description: 'Low-latency routing optimised for Pakistani ISPs — fast loading for your local audience.',
-  },
-  {
-    icon: Lock,
-    title: 'DDoS Protection',
-    description: 'Enterprise-grade DDoS mitigation included on all plans at no extra cost — always on.',
-  },
+const services = [
   {
     icon: Server,
-    title: '99.9% Uptime SLA',
-    description: 'We guarantee 99.9% uptime. If we miss it, you get credit — automatically applied.',
+    title: 'Web Hosting',
+    description:
+      'Reliable hosting solutions for business websites that need stability, speed, and support. Free SSL, daily backups, and expert help whenever you need it.',
+    href: '/web-hosting',
   },
   {
-    icon: BarChart3,
-    title: 'cPanel Control Panel',
-    description: 'Industry-leading cPanel makes managing your hosting intuitive and powerful. No learning curve.',
+    icon: Layout,
+    title: 'Web Portals',
+    description:
+      'Professional web portals for organisations, teams, and businesses that want better digital access and workflow. We build portals that actually get used.',
+    href: '/contact',
   },
   {
-    icon: Wrench,
-    title: 'Free Website Migration',
-    description: 'Moving from another host? Our team migrates your site for free with zero downtime.',
+    icon: Code2,
+    title: 'Custom Development',
+    description:
+      'Tailored web systems and applications built around your business needs, processes, and goals — not generic templates. We build for the long term.',
+    href: '/contact',
   },
 ];
 
@@ -65,13 +30,34 @@ export function FeaturesSection() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4">
-            Everything You Need to Succeed Online
+            What We Do
           </h2>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-            Built for Pakistani businesses — from startups in Karachi to enterprises in Islamabad.
+            Custom solutions, not one-size-fits-all. We work with your business to deliver
+            what you actually need.
           </p>
         </div>
-        <FeatureGrid features={features} columns={3} />
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {services.map(({ icon: Icon, title, description, href }) => (
+            <div
+              key={title}
+              className="group relative bg-background border border-border rounded-2xl p-8 hover:border-[#15803D]/50 hover:shadow-lg hover:shadow-[#15803D]/5 transition-all duration-200"
+            >
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[#15803D]/10 text-[#15803D] mb-6">
+                <Icon className="h-6 w-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">{title}</h3>
+              <p className="text-muted-foreground leading-relaxed mb-6">{description}</p>
+              <a
+                href={href}
+                className="inline-flex items-center gap-1 text-sm font-semibold text-[#15803D] hover:gap-2 transition-all"
+              >
+                Learn more <ArrowRight className="h-4 w-4" />
+              </a>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
