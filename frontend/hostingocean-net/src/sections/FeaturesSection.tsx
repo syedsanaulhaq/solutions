@@ -23,7 +23,7 @@ const services = [
       'Employee & staff portals',
       'Booking & support portals',
     ],
-    href: 'https://solutions.hostingocean.net/services',
+    href: 'https://solutions.hostingocean.net/services/web-portals',
     external: true,
   },
   {
