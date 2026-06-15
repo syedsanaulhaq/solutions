@@ -11,7 +11,7 @@ const serviceLinks = [
   { label: 'Node.js APIs', href: '/node-api-development' },
   { label: 'Automation & Integrations', href: '/automation' },
   { label: 'All Services', href: '/services' },
-  { label: 'Web Hosting ↗', href: 'https://www.hostingocean.co.uk', external: true },
+  { label: 'Web Hosting ↗', href: 'https://www.hostingocean.net', external: true },
 ];
 
 const companyLinks = [

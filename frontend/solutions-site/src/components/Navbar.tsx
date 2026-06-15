@@ -14,7 +14,7 @@ const serviceLinks = [
   { label: 'AI Chatbots', href: '/ai-chatbots' },
   { label: 'Automation', href: '/automation' },
   { label: 'Web Portals', href: '/services/web-portals' },
-  { label: 'Web Hosting ↗', href: 'https://www.hostingocean.co.uk' },
+  { label: 'Web Hosting ↗', href: 'https://www.hostingocean.net' },
 ];
 
 export function Navbar() {
@@ -111,7 +111,7 @@ export function Navbar() {
             </div>
 
             <a
-              href="https://www.hostingocean.co.uk"
+              href="https://www.hostingocean.net"
               target="_blank"
               rel="noopener noreferrer"
               className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-accent"
