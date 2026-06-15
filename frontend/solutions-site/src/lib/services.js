@@ -154,6 +154,32 @@ const services = [
     group: 'Learning',
   },
   {
+    slug: 'web-portals',
+    name: 'Web Portal Development',
+    tagline: 'Secure, login-based systems built for your clients, staff, or students.',
+    icon: '🔐',
+    highlights: [
+      'Client & customer portals',
+      'School & student portals',
+      'Employee & staff portals',
+      'Booking & support portals',
+    ],
+    description:
+      'We design and build login-based web portals that give your clients, staff, students, or customers a dedicated, secure digital space. Whether you need a client portal for a service business, a school system for educators and students, or an employee intranet — we build it around your exact workflow and brand.',
+    features: [
+      'Client portals — invoices, shared files, project status, messaging',
+      'School & student portals — courses, schedules, grades, notices',
+      'Employee & staff portals — HR forms, payslips, shift management',
+      'Booking portals — appointment scheduling, payments, reminders',
+      'Customer portals — order tracking, support tickets, account management',
+      'Role-based access — different views for admins, staff, and end users',
+      'Secure authentication — email/password, Google SSO, magic links',
+      'Admin dashboard to manage users, content, and activity',
+      'Mobile-responsive — works on all devices without an app',
+    ],
+    group: 'Web Development',
+  },
+  {
     slug: 'ai-solutions',
     name: 'AI Solutions',
     tagline: 'Add intelligence to your products — without building the infrastructure.',
