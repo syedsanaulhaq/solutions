@@ -125,7 +125,7 @@ export function Footer() {
             &copy; 2026 HostingOcean Solutions. All rights reserved.
           </p>
           <p className="text-xs text-slate-700">
-            solutions.hostingocean.co.uk &middot; Built with Next.js 14 &amp; TypeScript
+            solutions.hostingocean.net &middot; Built with Next.js 14 &amp; TypeScript
           </p>
         </div>
       </div>

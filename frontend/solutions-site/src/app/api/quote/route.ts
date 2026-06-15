@@ -184,7 +184,7 @@ async function sendAutoReply(name: string, email: string, service: string): Prom
     from: `"HostingOcean Solutions" <${SMTP_USER}>`,
     to: email,
     subject: 'We received your enquiry — HostingOcean Solutions',
-    text: `Hi ${name},\n\nThank you for getting in touch! We have received your enquiry about ${service} and will get back to you within one business day.\n\nBest regards,\nThe HostingOcean Solutions Team\nhttps://solutions.hostingocean.co.uk`,
+    text: `Hi ${name},\n\nThank you for getting in touch! We have received your enquiry about ${service} and will get back to you within one business day.\n\nBest regards,\nThe HostingOcean Solutions Team\nhttps://solutions.hostingocean.net`,
     html,
   });
 }

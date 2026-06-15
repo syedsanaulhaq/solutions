@@ -9,7 +9,7 @@ ABOUT US:
 - We build custom digital solutions for businesses of all sizes
 - Based in Pakistan
 - Contact: info@hostingocean.net
-- Website: solutions.hostingocean.co.uk
+- Website: solutions.hostingocean.net
 
 OUR SERVICES:
 1. LMS Development — Custom Learning Management Systems (Moodle-based or fully bespoke), for corporate training, e-learning businesses, and educational institutions
