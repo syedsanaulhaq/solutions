@@ -13,6 +13,7 @@ const serviceLinks = [
   { label: 'Node.js APIs', href: '/node-api-development' },
   { label: 'AI Chatbots', href: '/ai-chatbots' },
   { label: 'Automation', href: '/automation' },
+  { label: 'Web Portals', href: '/services/web-portals' },
   { label: 'Web Hosting ↗', href: 'https://www.hostingocean.co.uk' },
 ];
 
