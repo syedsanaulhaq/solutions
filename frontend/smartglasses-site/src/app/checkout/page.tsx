@@ -189,6 +189,10 @@ export default function CheckoutPage() {
                     <dt className="text-muted-foreground">IBAN</dt>
                     <dd className="break-all font-medium">{bankTransfer.iban}</dd>
                   </div>
+                  <div className="flex justify-between gap-4">
+                    <dt className="text-muted-foreground">SWIFT</dt>
+                    <dd className="font-medium">{bankTransfer.swift}</dd>
+                  </div>
                   <p className="pt-2 text-xs text-muted-foreground">
                     After transfer, send the payment screenshot on WhatsApp to confirm your order.
                   </p>

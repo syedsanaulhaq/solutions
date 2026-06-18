@@ -44,10 +44,11 @@ export const demoVideo = {
  * (or change `qrImage` below). Leave `qrImage` as '' to hide the QR.
  */
 export const bankTransfer = {
-  bankName: 'Meezan Bank',          // TODO: replace with your bank
-  accountTitle: 'SmartGlasses',     // TODO: replace with account title
-  accountNumber: '0000-0000000000', // TODO: replace with account number
-  iban: 'PK00MEZN0000000000000000', // TODO: replace with IBAN
+  bankName: 'Meezan Bank',
+  accountTitle: 'Hosting Ocean',
+  accountNumber: '08020103613868',
+  iban: 'PK32MEZN0008020103613868',
+  swift: 'MEZNPKKA',
   qrImage: '/payment-qr.png',       // drop your QR here; '' hides it
 } as const;
 
