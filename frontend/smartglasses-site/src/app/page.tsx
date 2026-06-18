@@ -63,9 +63,9 @@ const faqs = [
 ];
 
 const heroShots = [
-  '/products/extra-2.jpg',
-  '/products/2_photo-1577744486770-020ab432da65.jpg',
-  '/products/7_photo-1604176354204-9268737828e4.jpg',
+  '/products/glass-02.svg',
+  '/products/glass-06.svg',
+  '/products/glass-10.svg',
 ];
 
 export default function HomePage() {

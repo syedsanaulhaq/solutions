@@ -1,0 +1,30 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+  <defs>
+    <linearGradient id="bg08" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="hsl(206 42% 14%)" />
+      <stop offset="100%" stop-color="hsl(206 48% 8%)" />
+    </linearGradient>
+    <linearGradient id="lens08" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.55" />
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.8" />
+    </linearGradient>
+    <filter id="shadow08" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#000" flood-opacity="0.5" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="900" fill="url(#bg08)" />
+  <circle cx="140" cy="120" r="180" fill="#22d3ee" opacity="0.08" />
+  <circle cx="1080" cy="780" r="240" fill="#60a5fa" opacity="0.09" />
+
+  <g transform="translate(600 460) rotate(-4)" filter="url(#shadow08)">
+    <rect x="-350" y="-130" rx="85" ry="85" width="300" height="220" fill="url(#lens08)" stroke="#dbeafe" stroke-opacity="0.8" stroke-width="16"/>
+    <rect x="50" y="-130" rx="85" ry="85" width="300" height="220" fill="url(#lens08)" stroke="#dbeafe" stroke-opacity="0.8" stroke-width="16"/>
+    <rect x="-86" y="-24" width="172" height="26" rx="12" fill="#cbd5e1" />
+    <path d="M -364 -30 Q -430 -12 -468 45" stroke="#cbd5e1" stroke-width="14" fill="none" stroke-linecap="round"/>
+    <path d="M 364 -30 Q 430 -12 468 45" stroke="#cbd5e1" stroke-width="14" fill="none" stroke-linecap="round"/>
+    <rect x="-24" y="-56" width="48" height="18" rx="8" fill="#94a3b8" />
+  </g>
+
+  <text x="70" y="840" fill="#e2e8f0" fill-opacity="0.75" font-size="36" font-family="Segoe UI, Arial, sans-serif">SmartGlasses Studio • Model 08</text>
+</svg>

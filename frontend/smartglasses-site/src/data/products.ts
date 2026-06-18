@@ -16,8 +16,7 @@ export type Product = {
 
 /**
  * PLACEHOLDER CATALOG — edit prices, names and features to match real stock.
- * To use real photos later: add images to /public/products/<slug>.jpg and
- * swap the emoji block in ProductCard / product page for a Next <Image>.
+ * Product visuals are mapped in productImageBySlug below.
  */
 export const products: Product[] = [
   // ─── Smart Glasses ──────────────────────────────────────────────
@@ -371,28 +370,28 @@ export const products: Product[] = [
 ];
 
 const productImageBySlug: Partial<Record<string, string>> = {
-  'bluetooth-audio-glasses': '/products/extra-1.jpg',
-  'hd-camera-glasses': '/products/extra-2.jpg',
-  'sport-bluetooth-glasses': '/products/extra-3.jpg',
-  'translation-smart-glasses': '/products/extra-4.jpg',
-  'classic-aviator-sunglasses': '/products/1_photo-1502163140606-888448ae8cfe.jpg',
-  'polarized-wayfarer-sunglasses': '/products/2_photo-1577744486770-020ab432da65.jpg',
-  'oversized-fashion-sunglasses': '/products/3_photo-1614715838608-dd527c46231d.jpg',
-  'retro-round-sunglasses': '/products/5_photo-1542219550-37153d387c27.jpg',
-  'titanium-rimless-frame': '/products/6_photo-1610631066894-62452ccb927c.jpg',
-  'acetate-rectangle-frame': '/products/7_photo-1604176354204-9268737828e4.jpg',
-  'cat-eye-frame': '/products/8_photo-1620207418302-439b387441b0.jpg',
-  'clear-round-frame': '/products/9_photo-1556015048-4d3aa10df74c.jpg',
-  'blue-light-computer-glasses': '/products/10_photo-1568819317551-31051b37f69f.jpg',
-  'gaming-blue-light-glasses': '/products/11_photo-1513475382585-d06e58bcb0e0.jpg',
-  'photochromic-smart-lenses': '/products/12_photo-1601924994987-69e26d50dc26.jpg',
-  'polarized-sport-wrap': '/products/13_photo-1535632787350-4e68ef0ac584.jpg',
-  'cycling-photochromic-glasses': '/products/15_photo-1592838064575-70ed626d3a0e.jpg',
-  'swimming-anti-fog-goggles': '/products/16_photo-1556306535-0f09a537f0a3.jpg',
-  'classic-reading-glasses': '/products/extra-5.jpg',
-  'foldable-reading-glasses': '/products/extra-6.jpg',
-  'blue-light-readers': '/products/extra-7.jpg',
-  'kids-flexible-frame': '/products/extra-8.jpg',
+  'bluetooth-audio-glasses': '/products/glass-01.svg',
+  'hd-camera-glasses': '/products/glass-02.svg',
+  'sport-bluetooth-glasses': '/products/glass-03.svg',
+  'translation-smart-glasses': '/products/glass-04.svg',
+  'classic-aviator-sunglasses': '/products/glass-05.svg',
+  'polarized-wayfarer-sunglasses': '/products/glass-06.svg',
+  'oversized-fashion-sunglasses': '/products/glass-07.svg',
+  'retro-round-sunglasses': '/products/glass-08.svg',
+  'titanium-rimless-frame': '/products/glass-09.svg',
+  'acetate-rectangle-frame': '/products/glass-10.svg',
+  'cat-eye-frame': '/products/glass-11.svg',
+  'clear-round-frame': '/products/glass-12.svg',
+  'blue-light-computer-glasses': '/products/glass-13.svg',
+  'gaming-blue-light-glasses': '/products/glass-14.svg',
+  'photochromic-smart-lenses': '/products/glass-15.svg',
+  'polarized-sport-wrap': '/products/glass-16.svg',
+  'cycling-photochromic-glasses': '/products/glass-17.svg',
+  'swimming-anti-fog-goggles': '/products/glass-18.svg',
+  'classic-reading-glasses': '/products/glass-19.svg',
+  'foldable-reading-glasses': '/products/glass-20.svg',
+  'blue-light-readers': '/products/glass-21.svg',
+  'kids-flexible-frame': '/products/glass-22.svg',
 };
 
 for (const product of products) {
