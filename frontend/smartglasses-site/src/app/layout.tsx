@@ -3,6 +3,7 @@ import '../styles/globals.css';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { WhatsAppFloat } from '@/components/WhatsAppFloat';
+import { CartProvider } from '@/lib/cart';
 import { site } from '@/lib/site';
 import type { Metadata } from 'next';
 
@@ -39,10 +40,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en-PK" className={inter.variable}>
       <body className="font-sans">
-        <Navbar />
-        <main className="min-h-[calc(100vh-4rem)]">{children}</main>
-        <Footer />
-        <WhatsAppFloat />
+        <CartProvider>
+          <Navbar />
+          <main className="min-h-[calc(100vh-4rem)]">{children}</main>
+          <Footer />
+          <WhatsAppFloat />
+        </CartProvider>
       </body>
     </html>
   );

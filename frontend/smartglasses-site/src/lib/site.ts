@@ -4,9 +4,9 @@
  */
 export const site = {
   name: 'SmartGlasses',
-  tagline: 'Smart Glasses, Imported for Pakistan',
+  tagline: 'Smart Glasses & Eyewear, Imported for Pakistan',
   description:
-    'Bluetooth audio glasses, photochromic smart lenses and camera glasses — imported and delivered across Pakistan with Cash on Delivery and a 7-day replacement warranty.',
+    'Smart glasses, sunglasses, frames, blue-light, sports, reading and kids eyewear — imported and delivered across Pakistan with Cash on Delivery, Bank Transfer and a 7-day replacement warranty.',
   url: 'https://smartglasses.hostingocean.net',
 
   // Contact
@@ -18,6 +18,37 @@ export const site = {
   // Social (optional — leave empty to hide)
   instagram: '',
   facebook: '',
+
+  // Free shipping threshold (PKR). Set to 0 to always charge shipping.
+  freeShippingOver: 3000,
+  shippingFlatRate: 200,
+} as const;
+
+/**
+ * Demo video shown on the homepage.
+ * - Set `youtubeId` to a YouTube video ID to embed it (e.g. 'dQw4w9WgXcQ'),
+ *   OR set `mp4Url` to a self-hosted file in /public (e.g. '/videos/demo.mp4').
+ * - If both are empty, an attractive placeholder is shown instead.
+ */
+export const demoVideo = {
+  youtubeId: '',
+  mp4Url: '',
+  poster: '', // optional poster image for the mp4, e.g. '/videos/demo-poster.jpg'
+  heading: 'See the Smart Glasses in Action',
+  subheading: 'Watch how our Bluetooth audio glasses let you take calls and play music hands-free.',
+} as const;
+
+/**
+ * Bank transfer details shown at checkout.
+ * EDIT THESE with your real account. Drop the QR image at /public/payment-qr.png
+ * (or change `qrImage` below). Leave `qrImage` as '' to hide the QR.
+ */
+export const bankTransfer = {
+  bankName: 'Meezan Bank',          // TODO: replace with your bank
+  accountTitle: 'SmartGlasses',     // TODO: replace with account title
+  accountNumber: '0000-0000000000', // TODO: replace with account number
+  iban: 'PK00MEZN0000000000000000', // TODO: replace with IBAN
+  qrImage: '/payment-qr.png',       // drop your QR here; '' hides it
 } as const;
 
 /**
@@ -36,4 +67,11 @@ export function orderLink(productName: string, price?: number) {
   return whatsappLink(
     `Hi ${site.name}! I want to order: ${productName}${priceText}. Please share details and delivery time.`,
   );
+}
+
+/** Shipping cost for a given subtotal (PKR). */
+export function shippingFor(subtotal: number) {
+  if (subtotal <= 0) return 0;
+  if (site.freeShippingOver && subtotal >= site.freeShippingOver) return 0;
+  return site.shippingFlatRate;
 }

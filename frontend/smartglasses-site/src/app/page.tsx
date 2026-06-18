@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import {
   BadgeCheck,
   MessageCircle,
@@ -6,43 +7,45 @@ import {
   Truck,
   Wallet,
 } from 'lucide-react';
-import { products } from '@/data/products';
+import { featuredProducts } from '@/data/products';
 import { ProductCard } from '@/components/ProductCard';
+import { CategoryGrid } from '@/components/CategoryGrid';
+import { VideoSection } from '@/components/VideoSection';
 import { site, whatsappLink } from '@/lib/site';
 
 const trustBadges = [
-  { icon: Truck, title: 'Free COD Delivery', text: 'Cash on Delivery all over Pakistan' },
+  { icon: Truck, title: 'Fast COD Delivery', text: 'Cash on Delivery all over Pakistan' },
   { icon: ShieldCheck, title: '7-Day Replacement', text: 'Faulty item? We replace it free' },
   { icon: BadgeCheck, title: 'Genuine Imports', text: 'Quality-checked, directly imported' },
-  { icon: MessageCircle, title: 'Easy WhatsApp Orders', text: 'Order in 1 minute, no signup' },
+  { icon: Wallet, title: 'COD or Bank Transfer', text: 'Pay your way — cash or transfer' },
 ];
 
 const steps = [
   {
-    icon: MessageCircle,
-    title: '1. Tap "Order on WhatsApp"',
-    text: 'Pick a product and message us on WhatsApp. We confirm price, colour and stock.',
-  },
-  {
     icon: PackageCheck,
-    title: '2. Share your address',
-    text: 'Send your name, full address and phone number. We book your parcel with the courier.',
+    title: '1. Add to Cart',
+    text: 'Browse the catalog and add the glasses you love to your cart.',
   },
   {
     icon: Wallet,
-    title: '3. Pay on Delivery',
-    text: 'Receive your smart glasses at your door and pay cash. Simple and risk-free.',
+    title: '2. Checkout',
+    text: 'Enter your address and choose Cash on Delivery or Bank Transfer.',
+  },
+  {
+    icon: MessageCircle,
+    title: '3. Confirm on WhatsApp',
+    text: 'Your order opens in WhatsApp in one tap. We confirm and dispatch.',
   },
 ];
 
 const faqs = [
   {
     q: 'How do I place an order?',
-    a: 'Just tap any "Order on WhatsApp" button, send us your address, and we deliver to your doorstep. You can pay cash on delivery.',
+    a: 'Add items to your cart, go to checkout, enter your address and choose a payment method. Tap "Place Order" and it opens WhatsApp with your full order — we confirm and dispatch.',
   },
   {
-    q: 'Do you offer Cash on Delivery (COD)?',
-    a: 'Yes. You pay only when the parcel reaches you, anywhere in Pakistan via our courier partners.',
+    q: 'What payment methods do you accept?',
+    a: 'Cash on Delivery (pay when the parcel arrives) and Bank Transfer (we show our account details and a QR code at checkout). For bank transfer, just send the payment screenshot on WhatsApp.',
   },
   {
     q: 'How long does delivery take?',
@@ -54,11 +57,13 @@ const faqs = [
   },
   {
     q: 'Are these original imported products?',
-    a: 'Yes, all our smart glasses are directly imported and quality-checked before dispatch.',
+    a: 'Yes, all our eyewear is directly imported and quality-checked before dispatch.',
   },
 ];
 
 export default function HomePage() {
+  const featured = featuredProducts();
+
   return (
     <>
       {/* Hero */}
@@ -66,35 +71,31 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 md:grid-cols-2 md:py-24">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1 text-xs font-medium text-muted-foreground">
-              <Truck className="h-3.5 w-3.5" /> Cash on Delivery across Pakistan
+              <Truck className="h-3.5 w-3.5" /> COD &amp; Bank Transfer across Pakistan
             </span>
             <h1 className="mt-5 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl">
               See Smarter. <span className="text-primary">Live Smarter.</span>
             </h1>
-            <p className="mt-4 max-w-lg text-lg text-muted-foreground">
-              {site.description}
-            </p>
+            <p className="mt-4 max-w-lg text-lg text-muted-foreground">{site.description}</p>
             <div className="mt-7 flex flex-wrap gap-3">
-              <a
-                href="#products"
+              <Link
+                href="#categories"
                 className="rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
               >
-                Shop Smart Glasses
-              </a>
-              <a
-                href={whatsappLink(`Hi ${site.name}! I'd like help choosing a product.`)}
-                target="_blank"
-                rel="noopener noreferrer"
+                Shop All Glasses
+              </Link>
+              <Link
+                href="/category/smart-glasses"
                 className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-6 py-3 text-sm font-semibold transition-colors hover:bg-secondary"
               >
-                <MessageCircle className="h-4 w-4" /> Chat with us
-              </a>
+                Explore Smart Glasses
+              </Link>
             </div>
           </div>
 
           <div className="relative flex items-center justify-center">
-            <div className="flex h-64 w-64 items-center justify-center rounded-3xl bg-gradient-to-br from-primary/20 to-accent/20 text-9xl sm:h-80 sm:w-80">
-              <span aria-hidden>🕶️</span>
+            <div className="flex h-64 w-64 items-center justify-center rounded-3xl bg-gradient-to-br from-primary/20 to-accent/20 text-9xl shadow-xl sm:h-80 sm:w-80">
+              <span aria-hidden className="animate-pulse">🕶️</span>
             </div>
           </div>
         </div>
@@ -117,18 +118,30 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Products */}
-      <section id="products" className="mx-auto max-w-6xl px-4 py-16">
+      {/* Categories */}
+      <CategoryGrid />
+
+      {/* Video demo */}
+      <VideoSection />
+
+      {/* Featured products */}
+      <section id="featured" className="mx-auto max-w-6xl px-4 py-16">
         <div className="mb-10 text-center">
-          <h2 className="text-3xl font-bold tracking-tight">Our Smart Glasses</h2>
-          <p className="mt-2 text-muted-foreground">
-            Tap any product to order instantly on WhatsApp — pay cash on delivery.
-          </p>
+          <h2 className="text-3xl font-bold tracking-tight">Featured Products</h2>
+          <p className="mt-2 text-muted-foreground">Our most popular picks across every category.</p>
         </div>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {products.map((p) => (
+          {featured.map((p) => (
             <ProductCard key={p.slug} product={p} />
           ))}
+        </div>
+        <div className="mt-10 text-center">
+          <Link
+            href="#categories"
+            className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-6 py-3 text-sm font-semibold transition-colors hover:bg-secondary"
+          >
+            Browse all categories
+          </Link>
         </div>
       </section>
 
@@ -179,16 +192,24 @@ export default function HomePage() {
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-4 py-14 text-center">
           <h2 className="text-3xl font-bold">Ready to upgrade your look?</h2>
           <p className="max-w-lg text-primary-foreground/90">
-            Message us now on WhatsApp. We&apos;ll help you choose the right pair and deliver it to your door.
+            Browse the catalog, add to cart and check out in minutes. Pay by Cash on Delivery or Bank Transfer.
           </p>
-          <a
-            href={whatsappLink(`Hi ${site.name}! I want to place an order.`)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-2 inline-flex items-center gap-2 rounded-lg bg-background px-6 py-3 text-sm font-semibold text-foreground transition-opacity hover:opacity-90"
-          >
-            <MessageCircle className="h-4 w-4" /> Order on WhatsApp
-          </a>
+          <div className="mt-2 flex flex-wrap justify-center gap-3">
+            <Link
+              href="#categories"
+              className="inline-flex items-center gap-2 rounded-lg bg-background px-6 py-3 text-sm font-semibold text-foreground transition-opacity hover:opacity-90"
+            >
+              Start Shopping
+            </Link>
+            <a
+              href={whatsappLink(`Hi ${site.name}! I have a question.`)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-lg border border-primary-foreground/40 px-6 py-3 text-sm font-semibold transition-colors hover:bg-primary-foreground/10"
+            >
+              <MessageCircle className="h-4 w-4" /> Ask on WhatsApp
+            </a>
+          </div>
         </div>
       </section>
     </>
