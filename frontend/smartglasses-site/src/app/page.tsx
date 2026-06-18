@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   BadgeCheck,
   MessageCircle,
@@ -61,20 +62,26 @@ const faqs = [
   },
 ];
 
+const heroShots = [
+  '/products/extra-2.jpg',
+  '/products/2_photo-1577744486770-020ab432da65.jpg',
+  '/products/7_photo-1604176354204-9268737828e4.jpg',
+];
+
 export default function HomePage() {
   const featured = featuredProducts();
 
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-border/60 bg-gradient-to-b from-secondary/60 to-background">
+      <section className="relative overflow-hidden border-b border-border/60 bg-gradient-to-b from-secondary/35 to-background">
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 md:grid-cols-2 md:py-24">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1 text-xs font-medium text-muted-foreground">
               <Truck className="h-3.5 w-3.5" /> COD &amp; Bank Transfer across Pakistan
             </span>
             <h1 className="mt-5 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl">
-              See Smarter. <span className="text-primary">Live Smarter.</span>
+              Dark Style. <span className="text-primary">Smart Vision.</span>
             </h1>
             <p className="mt-4 max-w-lg text-lg text-muted-foreground">{site.description}</p>
             <div className="mt-7 flex flex-wrap gap-3">
@@ -93,10 +100,17 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="relative flex items-center justify-center">
-            <div className="flex h-64 w-64 items-center justify-center rounded-3xl bg-gradient-to-br from-primary/20 to-accent/20 text-9xl shadow-xl sm:h-80 sm:w-80">
-              <span aria-hidden className="animate-pulse">🕶️</span>
+          <div className="relative h-[360px] w-full">
+            <div className="absolute left-2 top-16 h-56 w-44 rotate-[-8deg] overflow-hidden rounded-2xl border border-border/70 shadow-xl shadow-black/35 transition-transform duration-500 hover:-translate-y-2">
+              <Image src={heroShots[0]} alt="Smart glasses product" fill className="object-cover" priority />
             </div>
+            <div className="absolute left-1/2 top-0 h-64 w-48 -translate-x-1/2 overflow-hidden rounded-2xl border border-border/70 shadow-2xl shadow-black/45 transition-transform duration-500 hover:-translate-y-2">
+              <Image src={heroShots[1]} alt="Sunglasses product" fill className="object-cover" priority />
+            </div>
+            <div className="absolute right-2 top-20 h-56 w-44 rotate-[8deg] overflow-hidden rounded-2xl border border-border/70 shadow-xl shadow-black/35 transition-transform duration-500 hover:-translate-y-2">
+              <Image src={heroShots[2]} alt="Eyeglasses product" fill className="object-cover" priority />
+            </div>
+            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent" />
           </div>
         </div>
       </section>

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { Check, ShieldCheck, Truck, Wallet } from 'lucide-react';
@@ -52,8 +53,20 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
 
       <div className="grid gap-10 lg:grid-cols-2">
         {/* Visual */}
-        <div className="relative flex aspect-square items-center justify-center rounded-2xl border border-border bg-gradient-to-br from-secondary to-accent/10 text-[10rem]">
-          <span aria-hidden>{product.emoji}</span>
+        <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-secondary to-accent/10 text-[10rem]">
+          {product.image ? (
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
+            />
+          ) : (
+            <span aria-hidden>{product.emoji}</span>
+          )}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/50 to-transparent" />
           {product.badge && (
             <span className="absolute left-4 top-4 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
               {product.badge}

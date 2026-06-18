@@ -38,7 +38,7 @@ const inter = Inter({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-PK" className={inter.variable}>
+    <html lang="en-PK" className={`${inter.variable} dark`}>
       <body className="font-sans">
         <CartProvider>
           <Navbar />

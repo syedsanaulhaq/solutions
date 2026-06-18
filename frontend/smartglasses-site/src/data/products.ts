@@ -9,6 +9,7 @@ export type Product = {
   shortDescription: string;
   description: string;
   features: string[];
+  image?: string;
   inStock: boolean;
   featured?: boolean;   // shown on the homepage "Featured" row
 };
@@ -368,6 +369,37 @@ export const products: Product[] = [
     inStock: true,
   },
 ];
+
+const productImageBySlug: Partial<Record<string, string>> = {
+  'bluetooth-audio-glasses': '/products/extra-1.jpg',
+  'hd-camera-glasses': '/products/extra-2.jpg',
+  'sport-bluetooth-glasses': '/products/extra-3.jpg',
+  'translation-smart-glasses': '/products/extra-4.jpg',
+  'classic-aviator-sunglasses': '/products/1_photo-1502163140606-888448ae8cfe.jpg',
+  'polarized-wayfarer-sunglasses': '/products/2_photo-1577744486770-020ab432da65.jpg',
+  'oversized-fashion-sunglasses': '/products/3_photo-1614715838608-dd527c46231d.jpg',
+  'retro-round-sunglasses': '/products/5_photo-1542219550-37153d387c27.jpg',
+  'titanium-rimless-frame': '/products/6_photo-1610631066894-62452ccb927c.jpg',
+  'acetate-rectangle-frame': '/products/7_photo-1604176354204-9268737828e4.jpg',
+  'cat-eye-frame': '/products/8_photo-1620207418302-439b387441b0.jpg',
+  'clear-round-frame': '/products/9_photo-1556015048-4d3aa10df74c.jpg',
+  'blue-light-computer-glasses': '/products/10_photo-1568819317551-31051b37f69f.jpg',
+  'gaming-blue-light-glasses': '/products/11_photo-1513475382585-d06e58bcb0e0.jpg',
+  'photochromic-smart-lenses': '/products/12_photo-1601924994987-69e26d50dc26.jpg',
+  'polarized-sport-wrap': '/products/13_photo-1535632787350-4e68ef0ac584.jpg',
+  'cycling-photochromic-glasses': '/products/15_photo-1592838064575-70ed626d3a0e.jpg',
+  'swimming-anti-fog-goggles': '/products/16_photo-1556306535-0f09a537f0a3.jpg',
+  'classic-reading-glasses': '/products/extra-5.jpg',
+  'foldable-reading-glasses': '/products/extra-6.jpg',
+  'blue-light-readers': '/products/extra-7.jpg',
+  'kids-flexible-frame': '/products/extra-8.jpg',
+};
+
+for (const product of products) {
+  if (productImageBySlug[product.slug]) {
+    product.image = productImageBySlug[product.slug];
+  }
+}
 
 export function getProduct(slug: string) {
   return products.find((p) => p.slug === slug);
