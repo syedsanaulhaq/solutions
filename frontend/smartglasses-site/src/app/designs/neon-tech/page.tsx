@@ -2,31 +2,32 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const specs = [
-  'Open-ear Bluetooth Audio',
-  'Voice Assistant + Call Mic',
-  'UV + Blue Light Shield',
-  'All-day Comfort Frame',
+  'BOLD PRICE BLOCKS',
+  'HIGH-CONTRAST CATALOG',
+  'NO SOFT SHADOWS',
+  'UTILITY-FIRST LAYOUT',
 ];
 
 export default function NeonTechThemePage() {
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_20%_10%,rgba(34,211,238,0.22),transparent_30%),radial-gradient(circle_at_90%_0%,rgba(59,130,246,0.22),transparent_35%),#020617] text-cyan-50">
-      <section className="mx-auto max-w-6xl px-4 py-16">
-        <p className="text-xs uppercase tracking-[0.25em] text-cyan-300">Neon Tech Theme</p>
-        <h1 className="mt-3 text-5xl font-black tracking-tight">Smart Eyewear, Reimagined</h1>
-        <p className="mt-4 max-w-2xl text-cyan-100/80">Futuristic surfaces, glowing accents, and feature-first modules built for gadget-focused buyers.</p>
+    <div className="min-h-screen bg-zinc-100 text-zinc-950" style={{ fontFamily: 'Arial Black, Impact, Haettenschweiler, sans-serif' }}>
+      <section className="mx-auto max-w-6xl px-4 py-12">
+        <p className="inline-block border-2 border-zinc-950 bg-yellow-300 px-2 py-1 text-xs tracking-[0.2em]">BRUTALIST MONO</p>
+        <h1 className="mt-4 text-5xl leading-none sm:text-6xl">LOUD.<br />FAST.<br />CLEAR.</h1>
+        <p className="mt-4 max-w-2xl text-sm font-bold">A completely opposite direction: hard edges, sharp borders, punchy labels.</p>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
-          <div className="relative h-[360px] overflow-hidden rounded-3xl border border-cyan-400/40 bg-slate-950">
-            <Image src="/products/glass-03.svg" alt="Tech hero" fill className="object-cover" />
+        <div className="mt-8 grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="relative h-[360px] overflow-hidden border-4 border-zinc-950 bg-white">
+            <Image src="/products/glass-03.svg" alt="Brutalist hero" fill className="object-cover" />
+            <div className="absolute bottom-3 left-3 border-2 border-zinc-950 bg-lime-300 px-2 py-1 text-xs">DROP #01</div>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-3">
             {specs.map((spec) => (
-              <div key={spec} className="rounded-2xl border border-cyan-400/35 bg-cyan-500/10 p-4">
-                <p className="font-semibold">{spec}</p>
+              <div key={spec} className="border-2 border-zinc-950 bg-white p-4">
+                <p className="text-sm tracking-wide">{spec}</p>
               </div>
             ))}
-            <Link href="/designs" className="inline-block rounded-lg bg-cyan-400 px-5 py-3 text-sm font-bold text-slate-950">
+            <Link href="/designs" className="inline-block border-2 border-zinc-950 bg-zinc-950 px-5 py-3 text-sm text-white">
               Back To Themes
             </Link>
           </div>

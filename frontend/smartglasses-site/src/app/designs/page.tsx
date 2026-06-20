@@ -3,37 +3,37 @@ import Link from 'next/link';
 const themes = [
   {
     slug: 'luxe',
-    title: 'Luxe Black',
-    subtitle: 'Premium editorial storefront',
-    color: 'from-zinc-900 via-zinc-800 to-zinc-900',
+    title: 'Ultra Minimal Light',
+    subtitle: 'Apple-like clean premium storefront',
+    color: 'from-white via-zinc-100 to-zinc-200',
   },
   {
     slug: 'neon-tech',
-    title: 'Neon Tech',
-    subtitle: 'Futuristic smart-glasses vibe',
-    color: 'from-cyan-950 via-slate-950 to-blue-950',
+    title: 'Brutalist Mono',
+    subtitle: 'Hard contrast, blocky anti-template design',
+    color: 'from-zinc-950 via-zinc-900 to-zinc-700',
   },
   {
     slug: 'market-pro',
-    title: 'Market Pro',
-    subtitle: 'High-conversion marketplace style',
-    color: 'from-amber-900/40 via-orange-900/20 to-zinc-900',
+    title: 'Retro Newspaper',
+    subtitle: 'Editorial cream paper + serif aesthetic',
+    color: 'from-amber-100 via-orange-100 to-yellow-50',
   },
   {
     slug: 'bold-mag',
-    title: 'Bold Magazine',
-    subtitle: 'Modern campaign-style brand layout',
-    color: 'from-fuchsia-950/40 via-violet-950/20 to-slate-950',
+    title: 'Playful Pop',
+    subtitle: 'Colorful, energetic, youth-focused commerce',
+    color: 'from-pink-400 via-orange-300 to-cyan-300',
   },
 ];
 
 export default function ThemesIndexPage() {
   return (
-    <div className="mx-auto max-w-6xl px-4 py-14">
-      <p className="text-center text-xs uppercase tracking-[0.2em] text-primary">Theme Gallery</p>
-      <h1 className="mt-3 text-center text-4xl font-black tracking-tight sm:text-5xl">Pick A Real Theme</h1>
+    <div className="mx-auto max-w-6xl px-4 py-14" style={{ fontFamily: 'Manrope, Segoe UI, sans-serif' }}>
+      <p className="text-center text-xs uppercase tracking-[0.2em] text-primary">Theme Showroom</p>
+      <h1 className="mt-3 text-center text-4xl font-black tracking-tight sm:text-5xl">Totally Different Theme Styles</h1>
       <p className="mx-auto mt-3 max-w-2xl text-center text-muted-foreground">
-        Open each demo theme and choose the one you want. I will apply your selected design to the full store.
+        Each option below uses a different visual language, not just color changes. Open each and choose one for the full site.
       </p>
 
       <div className="mt-10 grid gap-6 sm:grid-cols-2">
@@ -41,7 +41,7 @@ export default function ThemesIndexPage() {
           <Link
             key={theme.slug}
             href={`/designs/${theme.slug}`}
-            className="group overflow-hidden rounded-3xl border border-border/70 bg-card shadow-xl shadow-black/20"
+            className="group overflow-hidden rounded-3xl border border-border/70 bg-card shadow-xl shadow-black/20 transition-transform duration-300 hover:-translate-y-1"
           >
             <div className={`h-40 bg-gradient-to-br ${theme.color}`} />
             <div className="p-6">
@@ -54,7 +54,7 @@ export default function ThemesIndexPage() {
       </div>
 
       <div className="mt-10 text-center text-sm text-muted-foreground">
-        Live store stays unchanged until you approve one design.
+        Live store remains unchanged until you approve one.
       </div>
     </div>
   );
