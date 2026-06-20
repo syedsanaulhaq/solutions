@@ -15,14 +15,14 @@ export function ProductCard({ product }: { product: Product }) {
   const href = `/product/${product.slug}`;
 
   return (
-    <div className="group flex flex-col overflow-hidden rounded-2xl border border-border/70 bg-card/95 shadow-lg shadow-black/20 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-black/35">
-      <Link href={href} className="relative flex h-52 items-center justify-center bg-gradient-to-br from-secondary to-accent/10 text-6xl">
+    <div className="group flex flex-col overflow-hidden rounded-lg border border-border bg-card shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+      <Link href={href} className="relative flex h-48 items-center justify-center bg-muted text-6xl">
         {product.image ? (
           <Image
             src={product.image}
             alt={product.name}
             fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
@@ -30,9 +30,8 @@ export function ProductCard({ product }: { product: Product }) {
             {product.emoji}
           </span>
         )}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/55 to-transparent" />
         {product.badge && (
-          <span className="absolute left-3 top-3 rounded-full bg-primary px-2.5 py-1 text-xs font-semibold text-primary-foreground">
+          <span className="absolute left-3 top-3 rounded-full bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
             {product.badge}
           </span>
         )}
@@ -43,39 +42,29 @@ export function ProductCard({ product }: { product: Product }) {
         )}
       </Link>
 
-      <div className="flex flex-1 flex-col p-5">
+      <div className="flex flex-1 flex-col p-4">
         <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
           {category?.name ?? product.categorySlug}
         </span>
         <Link href={href}>
-          <h3 className="mt-1 text-lg font-bold transition-colors group-hover:text-primary">{product.name}</h3>
+          <h3 className="mt-1 text-base font-bold transition-colors group-hover:text-primary">{product.name}</h3>
         </Link>
-        <p className="mt-1 text-sm text-muted-foreground">{product.shortDescription}</p>
 
-        <ul className="mt-4 space-y-1.5">
-          {product.features.slice(0, 3).map((f) => (
-            <li key={f} className="flex items-start gap-2 text-sm">
-              <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-              <span>{f}</span>
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-5 flex items-end gap-2">
-          <span className="text-2xl font-extrabold">{formatPKR(product.price)}</span>
+        <div className="mt-3 flex items-end gap-2">
+          <span className="text-xl font-extrabold text-foreground">{formatPKR(product.price)}</span>
           {product.oldPrice && (
-            <span className="mb-0.5 text-sm text-muted-foreground line-through">
+            <span className="mb-0.5 text-xs text-muted-foreground line-through">
               {formatPKR(product.oldPrice)}
             </span>
           )}
         </div>
 
-        <div className="mt-4 flex gap-2">
+        <div className="mt-3 flex gap-2">
           <AddToCartButton
             slug={product.slug}
             inStock={product.inStock}
             className="flex-1"
-            label={product.price >= 8000 ? 'Add' : 'Add to Cart'}
+            label="Add to Cart"
           />
           <Link
             href={href}

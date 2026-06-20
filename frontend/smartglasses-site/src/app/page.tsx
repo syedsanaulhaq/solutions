@@ -7,11 +7,11 @@ import {
   ShieldCheck,
   Truck,
   Wallet,
+  Search,
 } from 'lucide-react';
 import { featuredProducts } from '@/data/products';
 import { ProductCard } from '@/components/ProductCard';
-import { CategoryGrid } from '@/components/CategoryGrid';
-import { VideoSection } from '@/components/VideoSection';
+import { categories } from '@/data/categories';
 import { site, whatsappLink } from '@/lib/site';
 
 const trustBadges = [
@@ -62,100 +62,97 @@ const faqs = [
   },
 ];
 
-const heroShots = [
-  '/products/glass-02.svg',
-  '/products/glass-06.svg',
-  '/products/glass-10.svg',
-];
-
 export default function HomePage() {
-  const featured = featuredProducts();
+  const featured = featuredProducts().slice(0, 8); // 8 products for popular section
 
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden border-b border-border/60 bg-gradient-to-b from-secondary/35 to-background">
-        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 md:grid-cols-2 md:py-24">
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1 text-xs font-medium text-muted-foreground">
-              <Truck className="h-3.5 w-3.5" /> COD &amp; Bank Transfer across Pakistan
-            </span>
-            <h1 className="mt-5 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl">
-              Dark Style. <span className="text-primary">Smart Vision.</span>
-            </h1>
-            <p className="mt-4 max-w-lg text-lg text-muted-foreground">{site.description}</p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Link
-                href="#categories"
-                className="rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
-              >
-                Shop All Glasses
-              </Link>
-              <Link
-                href="/category/smart-glasses"
-                className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-6 py-3 text-sm font-semibold transition-colors hover:bg-secondary"
-              >
-                Explore Smart Glasses
-              </Link>
-            </div>
-          </div>
+      {/* Top Yellow Bar with Promo */}
+      <section className="bg-secondary text-foreground">
+        <div className="mx-auto max-w-full px-4 py-2 text-center text-sm font-medium">
+          📦 FREE DELIVERY | 🔄 7-DAY REPLACEMENT | 💯 ORIGINAL PRODUCTS
+        </div>
+      </section>
 
-          <div className="relative h-[360px] w-full">
-            <div className="absolute left-2 top-16 h-56 w-44 rotate-[-8deg] overflow-hidden rounded-2xl border border-border/70 shadow-xl shadow-black/35 transition-transform duration-500 hover:-translate-y-2">
-              <Image src={heroShots[0]} alt="Smart glasses product" fill className="object-cover" priority />
+      {/* Blue Header with Search */}
+      <section className="border-b border-border bg-primary text-primary-foreground sticky top-[4rem] z-20">
+        <div className="mx-auto max-w-full px-4 py-4">
+          <div className="flex items-center gap-4">
+            <div className="flex-1 flex items-center gap-2 bg-primary-foreground/15 rounded-lg px-3 py-2">
+              <Search className="h-4 w-4 flex-shrink-0" />
+              <input
+                type="text"
+                placeholder="Search glasses..."
+                className="w-full bg-transparent outline-none text-sm placeholder-primary-foreground/60 text-primary-foreground"
+              />
             </div>
-            <div className="absolute left-1/2 top-0 h-64 w-48 -translate-x-1/2 overflow-hidden rounded-2xl border border-border/70 shadow-2xl shadow-black/45 transition-transform duration-500 hover:-translate-y-2">
-              <Image src={heroShots[1]} alt="Sunglasses product" fill className="object-cover" priority />
-            </div>
-            <div className="absolute right-2 top-20 h-56 w-44 rotate-[8deg] overflow-hidden rounded-2xl border border-border/70 shadow-xl shadow-black/35 transition-transform duration-500 hover:-translate-y-2">
-              <Image src={heroShots[2]} alt="Eyeglasses product" fill className="object-cover" priority />
-            </div>
-            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent" />
+            <span className="text-sm font-semibold whitespace-nowrap">🛒 Cart</span>
           </div>
         </div>
       </section>
 
-      {/* Trust badges */}
-      <section className="border-b border-border/60 bg-background">
-        <div className="mx-auto grid max-w-6xl gap-6 px-4 py-10 sm:grid-cols-2 lg:grid-cols-4">
-          {trustBadges.map((b) => (
-            <div key={b.title} className="flex items-start gap-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-secondary text-primary">
-                <b.icon className="h-5 w-5" />
-              </span>
-              <div>
-                <p className="text-sm font-semibold">{b.title}</p>
-                <p className="text-sm text-muted-foreground">{b.text}</p>
+      {/* Main Content with Sidebar */}
+      <section className="mx-auto max-w-full">
+        <div className="grid grid-cols-4 gap-0 min-h-[600px]">
+          {/* Sidebar - Categories */}
+          <div className="col-span-1 bg-muted border-r border-border p-4 max-h-[calc(100vh-9rem)] overflow-y-auto">
+            <h3 className="text-sm font-bold uppercase tracking-wide text-foreground mb-4">Categories</h3>
+            <ul className="space-y-2">
+              {categories.map((cat) => (
+                <li key={cat.slug}>
+                  <Link
+                    href={`/category/${cat.slug}`}
+                    className="block text-sm font-medium text-foreground hover:text-primary transition-colors p-2 hover:bg-background rounded"
+                  >
+                    {cat.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Main Content */}
+          <div className="col-span-3 px-6 py-8">
+            {/* Popular Products */}
+            <div>
+              <div className="mb-8">
+                <h2 className="text-3xl font-bold text-foreground">Popular Products</h2>
+                <p className="text-sm text-muted-foreground mt-1">Best sellers and most loved glasses</p>
+              </div>
+              <div className="grid grid-cols-4 gap-4 mb-12">
+                {featured.map((p) => (
+                  <ProductCard key={p.slug} product={p} />
+                ))}
+              </div>
+              <div className="text-center">
+                <Link
+                  href="/category/smart-glasses"
+                  className="inline-block bg-primary text-primary-foreground px-6 py-2.5 rounded font-semibold text-sm hover:opacity-90 transition-opacity"
+                >
+                  View All Products
+                </Link>
               </div>
             </div>
-          ))}
+          </div>
         </div>
       </section>
 
-      {/* Categories */}
-      <CategoryGrid />
-
-      {/* Video demo */}
-      <VideoSection />
-
-      {/* Featured products */}
-      <section id="featured" className="mx-auto max-w-6xl px-4 py-16">
-        <div className="mb-10 text-center">
-          <h2 className="text-3xl font-bold tracking-tight">Featured Products</h2>
-          <p className="mt-2 text-muted-foreground">Our most popular picks across every category.</p>
-        </div>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((p) => (
-            <ProductCard key={p.slug} product={p} />
-          ))}
-        </div>
-        <div className="mt-10 text-center">
-          <Link
-            href="#categories"
-            className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-6 py-3 text-sm font-semibold transition-colors hover:bg-secondary"
-          >
-            Browse all categories
-          </Link>
+      {/* Trust Badges */}
+      <section className="bg-background border-t border-b border-border py-8">
+        <div className="mx-auto max-w-full">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 px-6">
+            {trustBadges.map((b) => (
+              <div key={b.title} className="flex items-start gap-3">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-secondary text-primary">
+                  <b.icon className="h-5 w-5" />
+                </span>
+                <div>
+                  <p className="text-sm font-semibold">{b.title}</p>
+                  <p className="text-xs text-muted-foreground">{b.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
