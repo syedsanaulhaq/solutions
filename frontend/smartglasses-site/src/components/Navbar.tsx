@@ -21,6 +21,9 @@ export function Navbar() {
         </Link>
 
         <div className="hidden items-center gap-6 text-sm font-medium lg:flex">
+          <Link href="/" className="text-muted-foreground transition-colors hover:text-foreground">
+            Home
+          </Link>
           <Link href="/#categories" className="text-muted-foreground transition-colors hover:text-foreground">
             Categories
           </Link>
@@ -54,6 +57,9 @@ export function Navbar() {
       {open && (
         <div className="border-t border-border/60 bg-background lg:hidden">
           <div className="mx-auto grid max-w-6xl gap-1 px-4 py-3 text-sm font-medium">
+            <Link href="/" onClick={() => setOpen(false)} className="rounded-md px-2 py-2 hover:bg-secondary">
+              Home
+            </Link>
             {categories.map((c) => (
               <Link
                 key={c.slug}
