@@ -6,7 +6,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Domain Registration Pakistan — .pk, .com.pk & More',
   description:
-    'Register .pk, .com.pk, .net.pk domains and international TLDs. Fast registration, DNS management, and free with qualifying hosting plans.',
+    'Register .pk, .com.pk, .net.pk domains and international TLDs. Fast registration and DNS management.',
 };
 
 function PriceTable({ title, items }: { title: string; items: typeof domainPricing.popular }) {
@@ -64,8 +64,8 @@ export default function DomainRegistrationPage() {
       </section>
 
       <CTASection
-        heading="Get a free domain with hosting"
-        subheading="All web hosting plans include a free .pk or .com.pk domain for the first year."
+          heading="Register your domain today"
+          subheading="Search and register .pk, .com.pk and international domain names quickly and securely."
         primaryLabel="View Hosting Plans"
         primaryHref="/web-hosting"
         secondaryLabel="Contact Us"

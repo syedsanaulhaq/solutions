@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   title: 'Web Hosting Pakistan — From Rs. 345/month',
   description:
-    'Affordable web hosting in Pakistan. Free SSL, daily backups, cPanel, 1-click WordPress, and free .pk domain for the first year. Prices synced from WHMCS.',
+    'Affordable web hosting in Pakistan. Free SSL, daily backups, cPanel, and 1-click WordPress. Prices synced from WHMCS.',
 };
 
 const faqs = [
@@ -18,8 +18,8 @@ const faqs = [
     answer: 'Every plan includes a free SSL certificate, daily automated backups, cPanel control panel, 1-click WordPress installer, and 24/7 Pakistan support.',
   },
   {
-    question: 'Do I get a free .pk domain?',
-    answer: 'Yes — all web hosting plans include a free .pk or .com.pk domain name for the first year.',
+    question: 'Can I register a .pk domain with my hosting?',
+    answer: 'Yes — you can register a .pk or .com.pk domain separately. Visit our domain registration page for pricing and availability.',
   },
   {
     question: 'Can I host multiple websites?',

@@ -24,7 +24,6 @@ All web hosting plans include:
 - Daily automated backups
 - cPanel control panel
 - 1-click WordPress installer
-- Free .pk or .com.pk domain for the first year
 - 24/7 Pakistan support
 
 Policies:
