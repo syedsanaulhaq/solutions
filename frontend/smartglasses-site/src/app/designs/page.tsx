@@ -47,7 +47,7 @@ export default function ThemesIndexPage() {
             <div className="p-6">
               <h2 className="text-2xl font-extrabold group-hover:text-primary">{theme.title}</h2>
               <p className="mt-2 text-sm text-muted-foreground">{theme.subtitle}</p>
-              <p className="mt-4 text-sm font-semibold text-primary">Open demo -></p>
+              <p className="mt-4 text-sm font-semibold text-primary">Open demo {'->'}</p>
             </div>
           </Link>
         ))}
