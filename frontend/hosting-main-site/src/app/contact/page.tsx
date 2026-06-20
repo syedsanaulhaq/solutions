@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { Mail, Headphones, Globe } from 'lucide-react';
 
 const WHMCS = process.env.NEXT_PUBLIC_WHMCS_URL || 'https://whmcs.hostingocean.co.uk';
+const CONTACT_PHONE = '+92 333 9141680';
+const REGISTERED_ADDRESS = 'APRT 206 2ND FLOOR PLAZA 68 CIVIC From Date : 01 JAN 2026 CENTER PH 4 BAHRIA TOWN RWP-';
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
@@ -58,6 +60,15 @@ export default function ContactPage() {
                 <div className="flex items-start gap-3">
                   <Headphones className="h-5 w-5 text-[#2563EB] mt-0.5 shrink-0" />
                   <div>
+                    <p className="text-sm font-medium">Contact Number</p>
+                    <a href={`tel:${CONTACT_PHONE.replace(/\s+/g, '')}`} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                      {CONTACT_PHONE}
+                    </a>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Globe className="h-5 w-5 text-[#2563EB] mt-0.5 shrink-0" />
+                  <div>
                     <p className="text-sm font-medium">Support Ticket</p>
                     <a
                       href={`${WHMCS}/submitticket.php`}
@@ -72,14 +83,14 @@ export default function ContactPage() {
                 <div className="flex items-start gap-3">
                   <Globe className="h-5 w-5 text-[#2563EB] mt-0.5 shrink-0" />
                   <div>
-                    <p className="text-sm font-medium">Knowledge Base</p>
+                    <p className="text-sm font-medium">Client Area</p>
                     <a
-                      href={`${WHMCS}/knowledgebase.php`}
+                      href="https://my.hostingocean.co.uk/clientarea.php"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      Browse articles →
+                      Access your client dashboard →
                     </a>
                   </div>
                 </div>
@@ -88,7 +99,12 @@ export default function ContactPage() {
 
             <div className="rounded-xl border border-border p-4 bg-card text-sm">
               <p className="font-semibold mb-1">Support Hours</p>
-              <p className="text-muted-foreground">24/7 via ticket and live chat.<br />Phone: Mon–Fri, 9am–6pm (GMT/BST)</p>
+              <p className="text-muted-foreground">Ticket and live chat support is available 24/7. Sales and billing enquiries are handled Monday–Friday, 9am–6pm UK time.</p>
+            </div>
+
+            <div className="rounded-xl border border-border p-4 bg-card text-sm">
+              <p className="font-semibold mb-1">Registered Business</p>
+              <p className="text-muted-foreground">HostingOcean Ltd, {REGISTERED_ADDRESS}. For legal or billing enquiries, email hello@hostingocean.co.uk.</p>
             </div>
           </div>
 
