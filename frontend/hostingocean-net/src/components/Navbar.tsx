@@ -112,7 +112,7 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <ModeToggle />
           <a
-            href="https://hostingocean.net/whmcs/clientarea.php"
+            href="https://whmcs.hostingocean.net/clientarea.php"
             target="_blank"
             rel="noopener noreferrer"
             className="hidden md:inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg border border-[#15803D]/30 text-[#166534] hover:bg-[#15803D]/10 transition-colors"
@@ -154,7 +154,7 @@ export function Navbar() {
           <Link href="/blog" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-colors">Blog</Link>
           <Link href="/contact" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-colors">Contact</Link>
           <a
-            href="https://hostingocean.net/whmcs/clientarea.php"
+            href="https://whmcs.hostingocean.net/clientarea.php"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setMobileOpen(false)}
