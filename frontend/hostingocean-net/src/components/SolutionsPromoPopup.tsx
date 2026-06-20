@@ -4,9 +4,7 @@ import { useEffect, useState } from 'react';
 
 const SOLUTIONS_URL = 'https://solutions.hostingocean.net';
 const SESSION_KEY = 'ho_solutions_popup_dismissed';
-
-// If you upload the provided creative to a public URL, replace this value.
-const PROMO_IMAGE = 'https://solutions.hostingocean.net/solutions-promo.jpg';
+const PROMO_IMAGE = '/solutions-promo.jpg';
 
 export function SolutionsPromoPopup() {
   const [isOpen, setIsOpen] = useState(false);
