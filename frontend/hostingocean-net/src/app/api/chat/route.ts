@@ -15,8 +15,8 @@ About HostingOcean.net:
 
 Services & Pricing:
 - Web Hosting: Rs. 599/mo (Starter — 2GB SSD, 1 site), Rs. 999/mo (Business — 5GB SSD, 5 sites), Rs. 1,799/mo (Professional — 10GB SSD, 20 sites)
-- VPS Hosting: from Rs. 3,499/mo
-- Dedicated Servers: from Rs. 27,999/mo
+- VPS Hosting: from Rs. 5,499/mo
+- Dedicated Servers: from Rs. 28,999/mo
 - Domain Registration: .pk from Rs. 1,999/yr, .com.pk from Rs. 1,499/yr, .com from Rs. 3,499/yr
 
 All web hosting plans include:

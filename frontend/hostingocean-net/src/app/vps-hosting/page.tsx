@@ -7,9 +7,9 @@ import type { Metadata } from 'next';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'VPS Hosting Pakistan — From Rs. 6,469/month',
+  title: 'VPS Hosting Pakistan — From Rs. 5,499/month',
   description:
-    'High-performance VPS hosting for Pakistani businesses. KVM-based, full root access, SSD storage. Starting from Rs. 6,469/month.',
+    'High-performance VPS hosting for Pakistani businesses. KVM-based, full root access, SSD storage. Starting from Rs. 5,499/month.',
 };
 
 const faqs = [
