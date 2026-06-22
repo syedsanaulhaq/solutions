@@ -4,6 +4,7 @@ import { WhyChooseSection } from '@/sections/WhyChooseSection';
 import { TestimonialsSection } from '@/sections/TestimonialsSection';
 import { CTASection } from '@/components/CTASection';
 import { FAQSection } from '@/components/FAQSection';
+import Link from 'next/link';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -53,6 +54,55 @@ export default function HomePage() {
     <>
       <HeroSection />
       <FeaturesSection />
+
+      {/* Hosting Services — explicit in-body links for SEO crawlability */}
+      <section className="py-16 px-4 bg-secondary/20">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-center mb-3">
+            Hosting Plans for Every Business
+          </h2>
+          <p className="text-center text-muted-foreground mb-10 max-w-xl mx-auto text-sm">
+            Whether you need a fast shared hosting plan, a KVM VPS, or a fully managed dedicated
+            server — we have options priced in PKR with no hidden fees.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {[
+              {
+                href: '/web-hosting',
+                label: 'Web Hosting Pakistan',
+                price: 'From Rs. 599/month',
+                desc: 'Shared hosting with free SSL, daily backups, cPanel, and 24/7 Pakistan support.',
+              },
+              {
+                href: '/vps-hosting',
+                label: 'VPS Hosting Pakistan',
+                price: 'From Rs. 2,672/month',
+                desc: 'KVM-based VPS with full root access, SSD storage, and dedicated resources.',
+              },
+              {
+                href: '/dedicated-servers',
+                label: 'Dedicated Servers Pakistan',
+                price: 'From Rs. 28,999/month',
+                desc: 'Your own physical hardware — fully managed, DDoS protected, 99.9% uptime SLA.',
+              },
+            ].map(({ href, label, price, desc }) => (
+              <Link
+                key={href}
+                href={href}
+                className="rounded-2xl border border-border bg-card p-6 hover:border-[#15803D]/50 hover:shadow-md transition-all duration-200 flex flex-col gap-3"
+              >
+                <h3 className="font-bold text-base">{label}</h3>
+                <p className="text-sm font-semibold text-[#15803D]">{price}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+                <span className="mt-auto inline-flex items-center gap-1 text-sm font-medium text-[#15803D]">
+                  View plans →
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <WhyChooseSection />
       <TestimonialsSection />
       <FAQSection items={homeFaqs} />
