@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   title: 'HostingOcean — Web Hosting, VPS & Dedicated Servers in Pakistan',
   description:
     'Secure web hosting, VPS servers, dedicated servers, and domain registration for businesses in Pakistan. Fast setup, responsive support, and reliable long-term performance.',
+  alternates: {
+    canonical: 'https://hostingocean.net',
+  },
 };
 
 const homeFaqs = [

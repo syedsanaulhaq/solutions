@@ -7,9 +7,12 @@ import type { Metadata } from 'next';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Web Hosting Pakistan — From Rs. 345/month',
+  title: 'Web Hosting Pakistan — From Rs. 599/month',
   description:
-    'Affordable web hosting in Pakistan. Free SSL, daily backups, cPanel, and 1-click WordPress. Prices synced from WHMCS.',
+    'Affordable web hosting in Pakistan. Free SSL, daily backups, cPanel, and 1-click WordPress. Starting from Rs. 599/month.',
+  alternates: {
+    canonical: 'https://hostingocean.net/web-hosting',
+  },
 };
 
 const faqs = [

@@ -6,9 +6,12 @@ import type { Metadata } from 'next';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Dedicated Servers Pakistan — Fully Managed',
+  title: 'Dedicated Servers Pakistan — From Rs. 28,999/month',
   description:
-    'Fully managed dedicated servers for Pakistani businesses. Maximum performance for high-traffic, mission-critical workloads. Contact us for pricing.',
+    'Fully managed dedicated servers for Pakistani businesses. Maximum performance for high-traffic, mission-critical workloads. Starting from Rs. 28,999/month.',
+  alternates: {
+    canonical: 'https://hostingocean.net/dedicated-servers',
+  },
 };
 
 export default async function DedicatedServersPage() {
