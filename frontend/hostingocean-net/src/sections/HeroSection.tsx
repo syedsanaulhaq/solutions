@@ -28,19 +28,19 @@ export function HeroSection() {
         {/* Heading */}
         <div className="max-w-3xl mx-auto text-center mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#4ade80]/30 bg-[#4ade80]/10 text-[#4ade80] text-xs font-semibold mb-6 tracking-wide uppercase">
-            Hosting &amp; Custom Web Systems for Businesses
+            Web Hosting, VPS &amp; Dedicated Servers for Businesses
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight mb-6">
-            Reliable hosting and custom web systems for{' '}
+            Reliable hosting infrastructure for{' '}
             <span className="text-[#4ade80]">growing businesses.</span>
           </h1>
           <p className="text-lg sm:text-xl text-green-100 leading-relaxed mb-4">
-            We help businesses in Pakistan and beyond with secure web hosting, web portals, and
-            custom development solutions built for performance and long-term support.
+            We help businesses in Pakistan and beyond with secure web hosting, VPS servers,
+            dedicated servers, and domain services built for performance and long-term support.
           </p>
           <p className="text-base text-green-300 leading-relaxed mb-8">
-            Fast setup. Responsive support. Practical technical solutions for businesses that need
-            more than just hosting.
+            Fast setup. Responsive support. Practical infrastructure for businesses that need a
+            dependable hosting partner.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

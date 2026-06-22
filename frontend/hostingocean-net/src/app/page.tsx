@@ -7,9 +7,9 @@ import { FAQSection } from '@/components/FAQSection';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'HostingOcean — Reliable Hosting & Custom Web Systems for Businesses',
+  title: 'HostingOcean — Web Hosting, VPS & Dedicated Servers in Pakistan',
   description:
-    'Secure web hosting, professional web portals, and custom development solutions for businesses in Pakistan and beyond. Fast setup, responsive support, built for long-term growth.',
+    'Secure web hosting, VPS servers, dedicated servers, and domain registration for businesses in Pakistan. Fast setup, responsive support, and reliable long-term performance.',
 };
 
 const homeFaqs = [

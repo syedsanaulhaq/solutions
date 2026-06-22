@@ -14,11 +14,11 @@ export const metadata: Metadata = {
   },
   description:
     'Pakistan\'s trusted web hosting provider. Affordable web hosting, VPS servers, dedicated servers and .pk domain registration. Fast, secure, and fully managed with 24/7 Pakistan support.',
-  metadataBase: new URL('https://www.hostingocean.net'),
+  metadataBase: new URL('https://hostingocean.net'),
   openGraph: {
     type: 'website',
     locale: 'en_PK',
-    url: 'https://www.hostingocean.net',
+    url: 'https://hostingocean.net',
     siteName: 'HostingOcean.net',
     title: 'HostingOcean.net — Pakistan Web Hosting, VPS & Domains',
     description:
