@@ -15,9 +15,6 @@ export const metadata: Metadata = {
   description:
     'Pakistan\'s trusted web hosting provider. Affordable web hosting, VPS servers, dedicated servers and .pk domain registration. Fast, secure, and fully managed with 24/7 Pakistan support.',
   metadataBase: new URL('https://hostingocean.net'),
-  alternates: {
-    canonical: '/',
-  },
   openGraph: {
     type: 'website',
     locale: 'en_PK',

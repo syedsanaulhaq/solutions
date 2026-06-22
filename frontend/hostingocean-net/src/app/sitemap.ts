@@ -1,9 +1,17 @@
 
 import { MetadataRoute } from 'next';
+import { blogPosts } from '@/data/blogPosts';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://hostingocean.net';
   const lastModified = new Date();
+
+  const blogUrls: MetadataRoute.Sitemap = blogPosts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified,
+    changeFrequency: 'monthly',
+    priority: 0.65,
+  }));
 
   return [
     {
@@ -66,5 +74,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'yearly',
       priority: 0.3,
     },
+    ...blogUrls,
   ];
 }

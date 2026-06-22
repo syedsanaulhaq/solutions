@@ -5,6 +5,9 @@ import { blogPosts } from '@/data/blogPosts';
 export const metadata: Metadata = {
   title: 'Blog — HostingOcean.net',
   description: 'Hosting tips, WordPress guides, domain advice, and news from HostingOcean Pakistan.',
+  alternates: {
+    canonical: 'https://hostingocean.net/blog',
+  },
 };
 
 export default function BlogPage() {
