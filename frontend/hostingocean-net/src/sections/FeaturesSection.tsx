@@ -23,7 +23,8 @@ const services = [
       'Employee & staff portals',
       'Booking & support portals',
     ],
-    href: '/contact',
+    href: 'https://solutions.hostingocean.net/services/web-portals',
+    external: true,
   },
   {
     icon: Code2,
@@ -35,7 +36,8 @@ const services = [
       'Business workflow automation',
       'Integrations & internal tools',
     ],
-    href: '/contact',
+    href: 'https://solutions.hostingocean.net/services',
+    external: true,
   },
 ];
 
@@ -54,7 +56,7 @@ export function FeaturesSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {services.map(({ icon: Icon, title, tagline, bullets, href }) => (
+          {services.map(({ icon: Icon, title, tagline, bullets, href, external }) => (
             <div
               key={title}
               className="group relative bg-background border border-border rounded-2xl p-8 hover:border-[#15803D]/50 hover:shadow-lg hover:shadow-[#15803D]/5 transition-all duration-200 flex flex-col"
@@ -74,9 +76,10 @@ export function FeaturesSection() {
               </ul>
               <a
                 href={href}
+                {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 className="inline-flex items-center gap-1 text-sm font-semibold text-[#15803D] hover:gap-2 transition-all mt-auto"
               >
-                {title === 'Web Hosting' ? 'View hosting plans' : 'Talk to our team'}{' '}
+                {title === 'Web Hosting' ? 'View hosting plans' : 'Explore solutions'}{' '}
                 <ArrowRight className="h-4 w-4" />
               </a>
             </div>
