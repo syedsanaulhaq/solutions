@@ -8,6 +8,14 @@ interface MediaItem {
   src: string;
 }
 
+type MediaKind = 'image' | 'video';
+
+interface ViewerState {
+  kind: MediaKind;
+  title: string;
+  src: string;
+}
+
 interface ReplyMedia {
   images: MediaItem[];
   videos: MediaItem[];
@@ -55,7 +63,7 @@ const TRAINING_MEDIA_LIBRARY: Record<string, ReplyMedia> = {
     videos: [
       {
         title: 'Welcome Walkthrough',
-        src: 'https://player.vimeo.com/external/523774138.sd.mp4?s=6f6739f76ce9aaf6b4922d3ec45ca94954d4f7c2&profile_id=164&oauth2_token_id=57447761',
+        src: 'https://www.youtube-nocookie.com/embed?listType=search&list=ice%20cream%20factory%20tour',
       },
     ],
   },
@@ -69,7 +77,7 @@ const TRAINING_MEDIA_LIBRARY: Record<string, ReplyMedia> = {
     videos: [
       {
         title: 'Factory Floor Orientation',
-        src: 'https://player.vimeo.com/external/449627919.sd.mp4?s=6b3168458d7311ca4fb22d2ff8ae9e06a9e0ebc3&profile_id=164&oauth2_token_id=57447761',
+        src: 'https://www.youtube-nocookie.com/embed?listType=search&list=factory%20layout%20training',
       },
     ],
   },
@@ -83,7 +91,7 @@ const TRAINING_MEDIA_LIBRARY: Record<string, ReplyMedia> = {
     videos: [
       {
         title: 'Safety and PPE Reminder',
-        src: 'https://player.vimeo.com/external/449627919.sd.mp4?s=6b3168458d7311ca4fb22d2ff8ae9e06a9e0ebc3&profile_id=164&oauth2_token_id=57447761',
+        src: 'https://www.youtube-nocookie.com/embed?listType=search&list=factory%20safety%20ppe%20training',
       },
     ],
   },
@@ -97,7 +105,7 @@ const TRAINING_MEDIA_LIBRARY: Record<string, ReplyMedia> = {
     videos: [
       {
         title: 'Machine Operation Basics',
-        src: 'https://player.vimeo.com/external/523774138.sd.mp4?s=6f6739f76ce9aaf6b4922d3ec45ca94954d4f7c2&profile_id=164&oauth2_token_id=57447761',
+        src: 'https://www.youtube-nocookie.com/embed?listType=search&list=food%20processing%20machine%20training',
       },
     ],
   },
@@ -111,7 +119,7 @@ const TRAINING_MEDIA_LIBRARY: Record<string, ReplyMedia> = {
     videos: [
       {
         title: 'Packing Line Awareness',
-        src: 'https://player.vimeo.com/external/523774138.sd.mp4?s=6f6739f76ce9aaf6b4922d3ec45ca94954d4f7c2&profile_id=164&oauth2_token_id=57447761',
+        src: 'https://www.youtube-nocookie.com/embed?listType=search&list=packaging%20line%20training',
       },
     ],
   },
@@ -125,7 +133,7 @@ const TRAINING_MEDIA_LIBRARY: Record<string, ReplyMedia> = {
     videos: [
       {
         title: 'Shift Role Briefing',
-        src: 'https://player.vimeo.com/external/449627919.sd.mp4?s=6b3168458d7311ca4fb22d2ff8ae9e06a9e0ebc3&profile_id=164&oauth2_token_id=57447761',
+        src: 'https://www.youtube-nocookie.com/embed?listType=search&list=employee%20orientation%20training',
       },
     ],
   },
@@ -165,6 +173,7 @@ export default function FactoryTrainerPage() {
   const [autoSpeak, setAutoSpeak] = useState(true);
   const [speechError, setSpeechError] = useState('');
   const [voiceMode, setVoiceMode] = useState<'neural' | 'browser'>('browser');
+  const [viewer, setViewer] = useState<ViewerState | null>(null);
 
   const nextIdRef = useRef(2);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -340,7 +349,7 @@ export default function FactoryTrainerPage() {
           text: reply,
           media: mediaForReply(reply),
         };
-        return [...prev, assistantMessage];
+        return [...prev.map((message) => (message.role === 'assistant' ? { ...message, media: undefined } : message)), assistantMessage];
       });
 
       speakText(reply);
@@ -352,7 +361,7 @@ export default function FactoryTrainerPage() {
           text: ERROR_REPLY,
           media: TRAINING_MEDIA_LIBRARY.overview,
         };
-        return [...prev, assistantMessage];
+        return [...prev.map((message) => (message.role === 'assistant' ? { ...message, media: undefined } : message)), assistantMessage];
       });
     } finally {
       setIsLoading(false);
@@ -476,6 +485,36 @@ export default function FactoryTrainerPage() {
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#dbeafe_0%,_#eff6ff_35%,_#f8fafc_70%)] dark:bg-slate-950 px-4 py-10">
       <div className="mx-auto max-w-4xl">
+        {viewer ? (
+          <div className="fixed inset-0 z-[120] flex items-center justify-center bg-slate-950/80 px-4 backdrop-blur-sm">
+            <div className="relative w-full max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-slate-900 shadow-2xl shadow-black/40">
+              <button
+                onClick={() => setViewer(null)}
+                className="absolute right-3 top-3 z-10 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white hover:bg-white/20"
+              >
+                Close
+              </button>
+              <div className="border-b border-white/10 px-6 py-4">
+                <p className="text-xs uppercase tracking-[0.24em] text-blue-200">Training media</p>
+                <h3 className="mt-1 text-lg font-semibold text-white">{viewer.title}</h3>
+              </div>
+              <div className="bg-black">
+                {viewer.kind === 'image' ? (
+                  <img src={viewer.src} alt={viewer.title} className="max-h-[75vh] w-full object-contain" />
+                ) : (
+                  <iframe
+                    src={viewer.src}
+                    title={viewer.title}
+                    className="h-[75vh] w-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+        ) : null}
+
         <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3">
@@ -537,12 +576,17 @@ export default function FactoryTrainerPage() {
                         {msg.media.images.length ? (
                           <div className="grid gap-2 md:grid-cols-2">
                             {msg.media.images.map((item) => (
-                              <figure key={item.title} className="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-950">
+                              <button
+                                key={item.title}
+                                type="button"
+                                onClick={() => setViewer({ kind: 'image', title: item.title, src: item.src })}
+                                className="overflow-hidden rounded-xl border border-slate-200 bg-white text-left transition hover:-translate-y-0.5 hover:shadow-md dark:border-slate-700 dark:bg-slate-950"
+                              >
                                 <img src={item.src} alt={item.title} className="h-28 w-full object-cover" loading="lazy" />
                                 <figcaption className="px-2 py-1 text-[11px] font-medium text-slate-600 dark:text-slate-300">
                                   {item.title}
                                 </figcaption>
-                              </figure>
+                              </button>
                             ))}
                           </div>
                         ) : null}
@@ -550,15 +594,27 @@ export default function FactoryTrainerPage() {
                         {msg.media.videos.length ? (
                           <div className="grid gap-2">
                             {msg.media.videos.map((item) => (
-                              <div key={item.title} className="rounded-xl border border-slate-200 bg-white p-2 dark:border-slate-700 dark:bg-slate-950">
-                                <video className="h-28 w-full rounded-lg object-cover" controls preload="metadata" muted playsInline>
-                                  <source src={item.src} type="video/mp4" />
-                                </video>
+                              <button
+                                key={item.title}
+                                type="button"
+                                onClick={() => setViewer({ kind: 'video', title: item.title, src: item.src })}
+                                className="rounded-xl border border-slate-200 bg-white p-2 text-left transition hover:-translate-y-0.5 hover:shadow-md dark:border-slate-700 dark:bg-slate-950"
+                              >
+                                <div className="relative h-28 overflow-hidden rounded-lg bg-slate-900">
+                                  <div className="absolute inset-0 grid place-items-center bg-gradient-to-br from-blue-600/30 via-slate-900/30 to-black/40 text-white">
+                                    <div className="rounded-full bg-white/15 px-4 py-2 text-xs font-semibold backdrop-blur">
+                                      Click to open video
+                                    </div>
+                                  </div>
+                                  <div className="absolute inset-x-0 bottom-0 bg-black/55 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-white/80">
+                                    YouTube preview
+                                  </div>
+                                </div>
                                 <p className="mt-1 inline-flex items-center gap-1 text-[11px] font-medium text-slate-600 dark:text-slate-300">
                                   <PlayCircle className="h-3 w-3" />
                                   {item.title}
                                 </p>
-                              </div>
+                              </button>
                             ))}
                           </div>
                         ) : null}
