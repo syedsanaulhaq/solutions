@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Bot, Mic, MicOff, PlayCircle, Send, Volume2, VolumeX } from 'lucide-react';
+import { Bot, Loader2, Mic, PlayCircle, Send, Square, Volume2, VolumeX } from 'lucide-react';
 
 interface MediaItem {
   title: string;
@@ -575,6 +575,28 @@ export default function FactoryTrainerPage() {
                   </div>
                 </div>
               ) : null}
+
+              {listening ? (
+                <div className="flex justify-end">
+                  <div className="max-w-[85%] rounded-2xl rounded-br-sm bg-blue-600 px-4 py-2 text-sm text-white">
+                    <p className="inline-flex items-center gap-2">
+                      <span className="inline-flex h-2.5 w-2.5 rounded-full bg-red-300 animate-pulse" />
+                      Recording voice... click mic again to send
+                    </p>
+                  </div>
+                </div>
+              ) : null}
+
+              {isTranscribing ? (
+                <div className="flex justify-end">
+                  <div className="max-w-[85%] rounded-2xl rounded-br-sm bg-blue-600 px-4 py-2 text-sm text-white">
+                    <p className="inline-flex items-center gap-2">
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Uploading and transcribing your voice...
+                    </p>
+                  </div>
+                </div>
+              ) : null}
             </div>
           </div>
 
@@ -587,7 +609,7 @@ export default function FactoryTrainerPage() {
               aria-label={listening ? 'Stop voice recording' : 'Start voice recording'}
               disabled={isLoading || isTranscribing}
             >
-              {listening ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
+              {listening ? <Square className="h-4 w-4" /> : <Mic className="h-5 w-5" />}
             </button>
 
             <input
@@ -600,15 +622,21 @@ export default function FactoryTrainerPage() {
                   void sendMessage();
                 }
               }}
-              placeholder="Ask about safety, machines, workflow, or responsibilities"
+              placeholder={
+                listening
+                  ? 'Recording... click mic again to finish'
+                  : isTranscribing
+                    ? 'Transcribing your voice...'
+                    : 'Ask about safety, machines, workflow, or responsibilities'
+              }
               className="h-11 flex-1 rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
               maxLength={1000}
-              disabled={isLoading || isTranscribing}
+              disabled={isLoading || isTranscribing || listening}
             />
 
             <button
               onClick={() => void sendMessage()}
-              disabled={!input.trim() || isLoading || isTranscribing}
+              disabled={!input.trim() || isLoading || isTranscribing || listening}
               className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
               aria-label="Send"
             >
