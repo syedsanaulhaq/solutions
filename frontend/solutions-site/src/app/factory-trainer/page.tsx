@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { Bot, Mic, MicOff, Send, Volume2, VolumeX } from 'lucide-react';
+import { Bot, Mic, MicOff, PlayCircle, Send, Volume2, VolumeX } from 'lucide-react';
 
 interface Message {
   id: number;
@@ -33,6 +33,32 @@ const QUICK_TOPICS = [
 
 const ERROR_REPLY = 'I could not connect right now. Please try again.';
 
+const TRAINING_IMAGES = [
+  {
+    title: 'Clean Production Floor',
+    src: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    title: 'Cold-Chain Handling',
+    src: 'https://images.unsplash.com/photo-1571689936114-b16146a5c2e9?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    title: 'Quality Check Station',
+    src: 'https://images.unsplash.com/photo-1582719368393-bb71ca45dbb9?auto=format&fit=crop&w=1200&q=80',
+  },
+];
+
+const TRAINING_VIDEOS = [
+  {
+    title: 'Sanitation and PPE Reminder',
+    src: 'https://player.vimeo.com/external/449627919.sd.mp4?s=6b3168458d7311ca4fb22d2ff8ae9e06a9e0ebc3&profile_id=164&oauth2_token_id=57447761',
+  },
+  {
+    title: 'Packing Line Awareness',
+    src: 'https://player.vimeo.com/external/523774138.sd.mp4?s=6f6739f76ce9aaf6b4922d3ec45ca94954d4f7c2&profile_id=164&oauth2_token_id=57447761',
+  },
+];
+
 type BrowserSpeechRecognition = {
   new (): {
     lang: string;
@@ -62,26 +88,75 @@ export default function FactoryTrainerPage() {
   const [listening, setListening] = useState(false);
   const [autoSpeak, setAutoSpeak] = useState(true);
   const [speechError, setSpeechError] = useState('');
+  const [voiceMode, setVoiceMode] = useState<'neural' | 'browser'>('browser');
 
   const nextIdRef = useRef(2);
   const recognitionRef = useRef<InstanceType<BrowserSpeechRecognition> | null>(null);
+  const currentAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const canUseSpeech = useMemo(() => typeof window !== 'undefined' && 'speechSynthesis' in window, []);
 
-  const speakText = useCallback((text: string) => {
-    if (!canUseSpeech || !autoSpeak) return;
-    window.speechSynthesis.cancel();
+  const stopAudio = useCallback(() => {
+    if (currentAudioRef.current) {
+      currentAudioRef.current.pause();
+      currentAudioRef.current = null;
+    }
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+  }, []);
+
+  const speakWithBrowserVoice = useCallback((text: string) => {
+    if (!canUseSpeech) return;
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 0.98;
-    utterance.pitch = 1;
+    utterance.rate = 0.94;
+    utterance.pitch = 0.98;
     utterance.lang = 'en-US';
 
+    const preferredNames = ['Google US English', 'Microsoft Guy Online (Natural)', 'Samantha', 'Daniel'];
     const voices = window.speechSynthesis.getVoices();
-    const preferred = voices.find((v) => v.lang === 'en-US') ?? voices.find((v) => v.lang.startsWith('en'));
-    if (preferred) utterance.voice = preferred;
+    const preferred =
+      preferredNames.map((name) => voices.find((v) => v.name.includes(name))).find(Boolean) ||
+      voices.find((v) => v.lang === 'en-US') ||
+      voices.find((v) => v.lang.startsWith('en'));
 
+    if (preferred) utterance.voice = preferred;
+    setVoiceMode('browser');
     window.speechSynthesis.speak(utterance);
-  }, [autoSpeak, canUseSpeech]);
+  }, [canUseSpeech]);
+
+  const speakText = useCallback(async (text: string) => {
+    if (!autoSpeak) return;
+    stopAudio();
+
+    try {
+      const response = await fetch(`/api/tts-en?q=${encodeURIComponent(text.slice(0, 1200))}`);
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size > 1000) {
+          const url = URL.createObjectURL(blob);
+          const audio = new Audio(url);
+          currentAudioRef.current = audio;
+          setVoiceMode('neural');
+          audio.onended = () => {
+            URL.revokeObjectURL(url);
+            currentAudioRef.current = null;
+          };
+          audio.onerror = () => {
+            URL.revokeObjectURL(url);
+            currentAudioRef.current = null;
+            speakWithBrowserVoice(text);
+          };
+          await audio.play();
+          return;
+        }
+      }
+    } catch {
+      // Fallback below
+    }
+
+    speakWithBrowserVoice(text);
+  }, [autoSpeak, speakWithBrowserVoice, stopAudio]);
 
   const sendMessage = useCallback(async (rawText?: string) => {
     const text = (rawText ?? input).trim();
@@ -160,8 +235,9 @@ export default function FactoryTrainerPage() {
 
     recognitionRef.current = recognition;
     setListening(true);
+    stopAudio();
     recognition.start();
-  }, []);
+  }, [stopAudio]);
 
   const stopListening = useCallback(() => {
     recognitionRef.current?.stop();
@@ -170,8 +246,38 @@ export default function FactoryTrainerPage() {
   }, []);
 
   return (
-    <div className="bg-slate-50 dark:bg-slate-950 min-h-screen px-4 py-10">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#dbeafe_0%,_#eff6ff_35%,_#f8fafc_70%)] dark:bg-slate-950 px-4 py-10">
       <div className="mx-auto max-w-4xl">
+        <div className="mb-6 rounded-3xl border border-blue-100 bg-white/80 p-5 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900">
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Training Comfort Zone</h2>
+          <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">
+            Short visual orientation clips and calming factory snapshots to help new employees feel confident before starting.
+          </p>
+
+          <div className="mt-4 grid gap-3 md:grid-cols-3">
+            {TRAINING_IMAGES.map((item) => (
+              <figure key={item.title} className="overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
+                <img src={item.src} alt={item.title} className="h-36 w-full object-cover" loading="lazy" />
+                <figcaption className="px-3 py-2 text-xs font-medium text-slate-600 dark:text-slate-300">{item.title}</figcaption>
+              </figure>
+            ))}
+          </div>
+
+          <div className="mt-4 grid gap-3 md:grid-cols-2">
+            {TRAINING_VIDEOS.map((item) => (
+              <div key={item.title} className="rounded-2xl border border-slate-200 bg-white p-2 dark:border-slate-700 dark:bg-slate-900">
+                <video className="h-44 w-full rounded-xl object-cover" controls preload="metadata" muted playsInline>
+                  <source src={item.src} type="video/mp4" />
+                </video>
+                <p className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-slate-600 dark:text-slate-300">
+                  <PlayCircle className="h-3.5 w-3.5" />
+                  {item.title}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3">
@@ -182,6 +288,9 @@ export default function FactoryTrainerPage() {
                 <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Ice Cream Factory AI Trainer</h1>
                 <p className="text-sm text-slate-600 dark:text-slate-300">
                   Voice onboarding assistant for new factory employees
+                </p>
+                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                  Voice engine: {voiceMode === 'neural' ? 'Neural voice (same style as your other demos)' : 'Browser fallback voice'}
                 </p>
               </div>
             </div>
