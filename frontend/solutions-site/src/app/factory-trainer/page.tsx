@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Bot, Mic, MicOff, PlayCircle, Send, Volume2, VolumeX } from 'lucide-react';
 
 interface MediaItem {
@@ -156,39 +156,20 @@ function mediaForReply(text: string): ReplyMedia | undefined {
   return undefined;
 }
 
-type BrowserSpeechRecognition = {
-  new (): {
-    lang: string;
-    interimResults: boolean;
-    maxAlternatives: number;
-    onresult: ((event: { results: ArrayLike<ArrayLike<{ transcript: string }>> }) => void) | null;
-    onerror: ((event: { error: string }) => void) | null;
-    onend: (() => void) | null;
-    start: () => void;
-    stop: () => void;
-  };
-};
-
-function getSpeechRecognitionCtor(): BrowserSpeechRecognition | null {
-  if (typeof window === 'undefined') return null;
-  const win = window as typeof window & {
-    SpeechRecognition?: BrowserSpeechRecognition;
-    webkitSpeechRecognition?: BrowserSpeechRecognition;
-  };
-  return win.SpeechRecognition ?? win.webkitSpeechRecognition ?? null;
-}
-
 export default function FactoryTrainerPage() {
   const [messages, setMessages] = useState<Message[]>([START_MESSAGE]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [listening, setListening] = useState(false);
+  const [isTranscribing, setIsTranscribing] = useState(false);
   const [autoSpeak, setAutoSpeak] = useState(true);
   const [speechError, setSpeechError] = useState('');
   const [voiceMode, setVoiceMode] = useState<'neural' | 'browser'>('browser');
 
   const nextIdRef = useRef(2);
-  const recognitionRef = useRef<InstanceType<BrowserSpeechRecognition> | null>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
+  const micStreamRef = useRef<MediaStream | null>(null);
   const currentAudioRef = useRef<HTMLAudioElement | null>(null);
   const speechSessionRef = useRef(0);
 
@@ -378,50 +359,118 @@ export default function FactoryTrainerPage() {
     }
   }, [input, isLoading, messages, speakText]);
 
+  useEffect(() => {
+    return () => {
+      if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+        mediaRecorderRef.current.stop();
+      }
+      if (micStreamRef.current) {
+        micStreamRef.current.getTracks().forEach((track) => track.stop());
+        micStreamRef.current = null;
+      }
+      stopAudio();
+    };
+  }, [stopAudio]);
+
   const startListening = useCallback(() => {
     setSpeechError('');
-    const Ctor = getSpeechRecognitionCtor();
-    if (!Ctor) {
-      setSpeechError('Voice input is not supported in this browser. Use Chrome or Edge.');
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || typeof MediaRecorder === 'undefined') {
+      setSpeechError('Voice recording is not supported in this browser. Use Chrome or Edge over HTTPS.');
       return;
     }
 
-    if (recognitionRef.current) {
-      recognitionRef.current.stop();
-      recognitionRef.current = null;
-    }
-
-    const recognition = new Ctor();
-    recognition.lang = 'en-US';
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-
-    recognition.onresult = (event) => {
-      const transcript = event.results?.[0]?.[0]?.transcript?.trim() ?? '';
-      if (transcript) {
-        setInput(transcript);
-      }
-    };
-
-    recognition.onerror = (event) => {
-      setSpeechError(`Microphone error: ${event.error}`);
-      setListening(false);
-    };
-
-    recognition.onend = () => {
-      setListening(false);
-    };
-
-    recognitionRef.current = recognition;
-    setListening(true);
     stopAudio();
-    recognition.start();
-  }, [stopAudio]);
+
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then((stream) => {
+        micStreamRef.current = stream;
+        audioChunksRef.current = [];
+
+        const mimeType = ['audio/webm', 'audio/ogg', 'audio/mp4'].find((type) => MediaRecorder.isTypeSupported(type));
+        const recorder = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
+
+        recorder.ondataavailable = (event) => {
+          if (event.data.size > 0) {
+            audioChunksRef.current.push(event.data);
+          }
+        };
+
+        recorder.onerror = () => {
+          setSpeechError('Microphone recording failed. Please try again.');
+          setListening(false);
+        };
+
+        recorder.onstop = async () => {
+          setListening(false);
+          setIsTranscribing(true);
+
+          if (micStreamRef.current) {
+            micStreamRef.current.getTracks().forEach((track) => track.stop());
+            micStreamRef.current = null;
+          }
+
+          if (!audioChunksRef.current.length) {
+            setSpeechError('No voice captured. Please try again.');
+            setIsTranscribing(false);
+            return;
+          }
+
+          try {
+            const blobType = recorder.mimeType || 'audio/webm';
+            const extension = blobType.includes('ogg') ? 'ogg' : blobType.includes('mp4') ? 'mp4' : 'webm';
+            const audioBlob = new Blob(audioChunksRef.current, { type: blobType });
+
+            const formData = new FormData();
+            formData.append('file', audioBlob, `voice.${extension}`);
+
+            const response = await fetch('/api/stt-en', {
+              method: 'POST',
+              body: formData,
+            });
+
+            const data = await response.json().catch(() => ({}));
+            const transcript = typeof data?.text === 'string' ? data.text.trim() : '';
+
+            if (!response.ok || !transcript) {
+              setSpeechError('Could not transcribe voice. Please try again.');
+            } else {
+              setSpeechError('');
+              setInput(transcript);
+              void sendMessage(transcript);
+            }
+          } catch {
+            setSpeechError('Voice upload failed. Please try again.');
+          } finally {
+            audioChunksRef.current = [];
+            mediaRecorderRef.current = null;
+            setIsTranscribing(false);
+          }
+        };
+
+        mediaRecorderRef.current = recorder;
+        setListening(true);
+        recorder.start();
+      })
+      .catch((error: Error & { name?: string }) => {
+        const code = error?.name || 'UnknownError';
+        if (code === 'NotAllowedError' || code === 'PermissionDeniedError') {
+          setSpeechError('Microphone permission denied. Please allow mic access and try again.');
+        } else if (code === 'NotFoundError') {
+          setSpeechError('No microphone found. Connect a microphone and try again.');
+        } else {
+          setSpeechError('Unable to access microphone. Please try again.');
+        }
+      });
+  }, [sendMessage, stopAudio]);
 
   const stopListening = useCallback(() => {
-    recognitionRef.current?.stop();
-    recognitionRef.current = null;
-    setListening(false);
+    const recorder = mediaRecorderRef.current;
+    if (recorder && recorder.state !== 'inactive') {
+      recorder.stop();
+    } else {
+      setListening(false);
+    }
   }, []);
 
   return (
@@ -535,7 +584,8 @@ export default function FactoryTrainerPage() {
               className={`flex h-11 w-11 items-center justify-center rounded-xl text-white ${
                 listening ? 'bg-red-500 hover:bg-red-600' : 'bg-slate-700 hover:bg-slate-800'
               }`}
-              aria-label={listening ? 'Stop voice input' : 'Start voice input'}
+              aria-label={listening ? 'Stop voice recording' : 'Start voice recording'}
+              disabled={isLoading || isTranscribing}
             >
               {listening ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
             </button>
@@ -553,12 +603,12 @@ export default function FactoryTrainerPage() {
               placeholder="Ask about safety, machines, workflow, or responsibilities"
               className="h-11 flex-1 rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
               maxLength={1000}
-              disabled={isLoading}
+              disabled={isLoading || isTranscribing}
             />
 
             <button
               onClick={() => void sendMessage()}
-              disabled={!input.trim() || isLoading}
+              disabled={!input.trim() || isLoading || isTranscribing}
               className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
               aria-label="Send"
             >
@@ -567,6 +617,7 @@ export default function FactoryTrainerPage() {
           </div>
 
           {speechError ? <p className="mt-2 text-sm text-red-600">{speechError}</p> : null}
+          {isTranscribing ? <p className="mt-2 text-sm text-blue-600">Uploading and transcribing your voice...</p> : null}
 
           <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
             Tip: Ask &quot;Start onboarding&quot; for a full voice-based orientation for new employees.
