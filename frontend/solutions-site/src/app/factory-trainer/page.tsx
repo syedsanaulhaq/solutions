@@ -93,10 +93,12 @@ export default function FactoryTrainerPage() {
   const nextIdRef = useRef(2);
   const recognitionRef = useRef<InstanceType<BrowserSpeechRecognition> | null>(null);
   const currentAudioRef = useRef<HTMLAudioElement | null>(null);
+  const speechSessionRef = useRef(0);
 
   const canUseSpeech = useMemo(() => typeof window !== 'undefined' && 'speechSynthesis' in window, []);
 
   const stopAudio = useCallback(() => {
+    speechSessionRef.current += 1;
     if (currentAudioRef.current) {
       currentAudioRef.current.pause();
       currentAudioRef.current = null;
@@ -106,57 +108,127 @@ export default function FactoryTrainerPage() {
     }
   }, []);
 
-  const speakWithBrowserVoice = useCallback((text: string) => {
-    if (!canUseSpeech) return;
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 0.94;
-    utterance.pitch = 0.98;
-    utterance.lang = 'en-US';
+  const splitForSpeech = useCallback((text: string): string[] => {
+    const normalized = text.replace(/\s+/g, ' ').trim();
+    if (!normalized) return [];
 
-    const preferredNames = ['Google US English', 'Microsoft Guy Online (Natural)', 'Samantha', 'Daniel'];
-    const voices = window.speechSynthesis.getVoices();
-    const preferred =
-      preferredNames.map((name) => voices.find((v) => v.name.includes(name))).find(Boolean) ||
-      voices.find((v) => v.lang === 'en-US') ||
-      voices.find((v) => v.lang.startsWith('en'));
+    const sentenceLike = normalized
+      .split(/(?<=[.!?])\s+/)
+      .map((part) => part.trim())
+      .filter(Boolean);
 
-    if (preferred) utterance.voice = preferred;
-    setVoiceMode('browser');
-    window.speechSynthesis.speak(utterance);
+    const chunks: string[] = [];
+    let current = '';
+
+    for (const part of sentenceLike) {
+      const next = current ? `${current} ${part}` : part;
+      if (next.length <= 220) {
+        current = next;
+      } else {
+        if (current) chunks.push(current);
+        if (part.length <= 220) {
+          current = part;
+        } else {
+          const words = part.split(' ');
+          let buffer = '';
+          for (const word of words) {
+            const candidate = buffer ? `${buffer} ${word}` : word;
+            if (candidate.length <= 220) {
+              buffer = candidate;
+            } else {
+              if (buffer) chunks.push(buffer);
+              buffer = word;
+            }
+          }
+          current = buffer;
+        }
+      }
+    }
+
+    if (current) chunks.push(current);
+    return chunks;
+  }, []);
+
+  const playNeuralChunk = useCallback(async (chunk: string, session: number): Promise<boolean> => {
+    try {
+      const response = await fetch(`/api/tts-en?q=${encodeURIComponent(chunk)}`);
+      if (!response.ok) return false;
+
+      const blob = await response.blob();
+      if (blob.size <= 1000) return false;
+
+      const url = URL.createObjectURL(blob);
+      const audio = new Audio(url);
+      currentAudioRef.current = audio;
+      setVoiceMode('neural');
+
+      const ok = await new Promise<boolean>((resolve) => {
+        audio.onended = () => {
+          URL.revokeObjectURL(url);
+          currentAudioRef.current = null;
+          resolve(true);
+        };
+        audio.onerror = () => {
+          URL.revokeObjectURL(url);
+          currentAudioRef.current = null;
+          resolve(false);
+        };
+        audio.play().catch(() => {
+          URL.revokeObjectURL(url);
+          currentAudioRef.current = null;
+          resolve(false);
+        });
+      });
+
+      return session === speechSessionRef.current ? ok : false;
+    } catch {
+      return false;
+    }
+  }, []);
+
+  const playBrowserChunk = useCallback((chunk: string, session: number) => {
+    return new Promise<void>((resolve) => {
+      if (!canUseSpeech || session !== speechSessionRef.current) {
+        resolve();
+        return;
+      }
+
+      const utterance = new SpeechSynthesisUtterance(chunk);
+      utterance.rate = 0.94;
+      utterance.pitch = 0.98;
+      utterance.lang = 'en-US';
+
+      const preferredNames = ['Google US English', 'Microsoft Guy Online (Natural)', 'Samantha', 'Daniel'];
+      const voices = window.speechSynthesis.getVoices();
+      const preferred =
+        preferredNames.map((name) => voices.find((v) => v.name.includes(name))).find(Boolean) ||
+        voices.find((v) => v.lang === 'en-US') ||
+        voices.find((v) => v.lang.startsWith('en'));
+
+      if (preferred) utterance.voice = preferred;
+      setVoiceMode('browser');
+
+      utterance.onend = () => resolve();
+      utterance.onerror = () => resolve();
+      window.speechSynthesis.speak(utterance);
+    });
   }, [canUseSpeech]);
 
   const speakText = useCallback(async (text: string) => {
     if (!autoSpeak) return;
     stopAudio();
 
-    try {
-      const response = await fetch(`/api/tts-en?q=${encodeURIComponent(text.slice(0, 1200))}`);
-      if (response.ok) {
-        const blob = await response.blob();
-        if (blob.size > 1000) {
-          const url = URL.createObjectURL(blob);
-          const audio = new Audio(url);
-          currentAudioRef.current = audio;
-          setVoiceMode('neural');
-          audio.onended = () => {
-            URL.revokeObjectURL(url);
-            currentAudioRef.current = null;
-          };
-          audio.onerror = () => {
-            URL.revokeObjectURL(url);
-            currentAudioRef.current = null;
-            speakWithBrowserVoice(text);
-          };
-          await audio.play();
-          return;
-        }
-      }
-    } catch {
-      // Fallback below
-    }
+    const session = speechSessionRef.current;
+    const chunks = splitForSpeech(text);
 
-    speakWithBrowserVoice(text);
-  }, [autoSpeak, speakWithBrowserVoice, stopAudio]);
+    for (const chunk of chunks) {
+      if (!autoSpeak || session !== speechSessionRef.current) return;
+      const neuralOk = await playNeuralChunk(chunk, session);
+      if (!neuralOk) {
+        await playBrowserChunk(chunk, session);
+      }
+    }
+  }, [autoSpeak, playBrowserChunk, playNeuralChunk, splitForSpeech, stopAudio]);
 
   const sendMessage = useCallback(async (rawText?: string) => {
     const text = (rawText ?? input).trim();
