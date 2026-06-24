@@ -3,10 +3,21 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { Bot, Mic, MicOff, PlayCircle, Send, Volume2, VolumeX } from 'lucide-react';
 
+interface MediaItem {
+  title: string;
+  src: string;
+}
+
+interface ReplyMedia {
+  images: MediaItem[];
+  videos: MediaItem[];
+}
+
 interface Message {
   id: number;
   role: 'assistant' | 'user';
   text: string;
+  media?: ReplyMedia;
 }
 
 interface ApiHistory {
@@ -33,31 +44,117 @@ const QUICK_TOPICS = [
 
 const ERROR_REPLY = 'I could not connect right now. Please try again.';
 
-const TRAINING_IMAGES = [
-  {
-    title: 'Clean Production Floor',
-    src: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80',
+const TRAINING_MEDIA_LIBRARY: Record<string, ReplyMedia> = {
+  overview: {
+    images: [
+      {
+        title: 'Factory Overview',
+        src: 'https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=1200&q=80',
+      },
+    ],
+    videos: [
+      {
+        title: 'Welcome Walkthrough',
+        src: 'https://player.vimeo.com/external/523774138.sd.mp4?s=6f6739f76ce9aaf6b4922d3ec45ca94954d4f7c2&profile_id=164&oauth2_token_id=57447761',
+      },
+    ],
   },
-  {
-    title: 'Cold-Chain Handling',
-    src: 'https://images.unsplash.com/photo-1571689936114-b16146a5c2e9?auto=format&fit=crop&w=1200&q=80',
+  layout: {
+    images: [
+      {
+        title: 'Production Layout',
+        src: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1200&q=80',
+      },
+    ],
+    videos: [
+      {
+        title: 'Factory Floor Orientation',
+        src: 'https://player.vimeo.com/external/449627919.sd.mp4?s=6b3168458d7311ca4fb22d2ff8ae9e06a9e0ebc3&profile_id=164&oauth2_token_id=57447761',
+      },
+    ],
   },
-  {
-    title: 'Quality Check Station',
-    src: 'https://images.unsplash.com/photo-1582719368393-bb71ca45dbb9?auto=format&fit=crop&w=1200&q=80',
+  safety: {
+    images: [
+      {
+        title: 'PPE and Hygiene',
+        src: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80',
+      },
+    ],
+    videos: [
+      {
+        title: 'Safety and PPE Reminder',
+        src: 'https://player.vimeo.com/external/449627919.sd.mp4?s=6b3168458d7311ca4fb22d2ff8ae9e06a9e0ebc3&profile_id=164&oauth2_token_id=57447761',
+      },
+    ],
   },
-];
+  machine: {
+    images: [
+      {
+        title: 'Machine Checkpoints',
+        src: 'https://images.unsplash.com/photo-1581092160613-7ddc8a8f9a63?auto=format&fit=crop&w=1200&q=80',
+      },
+    ],
+    videos: [
+      {
+        title: 'Machine Operation Basics',
+        src: 'https://player.vimeo.com/external/523774138.sd.mp4?s=6f6739f76ce9aaf6b4922d3ec45ca94954d4f7c2&profile_id=164&oauth2_token_id=57447761',
+      },
+    ],
+  },
+  workflow: {
+    images: [
+      {
+        title: 'Daily Workflow Board',
+        src: 'https://images.unsplash.com/photo-1582719368393-bb71ca45dbb9?auto=format&fit=crop&w=1200&q=80',
+      },
+    ],
+    videos: [
+      {
+        title: 'Packing Line Awareness',
+        src: 'https://player.vimeo.com/external/523774138.sd.mp4?s=6f6739f76ce9aaf6b4922d3ec45ca94954d4f7c2&profile_id=164&oauth2_token_id=57447761',
+      },
+    ],
+  },
+  role: {
+    images: [
+      {
+        title: 'Team Responsibilities',
+        src: 'https://images.unsplash.com/photo-1571689936114-b16146a5c2e9?auto=format&fit=crop&w=1200&q=80',
+      },
+    ],
+    videos: [
+      {
+        title: 'Shift Role Briefing',
+        src: 'https://player.vimeo.com/external/449627919.sd.mp4?s=6b3168458d7311ca4fb22d2ff8ae9e06a9e0ebc3&profile_id=164&oauth2_token_id=57447761',
+      },
+    ],
+  },
+};
 
-const TRAINING_VIDEOS = [
-  {
-    title: 'Sanitation and PPE Reminder',
-    src: 'https://player.vimeo.com/external/449627919.sd.mp4?s=6b3168458d7311ca4fb22d2ff8ae9e06a9e0ebc3&profile_id=164&oauth2_token_id=57447761',
-  },
-  {
-    title: 'Packing Line Awareness',
-    src: 'https://player.vimeo.com/external/523774138.sd.mp4?s=6f6739f76ce9aaf6b4922d3ec45ca94954d4f7c2&profile_id=164&oauth2_token_id=57447761',
-  },
-];
+function mediaForReply(text: string): ReplyMedia | undefined {
+  const lower = text.toLowerCase();
+
+  if (lower.includes('safety') || lower.includes('ppe') || lower.includes('hygiene') || lower.includes('emergency')) {
+    return TRAINING_MEDIA_LIBRARY.safety;
+  }
+  if (lower.includes('machine') || lower.includes('equipment') || lower.includes('jam') || lower.includes('lockout')) {
+    return TRAINING_MEDIA_LIBRARY.machine;
+  }
+  if (lower.includes('layout') || lower.includes('zone') || lower.includes('floor') || lower.includes('station')) {
+    return TRAINING_MEDIA_LIBRARY.layout;
+  }
+  if (lower.includes('workflow') || lower.includes('daily') || lower.includes('shift') || lower.includes('process')) {
+    return TRAINING_MEDIA_LIBRARY.workflow;
+  }
+  if (lower.includes('responsibilit') || lower.includes('role') || lower.includes('duty')) {
+    return TRAINING_MEDIA_LIBRARY.role;
+  }
+  if (lower.includes('overview') || lower.includes('company') || lower.includes('welcome') || lower.includes('onboarding')) {
+    return TRAINING_MEDIA_LIBRARY.overview;
+  }
+
+  return undefined;
+}
 
 type BrowserSpeechRecognition = {
   new (): {
@@ -256,14 +353,24 @@ export default function FactoryTrainerPage() {
       const reply: string = data?.reply || ERROR_REPLY;
 
       setMessages((prev) => {
-        const assistantMessage: Message = { id: nextIdRef.current++, role: 'assistant', text: reply };
+        const assistantMessage: Message = {
+          id: nextIdRef.current++,
+          role: 'assistant',
+          text: reply,
+          media: mediaForReply(reply),
+        };
         return [...prev, assistantMessage];
       });
 
       speakText(reply);
     } catch {
       setMessages((prev) => {
-        const assistantMessage: Message = { id: nextIdRef.current++, role: 'assistant', text: ERROR_REPLY };
+        const assistantMessage: Message = {
+          id: nextIdRef.current++,
+          role: 'assistant',
+          text: ERROR_REPLY,
+          media: TRAINING_MEDIA_LIBRARY.overview,
+        };
         return [...prev, assistantMessage];
       });
     } finally {
@@ -320,36 +427,6 @@ export default function FactoryTrainerPage() {
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#dbeafe_0%,_#eff6ff_35%,_#f8fafc_70%)] dark:bg-slate-950 px-4 py-10">
       <div className="mx-auto max-w-4xl">
-        <div className="mb-6 rounded-3xl border border-blue-100 bg-white/80 p-5 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900">
-          <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Training Comfort Zone</h2>
-          <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">
-            Short visual orientation clips and calming factory snapshots to help new employees feel confident before starting.
-          </p>
-
-          <div className="mt-4 grid gap-3 md:grid-cols-3">
-            {TRAINING_IMAGES.map((item) => (
-              <figure key={item.title} className="overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
-                <img src={item.src} alt={item.title} className="h-36 w-full object-cover" loading="lazy" />
-                <figcaption className="px-3 py-2 text-xs font-medium text-slate-600 dark:text-slate-300">{item.title}</figcaption>
-              </figure>
-            ))}
-          </div>
-
-          <div className="mt-4 grid gap-3 md:grid-cols-2">
-            {TRAINING_VIDEOS.map((item) => (
-              <div key={item.title} className="rounded-2xl border border-slate-200 bg-white p-2 dark:border-slate-700 dark:bg-slate-900">
-                <video className="h-44 w-full rounded-xl object-cover" controls preload="metadata" muted playsInline>
-                  <source src={item.src} type="video/mp4" />
-                </video>
-                <p className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-slate-600 dark:text-slate-300">
-                  <PlayCircle className="h-3.5 w-3.5" />
-                  {item.title}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
         <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3">
@@ -404,7 +481,40 @@ export default function FactoryTrainerPage() {
                         : 'bg-white text-slate-800 border border-slate-200 rounded-bl-sm dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700'
                     }`}
                   >
-                    {msg.text}
+                    <p>{msg.text}</p>
+
+                    {msg.role === 'assistant' && msg.media ? (
+                      <div className="mt-3 space-y-2">
+                        {msg.media.images.length ? (
+                          <div className="grid gap-2 md:grid-cols-2">
+                            {msg.media.images.map((item) => (
+                              <figure key={item.title} className="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-950">
+                                <img src={item.src} alt={item.title} className="h-28 w-full object-cover" loading="lazy" />
+                                <figcaption className="px-2 py-1 text-[11px] font-medium text-slate-600 dark:text-slate-300">
+                                  {item.title}
+                                </figcaption>
+                              </figure>
+                            ))}
+                          </div>
+                        ) : null}
+
+                        {msg.media.videos.length ? (
+                          <div className="grid gap-2">
+                            {msg.media.videos.map((item) => (
+                              <div key={item.title} className="rounded-xl border border-slate-200 bg-white p-2 dark:border-slate-700 dark:bg-slate-950">
+                                <video className="h-28 w-full rounded-lg object-cover" controls preload="metadata" muted playsInline>
+                                  <source src={item.src} type="video/mp4" />
+                                </video>
+                                <p className="mt-1 inline-flex items-center gap-1 text-[11px] font-medium text-slate-600 dark:text-slate-300">
+                                  <PlayCircle className="h-3 w-3" />
+                                  {item.title}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        ) : null}
+                      </div>
+                    ) : null}
                   </div>
                 </div>
               ))}
