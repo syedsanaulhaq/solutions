@@ -60,6 +60,17 @@ interface ChatMessage {
   content: string;
 }
 
+function buildSystemPrompt(customAgendaText?: string): string {
+  if (!customAgendaText) return SYSTEM_PROMPT;
+
+  return `${SYSTEM_PROMPT}
+
+Custom agenda uploaded by admin (treat this as highest-priority source of training structure):
+${customAgendaText}
+
+When you answer, align day/module references to this uploaded agenda first.`;
+}
+
 const FALLBACK_REPLY =
   'I am having trouble connecting right now. Please continue with your PST-2026 schedule and try again in a moment.';
 
@@ -70,7 +81,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
     }
 
-    const { message, history } = body as { message?: unknown; history?: unknown };
+    const { message, history, agendaText } = body as { message?: unknown; history?: unknown; agendaText?: unknown };
 
     if (typeof message !== 'string' || !message.trim()) {
       return NextResponse.json({ error: 'Message must be a non-empty string' }, { status: 400 });
@@ -79,6 +90,11 @@ export async function POST(request: NextRequest) {
     if (message.length > 1000) {
       return NextResponse.json({ error: 'Message exceeds maximum length of 1000 characters' }, { status: 400 });
     }
+
+    const safeAgendaText =
+      typeof agendaText === 'string' && agendaText.trim()
+        ? agendaText.replace(/\s+/g, ' ').trim().slice(0, 12000)
+        : undefined;
 
     const apiKey = process.env.AI_API_KEY;
     const providerName = (process.env.AI_PROVIDER ?? 'openai') as Provider;
@@ -107,7 +123,7 @@ export async function POST(request: NextRequest) {
       : [];
 
     const chatMessages = [
-      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'system', content: buildSystemPrompt(safeAgendaText) },
       ...safeHistory,
       { role: 'user', content: message.trim() },
     ];

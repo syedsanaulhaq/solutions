@@ -33,6 +33,8 @@ interface ApiHistory {
   content: string;
 }
 
+const AGENDA_STORAGE_KEY = 'ecpTrainerCustomAgendaV1';
+
 const START_MESSAGE: Message = {
   id: 1,
   role: 'assistant',
@@ -174,6 +176,11 @@ export default function EcpTrainerPage() {
   const [speechError, setSpeechError] = useState('');
   const [voiceMode, setVoiceMode] = useState<'neural' | 'browser'>('browser');
   const [viewer, setViewer] = useState<ViewerState | null>(null);
+  const [agendaText, setAgendaText] = useState('');
+  const [agendaSummary, setAgendaSummary] = useState<string[]>([]);
+  const [agendaStatus, setAgendaStatus] = useState('');
+  const [isUploadingAgenda, setIsUploadingAgenda] = useState(false);
+  const [showAdminPanel, setShowAdminPanel] = useState(false);
 
   const nextIdRef = useRef(2);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -336,7 +343,7 @@ export default function EcpTrainerPage() {
       const res = await fetch('/api/ecp-trainer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text, history }),
+        body: JSON.stringify({ message: text, history, agendaText }),
       });
 
       const data = await res.json();
@@ -366,7 +373,15 @@ export default function EcpTrainerPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [input, isLoading, messages, speakText]);
+  }, [agendaText, input, isLoading, messages, speakText]);
+
+  useEffect(() => {
+    const stored = typeof window !== 'undefined' ? window.localStorage.getItem(AGENDA_STORAGE_KEY) : null;
+    if (stored) {
+      setAgendaText(stored);
+      setAgendaStatus('Custom agenda loaded from local storage.');
+    }
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -473,6 +488,49 @@ export default function EcpTrainerPage() {
       });
   }, [sendMessage, stopAudio]);
 
+  const uploadAgenda = useCallback(async (file: File) => {
+    setAgendaStatus('Uploading and parsing agenda...');
+    setIsUploadingAgenda(true);
+
+    try {
+      const form = new FormData();
+      form.append('file', file);
+
+      const response = await fetch('/api/ecp-trainer/agenda', {
+        method: 'POST',
+        body: form,
+      });
+
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || typeof data?.agendaText !== 'string') {
+        setAgendaStatus(data?.error || 'Could not parse agenda file.');
+        return;
+      }
+
+      setAgendaText(data.agendaText);
+      setAgendaSummary(Array.isArray(data?.summary) ? data.summary : []);
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(AGENDA_STORAGE_KEY, data.agendaText);
+      }
+
+      const clipped = data?.clipped ? ' (text clipped for performance)' : '';
+      setAgendaStatus(`Agenda uploaded successfully${clipped}.`);
+    } catch {
+      setAgendaStatus('Failed to upload agenda. Please try again.');
+    } finally {
+      setIsUploadingAgenda(false);
+    }
+  }, []);
+
+  const clearAgenda = useCallback(() => {
+    setAgendaText('');
+    setAgendaSummary([]);
+    setAgendaStatus('Custom agenda cleared.');
+    if (typeof window !== 'undefined') {
+      window.localStorage.removeItem(AGENDA_STORAGE_KEY);
+    }
+  }, []);
+
   const stopListening = useCallback(() => {
     const recorder = mediaRecorderRef.current;
     if (recorder && recorder.state !== 'inactive') {
@@ -516,6 +574,82 @@ export default function EcpTrainerPage() {
         ) : null}
 
         <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <div className="mb-5 rounded-2xl border border-blue-200 bg-blue-50/70 p-4 dark:border-blue-900 dark:bg-blue-950/20">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <p className="text-sm font-semibold text-blue-900 dark:text-blue-200">Admin Agenda Loader</p>
+              <button
+                type="button"
+                onClick={() => setShowAdminPanel((v) => !v)}
+                className="rounded-lg border border-blue-300 px-2.5 py-1 text-xs font-medium text-blue-800 hover:bg-blue-100 dark:border-blue-700 dark:text-blue-200 dark:hover:bg-blue-900/50"
+              >
+                {showAdminPanel ? 'Hide' : 'Show'}
+              </button>
+            </div>
+
+            {showAdminPanel ? (
+              <div className="mt-3 space-y-3">
+                <div className="flex flex-wrap items-center gap-2">
+                  <label className="inline-flex cursor-pointer items-center rounded-lg border border-blue-300 bg-white px-3 py-1.5 text-xs font-medium text-blue-800 hover:bg-blue-100 dark:border-blue-700 dark:bg-slate-900 dark:text-blue-200 dark:hover:bg-blue-900/40">
+                    Upload .docx/.txt/.md
+                    <input
+                      type="file"
+                      accept=".docx,.txt,.md"
+                      className="hidden"
+                      onChange={(event) => {
+                        const file = event.target.files?.[0];
+                        if (file) {
+                          void uploadAgenda(file);
+                        }
+                        event.currentTarget.value = '';
+                      }}
+                      disabled={isUploadingAgenda}
+                    />
+                  </label>
+                  <button
+                    type="button"
+                    onClick={clearAgenda}
+                    className="rounded-lg border border-blue-300 px-3 py-1.5 text-xs font-medium text-blue-800 hover:bg-blue-100 dark:border-blue-700 dark:text-blue-200 dark:hover:bg-blue-900/40"
+                  >
+                    Clear custom agenda
+                  </button>
+                </div>
+
+                <textarea
+                  value={agendaText}
+                  onChange={(event) => setAgendaText(event.target.value)}
+                  placeholder="Optional: paste full agenda text here..."
+                  className="h-28 w-full rounded-xl border border-blue-200 bg-white px-3 py-2 text-xs text-slate-800 outline-none focus:ring-2 focus:ring-blue-500 dark:border-blue-800 dark:bg-slate-900 dark:text-slate-100"
+                />
+
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (typeof window !== 'undefined') {
+                        window.localStorage.setItem(AGENDA_STORAGE_KEY, agendaText);
+                      }
+                      setAgendaStatus('Agenda text saved for this browser.');
+                    }}
+                    className="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700"
+                  >
+                    Save agenda text
+                  </button>
+                  {agendaText ? <span className="text-xs text-blue-900 dark:text-blue-200">Custom agenda active</span> : null}
+                </div>
+
+                {agendaSummary.length ? (
+                  <div className="rounded-lg border border-blue-200 bg-white p-2 text-xs text-slate-700 dark:border-blue-800 dark:bg-slate-900 dark:text-slate-200">
+                    {agendaSummary.map((line) => (
+                      <p key={line}>{line}</p>
+                    ))}
+                  </div>
+                ) : null}
+
+                {agendaStatus ? <p className="text-xs text-blue-900 dark:text-blue-200">{agendaStatus}</p> : null}
+              </div>
+            ) : null}
+          </div>
+
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-600 text-white">
