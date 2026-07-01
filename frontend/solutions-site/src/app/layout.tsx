@@ -1,14 +1,10 @@
 import { Inter } from 'next/font/google';
 import '../styles/globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
-import { Navbar } from '@/components/Navbar';
-import { Footer } from '@/components/Footer';
-import { QuoteModalRoot } from '@/components/QuoteModalRoot';
-import { ChatbotWidget } from '@/components/ChatbotWidget';
 import { Analytics } from '@/components/Analytics';
-import AnnouncementBanner from '@/components/AnnouncementBanner';
 import { defaultMetadata, organizationSchema, websiteSchema } from '@/lib/seo';
 import { CurrencyProvider } from '@/components/CurrencyProvider';
+import { AppChrome } from '@/components/AppChrome';
 
 export { defaultMetadata as metadata };
 
@@ -44,12 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             Skip to main content
           </a>
           <CurrencyProvider>
-            <AnnouncementBanner />
-            <Navbar />
-            <main id="main-content" className="min-h-screen">{children}</main>
-            <Footer />
-            <QuoteModalRoot />
-            <ChatbotWidget />
+            <AppChrome>{children}</AppChrome>
             <Analytics />
           </CurrencyProvider>
         </ThemeProvider>

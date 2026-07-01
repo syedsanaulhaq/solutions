@@ -1,7 +1,9 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Bot, Loader2, Mic, PlayCircle, Send, Square, Volume2, VolumeX } from 'lucide-react';
+import { Loader2, Mic, PlayCircle, Send, Square, Volume2, VolumeX } from 'lucide-react';
+
+const ECP_LOGO_URL = 'https://upload.wikimedia.org/wikipedia/en/thumb/2/2e/Election_Commission_of_Pakistan_logo.svg/512px-Election_Commission_of_Pakistan_logo.svg.png';
 
 interface MediaItem {
   title: string;
@@ -652,8 +654,8 @@ export default function EcpTrainerPage() {
 
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-600 text-white">
-                <Bot className="h-5 w-5" />
+              <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
+                <img src={ECP_LOGO_URL} alt="Election Commission of Pakistan logo" className="h-10 w-10 object-contain" loading="lazy" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Election Commission of Pakistan AI Trainer</h1>
