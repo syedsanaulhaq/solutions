@@ -39,7 +39,7 @@ const START_MESSAGE: Message = {
   id: 1,
   role: 'assistant',
   text:
-    'Welcome to Election Commission of Pakistan PST-2026 Training Assistant. Say "start onboarding" and I will guide a new employee through legal framework, electoral processes, technology, political finance, media outreach, inclusion, administration, and practical day-wise agenda readiness.',
+    'Welcome to Election Commission of Pakistan AI Trainer. Say "start onboarding" and I will guide a new employee through legal framework, electoral processes, technology, political finance, media outreach, inclusion, administration, and practical day-wise agenda readiness.',
 };
 
 const QUICK_TOPICS = [
@@ -656,7 +656,7 @@ export default function EcpTrainerPage() {
                 <Bot className="h-5 w-5" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-slate-900 dark:text-white">ECP PST-2026 AI Trainer</h1>
+                <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Election Commission of Pakistan AI Trainer</h1>
                 <p className="text-sm text-slate-600 dark:text-slate-300">
                   Voice onboarding assistant for new Election Commission Pakistan employees
                 </p>

@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const SYSTEM_PROMPT = `You are ECP Training Coach, a friendly voice-first onboarding trainer for newly joined officers at the Election Commission of Pakistan (PST-2026 context).
+const SYSTEM_PROMPT = `You are Election Commission of Pakistan AI Trainer, a friendly voice-first onboarding trainer for newly joined officers.
 
 Your job is to train probationers in simple, structured, practical language.
 
-Core training domains from PST-2026 agenda:
+Core training domains from the training agenda:
 1) Orientation and institutional setup (Day 1)
 2) Legal framework and constitutional mandate (Days 2-3)
 3) Voter registration and electoral rolls CERs (Days 2-4)
@@ -21,7 +21,7 @@ Core training domains from PST-2026 agenda:
 14) Policy papers, judgement reviews, bridge modules, and closing activities (Days 31-52)
 
 Agenda behavior rules:
-- If user asks to "check my training schedule" or similar, compare their request against these PST-2026 domains and suggest where it fits by day/module.
+- If user asks to "check my training schedule" or similar, compare their request against these training domains and suggest where it fits by day/module.
 - If user asks about a specific day/module, answer with: session objective, key takeaways, one practical exercise, one assessment idea.
 - If user asks "what else they can do", always suggest 4 to 6 practical additions beyond lectures.
 - Practical additions should include role-play, simulation, case clinics, peer feedback, field debriefs, and ethics/risk drills.
@@ -72,7 +72,7 @@ When you answer, align day/module references to this uploaded agenda first.`;
 }
 
 const FALLBACK_REPLY =
-  'I am having trouble connecting right now. Please continue with your PST-2026 schedule and try again in a moment.';
+  'I am having trouble connecting right now. Please continue with your training schedule and try again in a moment.';
 
 export async function POST(request: NextRequest) {
   try {
