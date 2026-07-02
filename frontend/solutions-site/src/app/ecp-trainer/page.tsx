@@ -145,25 +145,27 @@ const TRAINING_MEDIA_LIBRARY: Record<string, ReplyMedia> = {
   },
 };
 
-function mediaForReply(text: string): ReplyMedia | undefined {
-  const lower = text.toLowerCase();
+function mediaForReply(userQuestion: string): ReplyMedia | undefined {
+  const lower = userQuestion.toLowerCase();
 
-  if (lower.includes('legal') || lower.includes('constitution') || lower.includes('elections act') || lower.includes('writ')) {
-    return TRAINING_MEDIA_LIBRARY.legal;
-  }
-  if (lower.includes('general election') || lower.includes('poll') || lower.includes('dro') || lower.includes('ro') || lower.includes('delimitation')) {
-    return TRAINING_MEDIA_LIBRARY.elections;
-  }
-  if (lower.includes('technology') || lower.includes('ems') || lower.includes('evm') || lower.includes('digital')) {
+  // Only show media when the user explicitly asks about a specific day
+  if (/\bday\s*5\b/.test(lower) || lower.includes('edr') || lower.includes('ems') || lower.includes('evm')) {
     return TRAINING_MEDIA_LIBRARY.technology;
   }
-  if (lower.includes('gender') || lower.includes('inclusion') || lower.includes('disability') || lower.includes('harassment')) {
-    return TRAINING_MEDIA_LIBRARY.inclusion;
-  }
-  if (lower.includes('secretariat') || lower.includes('hr') || lower.includes('procurement') || lower.includes('leadership')) {
+  if (/\bday\s*4\b/.test(lower)) {
     return TRAINING_MEDIA_LIBRARY.administration;
   }
-  if (lower.includes('overview') || lower.includes('agenda') || lower.includes('orientation') || lower.includes('onboarding')) {
+  if (/\bday\s*3\b/.test(lower)) {
+    return TRAINING_MEDIA_LIBRARY.elections;
+  }
+  if (/\bday\s*2\b/.test(lower)) {
+    return TRAINING_MEDIA_LIBRARY.legal;
+  }
+  if (/\bday\s*1\b/.test(lower) || /\bday\s+one\b/.test(lower)) {
+    return TRAINING_MEDIA_LIBRARY.overview;
+  }
+  // Generic day/agenda/onboarding question — show overview
+  if (/\bday\b/.test(lower) && (lower.includes('agenda') || lower.includes('orientation') || lower.includes('onboarding') || lower.includes('training'))) {
     return TRAINING_MEDIA_LIBRARY.overview;
   }
 
@@ -363,7 +365,7 @@ export default function EcpTrainerPage() {
           id: nextIdRef.current++,
           role: 'assistant',
           text: reply,
-          media: mediaForReply(reply),
+          media: mediaForReply(text),
         };
         return [...prev.map((message) => (message.role === 'assistant' ? { ...message, media: undefined } : message)), assistantMessage];
       });
