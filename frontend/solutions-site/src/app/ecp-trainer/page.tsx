@@ -36,12 +36,13 @@ interface ApiHistory {
 }
 
 const AGENDA_STORAGE_KEY = 'ecpTrainerCustomAgendaV1';
+const CALENDAR_PDF_URL_KEY = 'ecpTrainerCalendarPdfUrlV1';
 
 const START_MESSAGE: Message = {
   id: 1,
   role: 'assistant',
   text:
-    'Welcome to Election Commission of Pakistan AI Trainer. Say "start onboarding" and I will guide a new employee through legal framework, electoral processes, technology, political finance, media outreach, inclusion, administration, and practical day-wise agenda readiness.',
+    'Welcome to Election Commission of Pakistan AI Trainer. Say "start onboarding" and I will guide a new employee through legal framework, electoral processes, technology, political finance, media outreach, inclusion, administration, and practical day-wise agenda readiness. You can also open the Training Calendar PDF from this first message.',
 };
 
 const QUICK_TOPICS = [
@@ -60,84 +61,84 @@ const TRAINING_MEDIA_LIBRARY: Record<string, ReplyMedia> = {
   overview: {
     images: [
       {
-        title: 'Institutional Orientation',
-        src: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=1200&q=80',
+        title: 'ECP Official Workshop Snapshot',
+        src: 'https://i.ytimg.com/vi/YMLenh-12lA/hqdefault.jpg',
       },
     ],
     videos: [
       {
-        title: 'Public Sector Orientation',
-        src: 'https://www.youtube-nocookie.com/embed?listType=search&list=public%20sector%20orientation%20pakistan',
+        title: 'Official ECP Video Briefing',
+        src: 'https://www.youtube-nocookie.com/embed/5ZTUmguQLmg',
       },
     ],
   },
   legal: {
     images: [
       {
-        title: 'Constitution and Rule of Law',
-        src: 'https://images.unsplash.com/photo-1589578527966-fdac0f44566c?auto=format&fit=crop&w=1200&q=80',
+        title: 'ECP Official Message Clip',
+        src: 'https://i.ytimg.com/vi/2Q4_r3jlx9E/hqdefault.jpg',
       },
     ],
     videos: [
       {
-        title: 'Election Law Briefing',
-        src: 'https://www.youtube-nocookie.com/embed?listType=search&list=election%20law%20overview',
+        title: 'Official ECP Civic Message',
+        src: 'https://www.youtube-nocookie.com/embed/2Q4_r3jlx9E',
       },
     ],
   },
   elections: {
     images: [
       {
-        title: 'Polling and Election Operations',
-        src: 'https://images.unsplash.com/photo-1607779097040-26e80aa78e66?auto=format&fit=crop&w=1200&q=80',
+        title: 'ECP Mock Polls Across Pakistan',
+        src: 'https://i.ytimg.com/vi/rr4WxPpVkCY/hqdefault.jpg',
       },
     ],
     videos: [
       {
-        title: 'Polling Process Training',
-        src: 'https://www.youtube-nocookie.com/embed?listType=search&list=polling%20process%20training',
+        title: 'ECP Mock Polls Training Video',
+        src: 'https://www.youtube-nocookie.com/embed/rr4WxPpVkCY',
       },
     ],
   },
   technology: {
     images: [
       {
-        title: 'Election Technology Systems',
-        src: 'https://images.unsplash.com/photo-1518773553398-650c184e0bb3?auto=format&fit=crop&w=1200&q=80',
+        title: 'Digital Innovation in Elections',
+        src: 'https://i.ytimg.com/vi/m4V8n73S6BU/hqdefault.jpg',
       },
     ],
     videos: [
       {
-        title: 'Digital Elections Management',
-        src: 'https://www.youtube-nocookie.com/embed?listType=search&list=election%20management%20system%20training',
+        title: 'Digital Innovation Powering Electoral Integrity',
+        src: 'https://www.youtube-nocookie.com/embed/m4V8n73S6BU',
       },
     ],
   },
   inclusion: {
     images: [
       {
-        title: 'Inclusive Electoral Participation',
-        src: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=80',
+        title: 'Female Voter Registration Drive',
+        src: 'https://i.ytimg.com/vi/cib22sDnhDY/hqdefault.jpg',
       },
     ],
     videos: [
       {
-        title: 'Gender and Inclusion in Elections',
-        src: 'https://www.youtube-nocookie.com/embed?listType=search&list=gender%20inclusive%20elections',
+        title: 'Women Parliamentary Caucus Collaboration',
+        src: 'https://www.youtube-nocookie.com/embed/cib22sDnhDY',
       },
     ],
   },
   administration: {
     images: [
       {
-        title: 'Public Administration and Governance',
-        src: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80',
+        title: 'Official ECP Training Test Guidance',
+        src: 'https://i.ytimg.com/vi/wf2b6vw3qb4/hqdefault.jpg',
       },
     ],
     videos: [
       {
-        title: 'Public Service Leadership Skills',
-        src: 'https://www.youtube-nocookie.com/embed?listType=search&list=public%20service%20leadership%20training',
+        title: 'How to Fill OMR Sheets (ECP)',
+        src: 'https://www.youtube-nocookie.com/embed/wf2b6vw3qb4',
       },
     ],
   },
@@ -183,6 +184,8 @@ export default function EcpTrainerPage() {
   const [agendaStatus, setAgendaStatus] = useState('');
   const [isUploadingAgenda, setIsUploadingAgenda] = useState(false);
   const [showAdminPanel, setShowAdminPanel] = useState(false);
+  const [calendarPdfUrl, setCalendarPdfUrl] = useState('');
+  const [showCalendarModal, setShowCalendarModal] = useState(false);
 
   const nextIdRef = useRef(2);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -379,9 +382,13 @@ export default function EcpTrainerPage() {
 
   useEffect(() => {
     const stored = typeof window !== 'undefined' ? window.localStorage.getItem(AGENDA_STORAGE_KEY) : null;
+    const storedCalendar = typeof window !== 'undefined' ? window.localStorage.getItem(CALENDAR_PDF_URL_KEY) : null;
     if (stored) {
       setAgendaText(stored);
       setAgendaStatus('Custom agenda loaded from local storage.');
+    }
+    if (storedCalendar) {
+      setCalendarPdfUrl(storedCalendar);
     }
   }, []);
 
@@ -545,6 +552,32 @@ export default function EcpTrainerPage() {
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#dbeafe_0%,_#eff6ff_35%,_#f8fafc_70%)] dark:bg-slate-950 px-4 py-10">
       <div className="mx-auto max-w-4xl">
+        {showCalendarModal ? (
+          <div className="fixed inset-0 z-[121] flex items-center justify-center bg-slate-950/80 px-4 backdrop-blur-sm">
+            <div className="relative w-full max-w-5xl overflow-hidden rounded-3xl border border-white/10 bg-slate-900 shadow-2xl shadow-black/40">
+              <button
+                onClick={() => setShowCalendarModal(false)}
+                className="absolute right-3 top-3 z-10 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white hover:bg-white/20"
+              >
+                Close
+              </button>
+              <div className="border-b border-white/10 px-6 py-4">
+                <p className="text-xs uppercase tracking-[0.24em] text-blue-200">Training calendar</p>
+                <h3 className="mt-1 text-lg font-semibold text-white">Election Commission of Pakistan Calendar PDF</h3>
+              </div>
+              <div className="bg-white">
+                {calendarPdfUrl ? (
+                  <iframe title="ECP Training Calendar PDF" src={calendarPdfUrl} className="h-[75vh] w-full" />
+                ) : (
+                  <div className="grid h-[40vh] place-items-center px-6 text-center text-slate-700">
+                    <p>Please set a calendar PDF URL from the Admin Agenda Loader panel to open it here.</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        ) : null}
+
         {viewer ? (
           <div className="fixed inset-0 z-[120] flex items-center justify-center bg-slate-950/80 px-4 backdrop-blur-sm">
             <div className="relative w-full max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-slate-900 shadow-2xl shadow-black/40">
@@ -636,6 +669,29 @@ export default function EcpTrainerPage() {
                   >
                     Save agenda text
                   </button>
+                  <input
+                    type="url"
+                    value={calendarPdfUrl}
+                    onChange={(event) => setCalendarPdfUrl(event.target.value)}
+                    placeholder="https://.../ecp-training-calendar.pdf"
+                    className="h-8 min-w-[260px] flex-1 rounded-lg border border-blue-200 bg-white px-2 text-xs text-slate-800 outline-none focus:ring-2 focus:ring-blue-500 dark:border-blue-800 dark:bg-slate-900 dark:text-slate-100"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (typeof window !== 'undefined') {
+                        if (calendarPdfUrl.trim()) {
+                          window.localStorage.setItem(CALENDAR_PDF_URL_KEY, calendarPdfUrl.trim());
+                        } else {
+                          window.localStorage.removeItem(CALENDAR_PDF_URL_KEY);
+                        }
+                      }
+                      setAgendaStatus('Calendar PDF URL saved.');
+                    }}
+                    className="rounded-lg border border-blue-300 px-3 py-1.5 text-xs font-medium text-blue-800 hover:bg-blue-100 dark:border-blue-700 dark:text-blue-200 dark:hover:bg-blue-900/40"
+                  >
+                    Save PDF URL
+                  </button>
                   {agendaText ? <span className="text-xs text-blue-900 dark:text-blue-200">Custom agenda active</span> : null}
                 </div>
 
@@ -706,6 +762,18 @@ export default function EcpTrainerPage() {
                     }`}
                   >
                     <p>{msg.text}</p>
+
+                    {msg.role === 'assistant' && msg.id === 1 ? (
+                      <div className="mt-2">
+                        <button
+                          type="button"
+                          onClick={() => setShowCalendarModal(true)}
+                          className="rounded-lg border border-blue-300 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 hover:bg-blue-100 dark:border-blue-700 dark:bg-blue-950/30 dark:text-blue-200 dark:hover:bg-blue-900/50"
+                        >
+                          Open Training Calendar (PDF)
+                        </button>
+                      </div>
+                    ) : null}
 
                     {msg.role === 'assistant' && msg.media ? (
                       <div className="mt-3 space-y-2">
