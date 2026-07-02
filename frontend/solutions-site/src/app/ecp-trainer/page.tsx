@@ -194,6 +194,9 @@ export default function EcpTrainerPage() {
   const micStreamRef = useRef<MediaStream | null>(null);
   const currentAudioRef = useRef<HTMLAudioElement | null>(null);
   const speechSessionRef = useRef(0);
+  const silenceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const silenceIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
 
   const canUseSpeech = useMemo(() => typeof window !== 'undefined' && 'speechSynthesis' in window, []);
 
@@ -409,6 +412,9 @@ export default function EcpTrainerPage() {
         micStreamRef.current.getTracks().forEach((track) => track.stop());
         micStreamRef.current = null;
       }
+      if (silenceIntervalRef.current) { clearInterval(silenceIntervalRef.current); silenceIntervalRef.current = null; }
+      if (silenceTimerRef.current)    { clearTimeout(silenceTimerRef.current);    silenceTimerRef.current = null; }
+      if (audioContextRef.current)    { void audioContextRef.current.close();     audioContextRef.current = null; }
       stopAudio();
     };
   }, [stopAudio]);
@@ -445,6 +451,11 @@ export default function EcpTrainerPage() {
         recorder.onstop = async () => {
           setListening(false);
           setIsTranscribing(true);
+
+          // Clean up silence detection
+          if (silenceIntervalRef.current) { clearInterval(silenceIntervalRef.current); silenceIntervalRef.current = null; }
+          if (silenceTimerRef.current)   { clearTimeout(silenceTimerRef.current);   silenceTimerRef.current = null; }
+          if (audioContextRef.current)   { void audioContextRef.current.close();    audioContextRef.current = null; }
 
           if (micStreamRef.current) {
             micStreamRef.current.getTracks().forEach((track) => track.stop());
@@ -492,6 +503,43 @@ export default function EcpTrainerPage() {
         mediaRecorderRef.current = recorder;
         setListening(true);
         recorder.start();
+
+        // ── Silence-detection: auto-submit after 3 s of silence ──
+        try {
+          const audioCtx = new AudioContext();
+          audioContextRef.current = audioCtx;
+          const source = audioCtx.createMediaStreamSource(stream);
+          const analyser = audioCtx.createAnalyser();
+          analyser.fftSize = 512;
+          source.connect(analyser);
+          const dataArray = new Uint8Array(analyser.frequencyBinCount);
+          let hasSpeech = false;
+          const SILENCE_THRESHOLD = 12; // RMS below this is considered silence
+          const SILENCE_MS = 3000;      // 3 seconds of silence → auto stop
+
+          silenceIntervalRef.current = setInterval(() => {
+            if (mediaRecorderRef.current?.state !== 'recording') {
+              if (silenceIntervalRef.current) clearInterval(silenceIntervalRef.current);
+              return;
+            }
+            analyser.getByteTimeDomainData(dataArray);
+            let sumSq = 0;
+            for (const v of dataArray) { const n = (v - 128) / 128; sumSq += n * n; }
+            const rms = Math.sqrt(sumSq / dataArray.length) * 100;
+
+            if (rms > SILENCE_THRESHOLD) {
+              hasSpeech = true;
+              if (silenceTimerRef.current) { clearTimeout(silenceTimerRef.current); silenceTimerRef.current = null; }
+            } else if (hasSpeech && !silenceTimerRef.current) {
+              silenceTimerRef.current = setTimeout(() => {
+                if (mediaRecorderRef.current?.state === 'recording') mediaRecorderRef.current.stop();
+                if (silenceIntervalRef.current) clearInterval(silenceIntervalRef.current);
+              }, SILENCE_MS);
+            }
+          }, 200);
+        } catch {
+          // AudioContext not available — silent fail, user still stops manually
+        }
       })
       .catch((error: Error & { name?: string }) => {
         const code = error?.name || 'UnknownError';
