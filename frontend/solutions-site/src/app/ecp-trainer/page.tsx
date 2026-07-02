@@ -795,13 +795,14 @@ export default function EcpTrainerPage() {
 
                     {msg.role === 'assistant' && msg.id === 1 ? (
                       <div className="mt-2">
-                        <button
-                          type="button"
-                          onClick={() => setShowCalendarModal(true)}
-                          className="rounded-lg border border-emerald-300 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 dark:border-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-200 dark:hover:bg-emerald-900/50"
+                        <a
+                          href={calendarPdfUrl || '/ecp/ecp-training-calendar.pdf'}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-block rounded-lg border border-emerald-300 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 dark:border-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-200 dark:hover:bg-emerald-900/50"
                         >
                           Open Training Calendar (PDF)
-                        </button>
+                        </a>
                       </div>
                     ) : null}
 
