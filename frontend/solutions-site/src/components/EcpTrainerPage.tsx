@@ -71,6 +71,117 @@ const QUICK_TOPICS_UR = [
 const START_MESSAGE_UR_TEXT =
   'الیکشن کمیشن آف پاکستان اے آئی ٹرینر میں خوش آمدید۹ “آغاز کریں” کہیں اور میں آپ کو قانونی ڈھانچے، انتخابی عمل، ٹیکنالوجی، میڈیا، صنفی شمول، انتظامیہ اور روزانہ کے ایجنڈے کے بارے میں رہنمائی کروں گا۹ آپ اس پیغام سے تربیتی کیلینڈر پی ڈی ایف بھی کھول سکتے ہیں۹';
 
+const UI_TEXT = {
+  en: {
+    adminLoader: 'Admin Agenda Loader',
+    show: 'Show',
+    hide: 'Hide',
+    uploadAgenda: 'Upload .docx/.txt/.md',
+    clearAgenda: 'Clear custom agenda',
+    agendaPlaceholder: 'Optional: paste full agenda text here...',
+    saveAgenda: 'Save agenda text',
+    pdfPlaceholder: 'https://.../ecp-training-calendar.pdf',
+    savePdfUrl: 'Save PDF URL',
+    customAgendaActive: 'Custom agenda active',
+    heading: 'Election Commission of Pakistan AI Trainer',
+    subheading: 'Voice onboarding assistant for new Election Commission Pakistan employees',
+    voiceEnginePrefix: 'Voice engine:',
+    neuralVoice: 'Neural voice (same style as your other demos)',
+    browserVoice: 'Browser fallback voice',
+    voiceOn: 'Voice On',
+    voiceOff: 'Voice Off',
+    urduVersion: 'اردو ورژن',
+    calendarTitle: 'Training calendar',
+    calendarHeading: 'Election Commission of Pakistan Calendar PDF',
+    openInNewTab: 'Open in new tab',
+    pdfUnavailable: 'PDF preview is unavailable in this browser.',
+    openPdfNewTab: 'Open PDF in new tab',
+    setPdfUrl: 'Please set a calendar PDF URL from the Admin Agenda Loader panel to open it here.',
+    trainingMedia: 'Training media',
+    close: 'Close',
+    openTrainingCalendar: 'Open Training Calendar (PDF)',
+    preparing: 'Trainer is preparing your agenda-based guidance...',
+    recording: 'Recording voice... click mic again to send',
+    transcribing: 'Uploading and transcribing your voice...',
+    recordingPlaceholder: 'Recording... click mic again to finish',
+    transcribingPlaceholder: 'Transcribing your voice...',
+    inputPlaceholder: 'Ask about legal framework, elections, technology, or a specific day',
+    sendAria: 'Send',
+    startVoice: 'Start voice recording',
+    stopVoice: 'Stop voice recording',
+    tip: 'Tip: Ask "Check Day 5 agenda" or "Suggest extra activities" for practical enhancements.',
+    customAgendaLoaded: 'Custom agenda loaded from local storage.',
+    uploadingAgenda: 'Uploading and parsing agenda...',
+    agendaUploadFailed: 'Failed to upload agenda. Please try again.',
+    agendaParseFailed: 'Could not parse agenda file.',
+    agendaCleared: 'Custom agenda cleared.',
+    agendaSaved: 'Agenda text saved for this browser.',
+    pdfSaved: 'Calendar PDF URL saved.',
+    noVoiceCaptured: 'No voice captured. Please try again.',
+    voiceFailed: 'Voice upload failed. Please try again.',
+    transcriptionFailed: 'Could not transcribe voice. Please try again.',
+    micFailed: 'Microphone recording failed. Please try again.',
+    micPermission: 'Microphone permission denied. Please allow mic access and try again.',
+    noMic: 'No microphone found. Connect a microphone and try again.',
+    micAccess: 'Unable to access microphone. Please try again.',
+    unsupportedVoice: 'Voice recording is not supported in this browser. Use Chrome or Edge over HTTPS.',
+  },
+  ur: {
+    adminLoader: 'ایڈمن ایجنڈا لوڈر',
+    show: 'کھولیں',
+    hide: 'چھپائیں',
+    uploadAgenda: '‏.docx/.txt/.md اپ لوڈ کریں',
+    clearAgenda: 'کسٹم ایجنڈا صاف کریں',
+    agendaPlaceholder: 'اختیاری: مکمل ایجنڈا یہاں پیسٹ کریں...',
+    saveAgenda: 'ایجنڈا متن محفوظ کریں',
+    pdfPlaceholder: 'https://.../ecp-training-calendar.pdf',
+    savePdfUrl: 'پی ڈی ایف یو آر ایل محفوظ کریں',
+    customAgendaActive: 'کسٹم ایجنڈا فعال ہے',
+    heading: 'الیکشن کمیشن آف پاکستان اے آئی ٹرینر',
+    subheading: 'نئے الیکشن کمیشن پاکستان ملازمین کے لیے صوتی آن بورڈنگ معاون',
+    voiceEnginePrefix: 'وائس انجن:',
+    neuralVoice: 'نیورل آواز',
+    browserVoice: 'براؤزر متبادل آواز',
+    voiceOn: 'آواز آن',
+    voiceOff: 'آواز آف',
+    urduVersion: 'انگریزی ورژن',
+    calendarTitle: 'تربیتی کیلینڈر',
+    calendarHeading: 'الیکشن کمیشن آف پاکستان کیلینڈر پی ڈی ایف',
+    openInNewTab: 'نئے ٹیب میں کھولیں',
+    pdfUnavailable: 'اس براؤزر میں پی ڈی ایف پیش نظارہ دستیاب نہیں۔',
+    openPdfNewTab: 'پی ڈی ایف نئے ٹیب میں کھولیں',
+    setPdfUrl: 'اسے یہاں کھولنے کے لیے ایڈمن ایجنڈا لوڈر پینل سے کیلینڈر پی ڈی ایف یو آر ایل سیٹ کریں۔',
+    trainingMedia: 'تربیتی میڈیا',
+    close: 'بند کریں',
+    openTrainingCalendar: 'تربیتی کیلینڈر (PDF) کھولیں',
+    preparing: 'ٹرینر آپ کی ایجنڈا بنیاد رہنمائی تیار کر رہا ہے...',
+    recording: 'آواز ریکارڈ ہو رہی ہے... بھیجنے کے لیے مائیک دوبارہ دبائیں',
+    transcribing: 'آپ کی آواز اپ لوڈ اور متن میں تبدیل کی جا رہی ہے...',
+    recordingPlaceholder: 'ریکارڈنگ جاری ہے... ختم کرنے کے لیے مائیک دوبارہ دبائیں',
+    transcribingPlaceholder: 'آپ کی آواز کو متن میں بدلا جا رہا ہے...',
+    inputPlaceholder: 'قانونی ڈھانچے، انتخابات، ٹیکنالوجی یا کسی مخصوص دن کے بارے میں پوچھیں',
+    sendAria: 'بھیجیں',
+    startVoice: 'آواز ریکارڈنگ شروع کریں',
+    stopVoice: 'آواز ریکارڈنگ بند کریں',
+    tip: 'مشورہ: عملی بہتری کے لیے "دن 5 ایجنڈا چیک کریں" یا "اضافی سرگرمیاں تجویز کریں" پوچھیں۔',
+    customAgendaLoaded: 'کسٹم ایجنڈا لوکل اسٹوریج سے لوڈ ہو گیا۔',
+    uploadingAgenda: 'ایجنڈا اپ لوڈ اور پارس کیا جا رہا ہے...',
+    agendaUploadFailed: 'ایجنڈا اپ لوڈ نہیں ہو سکا۔ دوبارہ کوشش کریں۔',
+    agendaParseFailed: 'ایجنڈا فائل پارس نہیں ہو سکی۔',
+    agendaCleared: 'کسٹم ایجنڈا صاف کر دیا گیا۔',
+    agendaSaved: 'ایجنڈا متن اس براؤزر کے لیے محفوظ کر دیا گیا۔',
+    pdfSaved: 'کیلینڈر پی ڈی ایف یو آر ایل محفوظ کر دیا گیا۔',
+    noVoiceCaptured: 'کوئی آواز ریکارڈ نہیں ہوئی۔ دوبارہ کوشش کریں۔',
+    voiceFailed: 'آواز اپ لوڈ ناکام ہو گئی۔ دوبارہ کوشش کریں۔',
+    transcriptionFailed: 'آواز کو متن میں تبدیل نہیں کیا جا سکا۔ دوبارہ کوشش کریں۔',
+    micFailed: 'مائیکروفون ریکارڈنگ ناکام ہو گئی۔ دوبارہ کوشش کریں۔',
+    micPermission: 'مائیکروفون کی اجازت نہیں ملی۔ براہ کرم اجازت دیں اور دوبارہ کوشش کریں۔',
+    noMic: 'کوئی مائیکروفون نہیں ملا۔ مائیکروفون جوڑیں اور دوبارہ کوشش کریں۔',
+    micAccess: 'مائیکروفون تک رسائی نہیں ہو سکی۔ دوبارہ کوشش کریں۔',
+    unsupportedVoice: 'اس براؤزر میں صوتی ریکارڈنگ دستیاب نہیں۔ براہ کرم HTTPS پر Chrome یا Edge استعمال کریں۔',
+  },
+} as const;
+
 const TRAINING_MEDIA_LIBRARY: Record<string, ReplyMedia> = {
   overview: {
     images: [
@@ -202,6 +313,14 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
   const [showCalendarModal, setShowCalendarModal] = useState(false);
   const lang = forcedLang;
   const langRef = useRef<'en' | 'ur'>(forcedLang);
+  const ui = UI_TEXT[lang];
+  const urduPageStyle =
+    lang === 'ur'
+      ? {
+          fontFamily: "'Noto Nastaliq Urdu', 'Noto Sans', serif",
+          lineHeight: '2',
+        }
+      : undefined;
 
   const nextIdRef = useRef(2);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -430,7 +549,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
     const storedCalendar = typeof window !== 'undefined' ? window.localStorage.getItem(CALENDAR_PDF_URL_KEY) : null;
     if (stored) {
       setAgendaText(stored);
-      setAgendaStatus('Custom agenda loaded from local storage.');
+      setAgendaStatus(UI_TEXT[langRef.current].customAgendaLoaded);
     }
 
     const normalizedCalendar = storedCalendar?.trim();
@@ -472,7 +591,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
   const startListening = useCallback(() => {
     setSpeechError('');
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || typeof MediaRecorder === 'undefined') {
-      setSpeechError('Voice recording is not supported in this browser. Use Chrome or Edge over HTTPS.');
+      setSpeechError(UI_TEXT[langRef.current].unsupportedVoice);
       return;
     }
 
@@ -494,7 +613,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
         };
 
         recorder.onerror = () => {
-          setSpeechError('Microphone recording failed. Please try again.');
+          setSpeechError(UI_TEXT[langRef.current].micFailed);
           setListening(false);
         };
 
@@ -521,7 +640,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
           }
 
           if (!audioChunksRef.current.length) {
-            setSpeechError('No voice captured. Please try again.');
+            setSpeechError(UI_TEXT[langRef.current].noVoiceCaptured);
             setIsTranscribing(false);
             return;
           }
@@ -544,14 +663,14 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
             const transcript = typeof data?.text === 'string' ? data.text.trim() : '';
 
             if (!response.ok || !transcript) {
-              setSpeechError('Could not transcribe voice. Please try again.');
+              setSpeechError(UI_TEXT[langRef.current].transcriptionFailed);
             } else {
               setSpeechError('');
               setInput(transcript);
               void sendMessage(transcript);
             }
           } catch {
-            setSpeechError('Voice upload failed. Please try again.');
+            setSpeechError(UI_TEXT[langRef.current].voiceFailed);
           } finally {
             audioChunksRef.current = [];
             mediaRecorderRef.current = null;
@@ -609,17 +728,17 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
       .catch((error: Error & { name?: string }) => {
         const code = error?.name || 'UnknownError';
         if (code === 'NotAllowedError' || code === 'PermissionDeniedError') {
-          setSpeechError('Microphone permission denied. Please allow mic access and try again.');
+          setSpeechError(UI_TEXT[langRef.current].micPermission);
         } else if (code === 'NotFoundError') {
-          setSpeechError('No microphone found. Connect a microphone and try again.');
+          setSpeechError(UI_TEXT[langRef.current].noMic);
         } else {
-          setSpeechError('Unable to access microphone. Please try again.');
+          setSpeechError(UI_TEXT[langRef.current].micAccess);
         }
       });
   }, [sendMessage, stopAudio]);
 
   const uploadAgenda = useCallback(async (file: File) => {
-    setAgendaStatus('Uploading and parsing agenda...');
+    setAgendaStatus(UI_TEXT[langRef.current].uploadingAgenda);
     setIsUploadingAgenda(true);
 
     try {
@@ -633,7 +752,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
 
       const data = await response.json().catch(() => ({}));
       if (!response.ok || typeof data?.agendaText !== 'string') {
-        setAgendaStatus(data?.error || 'Could not parse agenda file.');
+        setAgendaStatus(data?.error || UI_TEXT[langRef.current].agendaParseFailed);
         return;
       }
 
@@ -644,9 +763,13 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
       }
 
       const clipped = data?.clipped ? ' (text clipped for performance)' : '';
-      setAgendaStatus(`Agenda uploaded successfully${clipped}.`);
+      setAgendaStatus(
+        langRef.current === 'ur'
+          ? `ایجنڈا کامیابی سے اپ لوڈ ہو گیا${clipped ? ' (متن کارکردگی کے لیے مختصر کیا گیا)' : ''}۔`
+          : `Agenda uploaded successfully${clipped}.`
+      );
     } catch {
-      setAgendaStatus('Failed to upload agenda. Please try again.');
+      setAgendaStatus(UI_TEXT[langRef.current].agendaUploadFailed);
     } finally {
       setIsUploadingAgenda(false);
     }
@@ -655,7 +778,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
   const clearAgenda = useCallback(() => {
     setAgendaText('');
     setAgendaSummary([]);
-    setAgendaStatus('Custom agenda cleared.');
+    setAgendaStatus(UI_TEXT[langRef.current].agendaCleared);
     if (typeof window !== 'undefined') {
       window.localStorage.removeItem(AGENDA_STORAGE_KEY);
     }
@@ -671,7 +794,11 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
   }, []);
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#d9f1e6_0%,_#e8f7ef_35%,_#f6fbf8_70%)] dark:bg-slate-950 px-4 py-10">
+    <div
+      className="min-h-screen bg-[radial-gradient(circle_at_top,_#d9f1e6_0%,_#e8f7ef_35%,_#f6fbf8_70%)] dark:bg-slate-950 px-4 py-10"
+      dir={lang === 'ur' ? 'rtl' : 'ltr'}
+      style={urduPageStyle}
+    >
       <div className="mx-auto max-w-4xl">
         {showCalendarModal ? (
           <div className="fixed inset-0 z-[121] flex items-center justify-center bg-slate-950/80 px-4 backdrop-blur-sm">
@@ -680,11 +807,11 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
                 onClick={() => setShowCalendarModal(false)}
                 className="absolute right-3 top-3 z-10 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white hover:bg-white/20"
               >
-                Close
+                {ui.close}
               </button>
               <div className="border-b border-white/10 px-6 py-4">
-                <p className="text-xs uppercase tracking-[0.24em] text-emerald-200">Training calendar</p>
-                <h3 className="mt-1 text-lg font-semibold text-white">Election Commission of Pakistan Calendar PDF</h3>
+                <p className="text-xs uppercase tracking-[0.24em] text-emerald-200">{ui.calendarTitle}</p>
+                <h3 className="mt-1 text-lg font-semibold text-white">{ui.calendarHeading}</h3>
                 {calendarPdfUrl ? (
                   <a
                     href={calendarPdfUrl}
@@ -692,7 +819,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
                     rel="noreferrer"
                     className="mt-2 inline-block rounded-md border border-white/20 px-2.5 py-1 text-xs font-medium text-white/90 hover:bg-white/10"
                   >
-                    Open in new tab
+                    {ui.openInNewTab}
                   </a>
                 ) : null}
               </div>
@@ -700,20 +827,20 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
                 {calendarPdfUrl ? (
                   <object data={`${calendarPdfUrl}#toolbar=1&navpanes=0`} type="application/pdf" className="h-[75vh] w-full">
                     <div className="grid h-[40vh] place-items-center px-6 text-center text-slate-700">
-                      <p className="mb-3">PDF preview is unavailable in this browser.</p>
+                      <p className="mb-3">{ui.pdfUnavailable}</p>
                       <a
                         href={calendarPdfUrl}
                         target="_blank"
                         rel="noreferrer"
                         className="rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100"
                       >
-                        Open PDF in new tab
+                        {ui.openPdfNewTab}
                       </a>
                     </div>
                   </object>
                 ) : (
                   <div className="grid h-[40vh] place-items-center px-6 text-center text-slate-700">
-                    <p>Please set a calendar PDF URL from the Admin Agenda Loader panel to open it here.</p>
+                    <p>{ui.setPdfUrl}</p>
                   </div>
                 )}
               </div>
@@ -728,10 +855,10 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
                 onClick={() => setViewer(null)}
                 className="absolute right-3 top-3 z-10 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white hover:bg-white/20"
               >
-                Close
+                {ui.close}
               </button>
               <div className="border-b border-white/10 px-6 py-4">
-                <p className="text-xs uppercase tracking-[0.24em] text-emerald-200">Training media</p>
+                <p className="text-xs uppercase tracking-[0.24em] text-emerald-200">{ui.trainingMedia}</p>
                 <h3 className="mt-1 text-lg font-semibold text-white">{viewer.title}</h3>
               </div>
               <div className="bg-black">
@@ -752,15 +879,15 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
         ) : null}
 
         <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-          <div className="mb-5 rounded-2xl border border-emerald-200 bg-emerald-50/70 p-4 dark:border-emerald-900 dark:bg-emerald-950/20">
+          <div className="mb-5 rounded-2xl border border-emerald-200 bg-emerald-50/70 p-4 dark:border-emerald-900 dark:bg-emerald-950/20" dir={lang === 'ur' ? 'rtl' : 'ltr'}>
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <p className="text-sm font-semibold text-emerald-900 dark:text-emerald-200">Admin Agenda Loader</p>
+              <p className="text-sm font-semibold text-emerald-900 dark:text-emerald-200">{ui.adminLoader}</p>
               <button
                 type="button"
                 onClick={() => setShowAdminPanel((v) => !v)}
                 className="rounded-lg border border-emerald-300 px-2.5 py-1 text-xs font-medium text-emerald-800 hover:bg-emerald-100 dark:border-emerald-700 dark:text-emerald-200 dark:hover:bg-emerald-900/50"
               >
-                {showAdminPanel ? 'Hide' : 'Show'}
+                {showAdminPanel ? ui.hide : ui.show}
               </button>
             </div>
 
@@ -768,7 +895,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
               <div className="mt-3 space-y-3">
                 <div className="flex flex-wrap items-center gap-2">
                   <label className="inline-flex cursor-pointer items-center rounded-lg border border-emerald-300 bg-white px-3 py-1.5 text-xs font-medium text-emerald-800 hover:bg-emerald-100 dark:border-emerald-700 dark:bg-slate-900 dark:text-emerald-200 dark:hover:bg-emerald-900/40">
-                    Upload .docx/.txt/.md
+                    {ui.uploadAgenda}
                     <input
                       type="file"
                       accept=".docx,.txt,.md"
@@ -788,14 +915,15 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
                     onClick={clearAgenda}
                     className="rounded-lg border border-emerald-300 px-3 py-1.5 text-xs font-medium text-emerald-800 hover:bg-emerald-100 dark:border-emerald-700 dark:text-emerald-200 dark:hover:bg-emerald-900/40"
                   >
-                    Clear custom agenda
+                    {ui.clearAgenda}
                   </button>
                 </div>
 
                 <textarea
+                  dir={lang === 'ur' ? 'rtl' : 'ltr'}
                   value={agendaText}
                   onChange={(event) => setAgendaText(event.target.value)}
-                  placeholder="Optional: paste full agenda text here..."
+                  placeholder={ui.agendaPlaceholder}
                   className="h-28 w-full rounded-xl border border-emerald-200 bg-white px-3 py-2 text-xs text-slate-800 outline-none focus:ring-2 focus:ring-emerald-500 dark:border-emerald-800 dark:bg-slate-900 dark:text-slate-100"
                 />
 
@@ -806,17 +934,18 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
                       if (typeof window !== 'undefined') {
                         window.localStorage.setItem(AGENDA_STORAGE_KEY, agendaText);
                       }
-                      setAgendaStatus('Agenda text saved for this browser.');
+                      setAgendaStatus(ui.agendaSaved);
                     }}
                     className="rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-700"
                   >
-                    Save agenda text
+                    {ui.saveAgenda}
                   </button>
                   <input
+                    dir={lang === 'ur' ? 'rtl' : 'ltr'}
                     type="url"
                     value={calendarPdfUrl}
                     onChange={(event) => setCalendarPdfUrl(event.target.value)}
-                    placeholder="https://.../ecp-training-calendar.pdf"
+                    placeholder={ui.pdfPlaceholder}
                     className="h-8 min-w-[260px] flex-1 rounded-lg border border-emerald-200 bg-white px-2 text-xs text-slate-800 outline-none focus:ring-2 focus:ring-emerald-500 dark:border-emerald-800 dark:bg-slate-900 dark:text-slate-100"
                   />
                   <button
@@ -829,13 +958,13 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
                           window.localStorage.removeItem(CALENDAR_PDF_URL_KEY);
                         }
                       }
-                      setAgendaStatus('Calendar PDF URL saved.');
+                      setAgendaStatus(ui.pdfSaved);
                     }}
                     className="rounded-lg border border-emerald-300 px-3 py-1.5 text-xs font-medium text-emerald-800 hover:bg-emerald-100 dark:border-emerald-700 dark:text-emerald-200 dark:hover:bg-emerald-900/40"
                   >
-                    Save PDF URL
+                    {ui.savePdfUrl}
                   </button>
-                  {agendaText ? <span className="text-xs text-emerald-900 dark:text-emerald-200">Custom agenda active</span> : null}
+                  {agendaText ? <span className="text-xs text-emerald-900 dark:text-emerald-200">{ui.customAgendaActive}</span> : null}
                 </div>
 
                 {agendaSummary.length ? (
@@ -851,18 +980,18 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
             ) : null}
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center justify-between gap-4" dir={lang === 'ur' ? 'rtl' : 'ltr'}>
             <div className="flex items-center gap-3">
               <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white p-1 shadow-sm dark:border-slate-700 dark:bg-slate-900">
                 <img src={ECP_LOGO_URL} alt="Election Commission of Pakistan logo" className="h-12 w-12 object-contain" loading="lazy" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Election Commission of Pakistan AI Trainer</h1>
+                <h1 className="text-2xl font-bold text-slate-900 dark:text-white">{ui.heading}</h1>
                 <p className="text-sm text-slate-600 dark:text-slate-300">
-                  Voice onboarding assistant for new Election Commission Pakistan employees
+                  {ui.subheading}
                 </p>
                 <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-                  Voice engine: {voiceMode === 'neural' ? 'Neural voice (same style as your other demos)' : 'Browser fallback voice'}
+                  {ui.voiceEnginePrefix} {voiceMode === 'neural' ? ui.neuralVoice : ui.browserVoice}
                 </p>
               </div>
             </div>
@@ -873,13 +1002,13 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
                 className="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
               >
                 {autoSpeak ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
-                {autoSpeak ? (lang === 'ur' ? 'آواز آن' : 'Voice On') : (lang === 'ur' ? 'آواز آف' : 'Voice Off')}
+                {autoSpeak ? ui.voiceOn : ui.voiceOff}
               </button>
               <a
                 href={lang === 'ur' ? '/ecp-trainer' : '/ecp-trainer-ur'}
                 className="inline-flex items-center gap-1.5 rounded-xl border-2 border-emerald-500 bg-emerald-50 px-3 py-2 text-sm font-bold text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-950/30 dark:text-emerald-300 dark:hover:bg-emerald-900/50"
               >
-                {lang === 'ur' ? 'English Version' : 'اردو ورژن'}
+                {ui.urduVersion}
               </a>
             </div>
           </div>
@@ -922,7 +1051,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
                           rel="noreferrer"
                           className="inline-block rounded-lg border border-emerald-300 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 dark:border-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-200 dark:hover:bg-emerald-900/50"
                         >
-                          Open Training Calendar (PDF)
+                          {ui.openTrainingCalendar}
                         </a>
                       </div>
                     ) : null}
@@ -986,7 +1115,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
               {isLoading ? (
                 <div className="flex justify-start">
                   <div className="rounded-2xl rounded-bl-sm border border-slate-200 bg-white px-4 py-2 text-sm text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
-                    Trainer is preparing your agenda-based guidance...
+                    {ui.preparing}
                   </div>
                 </div>
               ) : null}
@@ -996,7 +1125,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
                   <div className="max-w-[85%] rounded-2xl rounded-br-sm bg-emerald-600 px-4 py-2 text-sm text-white">
                     <p className="inline-flex items-center gap-2">
                       <span className="inline-flex h-2.5 w-2.5 rounded-full bg-red-300 animate-pulse" />
-                      Recording voice... click mic again to send
+                      {ui.recording}
                     </p>
                   </div>
                 </div>
@@ -1007,7 +1136,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
                   <div className="max-w-[85%] rounded-2xl rounded-br-sm bg-emerald-600 px-4 py-2 text-sm text-white">
                     <p className="inline-flex items-center gap-2">
                       <Loader2 className="h-4 w-4 animate-spin" />
-                      Uploading and transcribing your voice...
+                      {ui.transcribing}
                     </p>
                   </div>
                 </div>
@@ -1021,13 +1150,14 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
               className={`flex h-11 w-11 items-center justify-center rounded-xl text-white ${
                 listening ? 'bg-red-500 hover:bg-red-600' : 'bg-slate-700 hover:bg-slate-800'
               }`}
-              aria-label={listening ? 'Stop voice recording' : 'Start voice recording'}
+              aria-label={listening ? ui.stopVoice : ui.startVoice}
               disabled={isLoading || isTranscribing}
             >
               {listening ? <Square className="h-4 w-4" /> : <Mic className="h-5 w-5" />}
             </button>
 
             <input
+              dir={lang === 'ur' ? 'rtl' : 'ltr'}
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -1039,10 +1169,10 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
               }}
               placeholder={
                 listening
-                  ? 'Recording... click mic again to finish'
+                  ? ui.recordingPlaceholder
                   : isTranscribing
-                    ? 'Transcribing your voice...'
-                    : lang === 'ur' ? 'قانونی ڈھانچے، انتخابات، ٹیکنالوجی یا کسی مخصوص دن کے بارے میں پوچھیں' : 'Ask about legal framework, elections, technology, or a specific day'
+                    ? ui.transcribingPlaceholder
+                    : ui.inputPlaceholder
               }
               className="h-11 flex-1 rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-emerald-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
               maxLength={1000}
@@ -1053,17 +1183,17 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
               onClick={() => void sendMessage()}
               disabled={!input.trim() || isLoading || isTranscribing || listening}
               className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-50"
-              aria-label="Send"
+              aria-label={ui.sendAria}
             >
               <Send className="h-5 w-5" />
             </button>
           </div>
 
           {speechError ? <p className="mt-2 text-sm text-red-600">{speechError}</p> : null}
-          {isTranscribing ? <p className="mt-2 text-sm text-emerald-600">Uploading and transcribing your voice...</p> : null}
+          {isTranscribing ? <p className="mt-2 text-sm text-emerald-600">{ui.transcribing}</p> : null}
 
           <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
-            Tip: Ask &quot;Check Day 5 agenda&quot; or &quot;Suggest extra activities&quot; for practical enhancements.
+            {ui.tip}
           </p>
         </div>
       </div>
