@@ -37,6 +37,7 @@ interface ApiHistory {
 
 const AGENDA_STORAGE_KEY = 'ecpTrainerCustomAgendaV1';
 const CALENDAR_PDF_URL_KEY = 'ecpTrainerCalendarPdfUrlV1';
+const DEFAULT_CALENDAR_URL = '/ecp/ecp-training-calendar.pdf';
 
 const START_MESSAGE: Message = {
   id: 1,
@@ -387,8 +388,15 @@ export default function EcpTrainerPage() {
       setAgendaText(stored);
       setAgendaStatus('Custom agenda loaded from local storage.');
     }
-    if (storedCalendar) {
-      setCalendarPdfUrl(storedCalendar);
+
+    const normalizedCalendar = storedCalendar?.trim();
+    if (!normalizedCalendar || normalizedCalendar === '/ecp/logo-only.png') {
+      setCalendarPdfUrl(DEFAULT_CALENDAR_URL);
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(CALENDAR_PDF_URL_KEY, DEFAULT_CALENDAR_URL);
+      }
+    } else {
+      setCalendarPdfUrl(normalizedCalendar);
     }
   }, []);
 
