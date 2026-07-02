@@ -550,7 +550,7 @@ export default function EcpTrainerPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#dbeafe_0%,_#eff6ff_35%,_#f8fafc_70%)] dark:bg-slate-950 px-4 py-10">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#d9f1e6_0%,_#e8f7ef_35%,_#f6fbf8_70%)] dark:bg-slate-950 px-4 py-10">
       <div className="mx-auto max-w-4xl">
         {showCalendarModal ? (
           <div className="fixed inset-0 z-[121] flex items-center justify-center bg-slate-950/80 px-4 backdrop-blur-sm">
@@ -562,7 +562,7 @@ export default function EcpTrainerPage() {
                 Close
               </button>
               <div className="border-b border-white/10 px-6 py-4">
-                <p className="text-xs uppercase tracking-[0.24em] text-blue-200">Training calendar</p>
+                <p className="text-xs uppercase tracking-[0.24em] text-emerald-200">Training calendar</p>
                 <h3 className="mt-1 text-lg font-semibold text-white">Election Commission of Pakistan Calendar PDF</h3>
               </div>
               <div className="bg-white">
@@ -588,7 +588,7 @@ export default function EcpTrainerPage() {
                 Close
               </button>
               <div className="border-b border-white/10 px-6 py-4">
-                <p className="text-xs uppercase tracking-[0.24em] text-blue-200">Training media</p>
+                <p className="text-xs uppercase tracking-[0.24em] text-emerald-200">Training media</p>
                 <h3 className="mt-1 text-lg font-semibold text-white">{viewer.title}</h3>
               </div>
               <div className="bg-black">
@@ -609,13 +609,13 @@ export default function EcpTrainerPage() {
         ) : null}
 
         <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-          <div className="mb-5 rounded-2xl border border-blue-200 bg-blue-50/70 p-4 dark:border-blue-900 dark:bg-blue-950/20">
+          <div className="mb-5 rounded-2xl border border-emerald-200 bg-emerald-50/70 p-4 dark:border-emerald-900 dark:bg-emerald-950/20">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <p className="text-sm font-semibold text-blue-900 dark:text-blue-200">Admin Agenda Loader</p>
+              <p className="text-sm font-semibold text-emerald-900 dark:text-emerald-200">Admin Agenda Loader</p>
               <button
                 type="button"
                 onClick={() => setShowAdminPanel((v) => !v)}
-                className="rounded-lg border border-blue-300 px-2.5 py-1 text-xs font-medium text-blue-800 hover:bg-blue-100 dark:border-blue-700 dark:text-blue-200 dark:hover:bg-blue-900/50"
+                className="rounded-lg border border-emerald-300 px-2.5 py-1 text-xs font-medium text-emerald-800 hover:bg-emerald-100 dark:border-emerald-700 dark:text-emerald-200 dark:hover:bg-emerald-900/50"
               >
                 {showAdminPanel ? 'Hide' : 'Show'}
               </button>
@@ -624,7 +624,7 @@ export default function EcpTrainerPage() {
             {showAdminPanel ? (
               <div className="mt-3 space-y-3">
                 <div className="flex flex-wrap items-center gap-2">
-                  <label className="inline-flex cursor-pointer items-center rounded-lg border border-blue-300 bg-white px-3 py-1.5 text-xs font-medium text-blue-800 hover:bg-blue-100 dark:border-blue-700 dark:bg-slate-900 dark:text-blue-200 dark:hover:bg-blue-900/40">
+                  <label className="inline-flex cursor-pointer items-center rounded-lg border border-emerald-300 bg-white px-3 py-1.5 text-xs font-medium text-emerald-800 hover:bg-emerald-100 dark:border-emerald-700 dark:bg-slate-900 dark:text-emerald-200 dark:hover:bg-emerald-900/40">
                     Upload .docx/.txt/.md
                     <input
                       type="file"
@@ -643,7 +643,7 @@ export default function EcpTrainerPage() {
                   <button
                     type="button"
                     onClick={clearAgenda}
-                    className="rounded-lg border border-blue-300 px-3 py-1.5 text-xs font-medium text-blue-800 hover:bg-blue-100 dark:border-blue-700 dark:text-blue-200 dark:hover:bg-blue-900/40"
+                    className="rounded-lg border border-emerald-300 px-3 py-1.5 text-xs font-medium text-emerald-800 hover:bg-emerald-100 dark:border-emerald-700 dark:text-emerald-200 dark:hover:bg-emerald-900/40"
                   >
                     Clear custom agenda
                   </button>
@@ -653,7 +653,7 @@ export default function EcpTrainerPage() {
                   value={agendaText}
                   onChange={(event) => setAgendaText(event.target.value)}
                   placeholder="Optional: paste full agenda text here..."
-                  className="h-28 w-full rounded-xl border border-blue-200 bg-white px-3 py-2 text-xs text-slate-800 outline-none focus:ring-2 focus:ring-blue-500 dark:border-blue-800 dark:bg-slate-900 dark:text-slate-100"
+                  className="h-28 w-full rounded-xl border border-emerald-200 bg-white px-3 py-2 text-xs text-slate-800 outline-none focus:ring-2 focus:ring-emerald-500 dark:border-emerald-800 dark:bg-slate-900 dark:text-slate-100"
                 />
 
                 <div className="flex flex-wrap items-center gap-2">
@@ -665,7 +665,7 @@ export default function EcpTrainerPage() {
                       }
                       setAgendaStatus('Agenda text saved for this browser.');
                     }}
-                    className="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700"
+                    className="rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-700"
                   >
                     Save agenda text
                   </button>
@@ -674,7 +674,7 @@ export default function EcpTrainerPage() {
                     value={calendarPdfUrl}
                     onChange={(event) => setCalendarPdfUrl(event.target.value)}
                     placeholder="https://.../ecp-training-calendar.pdf"
-                    className="h-8 min-w-[260px] flex-1 rounded-lg border border-blue-200 bg-white px-2 text-xs text-slate-800 outline-none focus:ring-2 focus:ring-blue-500 dark:border-blue-800 dark:bg-slate-900 dark:text-slate-100"
+                    className="h-8 min-w-[260px] flex-1 rounded-lg border border-emerald-200 bg-white px-2 text-xs text-slate-800 outline-none focus:ring-2 focus:ring-emerald-500 dark:border-emerald-800 dark:bg-slate-900 dark:text-slate-100"
                   />
                   <button
                     type="button"
@@ -688,22 +688,22 @@ export default function EcpTrainerPage() {
                       }
                       setAgendaStatus('Calendar PDF URL saved.');
                     }}
-                    className="rounded-lg border border-blue-300 px-3 py-1.5 text-xs font-medium text-blue-800 hover:bg-blue-100 dark:border-blue-700 dark:text-blue-200 dark:hover:bg-blue-900/40"
+                    className="rounded-lg border border-emerald-300 px-3 py-1.5 text-xs font-medium text-emerald-800 hover:bg-emerald-100 dark:border-emerald-700 dark:text-emerald-200 dark:hover:bg-emerald-900/40"
                   >
                     Save PDF URL
                   </button>
-                  {agendaText ? <span className="text-xs text-blue-900 dark:text-blue-200">Custom agenda active</span> : null}
+                  {agendaText ? <span className="text-xs text-emerald-900 dark:text-emerald-200">Custom agenda active</span> : null}
                 </div>
 
                 {agendaSummary.length ? (
-                  <div className="rounded-lg border border-blue-200 bg-white p-2 text-xs text-slate-700 dark:border-blue-800 dark:bg-slate-900 dark:text-slate-200">
+                  <div className="rounded-lg border border-emerald-200 bg-white p-2 text-xs text-slate-700 dark:border-emerald-800 dark:bg-slate-900 dark:text-slate-200">
                     {agendaSummary.map((line) => (
                       <p key={line}>{line}</p>
                     ))}
                   </div>
                 ) : null}
 
-                {agendaStatus ? <p className="text-xs text-blue-900 dark:text-blue-200">{agendaStatus}</p> : null}
+                {agendaStatus ? <p className="text-xs text-emerald-900 dark:text-emerald-200">{agendaStatus}</p> : null}
               </div>
             ) : null}
           </div>
@@ -757,7 +757,7 @@ export default function EcpTrainerPage() {
                   <div
                     className={`max-w-[85%] rounded-2xl px-4 py-2 text-sm leading-relaxed ${
                       msg.role === 'user'
-                        ? 'bg-blue-600 text-white rounded-br-sm'
+                        ? 'bg-emerald-600 text-white rounded-br-sm'
                         : 'bg-white text-slate-800 border border-slate-200 rounded-bl-sm dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700'
                     }`}
                   >
@@ -768,7 +768,7 @@ export default function EcpTrainerPage() {
                         <button
                           type="button"
                           onClick={() => setShowCalendarModal(true)}
-                          className="rounded-lg border border-blue-300 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 hover:bg-blue-100 dark:border-blue-700 dark:bg-blue-950/30 dark:text-blue-200 dark:hover:bg-blue-900/50"
+                          className="rounded-lg border border-emerald-300 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 dark:border-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-200 dark:hover:bg-emerald-900/50"
                         >
                           Open Training Calendar (PDF)
                         </button>
@@ -805,7 +805,7 @@ export default function EcpTrainerPage() {
                                 className="rounded-xl border border-slate-200 bg-white p-2 text-left transition hover:-translate-y-0.5 hover:shadow-md dark:border-slate-700 dark:bg-slate-950"
                               >
                                 <div className="relative h-28 overflow-hidden rounded-lg bg-slate-900">
-                                  <div className="absolute inset-0 grid place-items-center bg-gradient-to-br from-blue-600/30 via-slate-900/30 to-black/40 text-white">
+                                  <div className="absolute inset-0 grid place-items-center bg-gradient-to-br from-emerald-600/30 via-slate-900/30 to-black/40 text-white">
                                     <div className="rounded-full bg-white/15 px-4 py-2 text-xs font-semibold backdrop-blur">
                                       Click to open video
                                     </div>
@@ -838,7 +838,7 @@ export default function EcpTrainerPage() {
 
               {listening ? (
                 <div className="flex justify-end">
-                  <div className="max-w-[85%] rounded-2xl rounded-br-sm bg-blue-600 px-4 py-2 text-sm text-white">
+                  <div className="max-w-[85%] rounded-2xl rounded-br-sm bg-emerald-600 px-4 py-2 text-sm text-white">
                     <p className="inline-flex items-center gap-2">
                       <span className="inline-flex h-2.5 w-2.5 rounded-full bg-red-300 animate-pulse" />
                       Recording voice... click mic again to send
@@ -849,7 +849,7 @@ export default function EcpTrainerPage() {
 
               {isTranscribing ? (
                 <div className="flex justify-end">
-                  <div className="max-w-[85%] rounded-2xl rounded-br-sm bg-blue-600 px-4 py-2 text-sm text-white">
+                  <div className="max-w-[85%] rounded-2xl rounded-br-sm bg-emerald-600 px-4 py-2 text-sm text-white">
                     <p className="inline-flex items-center gap-2">
                       <Loader2 className="h-4 w-4 animate-spin" />
                       Uploading and transcribing your voice...
@@ -889,7 +889,7 @@ export default function EcpTrainerPage() {
                     ? 'Transcribing your voice...'
                     : 'Ask about legal framework, elections, technology, or a specific day'
               }
-              className="h-11 flex-1 rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+              className="h-11 flex-1 rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-emerald-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
               maxLength={1000}
               disabled={isLoading || isTranscribing || listening}
             />
@@ -897,7 +897,7 @@ export default function EcpTrainerPage() {
             <button
               onClick={() => void sendMessage()}
               disabled={!input.trim() || isLoading || isTranscribing || listening}
-              className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-50"
               aria-label="Send"
             >
               <Send className="h-5 w-5" />
@@ -905,7 +905,7 @@ export default function EcpTrainerPage() {
           </div>
 
           {speechError ? <p className="mt-2 text-sm text-red-600">{speechError}</p> : null}
-          {isTranscribing ? <p className="mt-2 text-sm text-blue-600">Uploading and transcribing your voice...</p> : null}
+          {isTranscribing ? <p className="mt-2 text-sm text-emerald-600">Uploading and transcribing your voice...</p> : null}
 
           <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
             Tip: Ask &quot;Check Day 5 agenda&quot; or &quot;Suggest extra activities&quot; for practical enhancements.
