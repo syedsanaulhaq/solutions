@@ -314,6 +314,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
   const lang = forcedLang;
   const langRef = useRef<'en' | 'ur'>(forcedLang);
   const ui = UI_TEXT[lang];
+  const adminUi = UI_TEXT.en;
   const urduPageStyle =
     lang === 'ur'
       ? {
@@ -879,15 +880,15 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
         ) : null}
 
         <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-          <div className="mb-5 rounded-2xl border border-emerald-200 bg-emerald-50/70 p-4 dark:border-emerald-900 dark:bg-emerald-950/20" dir={lang === 'ur' ? 'rtl' : 'ltr'}>
+          <div className="mb-5 rounded-2xl border border-emerald-200 bg-emerald-50/70 p-4 dark:border-emerald-900 dark:bg-emerald-950/20" dir="ltr">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <p className="text-sm font-semibold text-emerald-900 dark:text-emerald-200">{ui.adminLoader}</p>
+              <p className="text-sm font-semibold text-emerald-900 dark:text-emerald-200">{adminUi.adminLoader}</p>
               <button
                 type="button"
                 onClick={() => setShowAdminPanel((v) => !v)}
                 className="rounded-lg border border-emerald-300 px-2.5 py-1 text-xs font-medium text-emerald-800 hover:bg-emerald-100 dark:border-emerald-700 dark:text-emerald-200 dark:hover:bg-emerald-900/50"
               >
-                {showAdminPanel ? ui.hide : ui.show}
+                {showAdminPanel ? adminUi.hide : adminUi.show}
               </button>
             </div>
 
@@ -895,7 +896,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
               <div className="mt-3 space-y-3">
                 <div className="flex flex-wrap items-center gap-2">
                   <label className="inline-flex cursor-pointer items-center rounded-lg border border-emerald-300 bg-white px-3 py-1.5 text-xs font-medium text-emerald-800 hover:bg-emerald-100 dark:border-emerald-700 dark:bg-slate-900 dark:text-emerald-200 dark:hover:bg-emerald-900/40">
-                    {ui.uploadAgenda}
+                    {adminUi.uploadAgenda}
                     <input
                       type="file"
                       accept=".docx,.txt,.md"
@@ -915,7 +916,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
                     onClick={clearAgenda}
                     className="rounded-lg border border-emerald-300 px-3 py-1.5 text-xs font-medium text-emerald-800 hover:bg-emerald-100 dark:border-emerald-700 dark:text-emerald-200 dark:hover:bg-emerald-900/40"
                   >
-                    {ui.clearAgenda}
+                    {adminUi.clearAgenda}
                   </button>
                 </div>
 
@@ -923,7 +924,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
                   dir={lang === 'ur' ? 'rtl' : 'ltr'}
                   value={agendaText}
                   onChange={(event) => setAgendaText(event.target.value)}
-                  placeholder={ui.agendaPlaceholder}
+                  placeholder={adminUi.agendaPlaceholder}
                   className="h-28 w-full rounded-xl border border-emerald-200 bg-white px-3 py-2 text-xs text-slate-800 outline-none focus:ring-2 focus:ring-emerald-500 dark:border-emerald-800 dark:bg-slate-900 dark:text-slate-100"
                 />
 
@@ -934,18 +935,18 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
                       if (typeof window !== 'undefined') {
                         window.localStorage.setItem(AGENDA_STORAGE_KEY, agendaText);
                       }
-                      setAgendaStatus(ui.agendaSaved);
+                      setAgendaStatus(adminUi.agendaSaved);
                     }}
                     className="rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-700"
                   >
-                    {ui.saveAgenda}
+                    {adminUi.saveAgenda}
                   </button>
                   <input
                     dir={lang === 'ur' ? 'rtl' : 'ltr'}
                     type="url"
                     value={calendarPdfUrl}
                     onChange={(event) => setCalendarPdfUrl(event.target.value)}
-                    placeholder={ui.pdfPlaceholder}
+                    placeholder={adminUi.pdfPlaceholder}
                     className="h-8 min-w-[260px] flex-1 rounded-lg border border-emerald-200 bg-white px-2 text-xs text-slate-800 outline-none focus:ring-2 focus:ring-emerald-500 dark:border-emerald-800 dark:bg-slate-900 dark:text-slate-100"
                   />
                   <button
@@ -958,13 +959,13 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
                           window.localStorage.removeItem(CALENDAR_PDF_URL_KEY);
                         }
                       }
-                      setAgendaStatus(ui.pdfSaved);
+                      setAgendaStatus(adminUi.pdfSaved);
                     }}
                     className="rounded-lg border border-emerald-300 px-3 py-1.5 text-xs font-medium text-emerald-800 hover:bg-emerald-100 dark:border-emerald-700 dark:text-emerald-200 dark:hover:bg-emerald-900/40"
                   >
-                    {ui.savePdfUrl}
+                    {adminUi.savePdfUrl}
                   </button>
-                  {agendaText ? <span className="text-xs text-emerald-900 dark:text-emerald-200">{ui.customAgendaActive}</span> : null}
+                  {agendaText ? <span className="text-xs text-emerald-900 dark:text-emerald-200">{adminUi.customAgendaActive}</span> : null}
                 </div>
 
                 {agendaSummary.length ? (
