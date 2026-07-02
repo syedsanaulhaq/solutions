@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Loader2, Mic, PlayCircle, Send, Square, Volume2, VolumeX } from 'lucide-react';
 
-const ECP_LOGO_URL = 'https://upload.wikimedia.org/wikipedia/en/thumb/2/2e/Election_Commission_of_Pakistan_logo.svg/512px-Election_Commission_of_Pakistan_logo.svg.png';
+const ECP_LOGO_URL = '/ecp/ecp-logo.jpg';
 
 interface MediaItem {
   title: string;
