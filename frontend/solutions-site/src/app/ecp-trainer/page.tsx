@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Loader2, Mic, PlayCircle, Send, Square, Volume2, VolumeX } from 'lucide-react';
 
-const ECP_LOGO_URL = '/ecp/ecp-logo.jpg';
+const ECP_LOGO_URL = '/ecp/ecp-logo.png';
 
 interface MediaItem {
   title: string;
