@@ -82,10 +82,57 @@
   .feat-card .icon { font-size: 36px; margin-bottom: 12px; }
   .feat-card h3 { font-size: 16px; margin-bottom: 8px; }
   .feat-card p { font-size: 13px; opacity: .78; }
+  .feat-card p.dual { line-height: 1.85; }
+  .feat-card p.dual .ur { display: block; margin-top: 8px; color: #d8f7e6; font-size: 14px; direction: rtl; font-family: 'Noto Nastaliq Urdu', serif; }
 
   /* ─── Two-column ────────────────────────────────────────────── */
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; width: 100%; max-width: 980px; align-items: start; }
   .two-col.center { align-items: center; }
+  .visual-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; width: 100%; max-width: 980px; }
+  .story-card {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 20px;
+    padding: 24px;
+    backdrop-filter: blur(6px);
+  }
+  .story-card h3 { font-size: 20px; margin-bottom: 10px; }
+  .story-card p { opacity: .86; }
+  .story-card .ur { display:block; margin-top: 8px; direction: rtl; font-family: 'Noto Nastaliq Urdu', serif; font-size: 16px; line-height: 1.95; color: #dff8eb; }
+  .pill-row { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:20px; }
+  .pill {
+    padding: 9px 16px; border-radius: 999px; background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.16); font-size: 13px; font-weight: 600;
+  }
+  .journey {
+    display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap:18px; width:100%; max-width:980px; margin-top:28px;
+  }
+  .journey-card {
+    border-radius: 18px; padding: 22px 18px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); text-align:center;
+  }
+  .journey-card .emoji { font-size: 32px; margin-bottom: 12px; }
+  .journey-card h3 { font-size: 16px; margin-bottom: 8px; }
+  .journey-card p { font-size: 13px; opacity: .82; }
+  .journey-card .ur { display:block; margin-top: 8px; direction: rtl; font-family: 'Noto Nastaliq Urdu', serif; font-size: 14px; line-height: 1.85; color: #dff8eb; }
+  .big-url {
+    margin-top: 26px; padding: 18px 28px; border-radius: 18px; background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15); text-align:center;
+  }
+  .big-url .label { font-size: 11px; opacity: .65; letter-spacing: .18em; text-transform: uppercase; }
+  .big-url .value { margin-top: 8px; font-size: clamp(20px, 2.2vw, 30px); font-weight: 800; color: var(--ecp-gold); }
+  .balanced-list { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:16px; width:100%; max-width:980px; margin-top:28px; }
+  .balanced-item {
+    border-radius: 18px; padding: 20px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+  }
+  .balanced-item h3 { font-size: 17px; margin-bottom: 8px; }
+  .balanced-item p { font-size: 14px; opacity: .84; }
+  .balanced-item .ur { display:block; margin-top: 8px; direction: rtl; font-family: 'Noto Nastaliq Urdu', serif; font-size: 15px; line-height: 1.9; color: #dff8eb; }
+
+  @media (max-width: 900px) {
+    .feat-grid, .two-col, .visual-grid, .balanced-list, .journey { grid-template-columns: 1fr; }
+    .step-flow { flex-direction: column; gap: 16px; }
+    .step:not(:last-child)::after { display: none; }
+  }
 
   /* ─── Checklist ─────────────────────────────────────────────── */
   .check-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
@@ -189,66 +236,62 @@
 
 <div id="deck">
 
-  <!-- ══ SLIDE 1 — Hero ══════════════════════════════════════════ -->
   <div class="slide bg-hero active" id="s0">
     <div class="logo-row">
       <img src="/ecp/ecp-logo.png" alt="ECP Logo" onerror="this.style.display='none'" />
       <div class="org">Election Commission<br/>of Pakistan</div>
     </div>
-    <div class="eyebrow">Training Wing — Technology Innovation</div>
+    <div class="eyebrow">Simple Demo Overview</div>
     <h1>ECP <span class="gold">AI Trainer</span></h1>
-    <p class="subtitle" style="max-width:600px;text-align:center;">
-      An intelligent onboarding assistant that trains new ECP employees using the official agenda, legal frameworks, and authentic ECP media — available 24/7, in voice and text.
+    <p class="subtitle" style="max-width:760px;text-align:center;line-height:1.7;">
+      A simple digital trainer for new ECP staff. It answers questions, explains the agenda, speaks back, and works in English and Urdu.
+      <br/><span style="display:block;margin-top:10px;direction:rtl;font-family:'Noto Nastaliq Urdu',serif;font-size:20px;line-height:2;">یہ نئے ای سی پی ملازمین کے لیے ایک سادہ ڈیجیٹل ٹرینر ہے۔ یہ سوالوں کے جواب دیتا ہے، ایجنڈا سمجھاتا ہے، آواز میں جواب دیتا ہے، اور انگریزی و اردو دونوں میں کام کرتا ہے۔</span>
     </p>
-    <div class="divider" style="margin: 28px auto;"></div>
-    <div class="tags">
-      <span class="tag">Voice Enabled</span>
-      <span class="tag">AI-Powered</span>
-      <span class="tag">Official ECP Content</span>
-      <span class="tag">Always Available</span>
+    <div class="pill-row">
+      <span class="pill">English + Urdu</span>
+      <span class="pill">Voice + Text</span>
+      <span class="pill">Official Agenda Based</span>
+      <span class="pill">Available 24/7</span>
     </div>
   </div>
 
-  <!-- ══ SLIDE 2 — The Challenge ════════════════════════════════ -->
   <div class="slide bg-dark-green" id="s1">
-    <div class="eyebrow">The Challenge</div>
-    <h2>New Employees Need <span class="gold">Structured Onboarding</span></h2>
+    <div class="eyebrow">The Problem</div>
+    <h2>What Problem Does It Solve?</h2>
     <div class="divider"></div>
-    <div class="two-col" style="max-width:860px; margin-top:24px;">
-      <div>
-        <ul class="check-list" style="--c:#f87171;">
-          <li style="color:#fca5a5">Inconsistent training quality across provinces</li>
-          <li style="color:#fca5a5">Trainers unavailable outside working hours</li>
-          <li style="color:#fca5a5">Large volumes of legal text hard to absorb quickly</li>
-          <li style="color:#fca5a5">No standardised day-wise onboarding schedule</li>
-          <li style="color:#fca5a5">No centralised media or reference material</li>
-        </ul>
+    <div class="visual-grid" style="margin-top:28px;">
+      <div class="story-card">
+        <h3>New staff need quick guidance</h3>
+        <p>Many new employees need the same orientation, but trainers are not always available.</p>
+        <span class="ur">نئے ملازمین کو فوری رہنمائی چاہیے ہوتی ہے، مگر ہر وقت ٹرینر دستیاب نہیں ہوتا۔</span>
       </div>
-      <div>
-        <div class="feat-card" style="text-align:left;">
-          <div class="icon">📋</div>
-          <h3 class="gold">Result</h3>
-          <p>New staff take weeks to reach operational readiness, with gaps in knowledge of election laws, processes, and ECP technology systems.</p>
-        </div>
+      <div class="story-card">
+        <h3>Documents are long and difficult</h3>
+        <p>Agendas, rules, and procedures are important, but they are hard to digest quickly.</p>
+        <span class="ur">ایجنڈا، قواعد اور طریقہ کار اہم ہوتے ہیں، مگر انہیں جلد سمجھنا آسان نہیں ہوتا۔</span>
+      </div>
+      <div class="story-card">
+        <h3>People ask repeated questions</h3>
+        <p>Basic training questions repeat again and again in every batch.</p>
+        <span class="ur">ہر نئے بیچ میں بنیادی تربیتی سوالات بار بار پوچھے جاتے ہیں۔</span>
+      </div>
+      <div class="story-card">
+        <h3>Consistency matters</h3>
+        <p>ECP needs one standard explanation for everyone.</p>
+        <span class="ur">ای سی پی کو سب کے لیے ایک جیسی اور معیاری رہنمائی درکار ہے۔</span>
       </div>
     </div>
   </div>
 
-  <!-- ══ SLIDE 3 — The Solution ═════════════════════════════════ -->
   <div class="slide bg-accent" id="s2">
-    <div class="eyebrow">Our Solution</div>
-    <h2>Meet the <span class="gold">ECP AI Trainer</span></h2>
+    <div class="eyebrow">The Idea</div>
+    <h2>What Is This System?</h2>
     <div class="divider"></div>
     <div class="two-col center" style="margin-top:28px;">
-      <div>
-        <ul class="check-list">
-          <li>AI chatbot trained on <strong>official ECP agenda</strong> &amp; legal framework</li>
-          <li>Voice-enabled — speak naturally, get spoken answers</li>
-          <li>Day-by-day onboarding: Day 1 through Day 5 coverage</li>
-          <li>Official ECP YouTube media embedded per topic</li>
-          <li>Training Calendar PDF always one click away</li>
-          <li>Available <strong>24 / 7</strong> — no trainer needed</li>
-        </ul>
+      <div class="story-card" style="text-align:left;">
+        <h3>Think of it as a smart training assistant</h3>
+        <p>Instead of waiting for a trainer, a new employee can open one page and ask questions in a natural way.</p>
+        <span class="ur">اسے ایک ذہین تربیتی معاون سمجھیں۔ نیا ملازم ایک صفحہ کھول کر قدرتی انداز میں سوال پوچھ سکتا ہے۔</span>
       </div>
       <div class="mock-browser">
         <div class="mock-bar">
@@ -262,243 +305,172 @@
             <div style="width:32px;height:32px;border-radius:50%;background:var(--ecp-green);display:flex;align-items:center;justify-content:center;font-size:16px;">🏛</div>
             <div>
               <div style="font-size:13px;font-weight:700;">ECP AI Trainer</div>
-              <div style="font-size:11px;opacity:.6;">Voice onboarding assistant</div>
+              <div style="font-size:11px;opacity:.6;">Ask. Listen. Learn.</div>
             </div>
           </div>
           <div class="mock-chat">
-            <div class="chat-bubble bot-bubble">Welcome! I'm your ECP AI Trainer. Say "start onboarding" and I'll guide you through the full programme. 🗳</div>
-            <div class="chat-bubble user-bubble">Tell me about Day 1 orientation.</div>
-            <div class="chat-bubble bot-bubble">Day 1 covers your appointment letter, joining formalities, ECP organogram, and introduction to electoral law…</div>
+            <div class="chat-bubble bot-bubble">Ask me about Day 1, Day 5, voter registration, or EDR.</div>
+            <div class="chat-bubble user-bubble">Explain Day 1 in simple words.</div>
+            <div class="chat-bubble bot-bubble">Day 1 introduces the employee to ECP, office structure, and the training plan.</div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ══ SLIDE 4 — Key Features ═════════════════════════════════ -->
   <div class="slide bg-dark-green" id="s3">
-    <div class="eyebrow">What It Does</div>
-    <h2>Key <span class="gold">Features</span></h2>
+    <div class="eyebrow">How It Works</div>
+    <h2>The Whole Journey in 4 Simple Steps</h2>
+    <div class="divider"></div>
+    <div class="journey">
+      <div class="journey-card">
+        <div class="emoji">1</div>
+        <h3>Open the page</h3>
+        <p>The employee opens the ECP trainer link.</p>
+        <span class="ur">ملازم ای سی پی ٹرینر کا لنک کھولتا ہے۔</span>
+      </div>
+      <div class="journey-card">
+        <div class="emoji">2</div>
+        <h3>Ask by text or voice</h3>
+        <p>They type or speak a question in plain language.</p>
+        <span class="ur">وہ عام زبان میں سوال ٹائپ یا بولتا ہے۔</span>
+      </div>
+      <div class="journey-card">
+        <div class="emoji">3</div>
+        <h3>AI explains simply</h3>
+        <p>The system reads the agenda and answers in a simple way.</p>
+        <span class="ur">سسٹم ایجنڈا دیکھ کر آسان انداز میں جواب دیتا ہے۔</span>
+      </div>
+      <div class="journey-card">
+        <div class="emoji">4</div>
+        <h3>Learning happens instantly</h3>
+        <p>The employee gets guidance immediately, without waiting.</p>
+        <span class="ur">ملازم کو فوراً رہنمائی مل جاتی ہے، انتظار نہیں کرنا پڑتا۔</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide bg-split" id="s4">
+    <div class="eyebrow">What It Can Do</div>
+    <h2>Features People Will Actually Notice</h2>
     <div class="divider"></div>
     <div class="feat-grid" style="margin-top:28px;">
       <div class="feat-card">
         <div class="icon">🎙️</div>
-        <h3>Voice Interface</h3>
-        <p>Speak to the trainer — it listens, responds in voice, and reads answers aloud in natural language.</p>
+        <h3>Voice Questions</h3>
+        <p class="dual">The employee can speak instead of typing.<span class="ur">ملازم ٹائپ کرنے کے بجائے بول بھی سکتا ہے۔</span></p>
       </div>
       <div class="feat-card">
-        <div class="icon">🧠</div>
-        <h3>AI Chat Engine</h3>
-        <p>Powered by GPT-4 — understands context, follows up on questions, and stays strictly within ECP scope.</p>
+        <div class="icon">🗣️</div>
+        <h3>Voice Answers</h3>
+        <p class="dual">The system can answer aloud.<span class="ur">سسٹم آواز میں جواب بھی دے سکتا ہے۔</span></p>
       </div>
       <div class="feat-card">
-        <div class="icon">📅</div>
-        <h3>Agenda-Based Training</h3>
-        <p>Follows the official ECP monthly training agenda day by day — fully configurable by admin upload.</p>
+        <div class="icon">📘</div>
+        <h3>Agenda Guidance</h3>
+        <p class="dual">It explains day-wise training in simple words.<span class="ur">یہ روزانہ کے تربیتی ایجنڈے کو آسان لفظوں میں سمجھاتا ہے۔</span></p>
       </div>
       <div class="feat-card">
-        <div class="icon">🎬</div>
-        <h3>Official ECP Media</h3>
-        <p>Embeds official ECP YouTube videos and images — relevant media surfaces automatically per topic.</p>
+        <div class="icon">🌍</div>
+        <h3>English & Urdu</h3>
+        <p class="dual">Separate links are available for both languages.<span class="ur">انگریزی اور اردو دونوں کے لیے الگ الگ لنکس موجود ہیں۔</span></p>
       </div>
       <div class="feat-card">
         <div class="icon">📄</div>
-        <h3>Training Calendar PDF</h3>
-        <p>Instant access to the ECP monthly training calendar with one click — no searching required.</p>
+        <h3>Calendar Access</h3>
+        <p class="dual">The training PDF opens in one click.<span class="ur">تربیتی پی ڈی ایف ایک کلک میں کھل جاتی ہے۔</span></p>
       </div>
       <div class="feat-card">
-        <div class="icon">⚙️</div>
-        <h3>Admin Panel</h3>
-        <p>Upload a new agenda DOCX/PDF at any time — the AI instantly adapts its training content.</p>
+        <div class="icon">🧩</div>
+        <h3>Relevant Media</h3>
+        <p class="dual">Images and videos appear only where useful.<span class="ur">تصاویر اور ویڈیوز صرف ضرورت کے مطابق دکھائی جاتی ہیں۔</span></p>
       </div>
     </div>
   </div>
 
-  <!-- ══ SLIDE 5 — Training Coverage ═══════════════════════════ -->
-  <div class="slide bg-split" id="s4">
-    <div class="eyebrow">Training Curriculum</div>
-    <h2>Full <span class="gold">5-Day Onboarding</span> Programme</h2>
-    <div class="divider"></div>
-    <div class="two-col" style="margin-top:28px;">
-      <div>
-        <ul class="check-list">
-          <li><strong>Day 1:</strong> Joining formalities, ECP structure &amp; organogram</li>
-          <li><strong>Day 2:</strong> Electoral Roll — registration, revision &amp; verification</li>
-          <li><strong>Day 3:</strong> General Elections — RO/DRO roles, polling process</li>
-          <li><strong>Day 4:</strong> By-Elections, Senate, Political Finance &amp; code of conduct</li>
-          <li><strong>Day 5:</strong> EDR technology, EMS system, ECP IT infrastructure</li>
-        </ul>
-      </div>
-      <div>
-        <ul class="check-list">
-          <li>Constitutional &amp; legal framework (Elections Act 2017)</li>
-          <li>Voter Registration Act &amp; electoral rolls</li>
-          <li>Gender inclusion &amp; disability representation</li>
-          <li>Media outreach &amp; public awareness</li>
-          <li>ECP international relations &amp; observer missions</li>
-          <li>Practical admin procedures &amp; OMR forms</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══ SLIDE 6 — How It Works ═════════════════════════════════ -->
   <div class="slide bg-dark-green" id="s5">
-    <div class="eyebrow">Under the Hood</div>
-    <h2>How It <span class="gold">Works</span></h2>
+    <div class="eyebrow">For the Training Wing</div>
+    <h2>What ECP Staff Can Control</h2>
     <div class="divider"></div>
-    <div class="step-flow" style="margin-top:40px;">
-      <div class="step">
-        <div class="step-num">1</div>
-        <h3 style="font-size:15px;">Employee Opens Trainer</h3>
-        <p>Visits the dedicated ECP-branded page — no login required.</p>
+    <div class="balanced-list">
+      <div class="balanced-item">
+        <h3>Upload a new agenda</h3>
+        <p>If the training agenda changes, admin uploads a new file.</p>
+        <span class="ur">اگر تربیتی ایجنڈا بدل جائے تو ایڈمن نئی فائل اپ لوڈ کر سکتا ہے۔</span>
       </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <h3 style="font-size:15px;">Asks a Question</h3>
-        <p>Types or speaks — e.g. "Explain Day 3 agenda" or "What is EDR?"</p>
+      <div class="balanced-item">
+        <h3>Update the PDF calendar</h3>
+        <p>The calendar link can be changed without rebuilding the whole system.</p>
+        <span class="ur">کیلینڈر لنک پورا سسٹم دوبارہ بنائے بغیر تبدیل کیا جا سکتا ہے۔</span>
       </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <h3 style="font-size:15px;">AI Processes</h3>
-        <p>GPT-4 answers using the uploaded ECP agenda and legal ruleset as context.</p>
+      <div class="balanced-item">
+        <h3>Use English or Urdu</h3>
+        <p>There is one clear link for English and one clear link for Urdu.</p>
+        <span class="ur">انگریزی کے لیے الگ لنک اور اردو کے لیے الگ لنک موجود ہے۔</span>
       </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <h3 style="font-size:15px;">Answer Delivered</h3>
-        <p>Response shown in text + spoken aloud. Relevant ECP videos surface automatically.</p>
+      <div class="balanced-item">
+        <h3>Keep answers focused</h3>
+        <p>The trainer is designed to stay within ECP onboarding topics.</p>
+        <span class="ur">ٹرینر کو اس طرح بنایا گیا ہے کہ یہ ای سی پی تربیتی موضوعات تک محدود رہے۔</span>
       </div>
-      <div class="step">
-        <div class="step-num">5</div>
-        <h3 style="font-size:15px;">Admin Updates</h3>
-        <p>Training Wing uploads new agenda — AI adapts instantly, no code changes needed.</p>
-      </div>
-    </div>
-    <div style="margin-top:32px; text-align:center; opacity:.7; font-size:13px;">
-      Hosted at <strong>solutions.hostingocean.net/ecp-trainer</strong> — no installation required for employees
     </div>
   </div>
 
-  <!-- ══ SLIDE 7 — Impact Numbers ═══════════════════════════════ -->
   <div class="slide bg-hero" id="s6">
-    <div class="eyebrow">Expected Impact</div>
-    <h2>Why This <span class="gold">Matters</span></h2>
+    <div class="eyebrow">Why It Matters</div>
+    <h2>Simple Benefits for ECP</h2>
     <div class="divider" style="margin:16px auto;"></div>
-    <div class="stat-row" style="margin: 32px 0;">
-      <div class="stat">
-        <div class="num">5×</div>
-        <div class="label">Faster onboarding<br/>completion</div>
-      </div>
+    <div class="stat-row" style="margin: 28px 0 34px;">
       <div class="stat">
         <div class="num">24/7</div>
-        <div class="label">Available without<br/>a trainer present</div>
+        <div class="label">Always available<br/>ہر وقت دستیاب</div>
       </div>
       <div class="stat">
-        <div class="num">100%</div>
-        <div class="label">Based on official<br/>ECP content only</div>
+        <div class="num">2</div>
+        <div class="label">English + Urdu<br/>دو زبانیں</div>
+      </div>
+      <div class="stat">
+        <div class="num">1</div>
+        <div class="label">Standard message<br/>ایک معیاری رہنمائی</div>
       </div>
       <div class="stat">
         <div class="num">0</div>
-        <div class="label">Hallucinations outside<br/>ECP scope allowed</div>
+        <div class="label">Need to wait for trainer<br/>انتظار کی ضرورت نہیں</div>
       </div>
     </div>
     <div class="quote">
-      "A non-partisan, fact-based, always-available trainer — every new ECP employee deserves this level of structured onboarding."
+      This is not replacing trainers. It is helping trainers by handling the first layer of guidance quickly and consistently.
+      <br/><span style="display:block;margin-top:10px;direction:rtl;font-family:'Noto Nastaliq Urdu',serif;font-style:normal;font-size:18px;line-height:2;">یہ ٹرینرز کی جگہ نہیں لے رہا، بلکہ ابتدائی رہنمائی کو تیز اور یکساں بنا کر ٹرینرز کی مدد کر رہا ہے۔</span>
     </div>
   </div>
 
-  <!-- ══ SLIDE 8 — Demo ═════════════════════════════════════════ -->
   <div class="slide bg-accent" id="s7">
-    <div class="eyebrow">Live Demonstration</div>
-    <h2>See It In <span class="gold">Action</span></h2>
+    <div class="eyebrow">Live Links</div>
+    <h2>Ready for Demonstration</h2>
     <div class="divider"></div>
-    <div style="margin-top:28px; display:flex; flex-direction:column; align-items:center; gap:24px; text-align:center;">
-      <p style="max-width:580px;opacity:.9;">
-        The live demo is running now at the URL below. During this presentation, we will demonstrate:
-      </p>
-      <div class="feat-grid" style="max-width:760px;">
-        <div class="feat-card">
-          <div class="icon">💬</div>
-          <h3>Chat Query</h3>
-          <p>Ask about Day 3 agenda live</p>
-        </div>
-        <div class="feat-card">
-          <div class="icon">🎙️</div>
-          <h3>Voice Mode</h3>
-          <p>Speak a question, hear the answer</p>
-        </div>
-        <div class="feat-card">
-          <div class="icon">📺</div>
-          <h3>Media Cards</h3>
-          <p>Official ECP YouTube videos appear in context</p>
+    <div class="visual-grid" style="margin-top:24px; max-width:860px;">
+      <div class="story-card" style="text-align:center;">
+        <h3>English Trainer</h3>
+        <p>For English speaking staff and demos.</p>
+        <span class="ur">انگریزی بولنے والے عملے اور ڈیمو کے لیے۔</span>
+        <div class="big-url">
+          <div class="label">English URL</div>
+          <div class="value">/ecp-trainer</div>
         </div>
       </div>
-      <div style="background:rgba(200,168,75,.15);border:1px solid rgba(200,168,75,.4);border-radius:12px;padding:16px 32px;margin-top:8px;">
-        <div style="font-size:12px;opacity:.7;margin-bottom:4px;">LIVE DEMO URL</div>
-        <div style="font-size:20px;font-weight:700;color:var(--ecp-gold);">solutions.hostingocean.net/ecp-trainer</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══ SLIDE 9 — Security & Compliance ═══════════════════════ -->
-  <div class="slide bg-dark-green" id="s8">
-    <div class="eyebrow">Trust &amp; Compliance</div>
-    <h2>Built with <span class="gold">Security in Mind</span></h2>
-    <div class="divider"></div>
-    <div class="two-col center" style="margin-top:28px;">
-      <div>
-        <ul class="check-list">
-          <li>Strictly <strong>non-partisan</strong> — AI rules prevent political opinion</li>
-          <li>Content drawn only from <strong>official ECP sources</strong></li>
-          <li>No employee data stored — fully stateless sessions</li>
-          <li>Runs on dedicated secure cloud server (Contabo VPS)</li>
-          <li>HTTPS encrypted — all data in transit protected</li>
-          <li>Admin panel restricted — agenda updates are audit-logged</li>
-          <li>No external tracking or data sharing</li>
-        </ul>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:16px;">
-        <div class="feat-card">
-          <div class="icon">🔒</div>
-          <h3>Data Privacy</h3>
-          <p>No PII collected. Sessions are ephemeral — nothing persisted after the chat ends.</p>
-        </div>
-        <div class="feat-card">
-          <div class="icon">🏛</div>
-          <h3>Official Content Only</h3>
-          <p>AI is restricted to official ECP mandate — it cannot answer outside its scope.</p>
+      <div class="story-card" style="text-align:center;">
+        <h3>Urdu Trainer</h3>
+        <p>For Urdu speaking staff with Nastaliq display and Urdu voice support.</p>
+        <span class="ur">اردو بولنے والے عملے کے لیے، نستعلیق فونٹ اور اردو وائس سپورٹ کے ساتھ۔</span>
+        <div class="big-url">
+          <div class="label">Urdu URL</div>
+          <div class="value">/ecp-trainer-ur</div>
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- ══ SLIDE 10 — Next Steps ══════════════════════════════════ -->
-  <div class="slide bg-hero" id="s9">
-    <div class="logo-row" style="justify-content:center; margin-bottom:20px;">
-      <img src="/ecp/ecp-logo.png" alt="ECP Logo" onerror="this.style.display='none'" />
-    </div>
-    <div class="eyebrow">Next Steps</div>
-    <h2>Ready to <span class="gold">Scale Nationwide</span></h2>
-    <div class="divider" style="margin:16px auto;"></div>
-    <div class="feat-grid" style="margin-top:28px; max-width:860px;">
-      <div class="feat-card">
-        <div class="icon">📁</div>
-        <h3>Upload Your Agenda</h3>
-        <p>Provide the official training agenda DOCX — we configure the AI in hours.</p>
-      </div>
-      <div class="feat-card">
-        <div class="icon">🌐</div>
-        <h3>Custom ECP Domain</h3>
-        <p>Move to <em>trainer.ecp.gov.pk</em> — fully deployable on government infrastructure.</p>
-      </div>
-      <div class="feat-card">
-        <div class="icon">🇵🇰</div>
-        <h3>Urdu Language Support</h3>
-        <p>Full Urdu voice &amp; text mode available — ready to enable for all provincial offices.</p>
-      </div>
-    </div>
-    <div style="margin-top:36px;text-align:center;">
-      <p style="opacity:.75;font-size:14px;">Presented by HostingOcean Solutions &nbsp;·&nbsp; solutions.hostingocean.net</p>
+    <div class="big-url" style="margin-top:30px; max-width:900px; width:100%;">
+      <div class="label">Full Demo Address</div>
+      <div class="value">solutions.hostingocean.net</div>
     </div>
   </div>
 
@@ -509,7 +481,7 @@
   <button onclick="go(-1)" title="Previous">◀</button>
   <div class="dot-row" id="dots"></div>
   <button onclick="go(1)"  title="Next">▶</button>
-  <span id="counter">1 / 10</span>
+  <span id="counter">1 / 8</span>
 </div>
 
 <script>
