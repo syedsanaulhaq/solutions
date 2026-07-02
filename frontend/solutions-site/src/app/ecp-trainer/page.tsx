@@ -508,6 +508,8 @@ export default function EcpTrainerPage() {
         try {
           const audioCtx = new AudioContext();
           audioContextRef.current = audioCtx;
+          // Chrome starts AudioContext suspended when created outside a direct user gesture
+          void audioCtx.resume();
           const source = audioCtx.createMediaStreamSource(stream);
           const analyser = audioCtx.createAnalyser();
           analyser.fftSize = 512;
