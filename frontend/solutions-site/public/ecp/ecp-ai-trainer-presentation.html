@@ -83,7 +83,6 @@
   .feat-card h3 { font-size: 16px; margin-bottom: 8px; }
   .feat-card p { font-size: 13px; opacity: .78; }
   .feat-card p.dual { line-height: 1.85; }
-  .feat-card p.dual .ur { display: block; margin-top: 8px; color: #d8f7e6; font-size: 14px; direction: rtl; font-family: 'Noto Nastaliq Urdu', serif; }
 
   /* ─── Two-column ────────────────────────────────────────────── */
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; width: 100%; max-width: 980px; align-items: start; }
@@ -98,7 +97,6 @@
   }
   .story-card h3 { font-size: 20px; margin-bottom: 10px; }
   .story-card p { opacity: .86; }
-  .story-card .ur { display:block; margin-top: 8px; direction: rtl; font-family: 'Noto Nastaliq Urdu', serif; font-size: 16px; line-height: 1.95; color: #dff8eb; }
   .pill-row { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:20px; }
   .pill {
     padding: 9px 16px; border-radius: 999px; background: rgba(255,255,255,.08);
@@ -113,7 +111,6 @@
   .journey-card .emoji { font-size: 32px; margin-bottom: 12px; }
   .journey-card h3 { font-size: 16px; margin-bottom: 8px; }
   .journey-card p { font-size: 13px; opacity: .82; }
-  .journey-card .ur { display:block; margin-top: 8px; direction: rtl; font-family: 'Noto Nastaliq Urdu', serif; font-size: 14px; line-height: 1.85; color: #dff8eb; }
   .big-url {
     margin-top: 26px; padding: 18px 28px; border-radius: 18px; background: rgba(255,255,255,.08);
     border: 1px solid rgba(255,255,255,.15); text-align:center;
@@ -126,7 +123,6 @@
   }
   .balanced-item h3 { font-size: 17px; margin-bottom: 8px; }
   .balanced-item p { font-size: 14px; opacity: .84; }
-  .balanced-item .ur { display:block; margin-top: 8px; direction: rtl; font-family: 'Noto Nastaliq Urdu', serif; font-size: 15px; line-height: 1.9; color: #dff8eb; }
 
   @media (max-width: 900px) {
     .feat-grid, .two-col, .visual-grid, .balanced-list, .journey { grid-template-columns: 1fr; }
@@ -244,11 +240,10 @@
     <div class="eyebrow">Simple Demo Overview</div>
     <h1>ECP <span class="gold">AI Trainer</span></h1>
     <p class="subtitle" style="max-width:760px;text-align:center;line-height:1.7;">
-      A simple digital trainer for new ECP staff. It answers questions, explains the agenda, speaks back, and works in English and Urdu.
-      <br/><span style="display:block;margin-top:10px;direction:rtl;font-family:'Noto Nastaliq Urdu',serif;font-size:20px;line-height:2;">یہ نئے ای سی پی ملازمین کے لیے ایک سادہ ڈیجیٹل ٹرینر ہے۔ یہ سوالوں کے جواب دیتا ہے، ایجنڈا سمجھاتا ہے، آواز میں جواب دیتا ہے، اور انگریزی و اردو دونوں میں کام کرتا ہے۔</span>
+      A simple digital training system for new ECP staff. It explains the agenda, answers questions, speaks back, and is available as two separate agents: one in English and one in Urdu.
     </p>
     <div class="pill-row">
-      <span class="pill">English + Urdu</span>
+      <span class="pill">Two Separate Agents</span>
       <span class="pill">Voice + Text</span>
       <span class="pill">Official Agenda Based</span>
       <span class="pill">Available 24/7</span>
@@ -263,22 +258,18 @@
       <div class="story-card">
         <h3>New staff need quick guidance</h3>
         <p>Many new employees need the same orientation, but trainers are not always available.</p>
-        <span class="ur">نئے ملازمین کو فوری رہنمائی چاہیے ہوتی ہے، مگر ہر وقت ٹرینر دستیاب نہیں ہوتا۔</span>
       </div>
       <div class="story-card">
         <h3>Documents are long and difficult</h3>
         <p>Agendas, rules, and procedures are important, but they are hard to digest quickly.</p>
-        <span class="ur">ایجنڈا، قواعد اور طریقہ کار اہم ہوتے ہیں، مگر انہیں جلد سمجھنا آسان نہیں ہوتا۔</span>
       </div>
       <div class="story-card">
         <h3>People ask repeated questions</h3>
         <p>Basic training questions repeat again and again in every batch.</p>
-        <span class="ur">ہر نئے بیچ میں بنیادی تربیتی سوالات بار بار پوچھے جاتے ہیں۔</span>
       </div>
       <div class="story-card">
         <h3>Consistency matters</h3>
         <p>ECP needs one standard explanation for everyone.</p>
-        <span class="ur">ای سی پی کو سب کے لیے ایک جیسی اور معیاری رہنمائی درکار ہے۔</span>
       </div>
     </div>
   </div>
@@ -289,9 +280,8 @@
     <div class="divider"></div>
     <div class="two-col center" style="margin-top:28px;">
       <div class="story-card" style="text-align:left;">
-        <h3>Think of it as a smart training assistant</h3>
-        <p>Instead of waiting for a trainer, a new employee can open one page and ask questions in a natural way.</p>
-        <span class="ur">اسے ایک ذہین تربیتی معاون سمجھیں۔ نیا ملازم ایک صفحہ کھول کر قدرتی انداز میں سوال پوچھ سکتا ہے۔</span>
+        <h3>Think of it as two smart training assistants</h3>
+        <p>Instead of waiting for a trainer, a new employee can open one of two pages: the English trainer or the Urdu trainer, then ask questions in a natural way.</p>
       </div>
       <div class="mock-browser">
         <div class="mock-bar">
@@ -326,26 +316,22 @@
       <div class="journey-card">
         <div class="emoji">1</div>
         <h3>Open the page</h3>
-        <p>The employee opens the ECP trainer link.</p>
-        <span class="ur">ملازم ای سی پی ٹرینر کا لنک کھولتا ہے۔</span>
+          <p>The employee opens either the English trainer or the Urdu trainer.</p>
       </div>
       <div class="journey-card">
         <div class="emoji">2</div>
         <h3>Ask by text or voice</h3>
-        <p>They type or speak a question in plain language.</p>
-        <span class="ur">وہ عام زبان میں سوال ٹائپ یا بولتا ہے۔</span>
+          <p>They type or speak a question in the language of that page.</p>
       </div>
       <div class="journey-card">
         <div class="emoji">3</div>
         <h3>AI explains simply</h3>
-        <p>The system reads the agenda and answers in a simple way.</p>
-        <span class="ur">سسٹم ایجنڈا دیکھ کر آسان انداز میں جواب دیتا ہے۔</span>
+          <p>The system reads the agenda and answers in simple, non-technical language.</p>
       </div>
       <div class="journey-card">
         <div class="emoji">4</div>
         <h3>Learning happens instantly</h3>
-        <p>The employee gets guidance immediately, without waiting.</p>
-        <span class="ur">ملازم کو فوراً رہنمائی مل جاتی ہے، انتظار نہیں کرنا پڑتا۔</span>
+          <p>The employee gets guidance immediately, without waiting for a trainer.</p>
       </div>
     </div>
   </div>
@@ -358,32 +344,32 @@
       <div class="feat-card">
         <div class="icon">🎙️</div>
         <h3>Voice Questions</h3>
-        <p class="dual">The employee can speak instead of typing.<span class="ur">ملازم ٹائپ کرنے کے بجائے بول بھی سکتا ہے۔</span></p>
+        <p class="dual">The employee can speak instead of typing.</p>
       </div>
       <div class="feat-card">
         <div class="icon">🗣️</div>
         <h3>Voice Answers</h3>
-        <p class="dual">The system can answer aloud.<span class="ur">سسٹم آواز میں جواب بھی دے سکتا ہے۔</span></p>
+        <p class="dual">The system can answer aloud.</p>
       </div>
       <div class="feat-card">
         <div class="icon">📘</div>
         <h3>Agenda Guidance</h3>
-        <p class="dual">It explains day-wise training in simple words.<span class="ur">یہ روزانہ کے تربیتی ایجنڈے کو آسان لفظوں میں سمجھاتا ہے۔</span></p>
+        <p class="dual">It explains day-wise training in simple words.</p>
       </div>
       <div class="feat-card">
         <div class="icon">🌍</div>
-        <h3>English & Urdu</h3>
-        <p class="dual">Separate links are available for both languages.<span class="ur">انگریزی اور اردو دونوں کے لیے الگ الگ لنکس موجود ہیں۔</span></p>
+        <h3>Two Language Agents</h3>
+        <p class="dual">One trainer is dedicated to English. A separate trainer is dedicated to Urdu.</p>
       </div>
       <div class="feat-card">
         <div class="icon">📄</div>
         <h3>Calendar Access</h3>
-        <p class="dual">The training PDF opens in one click.<span class="ur">تربیتی پی ڈی ایف ایک کلک میں کھل جاتی ہے۔</span></p>
+        <p class="dual">The training PDF opens in one click.</p>
       </div>
       <div class="feat-card">
         <div class="icon">🧩</div>
         <h3>Relevant Media</h3>
-        <p class="dual">Images and videos appear only where useful.<span class="ur">تصاویر اور ویڈیوز صرف ضرورت کے مطابق دکھائی جاتی ہیں۔</span></p>
+        <p class="dual">Images and videos appear only where useful.</p>
       </div>
     </div>
   </div>
@@ -396,22 +382,18 @@
       <div class="balanced-item">
         <h3>Upload a new agenda</h3>
         <p>If the training agenda changes, admin uploads a new file.</p>
-        <span class="ur">اگر تربیتی ایجنڈا بدل جائے تو ایڈمن نئی فائل اپ لوڈ کر سکتا ہے۔</span>
       </div>
       <div class="balanced-item">
         <h3>Update the PDF calendar</h3>
         <p>The calendar link can be changed without rebuilding the whole system.</p>
-        <span class="ur">کیلینڈر لنک پورا سسٹم دوبارہ بنائے بغیر تبدیل کیا جا سکتا ہے۔</span>
       </div>
       <div class="balanced-item">
-        <h3>Use English or Urdu</h3>
-        <p>There is one clear link for English and one clear link for Urdu.</p>
-        <span class="ur">انگریزی کے لیے الگ لنک اور اردو کے لیے الگ لنک موجود ہے۔</span>
+        <h3>Run two separate trainers</h3>
+        <p>There is one clear link for the English trainer and one clear link for the Urdu trainer.</p>
       </div>
       <div class="balanced-item">
         <h3>Keep answers focused</h3>
         <p>The trainer is designed to stay within ECP onboarding topics.</p>
-        <span class="ur">ٹرینر کو اس طرح بنایا گیا ہے کہ یہ ای سی پی تربیتی موضوعات تک محدود رہے۔</span>
       </div>
     </div>
   </div>
@@ -423,24 +405,23 @@
     <div class="stat-row" style="margin: 28px 0 34px;">
       <div class="stat">
         <div class="num">24/7</div>
-        <div class="label">Always available<br/>ہر وقت دستیاب</div>
+        <div class="label">Always available</div>
       </div>
       <div class="stat">
         <div class="num">2</div>
-        <div class="label">English + Urdu<br/>دو زبانیں</div>
+        <div class="label">Two separate language agents</div>
       </div>
       <div class="stat">
         <div class="num">1</div>
-        <div class="label">Standard message<br/>ایک معیاری رہنمائی</div>
+        <div class="label">One standard onboarding direction</div>
       </div>
       <div class="stat">
         <div class="num">0</div>
-        <div class="label">Need to wait for trainer<br/>انتظار کی ضرورت نہیں</div>
+        <div class="label">Need to wait for a trainer</div>
       </div>
     </div>
     <div class="quote">
-      This is not replacing trainers. It is helping trainers by handling the first layer of guidance quickly and consistently.
-      <br/><span style="display:block;margin-top:10px;direction:rtl;font-family:'Noto Nastaliq Urdu',serif;font-style:normal;font-size:18px;line-height:2;">یہ ٹرینرز کی جگہ نہیں لے رہا، بلکہ ابتدائی رہنمائی کو تیز اور یکساں بنا کر ٹرینرز کی مدد کر رہا ہے۔</span>
+      This is not replacing trainers. It supports the Training Wing by giving staff a fast first layer of guidance in either English or Urdu.
     </div>
   </div>
 
@@ -452,7 +433,6 @@
       <div class="story-card" style="text-align:center;">
         <h3>English Trainer</h3>
         <p>For English speaking staff and demos.</p>
-        <span class="ur">انگریزی بولنے والے عملے اور ڈیمو کے لیے۔</span>
         <div class="big-url">
           <div class="label">English URL</div>
           <div class="value">/ecp-trainer</div>
@@ -460,8 +440,7 @@
       </div>
       <div class="story-card" style="text-align:center;">
         <h3>Urdu Trainer</h3>
-        <p>For Urdu speaking staff with Nastaliq display and Urdu voice support.</p>
-        <span class="ur">اردو بولنے والے عملے کے لیے، نستعلیق فونٹ اور اردو وائس سپورٹ کے ساتھ۔</span>
+        <p>For Urdu speaking staff with Urdu voice support and a dedicated Urdu interface.</p>
         <div class="big-url">
           <div class="label">Urdu URL</div>
           <div class="value">/ecp-trainer-ur</div>
