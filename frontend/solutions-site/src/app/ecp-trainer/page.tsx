@@ -817,7 +817,7 @@ export default function EcpTrainerPage() {
                                 onClick={() => setViewer({ kind: 'image', title: item.title, src: item.src })}
                                 className="overflow-hidden rounded-xl border border-slate-200 bg-white text-left transition hover:-translate-y-0.5 hover:shadow-md dark:border-slate-700 dark:bg-slate-950"
                               >
-                                <img src={item.src} alt={item.title} className="h-28 w-full object-cover" loading="lazy" />
+                                <img src={item.src} alt={item.title} className="w-full aspect-[4/3] object-cover" loading="lazy" />
                                 <figcaption className="px-2 py-1 text-[11px] font-medium text-slate-600 dark:text-slate-300">
                                   {item.title}
                                 </figcaption>
@@ -835,7 +835,7 @@ export default function EcpTrainerPage() {
                                 onClick={() => setViewer({ kind: 'video', title: item.title, src: item.src })}
                                 className="rounded-xl border border-slate-200 bg-white p-2 text-left transition hover:-translate-y-0.5 hover:shadow-md dark:border-slate-700 dark:bg-slate-950"
                               >
-                                <div className="relative h-28 overflow-hidden rounded-lg bg-slate-900">
+                                <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-slate-900">
                                   {/* YouTube thumbnail */}
                                   <img
                                     src={`https://img.youtube.com/vi/${item.src.split('/embed/').pop()?.split('?')[0] ?? ''}/hqdefault.jpg`}
