@@ -58,6 +58,21 @@ const QUICK_TOPICS = [
 
 const ERROR_REPLY = 'I could not connect right now. Please try again.';
 
+const LANG_STORAGE_KEY = 'ecpTrainerLangV1';
+
+const QUICK_TOPICS_UR = [
+  'آغاز کریں',
+  'پہلا دن ـ تعارف',
+  'قانونی ڈھانچہ',
+  'ووٹر رجسٹریشن',
+  'عام انتخابات',
+  'ای ڈی آر اور ٹیکنالوجی',
+  'اضافی سرگرمیاں تجویز کریں',
+];
+
+const START_MESSAGE_UR_TEXT =
+  'الیکشن کمیشن آف پاکستان اے آئی ٹرینر میں خوش آمدید۹ “آغاز کریں” کہیں اور میں آپ کو قانونی ڈھانچے، انتخابی عمل، ٹیکنالوجی، میڈیا، صنفی شمول، انتظامیہ اور روزانہ کے ایجنڈے کے بارے میں رہنمائی کروں گا۹ آپ اس پیغام سے تربیتی کیلینڈر پی ڈی ایف بھی کھول سکتے ہیں۹';
+
 const TRAINING_MEDIA_LIBRARY: Record<string, ReplyMedia> = {
   overview: {
     images: [
@@ -189,6 +204,8 @@ export default function EcpTrainerPage() {
   const [showAdminPanel, setShowAdminPanel] = useState(false);
   const [calendarPdfUrl, setCalendarPdfUrl] = useState('');
   const [showCalendarModal, setShowCalendarModal] = useState(false);
+  const [lang, setLang] = useState<'en' | 'ur'>('en');
+  const langRef = useRef<'en' | 'ur'>('en');
 
   const nextIdRef = useRef(2);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -199,6 +216,14 @@ export default function EcpTrainerPage() {
   const silenceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const silenceIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
+
+  // Keep langRef in sync so TTS/STT callbacks always use the latest language
+  useEffect(() => {
+    langRef.current = lang;
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(LANG_STORAGE_KEY, lang);
+    }
+  }, [lang]);
 
   const canUseSpeech = useMemo(() => typeof window !== 'undefined' && 'speechSynthesis' in window, []);
 
@@ -256,7 +281,8 @@ export default function EcpTrainerPage() {
 
   const playNeuralChunk = useCallback(async (chunk: string, session: number): Promise<boolean> => {
     try {
-      const response = await fetch(`/api/tts-en?q=${encodeURIComponent(chunk)}`);
+      const ttsEndpoint = langRef.current === 'ur' ? '/api/tts-ur' : '/api/tts-en';
+      const response = await fetch(`${ttsEndpoint}?q=${encodeURIComponent(chunk)}`);
       if (!response.ok) return false;
 
       const blob = await response.blob();
@@ -354,7 +380,7 @@ export default function EcpTrainerPage() {
       const res = await fetch('/api/ecp-trainer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text, history, agendaText }),
+        body: JSON.stringify({ message: text, history, agendaText, language: langRef.current }),
       });
 
       const data = await res.json();
@@ -389,9 +415,14 @@ export default function EcpTrainerPage() {
   useEffect(() => {
     const stored = typeof window !== 'undefined' ? window.localStorage.getItem(AGENDA_STORAGE_KEY) : null;
     const storedCalendar = typeof window !== 'undefined' ? window.localStorage.getItem(CALENDAR_PDF_URL_KEY) : null;
+    const storedLang = typeof window !== 'undefined' ? window.localStorage.getItem(LANG_STORAGE_KEY) : null;
     if (stored) {
       setAgendaText(stored);
       setAgendaStatus('Custom agenda loaded from local storage.');
+    }
+    if (storedLang === 'ur') {
+      setLang('ur');
+      langRef.current = 'ur';
     }
 
     const normalizedCalendar = storedCalendar?.trim();
@@ -478,7 +509,8 @@ export default function EcpTrainerPage() {
             const formData = new FormData();
             formData.append('file', audioBlob, `voice.${extension}`);
 
-            const response = await fetch('/api/stt-en', {
+            const sttEndpoint = langRef.current === 'ur' ? '/api/stt-ur' : '/api/stt-en';
+            const response = await fetch(sttEndpoint, {
               method: 'POST',
               body: formData,
             });
@@ -806,17 +838,26 @@ export default function EcpTrainerPage() {
               </div>
             </div>
 
-            <button
-              onClick={() => setAutoSpeak((v) => !v)}
-              className="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
-            >
-              {autoSpeak ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
-              {autoSpeak ? 'Voice On' : 'Voice Off'}
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setAutoSpeak((v) => !v)}
+                className="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+              >
+                {autoSpeak ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
+                {autoSpeak ? (lang === 'ur' ? 'آواز آن' : 'Voice On') : (lang === 'ur' ? 'آواز آف' : 'Voice Off')}
+              </button>
+              <button
+                onClick={() => setLang((l) => (l === 'en' ? 'ur' : 'en'))}
+                className="inline-flex items-center gap-1.5 rounded-xl border-2 border-emerald-500 bg-emerald-50 px-3 py-2 text-sm font-bold text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-950/30 dark:text-emerald-300 dark:hover:bg-emerald-900/50"
+                title="Switch language / زبان تبدیل کریں"
+              >
+                {lang === 'en' ? 'اردو میں جائیں' : 'Switch to English'}
+              </button>
+            </div>
           </div>
 
-          <div className="mt-5 flex flex-wrap gap-2">
-            {QUICK_TOPICS.map((topic) => (
+          <div className="mt-5 flex flex-wrap gap-2" dir={lang === 'ur' ? 'rtl' : 'ltr'}>
+            {(lang === 'ur' ? QUICK_TOPICS_UR : QUICK_TOPICS).map((topic) => (
               <button
                 key={topic}
                 onClick={() => {
@@ -829,7 +870,7 @@ export default function EcpTrainerPage() {
             ))}
           </div>
 
-          <div className="mt-5 h-[460px] overflow-y-auto rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950">
+          <div className="mt-5 h-[460px] overflow-y-auto rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950" dir={lang === 'ur' ? 'rtl' : 'ltr'} style={lang === 'ur' ? { fontFamily: "'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif" } : undefined}>
             <div className="space-y-3">
               {messages.map((msg) => (
                 <div
@@ -843,7 +884,7 @@ export default function EcpTrainerPage() {
                         : 'bg-white text-slate-800 border border-slate-200 rounded-bl-sm dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700'
                     }`}
                   >
-                    <p>{msg.text}</p>
+                    <p>{msg.id === 1 && lang === 'ur' ? START_MESSAGE_UR_TEXT : msg.text}</p>
 
                     {msg.role === 'assistant' && msg.id === 1 ? (
                       <div className="mt-2">
@@ -975,7 +1016,7 @@ export default function EcpTrainerPage() {
                   ? 'Recording... click mic again to finish'
                   : isTranscribing
                     ? 'Transcribing your voice...'
-                    : 'Ask about legal framework, elections, technology, or a specific day'
+                    : lang === 'ur' ? 'قانونی ڈھانچے، انتخابات، ٹیکنالوجی یا کسی مخصوص دن کے بارے میں پوچھیں' : 'Ask about legal framework, elections, technology, or a specific day'
               }
               className="h-11 flex-1 rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-emerald-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
               maxLength={1000}

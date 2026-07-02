@@ -60,15 +60,15 @@ interface ChatMessage {
   content: string;
 }
 
-function buildSystemPrompt(customAgendaText?: string): string {
-  if (!customAgendaText) return SYSTEM_PROMPT;
+function buildSystemPrompt(customAgendaText?: string, language?: string): string {
+  const base = customAgendaText
+    ? `${SYSTEM_PROMPT}\n\nCustom agenda uploaded by admin (treat this as highest-priority source of training structure):\n${customAgendaText}\n\nWhen you answer, align day/module references to this uploaded agenda first.`
+    : SYSTEM_PROMPT;
 
-  return `${SYSTEM_PROMPT}
-
-Custom agenda uploaded by admin (treat this as highest-priority source of training structure):
-${customAgendaText}
-
-When you answer, align day/module references to this uploaded agenda first.`;
+  if (language === 'ur') {
+    return `${base}\n\nIMPORTANT: The user has selected Urdu language. You MUST respond entirely in Urdu (اردو). Use clear, simple Urdu suitable for newly joined government officers. Keep the same structured format (bullets, coaching question at the end) but in Urdu script only. Do NOT respond in English.`;
+  }
+  return base;
 }
 
 const FALLBACK_REPLY =
@@ -81,7 +81,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
     }
 
-    const { message, history, agendaText } = body as { message?: unknown; history?: unknown; agendaText?: unknown };
+    const { message, history, agendaText, language } = body as { message?: unknown; history?: unknown; agendaText?: unknown; language?: unknown };
 
     if (typeof message !== 'string' || !message.trim()) {
       return NextResponse.json({ error: 'Message must be a non-empty string' }, { status: 400 });
@@ -90,6 +90,8 @@ export async function POST(request: NextRequest) {
     if (message.length > 1000) {
       return NextResponse.json({ error: 'Message exceeds maximum length of 1000 characters' }, { status: 400 });
     }
+
+    const safeLanguage = language === 'ur' ? 'ur' : 'en';
 
     const safeAgendaText =
       typeof agendaText === 'string' && agendaText.trim()
@@ -123,7 +125,7 @@ export async function POST(request: NextRequest) {
       : [];
 
     const chatMessages = [
-      { role: 'system', content: buildSystemPrompt(safeAgendaText) },
+      { role: 'system', content: buildSystemPrompt(safeAgendaText, safeLanguage) },
       ...safeHistory,
       { role: 'user', content: message.trim() },
     ];
