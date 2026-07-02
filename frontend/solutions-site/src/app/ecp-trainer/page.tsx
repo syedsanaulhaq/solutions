@@ -585,7 +585,19 @@ export default function EcpTrainerPage() {
               </div>
               <div className="bg-white">
                 {calendarPdfUrl ? (
-                  <iframe title="ECP Training Calendar PDF" src={`${calendarPdfUrl}#toolbar=1&navpanes=0`} className="h-[75vh] w-full" />
+                  <object data={`${calendarPdfUrl}#toolbar=1&navpanes=0`} type="application/pdf" className="h-[75vh] w-full">
+                    <div className="grid h-[40vh] place-items-center px-6 text-center text-slate-700">
+                      <p className="mb-3">PDF preview is unavailable in this browser.</p>
+                      <a
+                        href={calendarPdfUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100"
+                      >
+                        Open PDF in new tab
+                      </a>
+                    </div>
+                  </object>
                 ) : (
                   <div className="grid h-[40vh] place-items-center px-6 text-center text-slate-700">
                     <p>Please set a calendar PDF URL from the Admin Agenda Loader panel to open it here.</p>
