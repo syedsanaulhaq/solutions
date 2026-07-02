@@ -223,6 +223,17 @@ export default function EcpTrainerPage() {
     if (typeof window !== 'undefined') {
       window.localStorage.setItem(LANG_STORAGE_KEY, lang);
     }
+    // Load Noto Nastaliq Urdu font on first Urdu switch
+    if (lang === 'ur' && typeof document !== 'undefined') {
+      const id = 'noto-nastaliq-font';
+      if (!document.getElementById(id)) {
+        const link = document.createElement('link');
+        link.id = id;
+        link.rel = 'stylesheet';
+        link.href = 'https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap';
+        document.head.appendChild(link);
+      }
+    }
   }, [lang]);
 
   const canUseSpeech = useMemo(() => typeof window !== 'undefined' && 'speechSynthesis' in window, []);
@@ -239,7 +250,16 @@ export default function EcpTrainerPage() {
   }, []);
 
   const splitForSpeech = useCallback((text: string): string[] => {
-    const normalized = text.replace(/\s+/g, ' ').trim();
+    // Strip markdown symbols so TTS doesn't read them aloud (e.g. * as "sitara")
+    const cleaned = text
+      .replace(/\*\*(.+?)\*\*/g, '$1') // bold
+      .replace(/\*(.+?)\*/g, '$1')     // italic
+      .replace(/^#{1,6}\s*/gm, '')      // headings
+      .replace(/^[\*\-]\s+/gm, '')     // bullet points
+      .replace(/\*/g, '')               // remaining asterisks
+      .replace(/`{1,3}[^`]*`{1,3}/g, '') // code
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1'); // links
+    const normalized = cleaned.replace(/\s+/g, ' ').trim();
     if (!normalized) return [];
 
     const sentenceLike = normalized
@@ -870,7 +890,7 @@ export default function EcpTrainerPage() {
             ))}
           </div>
 
-          <div className="mt-5 h-[460px] overflow-y-auto rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950" dir={lang === 'ur' ? 'rtl' : 'ltr'} style={lang === 'ur' ? { fontFamily: "'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif" } : undefined}>
+          <div className="mt-5 h-[460px] overflow-y-auto rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950" dir={lang === 'ur' ? 'rtl' : 'ltr'} style={lang === 'ur' ? { fontFamily: "'Noto Nastaliq Urdu', 'Noto Sans', serif", fontSize: '1rem', lineHeight: '2' } : undefined}>
             <div className="space-y-3">
               {messages.map((msg) => (
                 <div
