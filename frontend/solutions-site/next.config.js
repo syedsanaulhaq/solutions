@@ -18,6 +18,15 @@ const nextConfig = {
         ],
       },
       {
+        // Allow the ECP calendar PDF to be shown in the trainer popup iframe
+        source: '/ecp/ecp-training-calendar.pdf',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+        ],
+      },
+      {
         source: '/((?!demo(?:-ja|-ur)?\.html$).*)' ,
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },

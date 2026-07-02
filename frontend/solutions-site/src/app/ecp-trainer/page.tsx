@@ -572,10 +572,20 @@ export default function EcpTrainerPage() {
               <div className="border-b border-white/10 px-6 py-4">
                 <p className="text-xs uppercase tracking-[0.24em] text-emerald-200">Training calendar</p>
                 <h3 className="mt-1 text-lg font-semibold text-white">Election Commission of Pakistan Calendar PDF</h3>
+                {calendarPdfUrl ? (
+                  <a
+                    href={calendarPdfUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-2 inline-block rounded-md border border-white/20 px-2.5 py-1 text-xs font-medium text-white/90 hover:bg-white/10"
+                  >
+                    Open in new tab
+                  </a>
+                ) : null}
               </div>
               <div className="bg-white">
                 {calendarPdfUrl ? (
-                  <iframe title="ECP Training Calendar PDF" src={calendarPdfUrl} className="h-[75vh] w-full" />
+                  <iframe title="ECP Training Calendar PDF" src={`${calendarPdfUrl}#toolbar=1&navpanes=0`} className="h-[75vh] w-full" />
                 ) : (
                   <div className="grid h-[40vh] place-items-center px-6 text-center text-slate-700">
                     <p>Please set a calendar PDF URL from the Admin Agenda Loader panel to open it here.</p>
