@@ -137,8 +137,8 @@ const UI_TEXT = {
     pdfPlaceholder: 'https://.../ecp-training-calendar.pdf',
     savePdfUrl: 'پی ڈی ایف یو آر ایل محفوظ کریں',
     customAgendaActive: 'کسٹم ایجنڈا فعال ہے',
-    heading: 'الیکشن کمیشن آف پاکستان اے آئی ٹرینر',
-    subheading: 'نئے الیکشن کمیشن پاکستان ملازمین کے لیے صوتی آن بورڈنگ معاون',
+    heading: 'Election Commission of Pakistan AI Trainer',
+    subheading: 'Voice onboarding assistant for new Election Commission Pakistan employees',
     voiceEnginePrefix: 'وائس انجن:',
     neuralVoice: 'نیورل آواز',
     browserVoice: 'براؤزر متبادل آواز',
@@ -318,7 +318,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
     lang === 'ur'
       ? {
           fontFamily: "'Noto Nastaliq Urdu', 'Noto Sans', serif",
-          lineHeight: '2',
+          lineHeight: '2.35',
         }
       : undefined;
 
@@ -1027,7 +1027,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
             ))}
           </div>
 
-          <div className="mt-5 h-[460px] overflow-y-auto rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950" dir={lang === 'ur' ? 'rtl' : 'ltr'} style={lang === 'ur' ? { fontFamily: "'Noto Nastaliq Urdu', 'Noto Sans', serif", fontSize: '1rem', lineHeight: '2' } : undefined}>
+          <div className="mt-5 h-[460px] overflow-y-auto rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950" dir={lang === 'ur' ? 'rtl' : 'ltr'} style={lang === 'ur' ? { fontFamily: "'Noto Nastaliq Urdu', 'Noto Sans', serif", fontSize: '1rem', lineHeight: '2.5' } : undefined}>
             <div className="space-y-3">
               {messages.map((msg) => (
                 <div
