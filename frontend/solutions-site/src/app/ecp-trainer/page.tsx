@@ -524,7 +524,7 @@ export default function EcpTrainerPage() {
             }
             analyser.getByteTimeDomainData(dataArray);
             let sumSq = 0;
-            for (const v of dataArray) { const n = (v - 128) / 128; sumSq += n * n; }
+            for (let i = 0; i < dataArray.length; i++) { const n = (dataArray[i] - 128) / 128; sumSq += n * n; }
             const rms = Math.sqrt(sumSq / dataArray.length) * 100;
 
             if (rms > SILENCE_THRESHOLD) {
