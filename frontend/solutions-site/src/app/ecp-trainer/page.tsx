@@ -836,13 +836,18 @@ export default function EcpTrainerPage() {
                                 className="rounded-xl border border-slate-200 bg-white p-2 text-left transition hover:-translate-y-0.5 hover:shadow-md dark:border-slate-700 dark:bg-slate-950"
                               >
                                 <div className="relative h-28 overflow-hidden rounded-lg bg-slate-900">
-                                  <div className="absolute inset-0 grid place-items-center bg-gradient-to-br from-emerald-600/30 via-slate-900/30 to-black/40 text-white">
-                                    <div className="rounded-full bg-white/15 px-4 py-2 text-xs font-semibold backdrop-blur">
-                                      Click to open video
+                                  {/* YouTube thumbnail */}
+                                  <img
+                                    src={`https://img.youtube.com/vi/${item.src.split('/embed/').pop()?.split('?')[0] ?? ''}/hqdefault.jpg`}
+                                    alt={item.title}
+                                    className="absolute inset-0 h-full w-full object-cover"
+                                    loading="lazy"
+                                  />
+                                  {/* Play overlay */}
+                                  <div className="absolute inset-0 flex items-center justify-center bg-black/30 transition hover:bg-black/20">
+                                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-600 shadow-lg">
+                                      <PlayCircle className="h-6 w-6 text-white" />
                                     </div>
-                                  </div>
-                                  <div className="absolute inset-x-0 bottom-0 bg-black/55 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-white/80">
-                                    YouTube preview
                                   </div>
                                 </div>
                                 <p className="mt-1 inline-flex items-center gap-1 text-[11px] font-medium text-slate-600 dark:text-slate-300">
