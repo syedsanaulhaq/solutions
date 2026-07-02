@@ -710,8 +710,8 @@ export default function EcpTrainerPage() {
 
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
-                <img src={ECP_LOGO_URL} alt="Election Commission of Pakistan logo" className="h-10 w-10 object-contain" loading="lazy" />
+              <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white p-1 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+                <img src={ECP_LOGO_URL} alt="Election Commission of Pakistan logo" className="h-12 w-12 object-contain" loading="lazy" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Election Commission of Pakistan AI Trainer</h1>
