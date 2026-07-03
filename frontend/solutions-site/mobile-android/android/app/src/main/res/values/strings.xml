@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ECP Trainer</string>
+    <string name="title_activity_main">ECP Trainer</string>
+    <string name="package_name">com.hostingocean.ecptrainer</string>
+    <string name="custom_url_scheme">com.hostingocean.ecptrainer</string>
+</resources>
