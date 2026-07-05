@@ -6,7 +6,8 @@
     "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start -p 3001",
-    "lint": "next lint"
+    "lint": "next lint",
+    "ecp:crawl": "node scripts/crawl-ecp-site.mjs"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.0.2",

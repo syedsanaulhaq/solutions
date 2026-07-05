@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ECP_VOTER_KNOWLEDGE } from '@/data/ecpVoterKnowledge';
+import { getRelevantEcpKnowledge } from '@/lib/ecpKnowledgeRetriever';
 
 const SYSTEM_PROMPT = `You are Election Commission of Pakistan AI Trainer, a friendly voice-first training assistant.
 
@@ -52,13 +53,14 @@ interface ChatMessage {
   content: string;
 }
 
-function buildSystemPrompt(language?: string): string {
-  const withVoterKnowledge = `${SYSTEM_PROMPT}\n\nOfficial ECP knowledge pack:\n${ECP_VOTER_KNOWLEDGE}\n\nWhen answering, prioritize these official ECP sources. If user asks for exact local office detail not present here, direct them to the relevant ECP page and District Election Commissioner office.`;
+function buildSystemPrompt(language: 'en' | 'ur', query: string): string {
+  const relevantCorpus = getRelevantEcpKnowledge(query, 10);
+  const withEcpKnowledge = `${SYSTEM_PROMPT}\n\nStatic ECP guidance baseline:\n${ECP_VOTER_KNOWLEDGE}\n\nRelevant extracted content from ecp.gov.pk corpus for this query:\n${relevantCorpus}\n\nWhen answering, prioritize these official ECP sources. If user asks for exact local office detail not present here, direct them to the relevant ECP page and District Election Commissioner office.`;
 
   if (language === 'ur') {
-    return `${withVoterKnowledge}\n\nIMPORTANT: The user has selected Urdu language. You MUST respond entirely in Urdu (اردو). Use clear, simple Urdu suitable for newly joined government officers. Keep the same structured format (bullets, coaching question at the end) but in Urdu script only. Do NOT respond in English.`;
+    return `${withEcpKnowledge}\n\nIMPORTANT: The user has selected Urdu language. You MUST respond entirely in Urdu (اردو). Use clear, simple Urdu suitable for newly joined government officers. Keep the same structured format (bullets, coaching question at the end) but in Urdu script only. Do NOT respond in English.`;
   }
-  return withVoterKnowledge;
+  return withEcpKnowledge;
 }
 
 const FALLBACK_REPLY =
@@ -110,7 +112,7 @@ export async function POST(request: NextRequest) {
       : [];
 
     const chatMessages = [
-      { role: 'system', content: buildSystemPrompt(safeLanguage) },
+      { role: 'system', content: buildSystemPrompt(safeLanguage, message.trim()) },
       ...safeHistory,
       { role: 'user', content: message.trim() },
     ];
