@@ -116,6 +116,7 @@ const UI_TEXT = {
     trainingMedia: 'Training media',
     close: 'Close',
     openTrainingCalendar: 'Open Training Calendar (PDF)',
+    referenceLabel: 'Reference: Official content from ecp.gov.pk',
     preparing: 'Trainer is preparing your agenda-based guidance...',
     recording: 'Recording voice... click mic again to send',
     transcribing: 'Uploading and transcribing your voice...',
@@ -164,6 +165,7 @@ const UI_TEXT = {
     trainingMedia: 'تربیتی میڈیا',
     close: 'بند کریں',
     openTrainingCalendar: 'تربیتی کیلینڈر (PDF) کھولیں',
+    referenceLabel: 'حوالہ: سرکاری مواد ecp.gov.pk سے',
     preparing: 'ٹرینر آپ کی ایجنڈا بنیاد رہنمائی تیار کر رہا ہے...',
     recording: 'آواز ریکارڈ ہو رہی ہے... بھیجنے کے لیے مائیک دوبارہ دبائیں',
     transcribing: 'آپ کی آواز اپ لوڈ اور متن میں تبدیل کی جا رہی ہے...',
@@ -961,15 +963,15 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
                   >
                     <p>{msg.id === 1 && lang === 'ur' ? START_MESSAGE_UR_TEXT : msg.text}</p>
 
-                    {msg.role === 'assistant' && msg.id === 1 ? (
+                    {msg.role === 'assistant' ? (
                       <div className="mt-2">
                         <a
-                          href={calendarPdfUrl || '/ecp/ecp-training-calendar.pdf'}
+                          href="https://ecp.gov.pk"
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-block rounded-lg border border-emerald-300 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 dark:border-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-200 dark:hover:bg-emerald-900/50"
+                          className="text-[11px] font-medium text-emerald-700 underline underline-offset-2 hover:text-emerald-800 dark:text-emerald-300 dark:hover:text-emerald-200"
                         >
-                          {ui.openTrainingCalendar}
+                          {ui.referenceLabel}
                         </a>
                       </div>
                     ) : null}
