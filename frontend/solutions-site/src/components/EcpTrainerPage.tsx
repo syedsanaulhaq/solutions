@@ -57,18 +57,18 @@ const START_MESSAGE: Message = {
   id: 1,
   role: 'assistant',
   text:
-    'Welcome to Election Commission of Pakistan AI Assistant. I can help you with official ECP website topics such as voter registration, 8300 SMS verification, election laws, delimitation, notifications, orders, and cause list updates.',
+    'Welcome to the Election Commission of Pakistan AI Assistant. I can assist you with official ECP website topics, including voter registration, 8300 SMS verification, election laws, delimitation, notifications, orders, and cause list updates.',
 };
 
 const QUICK_TOPICS = [
   'For Voters services',
-  'How to register vote',
-  'Check registration via 8300',
+  'How to register to vote',
+  'Verify registration via 8300',
   'Election laws',
   'Voter registration',
   'General elections',
   'Delimitation',
-  'Notifications and orders',
+  'Notifications and Orders',
 ];
 
 const ERROR_REPLY = 'I could not connect right now. Please try again.';
@@ -100,7 +100,7 @@ const UI_TEXT = {
     savePdfUrl: 'Save PDF URL',
     customAgendaActive: 'Custom agenda active',
     heading: 'ECP AI Trainer',
-    subheading: 'Voice onboarding assistant for new Election Commission Pakistan employees',
+    subheading: 'Voice onboarding assistant for newly appointed Election Commission of Pakistan employees',
     voiceEnginePrefix: 'Voice engine:',
     neuralVoice: 'Neural voice (same style as your other demos)',
     browserVoice: 'Browser fallback voice',
@@ -117,16 +117,16 @@ const UI_TEXT = {
     close: 'Close',
     openTrainingCalendar: 'Open Training Calendar (PDF)',
     referenceLabel: 'Reference: Official content from ecp.gov.pk',
-    preparing: 'Trainer is preparing your agenda-based guidance...',
-    recording: 'Recording voice... click mic again to send',
+    preparing: 'The assistant is preparing your guidance...',
+    recording: 'Recording in progress. Select the microphone again to send.',
     transcribing: 'Uploading and transcribing your voice...',
-    recordingPlaceholder: 'Recording... click mic again to finish',
+    recordingPlaceholder: 'Recording in progress... select the microphone again to finish.',
     transcribingPlaceholder: 'Transcribing your voice...',
-    inputPlaceholder: 'Ask about legal framework, elections, technology, or a specific day',
+    inputPlaceholder: 'Ask about election laws, voter services, notifications, or any official ECP process',
     sendAria: 'Send',
     startVoice: 'Start voice recording',
     stopVoice: 'Stop voice recording',
-    tip: 'Tip: Ask about voter registration, election laws, delimitation, or latest notifications for practical guidance.',
+    tip: 'Guidance: You may ask about voter registration, election laws, delimitation, or recent notifications for practical support.',
     pdfSaved: 'Calendar PDF URL saved.',
     noVoiceCaptured: 'No voice captured. Please try again.',
     voiceFailed: 'Voice upload failed. Please try again.',

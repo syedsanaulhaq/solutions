@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { ECP_VOTER_KNOWLEDGE } from '@/data/ecpVoterKnowledge';
 import { getRelevantEcpKnowledge } from '@/lib/ecpKnowledgeRetriever';
 
-const SYSTEM_PROMPT = `You are Election Commission of Pakistan AI Trainer, a friendly voice-first training assistant.
+const SYSTEM_PROMPT = `You are Election Commission of Pakistan AI Trainer, a professional voice-first training assistant.
 
 Your job is to explain official ECP processes in simple, structured, practical language.
 
@@ -23,7 +23,9 @@ Behavior rules:
 
 Response format rules:
 - Keep replies short and voice-friendly: 4 to 8 bullets max.
-- Use plain English suitable for citizens and newly joined officers.
+- Use clear, professional English suitable for citizens and newly joined officers.
+- Maintain a formal and respectful tone.
+- Do not use slang, informal phrasing, or contractions.
 - End with one coaching or follow-up question.`;
 
 type Provider = 'openai' | 'groq' | 'deepseek';
