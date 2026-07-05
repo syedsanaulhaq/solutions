@@ -116,7 +116,9 @@ export async function POST(req: NextRequest) {
     if (!response || !response.ok) {
       const quotaHit = /limit|quota|billing|aspd|rate/i.test(errorMessage);
       const error = quotaHit
-        ? 'Daily voice transcription quota is exhausted. Please try later or switch transcription provider key.'
+        ? (openAIApiKey
+            ? 'Daily voice transcription quota is exhausted. Please try later or verify backup transcription provider credits.'
+            : 'Daily voice transcription quota is exhausted and backup provider is not configured. Set OPENAI_API_KEY to enable fallback.')
         : errorMessage;
       return NextResponse.json({ error }, { status: 502 });
     }
