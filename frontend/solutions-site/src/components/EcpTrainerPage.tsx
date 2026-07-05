@@ -796,7 +796,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
 
   return (
     <div
-      className="min-h-[100dvh] w-full bg-slate-950 md:bg-[radial-gradient(circle_at_top,_#d9f1e6_0%,_#e8f7ef_35%,_#f6fbf8_70%)] px-0 py-0 [padding-top:env(safe-area-inset-top)] [padding-bottom:env(safe-area-inset-bottom)] md:px-4 md:py-10"
+      className="h-[100dvh] w-full overflow-hidden bg-slate-950 md:min-h-[100dvh] md:h-auto md:bg-[radial-gradient(circle_at_top,_#d9f1e6_0%,_#e8f7ef_35%,_#f6fbf8_70%)] px-0 py-0 [padding-top:env(safe-area-inset-top)] [padding-bottom:env(safe-area-inset-bottom)] md:px-4 md:py-10"
       dir={lang === 'ur' ? 'rtl' : 'ltr'}
       style={urduPageStyle}
     >
@@ -879,7 +879,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
           </div>
         ) : null}
 
-        <div className="min-h-[100dvh] rounded-none border-0 bg-[#07122b] p-3 shadow-none md:min-h-0 md:rounded-3xl md:border md:border-slate-200 md:bg-white md:p-6 md:shadow-sm md:dark:border-slate-800 md:dark:bg-slate-900">
+        <div className="flex h-[100dvh] min-h-[100dvh] flex-col rounded-none border-0 bg-[#07122b] p-3 shadow-none md:min-h-0 md:h-auto md:rounded-3xl md:border md:border-slate-200 md:bg-white md:p-6 md:shadow-sm md:dark:border-slate-800 md:dark:bg-slate-900">
           <div className="mb-5 hidden rounded-2xl border border-emerald-200 bg-emerald-50/70 p-4 dark:border-emerald-900 dark:bg-emerald-950/20 md:block" dir="ltr">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <p className="text-sm font-semibold text-emerald-900 dark:text-emerald-200">{adminUi.adminLoader}</p>
@@ -1025,7 +1025,21 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
             ))}
           </div>
 
-          <div className="mt-4 h-[60dvh] overflow-y-auto rounded-2xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-950 md:mt-5 md:h-[460px] md:p-4" dir={lang === 'ur' ? 'rtl' : 'ltr'} style={lang === 'ur' ? { fontFamily: "'Noto Nastaliq Urdu', 'Noto Sans', serif", fontSize: '1rem', lineHeight: '2.5' } : undefined}>
+          <div className="mt-3 grid grid-cols-2 gap-2 md:hidden" dir={lang === 'ur' ? 'rtl' : 'ltr'}>
+            {(lang === 'ur' ? QUICK_TOPICS_UR : QUICK_TOPICS).slice(0, 4).map((topic) => (
+              <button
+                key={topic}
+                onClick={() => {
+                  setInput(topic);
+                }}
+                className="rounded-lg border border-slate-300/60 bg-slate-900/60 px-2 py-1.5 text-[11px] font-medium text-slate-100"
+              >
+                {topic}
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-3 flex-1 min-h-0 overflow-y-auto rounded-2xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-950 md:mt-5 md:h-[460px] md:flex-none md:p-4" dir={lang === 'ur' ? 'rtl' : 'ltr'} style={lang === 'ur' ? { fontFamily: "'Noto Nastaliq Urdu', 'Noto Sans', serif", fontSize: '1rem', lineHeight: '2.5' } : undefined}>
             <div className="space-y-3">
               {messages.map((msg) => (
                 <div
