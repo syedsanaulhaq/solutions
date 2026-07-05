@@ -57,13 +57,15 @@ const START_MESSAGE: Message = {
   id: 1,
   role: 'assistant',
   text:
-    'Welcome to Election Commission of Pakistan AI Trainer. Say "start onboarding" and I will guide a new employee through legal framework, electoral processes, voter services, technology, political finance, and public information channels. You can also open the Training Calendar PDF from this first message.',
+    'Welcome to Election Commission of Pakistan AI Assistant. I can help you with official ECP website topics such as voter registration, 8300 SMS verification, election laws, delimitation, notifications, orders, and cause list updates.',
 };
 
 const QUICK_TOPICS = [
-  'Start onboarding',
+  'For Voters services',
+  'How to register vote',
+  'Check registration via 8300',
+  'Election laws',
   'Voter registration',
-  'Legal framework',
   'General elections',
   'Delimitation',
   'Notifications and orders',
@@ -72,16 +74,18 @@ const QUICK_TOPICS = [
 const ERROR_REPLY = 'I could not connect right now. Please try again.';
 
 const QUICK_TOPICS_UR = [
-  'آغاز کریں',
+  'ووٹر سروسز',
+  'ووٹ رجسٹر کیسے کریں',
+  '8300 سے رجسٹریشن چیک کریں',
+  'انتخابی قوانین',
   'ووٹر رجسٹریشن',
-  'قانونی ڈھانچہ',
   'عام انتخابات',
   'حلقہ بندی',
   'نوٹیفکیشنز اور آرڈرز',
 ];
 
 const START_MESSAGE_UR_TEXT =
-  'الیکشن کمیشن آف پاکستان اے آئی ٹرینر میں خوش آمدید۹ “آغاز کریں” کہیں اور میں آپ کو قانونی ڈھانچے، انتخابی عمل، ٹیکنالوجی، میڈیا، صنفی شمول، انتظامیہ اور روزانہ کے ایجنڈے کے بارے میں رہنمائی کروں گا۹ آپ اس پیغام سے تربیتی کیلینڈر پی ڈی ایف بھی کھول سکتے ہیں۹';
+  'الیکشن کمیشن آف پاکستان اے آئی اسسٹنٹ میں خوش آمدید۔ میں آپ کی مدد ECP ویب سائٹ کے سرکاری موضوعات میں کر سکتا ہوں، جیسے ووٹر رجسٹریشن، 8300 ایس ایم ایس تصدیق، انتخابی قوانین، حلقہ بندی، نوٹیفکیشنز، آرڈرز اور کاز لسٹ اپ ڈیٹس۔';
 
 const UI_TEXT = {
   en: {
