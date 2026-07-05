@@ -4,7 +4,7 @@ const PROD_URL = process.env.ECP_APP_URL || 'https://solutions.hostingocean.net/
 
 const config: CapacitorConfig = {
   appId: 'com.hostingocean.ecptrainer',
-  appName: 'ECP Trainer',
+  appName: 'ECP AI-Trainer',
   webDir: 'www',
   server: {
     url: PROD_URL,
