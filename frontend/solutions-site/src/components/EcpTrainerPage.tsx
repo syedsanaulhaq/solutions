@@ -83,7 +83,7 @@ const UI_TEXT = {
     pdfPlaceholder: 'https://.../ecp-training-calendar.pdf',
     savePdfUrl: 'Save PDF URL',
     customAgendaActive: 'Custom agenda active',
-    heading: 'Election Commission of Pakistan AI Trainer',
+    heading: 'ECP AI Trainer',
     subheading: 'Voice onboarding assistant for new Election Commission Pakistan employees',
     voiceEnginePrefix: 'Voice engine:',
     neuralVoice: 'Neural voice (same style as your other demos)',
@@ -137,7 +137,7 @@ const UI_TEXT = {
     pdfPlaceholder: 'https://.../ecp-training-calendar.pdf',
     savePdfUrl: 'پی ڈی ایف یو آر ایل محفوظ کریں',
     customAgendaActive: 'کسٹم ایجنڈا فعال ہے',
-    heading: 'Election Commission of Pakistan AI Trainer',
+    heading: 'ECP AI Trainer',
     subheading: 'Voice onboarding assistant for new Election Commission Pakistan employees',
     voiceEnginePrefix: 'وائس انجن:',
     neuralVoice: 'نیورل آواز',
@@ -983,7 +983,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
 
           <div className="flex flex-wrap items-center justify-between gap-3" dir="ltr">
             <div className="flex items-center gap-3" dir="ltr">
-              <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl border border-slate-700/70 bg-white/90 p-1 shadow-sm md:h-14 md:w-14 md:rounded-2xl md:border-slate-200 md:bg-white dark:md:border-slate-700 dark:md:bg-slate-900">
+              <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl p-1 md:h-14 md:w-14 md:rounded-2xl">
                 <img src={ECP_LOGO_URL} alt="Election Commission of Pakistan logo" className="h-9 w-9 object-contain md:h-12 md:w-12" loading="lazy" />
               </div>
               <div className="text-left">
