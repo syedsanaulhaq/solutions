@@ -33,10 +33,14 @@ public class MainActivity extends BridgeActivity {
         webView.setVerticalScrollBarEnabled(false);
         webView.setHorizontalScrollBarEnabled(false);
         webView.setOverScrollMode(WebView.OVER_SCROLL_NEVER);
+        webView.clearCache(true);
+        webView.clearHistory();
+        webView.clearFormData();
 
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         
         // Force content to fit screen
         settings.setLoadWithOverviewMode(true);
