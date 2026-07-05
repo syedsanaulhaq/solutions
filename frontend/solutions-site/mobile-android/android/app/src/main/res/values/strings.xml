@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">ECP AI-Trainer</string>
-    <string name="title_activity_main">ECP AI-Trainer</string>
+    <string name="app_name">ECP Helper</string>
+    <string name="title_activity_main">ECP Helper</string>
     <string name="package_name">com.hostingocean.ecptrainer</string>
     <string name="custom_url_scheme">com.hostingocean.ecptrainer</string>
 </resources>
