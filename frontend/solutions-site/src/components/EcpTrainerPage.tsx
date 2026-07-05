@@ -604,7 +604,11 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
         micStreamRef.current = stream;
         audioChunksRef.current = [];
 
-        const mimeType = ['audio/webm', 'audio/ogg', 'audio/mp4'].find((type) => MediaRecorder.isTypeSupported(type));
+        const isAndroid = /android/i.test(navigator.userAgent);
+        const preferredTypes = isAndroid
+          ? ['audio/mp4', 'audio/webm', 'audio/ogg']
+          : ['audio/webm', 'audio/ogg', 'audio/mp4'];
+        const mimeType = preferredTypes.find((type) => MediaRecorder.isTypeSupported(type));
         const recorder = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
 
         recorder.ondataavailable = (event) => {
@@ -664,7 +668,11 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
             const transcript = typeof data?.text === 'string' ? data.text.trim() : '';
 
             if (!response.ok || !transcript) {
-              setSpeechError(UI_TEXT[langRef.current].transcriptionFailed);
+              setSpeechError(
+                typeof data?.error === 'string' && data.error.trim()
+                  ? data.error
+                  : UI_TEXT[langRef.current].transcriptionFailed
+              );
             } else {
               setSpeechError('');
               setInput(transcript);
