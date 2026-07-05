@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { ECP_VOTER_KNOWLEDGE } from '@/data/ecpVoterKnowledge';
 
 const SYSTEM_PROMPT = `You are Election Commission of Pakistan AI Trainer, a friendly voice-first onboarding trainer for newly joined officers.
 
@@ -65,10 +66,12 @@ function buildSystemPrompt(customAgendaText?: string, language?: string): string
     ? `${SYSTEM_PROMPT}\n\nCustom agenda uploaded by admin (treat this as highest-priority source of training structure):\n${customAgendaText}\n\nWhen you answer, align day/module references to this uploaded agenda first.`
     : SYSTEM_PROMPT;
 
+  const withVoterKnowledge = `${base}\n\nOfficial voter guidance knowledge pack (use this for voter-facing questions and registration procedures):\n${ECP_VOTER_KNOWLEDGE}\n\nWhen answering voter questions, prioritize these official ECP sources. If user asks for exact local office detail not present here, direct them to the relevant ECP page and District Election Commissioner office.`;
+
   if (language === 'ur') {
-    return `${base}\n\nIMPORTANT: The user has selected Urdu language. You MUST respond entirely in Urdu (اردو). Use clear, simple Urdu suitable for newly joined government officers. Keep the same structured format (bullets, coaching question at the end) but in Urdu script only. Do NOT respond in English.`;
+    return `${withVoterKnowledge}\n\nIMPORTANT: The user has selected Urdu language. You MUST respond entirely in Urdu (اردو). Use clear, simple Urdu suitable for newly joined government officers. Keep the same structured format (bullets, coaching question at the end) but in Urdu script only. Do NOT respond in English.`;
   }
-  return base;
+  return withVoterKnowledge;
 }
 
 const FALLBACK_REPLY =
