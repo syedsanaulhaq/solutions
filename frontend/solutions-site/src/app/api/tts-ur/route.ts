@@ -13,10 +13,54 @@ export async function GET(req: NextRequest) {
   }
 
   const input = text.slice(0, 1200);
+  const azureSpeechKey = process.env.AZURE_SPEECH_KEY;
+  const azureSpeechRegion = process.env.AZURE_SPEECH_REGION;
+  const azureUrduVoice = process.env.AZURE_SPEECH_URDU_VOICE || 'ur-PK-UzmaNeural';
   const elevenLabsKey = process.env.ELEVENLABS_API_KEY;
   const urduVoiceId = process.env.ELEVENLABS_URDU_VOICE_ID || process.env.ELEVENLABS_VOICE_ID;
 
-  // 1) Primary: ElevenLabs multilingual neural voice for Urdu.
+  const escaped = input
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+
+  // 1) Primary: Azure Speech ur-PK neural voice.
+  if (azureSpeechKey && azureSpeechRegion) {
+    try {
+      const ssml = `<speak version="1.0" xml:lang="ur-PK"><voice name="${azureUrduVoice}">${escaped}</voice></speak>`;
+      const upstream = await fetch(`https://${azureSpeechRegion}.tts.speech.microsoft.com/cognitiveservices/v1`, {
+        method: 'POST',
+        headers: {
+          'Ocp-Apim-Subscription-Key': azureSpeechKey,
+          'Content-Type': 'application/ssml+xml',
+          'X-Microsoft-OutputFormat': 'audio-16khz-32kbitrate-mono-mp3',
+          'User-Agent': 'hostingocean-solutions-site',
+        },
+        body: ssml,
+        signal: AbortSignal.timeout(12_000),
+      });
+
+      if (upstream.ok) {
+        const audio = await upstream.arrayBuffer();
+        return new NextResponse(audio, {
+          status: 200,
+          headers: {
+            'Content-Type': 'audio/mpeg',
+            'Cache-Control': 'no-store',
+          },
+        });
+      }
+
+      const azErrText = await upstream.text().catch(() => '');
+      console.warn('[tts-ur] Azure fallback trigger:', azErrText || upstream.status);
+    } catch {
+      console.warn('[tts-ur] Azure request failed, trying fallback provider');
+    }
+  }
+
+  // 2) Secondary: ElevenLabs multilingual neural voice for Urdu.
   // Set ELEVENLABS_URDU_VOICE_ID to a Pakistani Urdu voice profile.
   if (elevenLabsKey && urduVoiceId) {
     try {
@@ -58,7 +102,7 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  // 2) Fallback: Google Translate TTS.
+  // 3) Fallback: Google Translate TTS.
   const params = new URLSearchParams({
     ie: 'UTF-8',
     q: input.slice(0, 200),
