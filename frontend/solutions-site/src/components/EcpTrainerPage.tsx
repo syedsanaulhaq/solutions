@@ -796,11 +796,11 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
 
   return (
     <div
-      className="min-h-screen bg-[radial-gradient(circle_at_top,_#d9f1e6_0%,_#e8f7ef_35%,_#f6fbf8_70%)] dark:bg-slate-950 px-4 py-10"
+      className="min-h-[100dvh] w-full bg-[radial-gradient(circle_at_top,_#d9f1e6_0%,_#e8f7ef_35%,_#f6fbf8_70%)] dark:bg-slate-950 px-3 py-3 md:px-4 md:py-10"
       dir={lang === 'ur' ? 'rtl' : 'ltr'}
       style={urduPageStyle}
     >
-      <div className="mx-auto max-w-4xl">
+      <div className="mx-auto w-full max-w-4xl">
         {showCalendarModal ? (
           <div className="fixed inset-0 z-[121] flex items-center justify-center bg-slate-950/80 px-4 backdrop-blur-sm">
             <div className="relative w-full max-w-5xl overflow-hidden rounded-3xl border border-white/10 bg-slate-900 shadow-2xl shadow-black/40">
@@ -879,8 +879,8 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
           </div>
         ) : null}
 
-        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-          <div className="mb-5 rounded-2xl border border-emerald-200 bg-emerald-50/70 p-4 dark:border-emerald-900 dark:bg-emerald-950/20" dir="ltr">
+        <div className="rounded-3xl border border-slate-200 bg-white p-3 shadow-sm dark:border-slate-800 dark:bg-slate-900 md:p-6">
+          <div className="mb-5 hidden rounded-2xl border border-emerald-200 bg-emerald-50/70 p-4 dark:border-emerald-900 dark:bg-emerald-950/20 md:block" dir="ltr">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <p className="text-sm font-semibold text-emerald-900 dark:text-emerald-200">{adminUi.adminLoader}</p>
               <button
@@ -981,14 +981,14 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
             ) : null}
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-4" dir="ltr">
+          <div className="flex flex-wrap items-center justify-between gap-3" dir="ltr">
             <div className="flex items-center gap-3" dir="ltr">
               <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white p-1 shadow-sm dark:border-slate-700 dark:bg-slate-900">
                 <img src={ECP_LOGO_URL} alt="Election Commission of Pakistan logo" className="h-12 w-12 object-contain" loading="lazy" />
               </div>
               <div className="text-left">
-                <h1 className="text-2xl font-bold text-slate-900 dark:text-white">{ui.heading}</h1>
-                <p className="text-sm text-slate-600 dark:text-slate-300">
+                <h1 className="text-lg font-bold text-slate-900 dark:text-white md:text-2xl">{ui.heading}</h1>
+                <p className="text-xs text-slate-600 dark:text-slate-300 md:text-sm">
                   {ui.subheading}
                 </p>
                 <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
@@ -1000,21 +1000,21 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
             <div className="flex items-center gap-2" dir="ltr">
               <button
                 onClick={() => setAutoSpeak((v) => !v)}
-                className="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+                className="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-2.5 py-2 text-xs font-medium text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800 md:px-3 md:text-sm"
               >
                 {autoSpeak ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
                 {autoSpeak ? ui.voiceOn : ui.voiceOff}
               </button>
               <a
                 href={lang === 'ur' ? '/ecp-trainer' : '/ecp-trainer-ur'}
-                className="inline-flex items-center gap-1.5 rounded-xl border-2 border-emerald-500 bg-emerald-50 px-3 py-2 text-sm font-bold text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-950/30 dark:text-emerald-300 dark:hover:bg-emerald-900/50"
+                className="inline-flex items-center gap-1.5 rounded-xl border-2 border-emerald-500 bg-emerald-50 px-2.5 py-2 text-xs font-bold text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-950/30 dark:text-emerald-300 dark:hover:bg-emerald-900/50 md:px-3 md:text-sm"
               >
                 {ui.urduVersion}
               </a>
             </div>
           </div>
 
-          <div className="mt-5 flex flex-wrap gap-2" dir={lang === 'ur' ? 'rtl' : 'ltr'}>
+          <div className="mt-5 hidden flex-wrap gap-2 md:flex" dir={lang === 'ur' ? 'rtl' : 'ltr'}>
             {(lang === 'ur' ? QUICK_TOPICS_UR : QUICK_TOPICS).map((topic) => (
               <button
                 key={topic}
@@ -1028,7 +1028,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
             ))}
           </div>
 
-          <div className="mt-5 h-[460px] overflow-y-auto rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950" dir={lang === 'ur' ? 'rtl' : 'ltr'} style={lang === 'ur' ? { fontFamily: "'Noto Nastaliq Urdu', 'Noto Sans', serif", fontSize: '1rem', lineHeight: '2.5' } : undefined}>
+          <div className="mt-4 h-[58dvh] overflow-y-auto rounded-2xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-950 md:mt-5 md:h-[460px] md:p-4" dir={lang === 'ur' ? 'rtl' : 'ltr'} style={lang === 'ur' ? { fontFamily: "'Noto Nastaliq Urdu', 'Noto Sans', serif", fontSize: '1rem', lineHeight: '2.5' } : undefined}>
             <div className="space-y-3">
               {messages.map((msg) => (
                 <div
@@ -1060,7 +1060,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
                     {msg.role === 'assistant' && msg.media ? (
                       <div className="mt-3 space-y-2">
                         {msg.media.images.length ? (
-                          <div className="grid gap-2 md:grid-cols-2">
+                          <div className="hidden gap-2 md:grid md:grid-cols-2">
                             {msg.media.images.map((item) => (
                               <button
                                 key={item.title}
@@ -1078,7 +1078,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
                         ) : null}
 
                         {msg.media.videos.length ? (
-                          <div className="grid gap-2">
+                          <div className="hidden gap-2 md:grid">
                             {msg.media.videos.map((item) => (
                               <button
                                 key={item.title}
@@ -1145,7 +1145,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
             </div>
           </div>
 
-          <div className="mt-4 flex items-center gap-2">
+          <div className="mt-3 flex items-center gap-2 md:mt-4">
             <button
               onClick={listening ? stopListening : startListening}
               className={`flex h-11 w-11 items-center justify-center rounded-xl text-white ${
