@@ -3,8 +3,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Loader2, Mic, PlayCircle, Send, Square, Volume2, VolumeX } from 'lucide-react';
 
-const ECP_LOGO_URL = '/ecp/ecp-logo.png';
-
 interface MediaItem {
   title: string;
   src: string;
@@ -983,14 +981,8 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
 
           <div className="flex flex-wrap items-center justify-between gap-3" dir="ltr">
             <div className="flex items-center gap-3" dir="ltr">
-              <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white p-1 shadow-sm dark:border-slate-700 dark:bg-slate-900">
-                <img src={ECP_LOGO_URL} alt="Election Commission of Pakistan logo" className="h-12 w-12 object-contain" loading="lazy" />
-              </div>
               <div className="text-left">
                 <h1 className="text-lg font-bold text-slate-900 dark:text-white md:text-2xl">{ui.heading}</h1>
-                <p className="text-xs text-slate-600 dark:text-slate-300 md:text-sm">
-                  {ui.subheading}
-                </p>
                 <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
                   {ui.voiceEnginePrefix} {voiceMode === 'neural' ? ui.neuralVoice : ui.browserVoice}
                 </p>
