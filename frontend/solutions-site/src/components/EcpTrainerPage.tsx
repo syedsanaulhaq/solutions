@@ -800,7 +800,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
       dir={lang === 'ur' ? 'rtl' : 'ltr'}
       style={urduPageStyle}
     >
-      <div className="mx-auto w-full max-w-4xl">
+      <div className="mx-auto h-full w-full max-w-4xl">
         {showCalendarModal ? (
           <div className="fixed inset-0 z-[121] flex items-center justify-center bg-slate-950/80 px-4 backdrop-blur-sm">
             <div className="relative w-full max-w-5xl overflow-hidden rounded-3xl border border-white/10 bg-slate-900 shadow-2xl shadow-black/40">
@@ -879,7 +879,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
           </div>
         ) : null}
 
-        <div className="flex h-[100dvh] min-h-[100dvh] flex-col rounded-none border-0 bg-[#07122b] p-3 shadow-none md:min-h-0 md:h-auto md:rounded-3xl md:border md:border-slate-200 md:bg-white md:p-6 md:shadow-sm md:dark:border-slate-800 md:dark:bg-slate-900">
+        <div className="flex h-full min-h-0 flex-col rounded-none border-0 bg-[#07122b] p-3 shadow-none md:min-h-0 md:h-auto md:rounded-3xl md:border md:border-slate-200 md:bg-white md:p-6 md:shadow-sm md:dark:border-slate-800 md:dark:bg-slate-900">
           <div className="mb-5 hidden rounded-2xl border border-emerald-200 bg-emerald-50/70 p-4 dark:border-emerald-900 dark:bg-emerald-950/20 md:block" dir="ltr">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <p className="text-sm font-semibold text-emerald-900 dark:text-emerald-200">{adminUi.adminLoader}</p>
