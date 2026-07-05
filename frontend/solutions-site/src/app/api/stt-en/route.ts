@@ -7,6 +7,13 @@ interface GroqTranscriptionReply {
   };
 }
 
+interface OpenAITranscriptionReply {
+  text?: string;
+  error?: {
+    message?: string;
+  };
+}
+
 async function transcribeWithGroq(file: File, apiKey: string, language?: string) {
   const upstreamForm = new FormData();
   upstreamForm.append('file', file, file.name || 'voice.webm');
@@ -29,6 +36,28 @@ async function transcribeWithGroq(file: File, apiKey: string, language?: string)
   return { response, payload };
 }
 
+async function transcribeWithOpenAI(file: File, apiKey: string, language?: string) {
+  const upstreamForm = new FormData();
+  upstreamForm.append('file', file, file.name || 'voice.webm');
+  upstreamForm.append('model', 'whisper-1');
+  upstreamForm.append('response_format', 'json');
+  if (language) {
+    upstreamForm.append('language', language);
+  }
+
+  const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+    },
+    body: upstreamForm,
+    signal: AbortSignal.timeout(60_000),
+  });
+
+  const payload = (await response.json().catch(() => ({}))) as OpenAITranscriptionReply;
+  return { response, payload };
+}
+
 export async function POST(req: NextRequest) {
   try {
     const form = await req.formData();
@@ -42,33 +71,54 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Audio file is empty' }, { status: 400 });
     }
 
-    const apiKey = process.env.GROQ_API_KEY || process.env.AI_API_KEY;
-    if (!apiKey) {
+    const groqApiKey = process.env.GROQ_API_KEY || process.env.AI_API_KEY;
+    const openAIApiKey = process.env.OPENAI_API_KEY;
+
+    if (!groqApiKey && !openAIApiKey) {
       return NextResponse.json({ error: 'Transcription service is not configured' }, { status: 503 });
     }
 
-    let { response, payload } = await transcribeWithGroq(file, apiKey, 'en');
+    let response: Response | null = null;
+    let errorMessage = 'Transcription failed';
+    let text = '';
 
-    if (!response.ok) {
-      // Retry once without forced language for better compatibility with some mobile audio encodings.
-      const retry = await transcribeWithGroq(file, apiKey);
-      response = retry.response;
-      payload = retry.payload;
-    }
+    if (groqApiKey) {
+      let groqResult = await transcribeWithGroq(file, groqApiKey, 'en');
 
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: payload?.error?.message || 'Transcription failed' },
-        { status: 502 }
-      );
-    }
-
-    let text = typeof payload.text === 'string' ? payload.text.trim() : '';
-    if (!text) {
-      const retry = await transcribeWithGroq(file, apiKey);
-      if (retry.response.ok) {
-        text = typeof retry.payload.text === 'string' ? retry.payload.text.trim() : '';
+      if (!groqResult.response.ok) {
+        // Retry once without forced language for better compatibility with some mobile audio encodings.
+        groqResult = await transcribeWithGroq(file, groqApiKey);
       }
+
+      response = groqResult.response;
+      errorMessage = groqResult.payload?.error?.message || errorMessage;
+      text = typeof groqResult.payload?.text === 'string' ? groqResult.payload.text.trim() : '';
+
+      if (response.ok && !text) {
+        const retry = await transcribeWithGroq(file, groqApiKey);
+        if (retry.response.ok) {
+          text = typeof retry.payload.text === 'string' ? retry.payload.text.trim() : '';
+        } else {
+          errorMessage = retry.payload?.error?.message || errorMessage;
+        }
+      }
+    }
+
+    if (!text && openAIApiKey) {
+      const openAIResult = await transcribeWithOpenAI(file, openAIApiKey, 'en');
+      response = openAIResult.response;
+      errorMessage = openAIResult.payload?.error?.message || errorMessage;
+      if (openAIResult.response.ok) {
+        text = typeof openAIResult.payload?.text === 'string' ? openAIResult.payload.text.trim() : '';
+      }
+    }
+
+    if (!response || !response.ok) {
+      const quotaHit = /limit|quota|billing|aspd|rate/i.test(errorMessage);
+      const error = quotaHit
+        ? 'Daily voice transcription quota is exhausted. Please try later or switch transcription provider key.'
+        : errorMessage;
+      return NextResponse.json({ error }, { status: 502 });
     }
 
     if (!text) {
