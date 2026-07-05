@@ -3,6 +3,15 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Loader2, Mic, PlayCircle, Send, Square, Volume2, VolumeX } from 'lucide-react';
 
+declare global {
+  interface Window {
+    AndroidSpeech?: {
+      startListening: (languageCode: string) => void;
+      stopListening: () => void;
+    };
+  }
+}
+
 const ECP_LOGO_URL = '/ecp/ecp-logo.png';
 
 interface MediaItem {
@@ -33,6 +42,12 @@ interface Message {
 interface ApiHistory {
   role: 'assistant' | 'user';
   content: string;
+}
+
+interface NativeSpeechEventDetail {
+  type?: 'result' | 'error';
+  text?: string;
+  error?: string;
 }
 
 const AGENDA_STORAGE_KEY = 'ecpTrainerCustomAgendaV1';
@@ -569,6 +584,9 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
       if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
         mediaRecorderRef.current.stop();
       }
+      if (typeof window !== 'undefined' && window.AndroidSpeech?.stopListening) {
+        window.AndroidSpeech.stopListening();
+      }
       if (micStreamRef.current) {
         micStreamRef.current.getTracks().forEach((track) => track.stop());
         micStreamRef.current = null;
@@ -589,8 +607,52 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
     };
   }, [stopAudio]);
 
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const handleNativeSpeech = (event: Event) => {
+      const detail = (event as CustomEvent<NativeSpeechEventDetail>).detail;
+      if (!detail?.type) {
+        return;
+      }
+
+      setListening(false);
+
+      if (detail.type === 'error') {
+        setSpeechError(detail.error?.trim() || UI_TEXT[langRef.current].transcriptionFailed);
+        return;
+      }
+
+      const transcript = detail.text?.trim() || '';
+      if (!transcript) {
+        setSpeechError(UI_TEXT[langRef.current].noVoiceCaptured);
+        return;
+      }
+
+      setSpeechError('');
+      setInput(transcript);
+      void sendMessage(transcript);
+    };
+
+    window.addEventListener('ecp-native-speech', handleNativeSpeech as EventListener);
+    return () => window.removeEventListener('ecp-native-speech', handleNativeSpeech as EventListener);
+  }, [sendMessage]);
+
   const startListening = useCallback(() => {
     setSpeechError('');
+
+    const nativeSpeech = typeof window !== 'undefined' ? window.AndroidSpeech : undefined;
+    const shouldUseNativeSpeech = /android/i.test(navigator.userAgent) && typeof nativeSpeech?.startListening === 'function';
+
+    if (shouldUseNativeSpeech) {
+      stopAudio();
+      setListening(true);
+      nativeSpeech.startListening(langRef.current === 'ur' ? 'ur-PK' : 'en-US');
+      return;
+    }
+
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || typeof MediaRecorder === 'undefined') {
       setSpeechError(UI_TEXT[langRef.current].unsupportedVoice);
       return;
@@ -794,6 +856,12 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
   }, []);
 
   const stopListening = useCallback(() => {
+    if (typeof window !== 'undefined' && window.AndroidSpeech?.stopListening && /android/i.test(navigator.userAgent)) {
+      window.AndroidSpeech.stopListening();
+      setListening(false);
+      return;
+    }
+
     const recorder = mediaRecorderRef.current;
     if (recorder && recorder.state !== 'inactive') {
       recorder.stop();
