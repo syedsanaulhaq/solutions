@@ -16,7 +16,16 @@ export function middleware(req: NextRequest) {
     return new NextResponse(null, { status: 405, headers: { Allow: 'GET, HEAD' } });
   }
 
-  return NextResponse.next();
+  const response = NextResponse.next();
+
+  if (pathname === '/ecp-trainer' || pathname === '/ecp-trainer-ur') {
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    response.headers.set('Surrogate-Control', 'no-store');
+  }
+
+  return response;
 }
 
 export const config = {
