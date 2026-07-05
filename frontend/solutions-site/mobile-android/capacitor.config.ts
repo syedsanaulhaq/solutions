@@ -1,6 +1,6 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
-const PROD_URL = process.env.ECP_APP_URL || 'https://solutions.hostingocean.com/ecp-trainer';
+const PROD_URL = process.env.ECP_APP_URL || 'https://solutions.hostingocean.net/ecp-trainer';
 
 const config: CapacitorConfig = {
   appId: 'com.hostingocean.ecptrainer',
@@ -13,17 +13,18 @@ const config: CapacitorConfig = {
   },
   android: {
     allowMixedContent: false,
-    backgroundColor: '#ffffff'
+    backgroundColor: '#0b141e'
   },
   plugins: {
     SplashScreen: {
       launchShowDuration: 1200,
       launchAutoHide: true,
-      backgroundColor: '#ffffff'
+      backgroundColor: '#0b141e'
     },
     StatusBar: {
-      style: 'DARK',
-      backgroundColor: '#ffffff'
+      style: 'LIGHT',
+      backgroundColor: '#0b141e',
+      overlaysWebView: false
     }
   }
 };

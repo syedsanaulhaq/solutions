@@ -794,7 +794,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
 
   return (
     <div
-      className="min-h-[100dvh] w-full bg-[radial-gradient(circle_at_top,_#d9f1e6_0%,_#e8f7ef_35%,_#f6fbf8_70%)] dark:bg-slate-950 px-3 py-3 md:px-4 md:py-10"
+      className="min-h-[100dvh] w-full bg-slate-950 md:bg-[radial-gradient(circle_at_top,_#d9f1e6_0%,_#e8f7ef_35%,_#f6fbf8_70%)] px-0 py-0 [padding-top:env(safe-area-inset-top)] [padding-bottom:env(safe-area-inset-bottom)] md:px-4 md:py-10"
       dir={lang === 'ur' ? 'rtl' : 'ltr'}
       style={urduPageStyle}
     >
@@ -877,7 +877,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
           </div>
         ) : null}
 
-        <div className="rounded-3xl border border-slate-200 bg-white p-3 shadow-sm dark:border-slate-800 dark:bg-slate-900 md:p-6">
+        <div className="min-h-[100dvh] rounded-none border-0 bg-[#07122b] p-3 shadow-none md:min-h-0 md:rounded-3xl md:border md:border-slate-200 md:bg-white md:p-6 md:shadow-sm md:dark:border-slate-800 md:dark:bg-slate-900">
           <div className="mb-5 hidden rounded-2xl border border-emerald-200 bg-emerald-50/70 p-4 dark:border-emerald-900 dark:bg-emerald-950/20 md:block" dir="ltr">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <p className="text-sm font-semibold text-emerald-900 dark:text-emerald-200">{adminUi.adminLoader}</p>
@@ -982,7 +982,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
           <div className="flex flex-wrap items-center justify-between gap-3" dir="ltr">
             <div className="flex items-center gap-3" dir="ltr">
               <div className="text-left">
-                <h1 className="text-lg font-bold text-slate-900 dark:text-white md:text-2xl">{ui.heading}</h1>
+                <h1 className="text-2xl font-bold text-white md:text-2xl md:text-slate-900 md:dark:text-white">{ui.heading}</h1>
                 <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
                   {ui.voiceEnginePrefix} {voiceMode === 'neural' ? ui.neuralVoice : ui.browserVoice}
                 </p>
@@ -1020,7 +1020,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
             ))}
           </div>
 
-          <div className="mt-4 h-[58dvh] overflow-y-auto rounded-2xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-950 md:mt-5 md:h-[460px] md:p-4" dir={lang === 'ur' ? 'rtl' : 'ltr'} style={lang === 'ur' ? { fontFamily: "'Noto Nastaliq Urdu', 'Noto Sans', serif", fontSize: '1rem', lineHeight: '2.5' } : undefined}>
+          <div className="mt-4 h-[50dvh] overflow-y-auto rounded-2xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-950 md:mt-5 md:h-[460px] md:p-4" dir={lang === 'ur' ? 'rtl' : 'ltr'} style={lang === 'ur' ? { fontFamily: "'Noto Nastaliq Urdu', 'Noto Sans', serif", fontSize: '1rem', lineHeight: '2.5' } : undefined}>
             <div className="space-y-3">
               {messages.map((msg) => (
                 <div
