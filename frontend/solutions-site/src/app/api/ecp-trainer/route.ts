@@ -1,38 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ECP_VOTER_KNOWLEDGE } from '@/data/ecpVoterKnowledge';
 
-const SYSTEM_PROMPT = `You are Election Commission of Pakistan AI Trainer, a friendly voice-first onboarding trainer for newly joined officers.
+const SYSTEM_PROMPT = `You are Election Commission of Pakistan AI Trainer, a friendly voice-first training assistant.
 
-Your job is to train probationers in simple, structured, practical language.
+Your job is to explain official ECP processes in simple, structured, practical language.
 
-Core training domains from the training agenda:
-1) Orientation and institutional setup (Day 1)
-2) Legal framework and constitutional mandate (Days 2-3)
-3) Voter registration and electoral rolls CERs (Days 2-4)
-4) Boundary delimitation (Day 4 and Day 12 practical)
-5) Conduct of general elections and polling operations (Days 5-7)
-6) Local government, presidential, and senate elections (Days 8-10)
-7) Media and voter education outreach (Day 10 and Day 14)
-8) Technology in elections (Day 11)
-9) Political finance (Days 11-12)
-10) Election dispute resolution and election justice (Days 13-15)
-11) Gender mainstreaming and social inclusion (Days 14, 15, 18)
-12) Leadership, secretariat instructions, strategic planning, HR/admin (Days 19-23)
-13) Financial management and procurement rules (Days 25-30)
-14) Policy papers, judgement reviews, bridge modules, and closing activities (Days 31-52)
+Core guidance domains:
+1) Voter registration, verification, and 8300 process
+2) Electoral rolls and voter facilitation channels
+3) General elections, local government elections, senate elections, and by-elections
+4) Election laws and procedural compliance
+5) Delimitation process and representation/proposal handling
+6) Political parties, election symbols, and code of conduct references
+7) Notifications, orders/judgements, and cause list usage
 
-Agenda behavior rules:
-- If user asks to "check my training schedule" or similar, compare their request against these training domains and suggest where it fits by day/module.
-- If user asks about a specific day/module, answer with: session objective, key takeaways, one practical exercise, one assessment idea.
-- If user asks "what else they can do", always suggest 4 to 6 practical additions beyond lectures.
-- Practical additions should include role-play, simulation, case clinics, peer feedback, field debriefs, and ethics/risk drills.
+Behavior rules:
+- Stay non-partisan, neutral, and institution-focused.
+- Give step-by-step procedural guidance.
+- Do not invent deadlines, forms, legal clauses, or district-level office details.
+- If exact detail is missing, direct users to the official ECP source URL.
 
 Response format rules:
 - Keep replies short and voice-friendly: 4 to 8 bullets max.
-- Use plain English suitable for newly joined officers.
-- End with one coaching question to continue training.
-- Stay non-partisan, neutral, and institution-focused.
-- If asked unrelated questions, briefly redirect to ECP onboarding topics.`;
+- Use plain English suitable for citizens and newly joined officers.
+- End with one coaching or follow-up question.`;
 
 type Provider = 'openai' | 'groq' | 'deepseek';
 
@@ -61,12 +52,8 @@ interface ChatMessage {
   content: string;
 }
 
-function buildSystemPrompt(customAgendaText?: string, language?: string): string {
-  const base = customAgendaText
-    ? `${SYSTEM_PROMPT}\n\nCustom agenda uploaded by admin (treat this as highest-priority source of training structure):\n${customAgendaText}\n\nWhen you answer, align day/module references to this uploaded agenda first.`
-    : SYSTEM_PROMPT;
-
-  const withVoterKnowledge = `${base}\n\nOfficial voter guidance knowledge pack (use this for voter-facing questions and registration procedures):\n${ECP_VOTER_KNOWLEDGE}\n\nWhen answering voter questions, prioritize these official ECP sources. If user asks for exact local office detail not present here, direct them to the relevant ECP page and District Election Commissioner office.`;
+function buildSystemPrompt(language?: string): string {
+  const withVoterKnowledge = `${SYSTEM_PROMPT}\n\nOfficial ECP knowledge pack:\n${ECP_VOTER_KNOWLEDGE}\n\nWhen answering, prioritize these official ECP sources. If user asks for exact local office detail not present here, direct them to the relevant ECP page and District Election Commissioner office.`;
 
   if (language === 'ur') {
     return `${withVoterKnowledge}\n\nIMPORTANT: The user has selected Urdu language. You MUST respond entirely in Urdu (اردو). Use clear, simple Urdu suitable for newly joined government officers. Keep the same structured format (bullets, coaching question at the end) but in Urdu script only. Do NOT respond in English.`;
@@ -84,7 +71,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
     }
 
-    const { message, history, agendaText, language } = body as { message?: unknown; history?: unknown; agendaText?: unknown; language?: unknown };
+    const { message, history, language } = body as { message?: unknown; history?: unknown; language?: unknown };
 
     if (typeof message !== 'string' || !message.trim()) {
       return NextResponse.json({ error: 'Message must be a non-empty string' }, { status: 400 });
@@ -95,11 +82,6 @@ export async function POST(request: NextRequest) {
     }
 
     const safeLanguage = language === 'ur' ? 'ur' : 'en';
-
-    const safeAgendaText =
-      typeof agendaText === 'string' && agendaText.trim()
-        ? agendaText.replace(/\s+/g, ' ').trim().slice(0, 12000)
-        : undefined;
 
     const apiKey = process.env.AI_API_KEY;
     const providerName = (process.env.AI_PROVIDER ?? 'openai') as Provider;
@@ -128,7 +110,7 @@ export async function POST(request: NextRequest) {
       : [];
 
     const chatMessages = [
-      { role: 'system', content: buildSystemPrompt(safeAgendaText, safeLanguage) },
+      { role: 'system', content: buildSystemPrompt(safeLanguage) },
       ...safeHistory,
       { role: 'user', content: message.trim() },
     ];

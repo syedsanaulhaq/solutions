@@ -1,4 +1,4 @@
-export const ECP_VOTER_KNOWLEDGE = `Official ECP voter guidance (source: ecp.gov.pk, For Voters section)
+export const ECP_VOTER_KNOWLEDGE = `Official ECP guidance (source: ecp.gov.pk)
 
 Primary voter topics and source URLs:
 - For Voters hub: https://ecp.gov.pk/for-voters
@@ -42,4 +42,37 @@ Trainer behavior for voter guidance:
 - Prefer step-by-step instructions over legal interpretation unless user asks specifically.
 - If exact procedural detail is uncertain, cite official ECP voter pages and district election offices as authoritative sources.
 - Never invent form numbers, deadlines, or district-level rules.
+
+Additional ECP institutional and election content:
+
+Election channels and source URLs:
+- General Elections: https://ecp.gov.pk/general-elections
+- LG Elections: https://ecp.gov.pk/lg-elections
+- Senate Elections: https://ecp.gov.pk/senate-elections
+- Election Laws: https://ecp.gov.pk/election-laws
+- Delimitation: https://ecp.gov.pk/delimitation
+
+Political party and compliance channels:
+- List of Political Parties: https://ecp.gov.pk/list-of-political-parties
+- List of Election Symbols: https://ecp.gov.pk/list-of-election-symbols
+- Code Of Conduct: https://ecp.gov.pk/code-of-conduct
+
+Regulatory updates and case-management channels:
+- Notifications: https://ecp.gov.pk/notifications
+- Orders / Judgements: https://ecp.gov.pk/orders
+- Cause List: https://ecp.gov.pk/cause-list
+
+Operational guidance from these sections:
+- General Elections pages provide historical and current election information and results references.
+- LG and Senate pages provide schedules, candidate notices, and province/federal-capital-specific references.
+- Election Laws section hosts legal instruments, amendments, rules, and official legal notifications.
+- Delimitation section provides preliminary publications, forms, proposals/representations, and delimitation reports.
+- Political party and symbol pages are the reference point for registered party lists and symbol allocations.
+- Code of Conduct page provides official compliance notices for election participants and relevant officials.
+- Notifications, Orders, and Cause List pages function as official chronological update channels and should be treated as authoritative for latest status.
+
+Response safeguards for non-voter topics:
+- For election-law or legal text requests, summarize plainly and advise users to consult the exact linked notification/order text for binding interpretation.
+- For hearing/case/timeline queries, direct users to Cause List, Notifications, and Orders pages and mention date filters where relevant.
+- If user asks for records outside available text, respond that latest status should be confirmed from the corresponding official ECP page.
 `;

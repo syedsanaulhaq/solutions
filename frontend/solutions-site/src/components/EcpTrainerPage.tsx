@@ -50,7 +50,6 @@ interface NativeSpeechEventDetail {
   error?: string;
 }
 
-const AGENDA_STORAGE_KEY = 'ecpTrainerCustomAgendaV1';
 const CALENDAR_PDF_URL_KEY = 'ecpTrainerCalendarPdfUrlV1';
 const DEFAULT_CALENDAR_URL = '/ecp/ecp-training-calendar.pdf';
 
@@ -58,29 +57,27 @@ const START_MESSAGE: Message = {
   id: 1,
   role: 'assistant',
   text:
-    'Welcome to Election Commission of Pakistan AI Trainer. Say "start onboarding" and I will guide a new employee through legal framework, electoral processes, technology, political finance, media outreach, inclusion, administration, and practical day-wise agenda readiness. You can also open the Training Calendar PDF from this first message.',
+    'Welcome to Election Commission of Pakistan AI Trainer. Say "start onboarding" and I will guide a new employee through legal framework, electoral processes, voter services, technology, political finance, and public information channels. You can also open the Training Calendar PDF from this first message.',
 };
 
 const QUICK_TOPICS = [
   'Start onboarding',
-  'Day 1 orientation',
-  'Legal framework',
   'Voter registration',
+  'Legal framework',
   'General elections',
-  'EDR and technology',
-  'Suggest extra activities',
+  'Delimitation',
+  'Notifications and orders',
 ];
 
 const ERROR_REPLY = 'I could not connect right now. Please try again.';
 
 const QUICK_TOPICS_UR = [
   'آغاز کریں',
-  'پہلا دن ـ تعارف',
-  'قانونی ڈھانچہ',
   'ووٹر رجسٹریشن',
+  'قانونی ڈھانچہ',
   'عام انتخابات',
-  'ای ڈی آر اور ٹیکنالوجی',
-  'اضافی سرگرمیاں تجویز کریں',
+  'حلقہ بندی',
+  'نوٹیفکیشنز اور آرڈرز',
 ];
 
 const START_MESSAGE_UR_TEXT =
@@ -124,13 +121,7 @@ const UI_TEXT = {
     sendAria: 'Send',
     startVoice: 'Start voice recording',
     stopVoice: 'Stop voice recording',
-    tip: 'Tip: Ask "Check Day 5 agenda" or "Suggest extra activities" for practical enhancements.',
-    customAgendaLoaded: 'Custom agenda loaded from local storage.',
-    uploadingAgenda: 'Uploading and parsing agenda...',
-    agendaUploadFailed: 'Failed to upload agenda. Please try again.',
-    agendaParseFailed: 'Could not parse agenda file.',
-    agendaCleared: 'Custom agenda cleared.',
-    agendaSaved: 'Agenda text saved for this browser.',
+    tip: 'Tip: Ask about voter registration, election laws, delimitation, or latest notifications for practical guidance.',
     pdfSaved: 'Calendar PDF URL saved.',
     noVoiceCaptured: 'No voice captured. Please try again.',
     voiceFailed: 'Voice upload failed. Please try again.',
@@ -178,13 +169,7 @@ const UI_TEXT = {
     sendAria: 'بھیجیں',
     startVoice: 'آواز ریکارڈنگ شروع کریں',
     stopVoice: 'آواز ریکارڈنگ بند کریں',
-    tip: 'مشورہ: عملی بہتری کے لیے "دن 5 ایجنڈا چیک کریں" یا "اضافی سرگرمیاں تجویز کریں" پوچھیں۔',
-    customAgendaLoaded: 'کسٹم ایجنڈا لوکل اسٹوریج سے لوڈ ہو گیا۔',
-    uploadingAgenda: 'ایجنڈا اپ لوڈ اور پارس کیا جا رہا ہے...',
-    agendaUploadFailed: 'ایجنڈا اپ لوڈ نہیں ہو سکا۔ دوبارہ کوشش کریں۔',
-    agendaParseFailed: 'ایجنڈا فائل پارس نہیں ہو سکی۔',
-    agendaCleared: 'کسٹم ایجنڈا صاف کر دیا گیا۔',
-    agendaSaved: 'ایجنڈا متن اس براؤزر کے لیے محفوظ کر دیا گیا۔',
+    tip: 'مشورہ: عملی رہنمائی کے لیے ووٹر رجسٹریشن، انتخابی قوانین، حلقہ بندی یا تازہ نوٹیفکیشنز کے بارے میں پوچھیں۔',
     pdfSaved: 'کیلینڈر پی ڈی ایف یو آر ایل محفوظ کر دیا گیا۔',
     noVoiceCaptured: 'کوئی آواز ریکارڈ نہیں ہوئی۔ دوبارہ کوشش کریں۔',
     voiceFailed: 'آواز اپ لوڈ ناکام ہو گئی۔ دوبارہ کوشش کریں۔',
@@ -319,17 +304,11 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
   const [speechError, setSpeechError] = useState('');
   const [voiceMode, setVoiceMode] = useState<'neural' | 'browser'>('browser');
   const [viewer, setViewer] = useState<ViewerState | null>(null);
-  const [agendaText, setAgendaText] = useState('');
-  const [agendaSummary, setAgendaSummary] = useState<string[]>([]);
-  const [agendaStatus, setAgendaStatus] = useState('');
-  const [isUploadingAgenda, setIsUploadingAgenda] = useState(false);
-  const [showAdminPanel, setShowAdminPanel] = useState(false);
   const [calendarPdfUrl, setCalendarPdfUrl] = useState('');
   const [showCalendarModal, setShowCalendarModal] = useState(false);
   const lang = forcedLang;
   const langRef = useRef<'en' | 'ur'>(forcedLang);
   const ui = UI_TEXT[lang];
-  const adminUi = UI_TEXT.en;
   const urduPageStyle =
     lang === 'ur'
       ? {
@@ -528,7 +507,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
       const res = await fetch('/api/ecp-trainer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text, history, agendaText, language: langRef.current }),
+        body: JSON.stringify({ message: text, history, language: langRef.current }),
       });
 
       const data = await res.json();
@@ -558,16 +537,10 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
     } finally {
       setIsLoading(false);
     }
-  }, [agendaText, input, isLoading, messages, speakText]);
+  }, [input, isLoading, messages, speakText]);
 
   useEffect(() => {
-    const stored = typeof window !== 'undefined' ? window.localStorage.getItem(AGENDA_STORAGE_KEY) : null;
     const storedCalendar = typeof window !== 'undefined' ? window.localStorage.getItem(CALENDAR_PDF_URL_KEY) : null;
-    if (stored) {
-      setAgendaText(stored);
-      setAgendaStatus(UI_TEXT[langRef.current].customAgendaLoaded);
-    }
-
     const normalizedCalendar = storedCalendar?.trim();
     if (!normalizedCalendar || normalizedCalendar === '/ecp/logo-only.png') {
       setCalendarPdfUrl(DEFAULT_CALENDAR_URL);
@@ -808,53 +781,6 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
       });
   }, [sendMessage, stopAudio]);
 
-  const uploadAgenda = useCallback(async (file: File) => {
-    setAgendaStatus(UI_TEXT[langRef.current].uploadingAgenda);
-    setIsUploadingAgenda(true);
-
-    try {
-      const form = new FormData();
-      form.append('file', file);
-
-      const response = await fetch('/api/ecp-trainer/agenda', {
-        method: 'POST',
-        body: form,
-      });
-
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok || typeof data?.agendaText !== 'string') {
-        setAgendaStatus(data?.error || UI_TEXT[langRef.current].agendaParseFailed);
-        return;
-      }
-
-      setAgendaText(data.agendaText);
-      setAgendaSummary(Array.isArray(data?.summary) ? data.summary : []);
-      if (typeof window !== 'undefined') {
-        window.localStorage.setItem(AGENDA_STORAGE_KEY, data.agendaText);
-      }
-
-      const clipped = data?.clipped ? ' (text clipped for performance)' : '';
-      setAgendaStatus(
-        langRef.current === 'ur'
-          ? `ایجنڈا کامیابی سے اپ لوڈ ہو گیا${clipped ? ' (متن کارکردگی کے لیے مختصر کیا گیا)' : ''}۔`
-          : `Agenda uploaded successfully${clipped}.`
-      );
-    } catch {
-      setAgendaStatus(UI_TEXT[langRef.current].agendaUploadFailed);
-    } finally {
-      setIsUploadingAgenda(false);
-    }
-  }, []);
-
-  const clearAgenda = useCallback(() => {
-    setAgendaText('');
-    setAgendaSummary([]);
-    setAgendaStatus(UI_TEXT[langRef.current].agendaCleared);
-    if (typeof window !== 'undefined') {
-      window.localStorage.removeItem(AGENDA_STORAGE_KEY);
-    }
-  }, []);
-
   const stopListening = useCallback(() => {
     if (typeof window !== 'undefined' && window.AndroidSpeech?.stopListening && /android/i.test(navigator.userAgent)) {
       window.AndroidSpeech.stopListening();
@@ -956,106 +882,6 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
         ) : null}
 
         <div className="flex h-full min-h-0 flex-col rounded-none border-0 bg-[#07122b] p-3 shadow-none md:min-h-0 md:h-auto md:rounded-3xl md:border md:border-slate-200 md:bg-white md:p-6 md:shadow-sm md:dark:border-slate-800 md:dark:bg-slate-900">
-          <div className="mb-5 hidden rounded-2xl border border-emerald-200 bg-emerald-50/70 p-4 dark:border-emerald-900 dark:bg-emerald-950/20 md:block" dir="ltr">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <p className="text-sm font-semibold text-emerald-900 dark:text-emerald-200">{adminUi.adminLoader}</p>
-              <button
-                type="button"
-                onClick={() => setShowAdminPanel((v) => !v)}
-                className="rounded-lg border border-emerald-300 px-2.5 py-1 text-xs font-medium text-emerald-800 hover:bg-emerald-100 dark:border-emerald-700 dark:text-emerald-200 dark:hover:bg-emerald-900/50"
-              >
-                {showAdminPanel ? adminUi.hide : adminUi.show}
-              </button>
-            </div>
-
-            {showAdminPanel ? (
-              <div className="mt-3 space-y-3">
-                <div className="flex flex-wrap items-center gap-2">
-                  <label className="inline-flex cursor-pointer items-center rounded-lg border border-emerald-300 bg-white px-3 py-1.5 text-xs font-medium text-emerald-800 hover:bg-emerald-100 dark:border-emerald-700 dark:bg-slate-900 dark:text-emerald-200 dark:hover:bg-emerald-900/40">
-                    {adminUi.uploadAgenda}
-                    <input
-                      type="file"
-                      accept=".docx,.txt,.md"
-                      className="hidden"
-                      onChange={(event) => {
-                        const file = event.target.files?.[0];
-                        if (file) {
-                          void uploadAgenda(file);
-                        }
-                        event.currentTarget.value = '';
-                      }}
-                      disabled={isUploadingAgenda}
-                    />
-                  </label>
-                  <button
-                    type="button"
-                    onClick={clearAgenda}
-                    className="rounded-lg border border-emerald-300 px-3 py-1.5 text-xs font-medium text-emerald-800 hover:bg-emerald-100 dark:border-emerald-700 dark:text-emerald-200 dark:hover:bg-emerald-900/40"
-                  >
-                    {adminUi.clearAgenda}
-                  </button>
-                </div>
-
-                <textarea
-                  dir={lang === 'ur' ? 'rtl' : 'ltr'}
-                  value={agendaText}
-                  onChange={(event) => setAgendaText(event.target.value)}
-                  placeholder={adminUi.agendaPlaceholder}
-                  className="h-28 w-full rounded-xl border border-emerald-200 bg-white px-3 py-2 text-xs text-slate-800 outline-none focus:ring-2 focus:ring-emerald-500 dark:border-emerald-800 dark:bg-slate-900 dark:text-slate-100"
-                />
-
-                <div className="flex flex-wrap items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (typeof window !== 'undefined') {
-                        window.localStorage.setItem(AGENDA_STORAGE_KEY, agendaText);
-                      }
-                      setAgendaStatus(adminUi.agendaSaved);
-                    }}
-                    className="rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-700"
-                  >
-                    {adminUi.saveAgenda}
-                  </button>
-                  <input
-                    dir={lang === 'ur' ? 'rtl' : 'ltr'}
-                    type="url"
-                    value={calendarPdfUrl}
-                    onChange={(event) => setCalendarPdfUrl(event.target.value)}
-                    placeholder={adminUi.pdfPlaceholder}
-                    className="h-8 min-w-[260px] flex-1 rounded-lg border border-emerald-200 bg-white px-2 text-xs text-slate-800 outline-none focus:ring-2 focus:ring-emerald-500 dark:border-emerald-800 dark:bg-slate-900 dark:text-slate-100"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (typeof window !== 'undefined') {
-                        if (calendarPdfUrl.trim()) {
-                          window.localStorage.setItem(CALENDAR_PDF_URL_KEY, calendarPdfUrl.trim());
-                        } else {
-                          window.localStorage.removeItem(CALENDAR_PDF_URL_KEY);
-                        }
-                      }
-                      setAgendaStatus(adminUi.pdfSaved);
-                    }}
-                    className="rounded-lg border border-emerald-300 px-3 py-1.5 text-xs font-medium text-emerald-800 hover:bg-emerald-100 dark:border-emerald-700 dark:text-emerald-200 dark:hover:bg-emerald-900/40"
-                  >
-                    {adminUi.savePdfUrl}
-                  </button>
-                  {agendaText ? <span className="text-xs text-emerald-900 dark:text-emerald-200">{adminUi.customAgendaActive}</span> : null}
-                </div>
-
-                {agendaSummary.length ? (
-                  <div className="rounded-lg border border-emerald-200 bg-white p-2 text-xs text-slate-700 dark:border-emerald-800 dark:bg-slate-900 dark:text-slate-200">
-                    {agendaSummary.map((line) => (
-                      <p key={line}>{line}</p>
-                    ))}
-                  </div>
-                ) : null}
-
-                {agendaStatus ? <p className="text-xs text-emerald-900 dark:text-emerald-200">{agendaStatus}</p> : null}
-              </div>
-            ) : null}
-          </div>
 
           <div className="flex flex-wrap items-center justify-between gap-3" dir="ltr">
             <div className="flex items-center gap-3" dir="ltr">
