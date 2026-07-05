@@ -49,6 +49,7 @@ export async function GET(req: NextRequest) {
           headers: {
             'Content-Type': 'audio/mpeg',
             'Cache-Control': 'no-store',
+            'X-TTS-Provider': 'azure',
           },
         });
       }
@@ -91,6 +92,7 @@ export async function GET(req: NextRequest) {
           headers: {
             'Content-Type': 'audio/mpeg',
             'Cache-Control': 'no-store',
+            'X-TTS-Provider': 'elevenlabs',
           },
         });
       }
@@ -134,6 +136,7 @@ export async function GET(req: NextRequest) {
       headers: {
         'Content-Type': 'audio/mpeg',
         'Cache-Control': 'no-store',
+        'X-TTS-Provider': 'google',
       },
     });
   } catch {
