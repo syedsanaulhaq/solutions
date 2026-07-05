@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Loader2, Mic, PlayCircle, Send, Square, Volume2, VolumeX } from 'lucide-react';
 
+const ECP_LOGO_URL = '/ecp/ecp-logo.png';
+
 interface MediaItem {
   title: string;
   src: string;
@@ -981,6 +983,9 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
 
           <div className="flex flex-wrap items-center justify-between gap-3" dir="ltr">
             <div className="flex items-center gap-3" dir="ltr">
+              <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl border border-slate-700/70 bg-white/90 p-1 shadow-sm md:h-14 md:w-14 md:rounded-2xl md:border-slate-200 md:bg-white dark:md:border-slate-700 dark:md:bg-slate-900">
+                <img src={ECP_LOGO_URL} alt="Election Commission of Pakistan logo" className="h-9 w-9 object-contain md:h-12 md:w-12" loading="lazy" />
+              </div>
               <div className="text-left">
                 <h1 className="text-2xl font-bold text-white md:text-2xl md:text-slate-900 md:dark:text-white">{ui.heading}</h1>
                 <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
@@ -1020,7 +1025,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
             ))}
           </div>
 
-          <div className="mt-4 h-[50dvh] overflow-y-auto rounded-2xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-950 md:mt-5 md:h-[460px] md:p-4" dir={lang === 'ur' ? 'rtl' : 'ltr'} style={lang === 'ur' ? { fontFamily: "'Noto Nastaliq Urdu', 'Noto Sans', serif", fontSize: '1rem', lineHeight: '2.5' } : undefined}>
+          <div className="mt-4 h-[60dvh] overflow-y-auto rounded-2xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-950 md:mt-5 md:h-[460px] md:p-4" dir={lang === 'ur' ? 'rtl' : 'ltr'} style={lang === 'ur' ? { fontFamily: "'Noto Nastaliq Urdu', 'Noto Sans', serif", fontSize: '1rem', lineHeight: '2.5' } : undefined}>
             <div className="space-y-3">
               {messages.map((msg) => (
                 <div
@@ -1137,7 +1142,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
             </div>
           </div>
 
-          <div className="mt-3 flex items-center gap-2 md:mt-4">
+          <div className="mt-2 flex items-center gap-2 md:mt-4">
             <button
               onClick={listening ? stopListening : startListening}
               className={`flex h-11 w-11 items-center justify-center rounded-xl text-white ${
@@ -1185,7 +1190,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
           {speechError ? <p className="mt-2 text-sm text-red-600">{speechError}</p> : null}
           {isTranscribing ? <p className="mt-2 text-sm text-emerald-600">{ui.transcribing}</p> : null}
 
-          <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
+          <p className="mt-2 hidden text-xs text-slate-500 dark:text-slate-400 md:block">
             {ui.tip}
           </p>
         </div>
