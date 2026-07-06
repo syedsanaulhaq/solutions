@@ -50,6 +50,10 @@ interface NativeSpeechEventDetail {
   error?: string;
 }
 
+interface CapacitorBrowserPlugin {
+  open?: (options: { url: string }) => Promise<void>;
+}
+
 const CALENDAR_PDF_URL_KEY = 'ecpTrainerCalendarPdfUrlV1';
 const DEFAULT_CALENDAR_URL = '/ecp/ecp-training-calendar.pdf';
 
@@ -274,6 +278,9 @@ const TRAINING_MEDIA_LIBRARY: Record<string, ReplyMedia> = {
     ],
   },
 };
+
+const URL_PATTERN = /(https?:\/\/[^\s<>()]+[\w\-\/\])])/gi;
+const MARKDOWN_LINK_PATTERN = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/gi;
 
 function mediaForReply(userQuestion: string): ReplyMedia | undefined {
   const lower = userQuestion.toLowerCase();
@@ -802,6 +809,96 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
     }
   }, []);
 
+  const openExternalUrl = useCallback(async (url: string) => {
+    try {
+      const maybeCapacitor = (window as Window & {
+        Capacitor?: { Plugins?: { Browser?: CapacitorBrowserPlugin } };
+      }).Capacitor;
+      const browserPlugin = maybeCapacitor?.Plugins?.Browser;
+      if (browserPlugin?.open) {
+        await browserPlugin.open({ url });
+        return;
+      }
+    } catch {
+      // Fallback below if Capacitor Browser is unavailable.
+    }
+
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }, []);
+
+  const renderMessageText = useCallback(
+    (text: string) => {
+      const chunks: Array<{ type: 'text' | 'link'; text: string; href?: string }> = [];
+      let last = 0;
+
+      for (const match of text.matchAll(MARKDOWN_LINK_PATTERN)) {
+        const full = match[0] ?? '';
+        const label = match[1] ?? '';
+        const href = match[2] ?? '';
+        const start = match.index ?? -1;
+        if (start < 0) continue;
+
+        if (start > last) {
+          chunks.push({ type: 'text', text: text.slice(last, start) });
+        }
+        chunks.push({ type: 'link', text: label || href, href });
+        last = start + full.length;
+      }
+
+      if (last < text.length) {
+        chunks.push({ type: 'text', text: text.slice(last) });
+      }
+
+      const exploded: Array<{ type: 'text' | 'link'; text: string; href?: string }> = [];
+      for (const part of chunks) {
+        if (part.type === 'link') {
+          exploded.push(part);
+          continue;
+        }
+
+        let textLast = 0;
+        for (const urlMatch of part.text.matchAll(URL_PATTERN)) {
+          const full = urlMatch[0] ?? '';
+          const start = urlMatch.index ?? -1;
+          if (start < 0) continue;
+
+          if (start > textLast) {
+            exploded.push({ type: 'text', text: part.text.slice(textLast, start) });
+          }
+          exploded.push({ type: 'link', text: full, href: full });
+          textLast = start + full.length;
+        }
+
+        if (textLast < part.text.length) {
+          exploded.push({ type: 'text', text: part.text.slice(textLast) });
+        }
+      }
+
+      return exploded.map((part, idx) => {
+        if (part.type === 'link' && part.href) {
+          return (
+            <a
+              key={`${part.href}-${idx}`}
+              href={part.href}
+              target="_blank"
+              rel="noreferrer"
+              onClick={(event) => {
+                event.preventDefault();
+                void openExternalUrl(part.href as string);
+              }}
+              className="break-all font-medium text-emerald-700 underline underline-offset-2 hover:text-emerald-800 dark:text-emerald-300 dark:hover:text-emerald-200"
+            >
+              {part.text}
+            </a>
+          );
+        }
+
+        return <span key={`text-${idx}`}>{part.text}</span>;
+      });
+    },
+    [openExternalUrl]
+  );
+
   return (
     <div
       className="h-[100dvh] w-full overflow-hidden bg-slate-950 md:min-h-[100dvh] md:h-auto md:bg-[radial-gradient(circle_at_top,_#d9f1e6_0%,_#e8f7ef_35%,_#f6fbf8_70%)] px-0 py-0 [padding-top:env(safe-area-inset-top)] [padding-bottom:env(safe-area-inset-bottom)] md:px-4 md:py-10"
@@ -961,7 +1058,7 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
                         : 'bg-white text-slate-800 border border-slate-200 rounded-bl-sm dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700'
                     }`}
                   >
-                    <p>{msg.id === 1 && lang === 'ur' ? START_MESSAGE_UR_TEXT : msg.text}</p>
+                    <p>{renderMessageText(msg.id === 1 && lang === 'ur' ? START_MESSAGE_UR_TEXT : msg.text)}</p>
 
                     {msg.role === 'assistant' ? (
                       <div className="mt-2">
