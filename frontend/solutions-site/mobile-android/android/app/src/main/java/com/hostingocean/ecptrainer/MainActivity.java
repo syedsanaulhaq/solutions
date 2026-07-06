@@ -3,6 +3,7 @@ package com.hostingocean.ecptrainer;
 import android.os.Bundle;
 import android.content.pm.PackageManager;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
@@ -272,6 +273,24 @@ public class MainActivity extends BridgeActivity {
         }
     }
 
+    private void openExternalUrl(String url) {
+        if (url == null || url.trim().isEmpty()) {
+            return;
+        }
+
+        runOnUiThread(() -> {
+            try {
+                Uri uri = Uri.parse(url.trim());
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            } catch (Exception ignored) {
+                // Ignore failures and let web fallback handle unsupported cases.
+            }
+        });
+    }
+
     private class NativeSpeechBridge {
         @JavascriptInterface
         public void startListening(String languageCode) {
@@ -281,6 +300,11 @@ public class MainActivity extends BridgeActivity {
         @JavascriptInterface
         public void stopListening() {
             stopNativeSpeech();
+        }
+
+        @JavascriptInterface
+        public void openExternalUrl(String url) {
+            MainActivity.this.openExternalUrl(url);
         }
     }
 }

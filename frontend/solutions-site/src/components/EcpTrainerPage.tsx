@@ -8,6 +8,7 @@ declare global {
     AndroidSpeech?: {
       startListening: (languageCode: string) => void;
       stopListening: () => void;
+      openExternalUrl?: (url: string) => void;
     };
   }
 }
@@ -810,6 +811,12 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
   }, []);
 
   const openExternalUrl = useCallback(async (url: string) => {
+    const nativeBridge = window.AndroidSpeech;
+    if (/android/i.test(navigator.userAgent) && typeof nativeBridge?.openExternalUrl === 'function') {
+      nativeBridge.openExternalUrl(url);
+      return;
+    }
+
     try {
       const maybeCapacitor = (window as Window & {
         Capacitor?: { Plugins?: { Browser?: CapacitorBrowserPlugin } };
