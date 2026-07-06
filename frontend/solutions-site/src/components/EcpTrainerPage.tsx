@@ -831,11 +831,13 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
       const chunks: Array<{ type: 'text' | 'link'; text: string; href?: string }> = [];
       let last = 0;
 
-      for (const match of text.matchAll(MARKDOWN_LINK_PATTERN)) {
-        const full = match[0] ?? '';
-        const label = match[1] ?? '';
-        const href = match[2] ?? '';
-        const start = match.index ?? -1;
+      const markdownRegex = new RegExp(MARKDOWN_LINK_PATTERN.source, MARKDOWN_LINK_PATTERN.flags);
+      let markdownMatch: RegExpExecArray | null;
+      while ((markdownMatch = markdownRegex.exec(text)) !== null) {
+        const full = markdownMatch[0] ?? '';
+        const label = markdownMatch[1] ?? '';
+        const href = markdownMatch[2] ?? '';
+        const start = markdownMatch.index ?? -1;
         if (start < 0) continue;
 
         if (start > last) {
@@ -857,7 +859,9 @@ export default function EcpTrainerPage({ forcedLang = 'en' }: { forcedLang?: 'en
         }
 
         let textLast = 0;
-        for (const urlMatch of part.text.matchAll(URL_PATTERN)) {
+        const urlRegex = new RegExp(URL_PATTERN.source, URL_PATTERN.flags);
+        let urlMatch: RegExpExecArray | null;
+        while ((urlMatch = urlRegex.exec(part.text)) !== null) {
           const full = urlMatch[0] ?? '';
           const start = urlMatch.index ?? -1;
           if (start < 0) continue;
