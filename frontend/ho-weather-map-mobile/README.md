@@ -1,6 +1,6 @@
 # HO Weather Map Android (Internal)
 
-This package builds an internal Android app wrapper around the HO Weather Map web application.
+This package builds an internal Android app wrapper around the HO Weather Map web app.
 
 ## Prerequisites
 
@@ -53,7 +53,28 @@ After running build commands, artifacts are available at:
 - Debug APK: `android/app/build/outputs/apk/debug/app-debug.apk`
 - Release unsigned APK: `android/app/build/outputs/apk/release/app-release-unsigned.apk`
 
+## Internal Signed Release (CLI)
+
+1. Generate a keystore once:
+
+```powershell
+keytool -genkeypair -v -keystore ecp-internal.jks -alias ecpinternal -keyalg RSA -keysize 2048 -validity 3650
+```
+
+2. Sign release APK:
+
+```powershell
+"$env:LOCALAPPDATA/Android/Sdk/build-tools/35.0.0/apksigner.bat" sign --ks ecp-internal.jks --out app-release-signed.apk android/app/build/outputs/apk/release/app-release-unsigned.apk
+```
+
+3. Verify signature:
+
+```powershell
+"$env:LOCALAPPDATA/Android/Sdk/build-tools/35.0.0/apksigner.bat" verify --verbose app-release-signed.apk
+```
+
 ## Notes
 
 - This app loads the hosted site, so web deploys reflect in the app immediately.
-- External links (URLs in responses) open in the phone's installed browser app.
+- English trainer route: `/ecp-trainer`
+- Urdu trainer route: `/ecp-trainer-ur`

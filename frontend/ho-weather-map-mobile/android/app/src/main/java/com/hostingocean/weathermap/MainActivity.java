@@ -10,7 +10,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.PermissionRequest;
 import android.webkit.WebChromeClient;
-import androidx.core.content.ContextCompat;
 import com.getcapacitor.BridgeActivity;
 
 public class MainActivity extends BridgeActivity {
@@ -41,20 +40,20 @@ public class MainActivity extends BridgeActivity {
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-        
+
         // Force content to fit screen
         settings.setLoadWithOverviewMode(true);
         settings.setUseWideViewPort(true);
-        
+
         // Disable text zooming/scaling
-        settings.setTextZoom(100); 
+        settings.setTextZoom(100);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             webView.addJavascriptInterface(new NativeBridge(), "AndroidSpeech");
         }
 
-        // CSS injection to fix layout and scrolling for mobile
-        String css = 
+        // CSS injection to make the weather map fit mobile screens
+        String css =
             "html, body { " +
             "  margin: 0 !important; " +
             "  padding: 0 !important; " +
@@ -81,7 +80,7 @@ public class MainActivity extends BridgeActivity {
             "  flex-direction: column !important; " +
             "  height: 100vh !important; " +
             "} " +
-            "[class*='WeatherCard'], [class*='Content'], [class*='MapContainer'] { " +
+            "[class*='MapContainer'], [class*='WeatherCard'], [class*='Content'] { " +
             "  flex: 1 !important; " +
             "  overflow-y: auto !important; " +
             "  width: 100% !important; " +
@@ -105,7 +104,7 @@ public class MainActivity extends BridgeActivity {
                 view.postDelayed(() -> view.evaluateJavascript(js, null), 500);
             }
         });
-        
+
         webView.evaluateJavascript(js, null);
     }
 

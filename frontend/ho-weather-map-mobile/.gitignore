@@ -1,10 +1,5 @@
 node_modules/
-dist/
-build/
-.gradle/
-.idea/
-*.iml
-*.apk
-*.aab
-*.jks
+www/
 .DS_Store
+*.keystore
+*.jks

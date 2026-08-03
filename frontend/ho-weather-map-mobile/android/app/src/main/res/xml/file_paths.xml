@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- Exported XML file paths for FileProvider to allow access to app-specific files -->
-    <paths xmlns:android="http://schemas.android.com/apk/res/android">
-        <files-path name="my_files" path="." />
-    </paths>
-</resources>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-path name="my_images" path="." />
+    <cache-path name="my_cache_images" path="." />
+</paths>
