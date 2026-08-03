@@ -1,0 +1,28 @@
+{
+  "name": "ho-weather-map-android",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Android wrapper app for HO Weather Map",
+  "scripts": {
+    "android:add": "cap add android",
+    "android:sync": "cap sync android",
+    "android:open": "cap open android",
+    "android:run": "cap run android",
+    "android:apk:debug": "cd android && gradlew.bat assembleDebug"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.2",
+    "@capacitor/app": "^7.1.1",
+    "@capacitor/core": "^7.4.2",
+    "@capacitor/filesystem": "^7.1.4",
+    "@capacitor/haptics": "^7.0.1",
+    "@capacitor/keyboard": "^7.0.2",
+    "@capacitor/network": "^7.0.2",
+    "@capacitor/splash-screen": "^7.0.2",
+    "@capacitor/status-bar": "^7.0.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.2",
+    "typescript": "^5.9.2"
+  }
+}

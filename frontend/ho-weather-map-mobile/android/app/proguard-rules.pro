@@ -1,0 +1,3 @@
+-keep class com.getcapacitor.** { *; }
+-keep @interface com.getcapacitor.** { *; }
+-keep public class * extends com.getcapacitor.Plugin { *; }

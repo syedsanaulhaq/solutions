@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">HO Weather Map</string>
+    <string name="title_activity_main">HO Weather Map</string>
+    <string name="package_name">com.hostingocean.weathermap</string>
+    <string name="custom_url_scheme">com.hostingocean.weathermap</string>
+</resources>

@@ -1,0 +1,4 @@
+// Prevent Gradle from warning about an unknown "capacitor" plugin
+plugins {
+    id("com.android.application") version "8.7.2" apply false
+}
