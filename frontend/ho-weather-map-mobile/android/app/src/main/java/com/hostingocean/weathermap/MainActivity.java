@@ -11,12 +11,15 @@ import android.webkit.WebViewClient;
 import android.webkit.PermissionRequest;
 import android.webkit.WebChromeClient;
 import com.getcapacitor.BridgeActivity;
+import androidx.core.view.WindowCompat;
 
 public class MainActivity extends BridgeActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Keep app content inside the status bar and navigation bar areas
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
     }
 
     @Override
@@ -52,7 +55,7 @@ public class MainActivity extends BridgeActivity {
             webView.addJavascriptInterface(new NativeBridge(), "AndroidSpeech");
         }
 
-        // CSS injection to make the weather map fit mobile screens
+        // CSS injection to make the weather map fit mobile screens safely
         String css =
             "html, body { " +
             "  margin: 0 !important; " +
@@ -79,11 +82,20 @@ public class MainActivity extends BridgeActivity {
             "  display: flex !important; " +
             "  flex-direction: column !important; " +
             "  height: 100vh !important; " +
+            "  padding-top: env(safe-area-inset-top) !important; " +
+            "  padding-bottom: env(safe-area-inset-bottom) !important; " +
             "} " +
             "[class*='MapContainer'], [class*='WeatherCard'], [class*='Content'] { " +
             "  flex: 1 !important; " +
             "  overflow-y: auto !important; " +
             "  width: 100% !important; " +
+            "  padding-bottom: env(safe-area-inset-bottom) !important; " +
+            "} " +
+            "header, [class*='header'], [class*='Header'] { " +
+            "  padding-top: max(8px, env(safe-area-inset-top)) !important; " +
+            "} " +
+            "footer, [class*='footer'], [class*='Footer'], [class*='bottom-bar'], [class*='BottomBar'] { " +
+            "  padding-bottom: max(8px, env(safe-area-inset-bottom)) !important; " +
             "} ";
 
         String js = "var style = document.createElement('style'); style.innerHTML = '" + css + "'; document.head.appendChild(style);";
