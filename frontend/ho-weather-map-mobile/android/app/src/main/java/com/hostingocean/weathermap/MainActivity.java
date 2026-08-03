@@ -15,10 +15,6 @@ import android.webkit.GeolocationPermissions;
 import com.getcapacitor.BridgeActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.core.graphics.Insets;
 
 public class MainActivity extends BridgeActivity {
 
@@ -27,8 +23,6 @@ public class MainActivity extends BridgeActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Keep app content inside the status bar and navigation bar areas
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
         ensureLocationPermission();
     }
 
@@ -67,13 +61,6 @@ public class MainActivity extends BridgeActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             webView.addJavascriptInterface(new NativeBridge(), "AndroidSpeech");
         }
-
-        // Keep WebView content inside status bar and navigation bar areas
-        ViewCompat.setOnApplyWindowInsetsListener(webView, (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
         // CSS injection to make the weather map fit mobile screens safely
         String css =
