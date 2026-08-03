@@ -15,7 +15,10 @@ import android.webkit.GeolocationPermissions;
 import com.getcapacitor.BridgeActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.graphics.Insets;
 
 public class MainActivity extends BridgeActivity {
 
@@ -65,6 +68,13 @@ public class MainActivity extends BridgeActivity {
             webView.addJavascriptInterface(new NativeBridge(), "AndroidSpeech");
         }
 
+        // Keep WebView content inside status bar and navigation bar areas
+        ViewCompat.setOnApplyWindowInsetsListener(webView, (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
         // CSS injection to make the weather map fit mobile screens safely
         String css =
             "html, body { " +
@@ -92,20 +102,11 @@ public class MainActivity extends BridgeActivity {
             "  display: flex !important; " +
             "  flex-direction: column !important; " +
             "  height: 100vh !important; " +
-            "  padding-top: env(safe-area-inset-top) !important; " +
-            "  padding-bottom: env(safe-area-inset-bottom) !important; " +
             "} " +
             "[class*='MapContainer'], [class*='WeatherCard'], [class*='Content'] { " +
             "  flex: 1 !important; " +
             "  overflow-y: auto !important; " +
             "  width: 100% !important; " +
-            "  padding-bottom: env(safe-area-inset-bottom) !important; " +
-            "} " +
-            "header, [class*='header'], [class*='Header'] { " +
-            "  padding-top: max(8px, env(safe-area-inset-top)) !important; " +
-            "} " +
-            "footer, [class*='footer'], [class*='Footer'], [class*='bottom-bar'], [class*='BottomBar'] { " +
-            "  padding-bottom: max(8px, env(safe-area-inset-bottom)) !important; " +
             "} ";
 
         String js = "var style = document.createElement('style'); style.innerHTML = '" + css + "'; document.head.appendChild(style);";
