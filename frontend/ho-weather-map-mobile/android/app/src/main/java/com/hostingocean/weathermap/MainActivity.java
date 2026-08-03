@@ -15,6 +15,10 @@ import android.webkit.GeolocationPermissions;
 import com.getcapacitor.BridgeActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.graphics.Insets;
 
 public class MainActivity extends BridgeActivity {
 
@@ -23,6 +27,8 @@ public class MainActivity extends BridgeActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Make content fit between status bar and navigation bar
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
         ensureLocationPermission();
     }
 
@@ -66,9 +72,10 @@ public class MainActivity extends BridgeActivity {
         String css =
             "html, body { " +
             "  margin: 0 !important; " +
-            "  padding: 0 !important; " +
+            "  padding-top: env(safe-area-inset-top) !important; " +
+            "  padding-bottom: env(safe-area-inset-bottom) !important; " +
             "  overflow: hidden !important; " +
-            "  height: 100vh !important; " +
+            "  height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important; " +
             "  width: 100vw !important; " +
             "  font-size: 14px !important; " +
             "} " +
@@ -88,7 +95,7 @@ public class MainActivity extends BridgeActivity {
             "main, #root, #__next { " +
             "  display: flex !important; " +
             "  flex-direction: column !important; " +
-            "  height: 100vh !important; " +
+            "  height: 100% !important; " +
             "} " +
             "[class*='MapContainer'], [class*='WeatherCard'], [class*='Content'] { " +
             "  flex: 1 !important; " +
