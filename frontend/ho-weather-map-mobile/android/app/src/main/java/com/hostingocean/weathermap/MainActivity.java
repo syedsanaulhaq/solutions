@@ -2,6 +2,7 @@ package com.hostingocean.weathermap;
 
 import android.os.Bundle;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.webkit.JavascriptInterface;
@@ -10,16 +11,22 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.PermissionRequest;
 import android.webkit.WebChromeClient;
+import android.webkit.GeolocationPermissions;
 import com.getcapacitor.BridgeActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.WindowCompat;
 
 public class MainActivity extends BridgeActivity {
+
+    private static final int REQUEST_LOCATION_PERMISSION = 1002;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Keep app content inside the status bar and navigation bar areas
         WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
+        ensureLocationPermission();
     }
 
     @Override
@@ -47,6 +54,9 @@ public class MainActivity extends BridgeActivity {
         // Force content to fit screen
         settings.setLoadWithOverviewMode(true);
         settings.setUseWideViewPort(true);
+
+        // Enable GPS / geolocation in WebView
+        settings.setGeolocationEnabled(true);
 
         // Disable text zooming/scaling
         settings.setTextZoom(100);
@@ -105,6 +115,21 @@ public class MainActivity extends BridgeActivity {
             public void onPermissionRequest(final PermissionRequest request) {
                 runOnUiThread(() -> request.grant(request.getResources()));
             }
+
+            @Override
+            public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
+                boolean hasLocationPermission = ContextCompat.checkSelfPermission(
+                    MainActivity.this,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED;
+
+                if (hasLocationPermission) {
+                    callback.invoke(origin, true, false);
+                } else {
+                    ensureLocationPermission();
+                    callback.invoke(origin, false, false);
+                }
+            }
         });
 
         webView.setWebViewClient(new WebViewClient() {
@@ -136,6 +161,33 @@ public class MainActivity extends BridgeActivity {
                 // Ignore failures and let web fallback handle unsupported cases.
             }
         });
+    }
+
+    private void ensureLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                this,
+                new String[]{
+                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION
+                },
+                REQUEST_LOCATION_PERMISSION
+            );
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_LOCATION_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                WebView webView = getBridge() != null ? getBridge().getWebView() : null;
+                if (webView != null) {
+                    webView.reload();
+                }
+            }
+        }
     }
 
     private class NativeBridge {
