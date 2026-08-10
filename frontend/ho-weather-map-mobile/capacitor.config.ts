@@ -1,6 +1,6 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
-const PROD_URL = process.env.WEATHER_MAP_URL || 'https://ho-weather-map.ai.studio/';
+const PROD_URL = process.env.WEATHER_MAP_URL || 'https://ho-route-weather.ai.studio';
 
 const config: CapacitorConfig = {
   appId: 'com.hostingocean.weathermap',

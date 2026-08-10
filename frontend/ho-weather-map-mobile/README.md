@@ -16,7 +16,7 @@ Set the production URL before running add/sync:
 PowerShell:
 
 ```powershell
-$env:WEATHER_MAP_URL = "https://ho-weather-map.ai.studio/"
+$env:WEATHER_MAP_URL = "https://ho-route-weather.ai.studio"
 ```
 
 If not set, it defaults to the same value above.
