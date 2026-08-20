@@ -15,11 +15,7 @@ import android.webkit.GeolocationPermissions;
 import com.getcapacitor.BridgeActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.core.graphics.Insets;
-
 import androidx.core.view.WindowInsetsControllerCompat;
 
 public class MainActivity extends BridgeActivity {
@@ -51,15 +47,6 @@ public class MainActivity extends BridgeActivity {
     }
 
     private void setupWebView(WebView webView) {
-        ViewCompat.setOnApplyWindowInsetsListener(webView, (view, windowInsets) -> {
-            Insets systemBars = windowInsets.getInsets(
-                WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout()
-            );
-            view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return windowInsets;
-        });
-        ViewCompat.requestApplyInsets(webView);
-
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
